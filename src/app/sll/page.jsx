@@ -24,6 +24,7 @@ class LinkedList extends Component {
         highlightTail: false,
         nodeColor: '#2196F3',
         newNodeColor: '#4CAF50',
+        iterateColor: '#FF5722',
         selectedNodes: [],
     }
 
@@ -96,11 +97,11 @@ class LinkedList extends Component {
                 style: {
                     ...edge.style,
                     strokeWidth: isHighlighted ? 4 : 2,
-                    stroke: isHighlighted ? '#FF5722' : '#333',
+                    stroke: isHighlighted ? this.state.iterateColor : '#333',
                 },
                 markerEnd: {
                     ...edge.markerEnd,
-                    color: isHighlighted ? '#FF5722' : '#333',
+                    color: isHighlighted ? this.state.iterateColor : '#333',
                 }
             };
         });
@@ -130,6 +131,8 @@ class LinkedList extends Component {
                         onColorChange={this.handleColorChange}
                         newNodeColor={this.state.newNodeColor}
                         onNewNodeColorChange={this.handleNewNodeColorChange}
+                        iterateColor={this.state.iterateColor}
+                        onIterateColorChange={this.handleIterateColorChange}
                     />
                     <div className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50 relative">
                         {this.state.nodes.length === 0 && (
@@ -259,6 +262,11 @@ class LinkedList extends Component {
     handleNewNodeColorChange = (e) => {
         const newColor = e.target.value;
         this.setState({ newNodeColor: newColor });
+    }
+
+    handleIterateColorChange = (e) => {
+        const newColor = e.target.value;
+        this.setState({ iterateColor: newColor });
     }
 
     handleVisualize = async (opIndex, value) => {
@@ -404,7 +412,7 @@ class LinkedList extends Component {
                 ...node,
                 style: {
                     ...node.style,
-                    background: idx === i ? '#FF5722' : node.style.background,
+                    background: idx === i ? this.state.iterateColor : node.style.background,
                 }
             }));
             this.setState({ nodes: tempNodes });
@@ -495,7 +503,7 @@ class LinkedList extends Component {
                 ...node,
                 style: {
                     ...node.style,
-                    background: idx === i ? '#FF5722' : node.style.background,
+                    background: idx === i ? this.state.iterateColor : node.style.background,
                 }
             }));
             this.setState({ nodes: tempNodes });
@@ -526,7 +534,7 @@ class LinkedList extends Component {
                 ...node,
                 style: {
                     ...node.style,
-                    background: idx === i ? '#FF5722' : node.style.background,
+                    background: idx === i ? this.state.iterateColor : node.style.background,
                 }
             }));
             this.setState({ nodes });
@@ -559,7 +567,7 @@ class LinkedList extends Component {
                 ...node,
                 style: {
                     ...node.style,
-                    background: idx === current ? '#FF5722' : (idx === prev ? '#4CAF50' : node.style.background),
+                    background: idx === current ? this.state.iterateColor : (idx === prev ? '#4CAF50' : node.style.background),
                     border: idx === current ? '3px solid #E64A19' : '2px solid #333',
                 }
             }));
@@ -588,11 +596,11 @@ class LinkedList extends Component {
                         type: MarkerType.ArrowClosed,
                         width: 10,
                         height: 10,
-                        color: '#FF5722'
+                        color: this.state.iterateColor
                     },
                     style: {
                         strokeWidth: 3,
-                        stroke: '#FF5722'
+                        stroke: this.state.iterateColor
                     }
                 });
                 this.setState({ edges: [...edges] });
