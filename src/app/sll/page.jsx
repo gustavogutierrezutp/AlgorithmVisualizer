@@ -20,6 +20,7 @@ class LinkedList extends Component {
         isRunning: false,
         operation: 0, // 0: insert, 1: delete, 2: search, 3: reverse
         hoveredNodeId: null,
+        highlightHead: false,
     }
 
     componentDidMount() {
@@ -42,7 +43,22 @@ class LinkedList extends Component {
     }
 
     render() {
-        const { hoveredNodeId } = this.state;
+        const { hoveredNodeId, highlightHead } = this.state;
+
+        // Apply head highlighting to the first node
+        const highlightedNodes = this.state.nodes.map((node, idx) => {
+            if (idx === 0 && highlightHead) {
+                return {
+                    ...node,
+                    style: {
+                        ...node.style,
+                        background: '#9C27B0', // Purple for head
+                        border: '3px solid #7B1FA2',
+                    }
+                };
+            }
+            return node;
+        });
 
         // Apply highlighting to edges based on hovered node
         const highlightedEdges = this.state.edges.map(edge => {
@@ -72,13 +88,15 @@ class LinkedList extends Component {
                         onVisualize={this.handleVisualize}
                         onRandomize={this.handleRandomize}
                         onScramble={this.handleScramble}
+                        onToggleHeadHighlight={this.handleToggleHeadHighlight}
+                        highlightHead={this.state.highlightHead}
                         onCountChange={this.handleCountChange}
                         onOperationChanged={this.handleOperationChanged}
                         onSpeedChange={this.handleSpeedChanged}
                     />
                     <div className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50">
                         <ReactFlow
-                            nodes={this.state.nodes}
+                            nodes={highlightedNodes}
                             edges={highlightedEdges}
                             onNodesChange={this.onNodesChange}
                             nodeTypes={nodeTypes}
@@ -122,6 +140,10 @@ class LinkedList extends Component {
             }
         }));
         this.setState({ nodes });
+    }
+
+    handleToggleHeadHighlight = () => {
+        this.setState({ highlightHead: !this.state.highlightHead });
     }
 
     handleVisualize = async () => {

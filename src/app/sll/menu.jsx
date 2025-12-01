@@ -63,6 +63,16 @@ class Menu extends Component {
 
                 <Button
                     className="w-full"
+                    onClick={this.props.onToggleHeadHighlight}
+                    disabled={this.props.disable}
+                    variant={this.props.highlightHead ? "default" : "outline"}
+                    style={this.isClickable()}
+                >
+                    {this.props.highlightHead ? "Hide Head" : "Show Head"}
+                </Button>
+
+                <Button
+                    className="w-full"
                     onClick={this.props.onVisualize}
                     disabled={this.props.disable}
                     style={this.isClickable()}
