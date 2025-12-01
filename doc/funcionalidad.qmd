@@ -64,3 +64,41 @@ indicada. Haciendo click en _Custom_ aparecerá un cuadro de texto para insertar
 cada uno de los elementos de la lista. El formato es simple: los elementos deben
 estar encerrados por los símbolos `[`y `]`. Adicionalmente los números en la
 deben estar separado por comas.
+
+## Adición y borrado de elementos
+
+En esta sección se define la manera de insertar y borrar elementos de la lista.
+Estas operaciones están disponibles en el menu __Operations__.
+
+### Inserción
+
+Existen dos maneras básicas de insertar elementos en una lista enlazada. La
+primera es insertar el nuevo elemento por el frente de la lista. Es decir, el
+nuevo elemento quedaría como nuevo primer elemento en la lista. Para esto se
+ingresa el valor a insertar en el capmo de texto _Target Value_ y se procede a
+dar click en el botón "_+ Head_". Al hacerlo el nuevo nodo se posicionará al
+inicio de la lista y tendrá un color diferente.
+
+Para insertar un elemento por el final de la lista se procede de la misma forma
+pero esta vez se pulsa el botón "_+ Tail_". Después de esto en el lienzo se
+mostrará de manera animada a recorrer cada uno de los elementos desde el inicio
+y se insertará el nuevo nodo con el elemento al final.
+
+
+::: {.callout-tip}
+#### Consejo
+
+Al lado del cuadro de texto donde se coloca el valor a insertar hay un botón. Al
+presionarlo se generará un número aleatorio que puede o no ser parte de la
+lista. Al presionar alguno de los botones de inserción se insertará dicho
+elemento.
+
+:::
+
+### Borrado
+
+Para eliminar un elemento de la lista se puede pulsar cualquiera de los botones
+con leyendas:"🗑 Head" o "🗑 Tail". El primero removerá el primer nodo de la
+lista mientras que el segundo presentará la animación del último nodo. En este
+último caso se visualizará el recorrido de la lista y la eliminación del último
+nodo.
