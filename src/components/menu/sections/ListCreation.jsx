@@ -35,7 +35,6 @@ export const ListCreation = ({
 
       {creationMode === "empty" && (
         <div className="text-center py-2">
-          <p className="text-xs text-gray-500 mb-3">Start with a blank canvas</p>
           <Button
             className="w-full"
             onClick={onCreateEmpty}
@@ -82,7 +81,7 @@ export const ListCreation = ({
             onClick={() => onCreateFromSequence(sequenceInput)}
             disabled={disable}
           >
-            Load Sequence
+            Create List
           </Button>
         </div>
       )}

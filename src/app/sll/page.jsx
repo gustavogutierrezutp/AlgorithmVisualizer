@@ -53,7 +53,9 @@ class LinkedList extends Component {
                         title: 'Bienvenido a DSViz',
                         description: 'Esta es una herramienta interactiva para visualizar listas enlazadas. Te guiaré por las principales funciones.',
                         side: "bottom",
-                        align: 'start'
+                        align: 'start',
+                        nextBtnText: 'Siguiente',
+                        prevBtnText: 'Anterior'
                     }
                 },
                 {
@@ -62,7 +64,9 @@ class LinkedList extends Component {
                         title: 'Creación de Listas',
                         description: 'Aquí puedes crear listas de diferentes formas: vacía, aleatoria o desde una secuencia personalizada.',
                         side: "right",
-                        align: 'start'
+                        align: 'start',
+                        nextBtnText: 'Siguiente',
+                        prevBtnText: 'Anterior'
                     }
                 },
                 {
@@ -71,7 +75,9 @@ class LinkedList extends Component {
                         title: 'Operaciones',
                         description: 'Selecciona y ejecuta operaciones como insertar, eliminar, recorrer y revertir la lista.',
                         side: "right",
-                        align: 'start'
+                        align: 'start',
+                        nextBtnText: 'Siguiente',
+                        prevBtnText: 'Anterior'
                     }
                 },
                 {
@@ -80,7 +86,9 @@ class LinkedList extends Component {
                         title: 'Opciones de Visualización',
                         description: 'Personaliza la velocidad de animación, colores de nodos y resalta cabeza/cola de la lista.',
                         side: "right",
-                        align: 'start'
+                        align: 'start',
+                        nextBtnText: 'Siguiente',
+                        prevBtnText: 'Anterior'
                     }
                 },
                 {
@@ -89,13 +97,16 @@ class LinkedList extends Component {
                         title: 'Área de Visualización',
                         description: 'Los nodos de la lista aparecen aquí. Puedes arrastrarlos, seleccionar múltiples nodos dibujando un rectángulo, y hacer zoom/pan.',
                         side: "left",
-                        align: 'center'
+                        align: 'center',
+                        nextBtnText: 'Siguiente',
+                        prevBtnText: 'Anterior'
                     }
                 },
                 {
                     popover: {
                         title: '¡Listo!',
                         description: 'Ahora estás listo para explorar las listas enlazadas. Puedes volver a ver este tutorial en cualquier momento.',
+                        doneBtnText: 'Cerrar'
                     }
                 }
             ],
