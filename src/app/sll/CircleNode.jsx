@@ -20,7 +20,6 @@ const CircleNode = ({ data, style }) => {
       }}
     >
       {data.label || 'C'}
-      <Handle type="target" position={Position.Left} style={{ background: '#555' }} />
       <Handle type="source" position={Position.Right} style={{ background: '#555' }} />
     </div>
   );
