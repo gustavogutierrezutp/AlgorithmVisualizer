@@ -5,6 +5,11 @@ import '@xyflow/react/dist/style.css';
 
 import Navbar from '@/components/navbar';
 import Menu from "./menu";
+import LinkedListNode from './LinkedListNode';
+
+const nodeTypes = {
+    linkedListNode: LinkedListNode,
+};
 
 class LinkedList extends Component {
     state = {
@@ -50,6 +55,7 @@ class LinkedList extends Component {
                             nodes={this.state.nodes}
                             edges={this.state.edges}
                             onNodesChange={this.onNodesChange}
+                            nodeTypes={nodeTypes}
                             fitView
                             nodesDraggable={true}
                             nodesConnectable={false}
@@ -109,6 +115,7 @@ class LinkedList extends Component {
         // Demo implementation - add new node at head
         const newNode = {
             id: `node-${Date.now()}`,
+            type: 'linkedListNode',
             data: { label: value.toString() },
             position: { x: 50, y: 100 },
             style: {
@@ -130,10 +137,21 @@ class LinkedList extends Component {
         const edges = nodes.length > 1 ? nodes.slice(0, -1).map((node, idx) => ({
             id: `edge-${idx}`,
             source: node.id,
+            sourceHandle: 'right',
             target: nodes[idx + 1].id,
+            targetHandle: 'left',
             animated: true,
             type: 'smoothstep',
-            markerEnd: { type: MarkerType.ArrowClosed }
+            markerEnd: {
+                type: MarkerType.ArrowClosed,
+                width: 20,
+                height: 20,
+                color: '#333'
+            },
+            style: {
+                strokeWidth: 2,
+                stroke: '#333'
+            }
         })) : [];
 
         this.setState({ nodes, edges });
@@ -151,10 +169,21 @@ class LinkedList extends Component {
         const edges = nodes.length > 1 ? nodes.slice(0, -1).map((node, idx) => ({
             id: `edge-${idx}`,
             source: node.id,
+            sourceHandle: 'right',
             target: nodes[idx + 1].id,
+            targetHandle: 'left',
             animated: true,
             type: 'smoothstep',
-            markerEnd: { type: MarkerType.ArrowClosed }
+            markerEnd: {
+                type: MarkerType.ArrowClosed,
+                width: 20,
+                height: 20,
+                color: '#333'
+            },
+            style: {
+                strokeWidth: 2,
+                stroke: '#333'
+            }
         })) : [];
 
         this.setState({ nodes, edges });
@@ -195,10 +224,21 @@ class LinkedList extends Component {
         const edges = nodes.length > 1 ? nodes.slice(0, -1).map((node, idx) => ({
             id: `edge-${idx}`,
             source: node.id,
+            sourceHandle: 'right',
             target: nodes[idx + 1].id,
+            targetHandle: 'left',
             animated: true,
             type: 'smoothstep',
-            markerEnd: { type: MarkerType.ArrowClosed }
+            markerEnd: {
+                type: MarkerType.ArrowClosed,
+                width: 20,
+                height: 20,
+                color: '#333'
+            },
+            style: {
+                strokeWidth: 2,
+                stroke: '#333'
+            }
         })) : [];
 
         this.setState({ nodes, edges });
@@ -218,6 +258,7 @@ const createInitialList = (count) => {
         const value = Math.floor(Math.random() * 100);
         nodes.push({
             id: `node-${i}`,
+            type: 'linkedListNode',
             data: { label: value.toString() },
             position: { x: 50 + (i * 150), y: 100 },
             style: {
@@ -236,10 +277,21 @@ const createInitialList = (count) => {
         edges.push({
             id: `edge-${i}`,
             source: `node-${i}`,
+            sourceHandle: 'right',
             target: `node-${i + 1}`,
+            targetHandle: 'left',
             animated: true,
             type: 'smoothstep',
-            markerEnd: { type: MarkerType.ArrowClosed }
+            markerEnd: {
+                type: MarkerType.ArrowClosed,
+                width: 20,
+                height: 20,
+                color: '#333'
+            },
+            style: {
+                strokeWidth: 2,
+                stroke: '#333'
+            }
         });
     }
 
