@@ -3,6 +3,7 @@ import { MenuHeader } from "./MenuHeader";
 import { ListCreation } from "./sections/ListCreation";
 import { Operations } from "./sections/Operations";
 import { DisplayOptions } from "./sections/DisplayOptions";
+import { TestSection } from "./sections/TestSection";
 
 export default function Menu(props) {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -39,13 +40,17 @@ export default function Menu(props) {
           onCountChange={props.onCountChange}
         />
 
-        <Operations 
-          disable={props.disable} 
-          onVisualize={props.onVisualize} 
+        <Operations
+          disable={props.disable}
+          onVisualize={props.onVisualize}
         />
 
-        <DisplayOptions 
-          {...props} 
+        <TestSection
+          onAddCircularNode={props.onAddCircularNode}
+        />
+
+        <DisplayOptions
+          {...props}
         />
       </div>
 

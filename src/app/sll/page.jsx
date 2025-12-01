@@ -8,9 +8,11 @@ import "driver.js/dist/driver.css";
 import Navbar from '@/components/navbar';
 import Menu from "@/components/menu/Menu";
 import LinkedListNode from './LinkedListNode';
+import CircleNode from './CircleNode';
 
 const nodeTypes = {
     linkedListNode: LinkedListNode,
+    circleNode: CircleNode,
 };
 
 class LinkedList extends Component {
@@ -222,6 +224,7 @@ class LinkedList extends Component {
                         onNewNodeColorChange={this.handleNewNodeColorChange}
                         iterateColor={this.state.iterateColor}
                         onIterateColorChange={this.handleIterateColorChange}
+                        onAddCircularNode={this.handleAddCircularNode}
                     />
                     <div id="canvas-area" className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50 relative">
                         {this.state.nodes.length === 0 && (
@@ -358,6 +361,22 @@ class LinkedList extends Component {
     handleIterateColorChange = (e) => {
         const newColor = e.target.value;
         this.setState({ iterateColor: newColor });
+    }
+
+    handleAddCircularNode = () => {
+        const newNodeId = `circle-${Date.now()}`;
+        const newNode = {
+            id: newNodeId,
+            type: 'circleNode',
+            data: { label: 'C' },
+            position: {
+                x: Math.random() * 400 + 50,
+                y: Math.random() * 400 + 50
+            },
+        };
+        this.setState(prevState => ({
+            nodes: [...prevState.nodes, newNode]
+        }));
     }
 
     handleVisualize = async (opIndex, value) => {
