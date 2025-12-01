@@ -177,9 +177,9 @@ class Menu extends Component {
                             </div>
                         </div>
 
-                        {/* Deletion Operations */}
+                        {/* Removal Operations */}
                         <div className="space-y-2">
-                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Deletion</h3>
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Removal</h3>
                             <div className="grid grid-cols-2 gap-2">
                                 <Button
                                     onClick={() => this.props.onVisualize(1)}
@@ -188,7 +188,7 @@ class Menu extends Component {
                                     variant="outline"
                                     size="sm"
                                 >
-                                    Head
+                                    pop_front
                                 </Button>
                                 <Button
                                     onClick={() => this.props.onVisualize(3)}
@@ -197,7 +197,7 @@ class Menu extends Component {
                                     variant="outline"
                                     size="sm"
                                 >
-                                    Tail
+                                    pop_back
                                 </Button>
                             </div>
                         </div>
