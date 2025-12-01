@@ -19,6 +19,7 @@ class LinkedList extends Component {
         speed: 500,
         isRunning: false,
         operation: 0, // 0: insert, 1: delete, 2: search, 3: reverse
+        hoveredNodeId: null,
     }
 
     componentDidMount() {
@@ -26,8 +27,12 @@ class LinkedList extends Component {
     }
 
     initializeList = (count) => {
-        const { nodes, edges } = createInitialList(count);
+        const { nodes, edges } = createInitialList(count, this.handlePointerHover);
         this.setState({ nodes, edges });
+    }
+
+    handlePointerHover = (nodeId) => {
+        this.setState({ hoveredNodeId: nodeId });
     }
 
     onNodesChange = (changes) => {
@@ -37,6 +42,26 @@ class LinkedList extends Component {
     }
 
     render() {
+        const { hoveredNodeId } = this.state;
+
+        // Apply highlighting to edges based on hovered node
+        const highlightedEdges = this.state.edges.map(edge => {
+            const isHighlighted = hoveredNodeId && edge.source === hoveredNodeId;
+            return {
+                ...edge,
+                animated: isHighlighted ? true : edge.animated,
+                style: {
+                    ...edge.style,
+                    strokeWidth: isHighlighted ? 4 : 2,
+                    stroke: isHighlighted ? '#FF5722' : '#333',
+                },
+                markerEnd: {
+                    ...edge.markerEnd,
+                    color: isHighlighted ? '#FF5722' : '#333',
+                }
+            };
+        });
+
         return (
             <div className="flex flex-col h-screen">
                 <Navbar title="Linked List Visualizer" />
@@ -53,7 +78,7 @@ class LinkedList extends Component {
                     <div className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50">
                         <ReactFlow
                             nodes={this.state.nodes}
-                            edges={this.state.edges}
+                            edges={highlightedEdges}
                             onNodesChange={this.onNodesChange}
                             nodeTypes={nodeTypes}
                             fitView
@@ -113,10 +138,15 @@ class LinkedList extends Component {
 
     insertAtHead = async (value) => {
         // Demo implementation - add new node at head
+        const newNodeId = `node-${Date.now()}`;
         const newNode = {
-            id: `node-${Date.now()}`,
+            id: newNodeId,
             type: 'linkedListNode',
-            data: { label: value.toString() },
+            data: {
+                label: value.toString(),
+                nodeId: newNodeId,
+                onPointerHover: this.handlePointerHover,
+            },
             position: { x: 50, y: 100 },
             style: {
                 background: '#4CAF50',
@@ -144,8 +174,8 @@ class LinkedList extends Component {
             type: 'smoothstep',
             markerEnd: {
                 type: MarkerType.ArrowClosed,
-                width: 20,
-                height: 20,
+                width: 10,
+                height: 10,
                 color: '#333'
             },
             style: {
@@ -176,8 +206,8 @@ class LinkedList extends Component {
             type: 'smoothstep',
             markerEnd: {
                 type: MarkerType.ArrowClosed,
-                width: 20,
-                height: 20,
+                width: 10,
+                height: 10,
                 color: '#333'
             },
             style: {
@@ -231,8 +261,8 @@ class LinkedList extends Component {
             type: 'smoothstep',
             markerEnd: {
                 type: MarkerType.ArrowClosed,
-                width: 20,
-                height: 20,
+                width: 10,
+                height: 10,
                 color: '#333'
             },
             style: {
@@ -250,16 +280,21 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const createInitialList = (count) => {
+const createInitialList = (count, onPointerHover) => {
     const nodes = [];
     const edges = [];
 
     for (let i = 0; i < count; i++) {
         const value = Math.floor(Math.random() * 100);
+        const nodeId = `node-${i}`;
         nodes.push({
-            id: `node-${i}`,
+            id: nodeId,
             type: 'linkedListNode',
-            data: { label: value.toString() },
+            data: {
+                label: value.toString(),
+                nodeId: nodeId,
+                onPointerHover: onPointerHover,
+            },
             position: { x: 50 + (i * 150), y: 100 },
             style: {
                 background: '#2196F3',
@@ -284,8 +319,8 @@ const createInitialList = (count) => {
             type: 'smoothstep',
             markerEnd: {
                 type: MarkerType.ArrowClosed,
-                width: 20,
-                height: 20,
+                width: 10,
+                height: 10,
                 color: '#333'
             },
             style: {

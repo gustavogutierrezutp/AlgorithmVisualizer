@@ -66,14 +66,19 @@ const LinkedListNode = ({ data, style }) => {
             </div>
 
             {/* Next Pointer Section */}
-            <div style={{
-                width: '30px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '20px',
-                background: 'rgba(0, 0, 0, 0.1)',
-            }}>
+            <div
+                style={{
+                    width: '30px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '20px',
+                    background: 'rgba(0, 0, 0, 0.1)',
+                    cursor: 'pointer',
+                }}
+                onMouseEnter={() => data.onPointerHover && data.onPointerHover(data.nodeId)}
+                onMouseLeave={() => data.onPointerHover && data.onPointerHover(null)}
+            >
                 ●
             </div>
         </div>
