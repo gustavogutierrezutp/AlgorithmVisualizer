@@ -70,3 +70,18 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+*::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+* {
+  scrollbar-width: none !important;
+}
+
+html, body {
+  overflow: auto;
+  -ms-overflow-style: none; 
+}
