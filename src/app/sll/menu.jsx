@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { CustomSlider } from "@/components/custom-slider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import {
   Eye,
   ChevronDown,
   ChevronRight,
+  Layers,
 } from "lucide-react";
 
 const Section = ({ title, children, defaultOpen = true, icon: Icon }) => {
@@ -64,29 +65,112 @@ const ColorPickerInput = ({ label, color, onChange, disabled }) => (
 
 export default function Menu(props) {
   const [sequenceInput, setSequenceInput] = useState("[1, 2, 3, 4, 5]");
-  const [creationMode, setCreationMode] = useState("random"); // 'empty', 'random', 'custom'
+  const [creationMode, setCreationMode] = useState("random");
   const [insertValue, setInsertValue] = useState(
     Math.floor(Math.random() * 100)
   );
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const scrollContainerRef = useRef(null);
 
-  const isClickable = props.disable
-    ? { cursor: "not-allowed", opacity: 0.7 }
-    : {};
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    const handleScroll = () => {
+      const scrollTop = scrollContainer.scrollTop;
+      const maxScroll = 80;
+      const progress = Math.min(scrollTop / maxScroll, 1);
+      setScrollProgress(progress);
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll);
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleCreateFromSequence = () => {
     props.onCreateFromSequence(sequenceInput);
   };
 
+  const headerHeight = 64 - (scrollProgress * 26);
+  const fontSize = 1.125 - (scrollProgress * 0.35);
+  const logoScale = 1 - (scrollProgress * 0.4);
+  const logoRotate = scrollProgress * 90;
+  const textOpacity = 1 - (scrollProgress * 0.5);
+  const borderOpacity = scrollProgress * 0.6;
+
   return (
-    <aside className="w-72 h-full bg-gray-50 border-r border-gray-200 flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-10 mt-1 ">
-      <div className="sticky top-0 z-20 px-5 py-4 bg-white/70 backdrop-blur-sm border-b border-gray-100/70">
-        <h2 className="font-bold text-lg text-gray-800 flex items-center gap-2">
-          <div className="w-1 h-5 bg-primary rounded-lg"></div>
-          Sections
-        </h2>
+    <aside className="w-72 h-full bg-gray-50 border-r border-gray-200 flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-10 mt-1">
+      <div
+        className="sticky top-0 z-20 px-5 flex items-center gap-3 bg-gradient-to-b from-gray-50 to-gray-50/95 transition-all duration-300 ease-out"
+        style={{
+          height: `${headerHeight}px`,
+          borderBottom: `1px solid rgba(229, 231, 235, ${borderOpacity})`,
+          boxShadow: scrollProgress > 0 ? `0 4px 12px rgba(0, 0, 0, ${scrollProgress * 0.08})` : 'none'
+        }}
+      >
+        <div
+          className="relative flex items-center justify-center transition-all duration-300 ease-out"
+          style={{
+            transform: `scale(${logoScale}) rotate(${logoRotate}deg)`,
+            opacity: 1 - (scrollProgress * 0.3)
+          }}
+        >
+          <div 
+            className="absolute inset-0 bg-blue-500/20 rounded-lg blur-md" 
+            style={{ opacity: scrollProgress }}
+          ></div>
+          
+          <div 
+            className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center relative z-10 shadow-lg"
+            style={{
+              boxShadow: `0 0 ${scrollProgress * 20}px rgba(59, 130, 246, ${scrollProgress * 0.6})`
+            }}
+          >
+            <Layers size={16} className="text-white" strokeWidth={2.5} />
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-hidden">
+          <h2
+            className="font-bold text-gray-800 transition-all duration-300 ease-out whitespace-nowrap"
+            style={{
+              fontSize: `${fontSize}rem`,
+              opacity: textOpacity,
+              transform: `translateY(${scrollProgress * -2}px)`,
+              letterSpacing: scrollProgress > 0.5 ? '0.05em' : '0'
+            }}
+          >
+            Sections
+          </h2>
+          
+        </div>
+
+        <div 
+          className="w-[.2rem] h-3 bg-gradient-to-b from-blue-500 to-blue-300 rounded-full transition-all duration-300"
+          style={{
+            opacity: scrollProgress,
+            transform: `scaleY(${scrollProgress})`
+          }}
+        ></div>
       </div>
 
-      <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 pb-2">
+      <div 
+        className="sticky z-20 h-1 bg-gray-200/50" 
+        style={{ top: `${headerHeight}px` }}
+      >
+        <div
+          className="h-full bg-gradient-to-r from-blue-500 via-blue-400 to-blue-300 transition-all duration-150 ease-out shadow-lg"
+          style={{
+            width: `${scrollProgress * 100}%`,
+            boxShadow: scrollProgress > 0 ? `0 0 10px rgba(59, 130, 246, ${scrollProgress * 0.6})` : 'none'
+          }}
+        ></div>
+      </div>
+
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-400 pb-2 scroll-smooth"
+      >
         <Section title="List Creation" icon={ListPlus}>
           <div className="bg-gray-100/50 p-1 rounded-lg flex gap-1">
             {["Empty", "Random", "Custom"].map((mode) => (
@@ -161,7 +245,6 @@ export default function Menu(props) {
           )}
         </Section>
 
-        {/* Operations */}
         <Section title="Operations" icon={Play} defaultOpen={false}>
           <div className="space-y-1 mb-4">
             <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">
@@ -263,7 +346,6 @@ export default function Menu(props) {
           </div>
         </Section>
 
-        {/* Display Options */}
         <Section title="Display Options" icon={Settings2} defaultOpen={false}>
           <div className="space-y-4">
             <CustomSlider
@@ -339,9 +421,8 @@ export default function Menu(props) {
         </Section>
       </div>
 
-      {/* Footer: Eliminado el borde superior */}
-      <div className="p-2 text-center">
-        <span className="text-[10px] text-gray-300">
+      <div className="p-2 text-center border-t border-gray-200/50">
+        <span className="text-[10px] text-gray-400 font-medium">
           v2.0 • Interactive Mode
         </span>
       </div>
