@@ -30,7 +30,11 @@ class LinkedList extends Component {
 
     initializeList = (count) => {
         const { nodes, edges } = createInitialList(count, this.handlePointerHover);
-        this.setState({ nodes, edges });
+        this.setState({ nodes, edges }, () => {
+            if (this.reactFlowInstance) {
+                this.reactFlowInstance.fitView({ duration: 500, padding: 0.2 });
+            }
+        });
     }
 
     handlePointerHover = (nodeId) => {
@@ -128,6 +132,7 @@ class LinkedList extends Component {
                             nodesDraggable={true}
                             nodesConnectable={false}
                             elementsSelectable={true}
+                            onInit={(instance) => this.reactFlowInstance = instance}
                         >
                             <Background />
                             <Controls />
@@ -153,7 +158,11 @@ class LinkedList extends Component {
                 return;
             }
             const { nodes, edges } = createListFromSequence(values, this.handlePointerHover);
-            this.setState({ nodes, edges });
+            this.setState({ nodes, edges }, () => {
+                if (this.reactFlowInstance) {
+                    this.reactFlowInstance.fitView({ duration: 500, padding: 0.2 });
+                }
+            });
         } catch (error) {
             alert('Invalid JSON format. Please enter an array like [1, 2, 3]');
         }
