@@ -6,8 +6,8 @@ import Image from 'next/image'
 const dataStructures = [
   {
     id: 'sll',
-    title: 'Linked List',
-    description: "Visualize singly linked list operations like insert, delete, traverse and reverse",
+    title: 'Listas enlazadas',
+    description: "Visualización de listas enlazadas y sus operaciones básicas: inserción, borrado, búsqueda y recorrido.",
     image: '/AlgorithmVisualizer/images/sll.png?height=200&width=300'
   }
 ]
