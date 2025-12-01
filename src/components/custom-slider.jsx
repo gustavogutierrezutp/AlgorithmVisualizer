@@ -13,7 +13,7 @@ export function CustomSlider({ title, onChange, min, max, step, defaultValue }) 
     return (
       <div className="space-y-2">
      {/* <div className="flex items-center space-x-2"> */}
-      <label className="text-sm font-medium whitespace-nowrap">{title}</label>
+      <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider whitespace-nowrap">{title}</label>
       <Slider
         value={[value]}
         onValueChange={onChangeCover}

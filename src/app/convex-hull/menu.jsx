@@ -5,7 +5,7 @@ import { Component } from 'react';
 class Menu extends Component {
     render() {
         return (
-            <div className="w-64 bg-gray-100 p-4 space-y-6">
+            <div className="w-64 bg-gray-100 p-4 space-y-6 ">
                 <h2 className="text-lg font-semibold">Settings</h2>
                 
                 <CustomSlider
