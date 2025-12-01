@@ -4,7 +4,7 @@ import { ReactFlow, Background, Controls, MarkerType, applyNodeChanges, Selectio
 import '@xyflow/react/dist/style.css';
 
 import Navbar from '@/components/navbar';
-import Menu from "./menu";
+import Menu from "@/components/menu/Menu";
 import LinkedListNode from './LinkedListNode';
 
 const nodeTypes = {
