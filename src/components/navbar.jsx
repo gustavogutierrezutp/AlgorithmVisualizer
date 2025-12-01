@@ -10,7 +10,7 @@ export default function Navbar(props) {
         <Button variant="ghost" size="lg" asChild>
           <Link href="/">
             <Home className="h-4 w-4" />
-            Home
+            Inicio
           </Link>
         </Button>
         <Button variant="ghost" size="lg" asChild>
