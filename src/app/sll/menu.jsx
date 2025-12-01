@@ -202,6 +202,22 @@ class Menu extends Component {
                             </div>
                         </div>
 
+                        {/* Access Operations */}
+                        <div className="space-y-2">
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Access</h3>
+                            <div className="grid grid-cols-2 gap-2">
+                                <Button
+                                    onClick={this.props.onToggleHeadHighlight}
+                                    disabled={this.props.disable}
+                                    style={this.isClickable()}
+                                    variant={this.props.highlightHead ? "default" : "outline"}
+                                    size="sm"
+                                >
+                                    front
+                                </Button>
+                            </div>
+                        </div>
+
                         {/* Utility Operations */}
                         <div className="space-y-2">
                             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Utility</h3>
@@ -249,15 +265,6 @@ class Menu extends Component {
                         Scramble Positions
                     </Button>
 
-                    <Button
-                        className="w-full"
-                        onClick={this.props.onToggleHeadHighlight}
-                        disabled={this.props.disable}
-                        variant={this.props.highlightHead ? "default" : "outline"}
-                        style={this.isClickable()}
-                    >
-                        {this.props.highlightHead ? "Hide Head" : "Show Head"}
-                    </Button>
 
                     <Button
                         className="w-full"
