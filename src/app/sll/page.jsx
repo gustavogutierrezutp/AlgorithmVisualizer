@@ -23,6 +23,7 @@ class LinkedList extends Component {
         highlightHead: false,
         highlightTail: false,
         nodeColor: '#2196F3',
+        newNodeColor: '#4CAF50',
         selectedNodes: [],
     }
 
@@ -127,6 +128,8 @@ class LinkedList extends Component {
                         onSpeedChange={this.handleSpeedChanged}
                         nodeColor={this.state.nodeColor}
                         onColorChange={this.handleColorChange}
+                        newNodeColor={this.state.newNodeColor}
+                        onNewNodeColorChange={this.handleNewNodeColorChange}
                     />
                     <div className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50 relative">
                         {this.state.nodes.length === 0 && (
@@ -253,6 +256,11 @@ class LinkedList extends Component {
         });
     }
 
+    handleNewNodeColorChange = (e) => {
+        const newColor = e.target.value;
+        this.setState({ newNodeColor: newColor });
+    }
+
     handleVisualize = async (opIndex, value) => {
         this.setState({ isRunning: true });
 
@@ -312,7 +320,7 @@ class LinkedList extends Component {
             },
             position: { x: newNodeX, y: newNodeY },
             style: {
-                background: this.state.nodeColor,
+                background: this.state.newNodeColor,
                 color: 'white',
                 border: '2px solid #333',
                 borderRadius: '8px',
@@ -430,7 +438,7 @@ class LinkedList extends Component {
             },
             position: { x: newNodeX, y: newNodeY },
             style: {
-                background: this.state.nodeColor,
+                background: this.state.newNodeColor,
                 color: 'white',
                 border: '2px solid #333',
                 borderRadius: '8px',
