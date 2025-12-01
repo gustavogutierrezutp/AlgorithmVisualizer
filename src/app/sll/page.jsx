@@ -203,9 +203,15 @@ class LinkedList extends Component {
                 await this.deleteAtHead();
                 break;
             case 2:
-                await this.traverseList();
+                await this.insertAtTail(Math.floor(Math.random() * 100));
                 break;
             case 3:
+                await this.deleteAtTail();
+                break;
+            case 4:
+                await this.traverseList();
+                break;
+            case 5:
                 await this.reverseList();
                 break;
             default:
@@ -296,6 +302,121 @@ class LinkedList extends Component {
         })) : [];
 
         this.setState({ nodes, edges });
+        await sleep(this.state.speed);
+    }
+
+    insertAtTail = async (value) => {
+        const nodes = [...this.state.nodes];
+        let edges = [...this.state.edges];
+
+        // Traverse to the end
+        for (let i = 0; i < nodes.length; i++) {
+            const tempNodes = nodes.map((node, idx) => ({
+                ...node,
+                style: {
+                    ...node.style,
+                    background: idx === i ? '#FF5722' : '#2196F3',
+                }
+            }));
+            this.setState({ nodes: tempNodes });
+            await sleep(this.state.speed / 2);
+        }
+
+        // Reset colors
+        const resetNodes = nodes.map(node => ({
+            ...node,
+            style: {
+                ...node.style,
+                background: '#2196F3',
+            }
+        }));
+        this.setState({ nodes: resetNodes });
+
+        // Add new node
+        const newNodeId = `node-${Date.now()}`;
+        const newNode = {
+            id: newNodeId,
+            type: 'linkedListNode',
+            data: {
+                label: value.toString(),
+                nodeId: newNodeId,
+                onPointerHover: this.handlePointerHover,
+            },
+            position: { x: 50 + (nodes.length * 150), y: 100 },
+            style: {
+                background: '#4CAF50',
+                color: 'white',
+                border: '2px solid #333',
+                borderRadius: '8px',
+                padding: '10px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+            }
+        };
+
+        const newNodes = [...resetNodes, newNode];
+
+        // Add edge if list was not empty
+        if (nodes.length > 0) {
+            edges.push({
+                id: `edge-${nodes.length - 1}`,
+                source: nodes[nodes.length - 1].id,
+                sourceHandle: 'right',
+                target: newNodeId,
+                targetHandle: 'left',
+                animated: true,
+                type: 'smoothstep',
+                markerEnd: {
+                    type: MarkerType.ArrowClosed,
+                    width: 10,
+                    height: 10,
+                    color: '#333'
+                },
+                style: {
+                    strokeWidth: 2,
+                    stroke: '#333'
+                }
+            });
+        }
+
+        this.setState({ nodes: newNodes, edges });
+        await sleep(this.state.speed);
+    }
+
+    deleteAtTail = async () => {
+        if (this.state.nodes.length === 0) return;
+
+        const nodes = [...this.state.nodes];
+        let edges = [...this.state.edges];
+
+        // Traverse to the second to last node
+        for (let i = 0; i < nodes.length - 1; i++) {
+            const tempNodes = nodes.map((node, idx) => ({
+                ...node,
+                style: {
+                    ...node.style,
+                    background: idx === i ? '#FF5722' : '#2196F3',
+                }
+            }));
+            this.setState({ nodes: tempNodes });
+            await sleep(this.state.speed / 2);
+        }
+
+        // Reset colors
+        const resetNodes = nodes.map(node => ({
+            ...node,
+            style: {
+                ...node.style,
+                background: '#2196F3',
+            }
+        }));
+        this.setState({ nodes: resetNodes });
+
+        // Remove last node and edge
+        const newNodes = resetNodes.slice(0, -1);
+        const newEdges = edges.slice(0, -1);
+
+        this.setState({ nodes: newNodes, edges: newEdges });
         await sleep(this.state.speed);
     }
 

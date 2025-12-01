@@ -37,7 +37,8 @@ class CollapsibleSection extends Component {
 
 class Menu extends Component {
     state = {
-        sequenceInput: '[1, 2, 3, 4, 5]'
+        sequenceInput: '[1, 2, 3, 4, 5]',
+        creationMode: 'random' // 'empty', 'random', 'custom'
     }
 
     isClickable = () => {
@@ -62,62 +63,85 @@ class Menu extends Component {
                 <h2 className="text-lg font-semibold mb-4">Linked List Controls</h2>
 
                 <CollapsibleSection title="List Creation" defaultOpen={true}>
-                    <div className="space-y-2">
-                        <Button
-                            className="w-full"
-                            onClick={this.props.onCreateEmpty}
-                            disabled={this.props.disable}
-                            style={this.isClickable()}
-                            variant="outline"
-                        >
-                            Empty List
-                        </Button>
-
-                        <div className="space-y-2">
-                            <CustomSlider
-                                title="Number of Nodes"
-                                defaultValue={5}
-                                min={1}
-                                max={10}
-                                step={1}
-                                onChange={this.props.onCountChange}
-                                disable={this.props.disable}
-                            />
-                            <Button
-                                className="w-full"
-                                onClick={this.props.onCreateRandom}
-                                disabled={this.props.disable}
-                                style={this.isClickable()}
-                            >
-                                Random List
-                            </Button>
+                    <div className="space-y-4">
+                        {/* Tabs */}
+                        <div className="flex p-1 space-x-1 bg-gray-100 rounded-lg">
+                            {['Empty', 'Random', 'Custom'].map((mode) => (
+                                <button
+                                    key={mode}
+                                    className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-all ${this.state.creationMode === mode.toLowerCase()
+                                        ? 'bg-white text-gray-900 shadow-sm'
+                                        : 'text-gray-500 hover:text-gray-900'
+                                        }`}
+                                    onClick={() => this.setState({ creationMode: mode.toLowerCase() })}
+                                >
+                                    {mode}
+                                </button>
+                            ))}
                         </div>
 
-                        <div className="space-y-2">
-                            <label className="text-xs text-gray-600">Sequence (JSON array)</label>
-                            <Input
-                                value={this.state.sequenceInput}
-                                onChange={this.handleSequenceChange}
-                                placeholder="[1, 2, 3, 4, 5]"
-                                disabled={this.props.disable}
-                                className="text-sm"
-                            />
+                        {/* Content based on active tab */}
+                        {this.state.creationMode === 'empty' && (
                             <Button
                                 className="w-full"
-                                onClick={this.handleCreateFromSequence}
+                                onClick={this.props.onCreateEmpty}
                                 disabled={this.props.disable}
                                 style={this.isClickable()}
+                                variant="outline"
                             >
-                                List from Sequence
+                                Create Empty List
                             </Button>
-                        </div>
+                        )}
+
+                        {this.state.creationMode === 'random' && (
+                            <div className="space-y-4">
+                                <CustomSlider
+                                    title="Number of Nodes"
+                                    defaultValue={5}
+                                    min={1}
+                                    max={100}
+                                    step={1}
+                                    onChange={this.props.onCountChange}
+                                    disable={this.props.disable}
+                                />
+                                <Button
+                                    className="w-full"
+                                    onClick={this.props.onCreateRandom}
+                                    disabled={this.props.disable}
+                                    style={this.isClickable()}
+                                >
+                                    Create Random List
+                                </Button>
+                            </div>
+                        )}
+
+                        {this.state.creationMode === 'custom' && (
+                            <div className="space-y-2">
+                                <label className="text-xs text-gray-600">Sequence (JSON array)</label>
+                                <Input
+                                    value={this.state.sequenceInput}
+                                    onChange={this.handleSequenceChange}
+                                    placeholder="[1, 2, 3, 4, 5]"
+                                    disabled={this.props.disable}
+                                    className="text-sm"
+                                />
+                                <Button
+                                    className="w-full"
+                                    onClick={this.handleCreateFromSequence}
+                                    disabled={this.props.disable}
+                                    style={this.isClickable()}
+                                >
+                                    Create from Sequence
+                                </Button>
+                            </div>
+                        )}
                     </div>
                 </CollapsibleSection>
 
                 <CollapsibleSection title="Operations" defaultOpen={true}>
                     <CustomSelect
                         title="Select Operation"
-                        options={["Insert at Head", "Delete at Head", "Traverse List", "Reverse List"]}
+                        options={["Insert at Head", "Delete at Head", "Insert at Tail", "Delete at Tail", "Traverse List", "Reverse List"]}
                         onChange={this.props.onOperationChanged}
                     />
 
