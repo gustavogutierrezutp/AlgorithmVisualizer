@@ -340,7 +340,13 @@ class LinkedList extends Component {
             }
         })) : [];
 
-        this.setState({ nodes, edges });
+        this.setState({ nodes, edges }, () => {
+            if (this.reactFlowInstance) {
+                setTimeout(() => {
+                    this.reactFlowInstance.fitView({ duration: 500, padding: 0.3 });
+                }, 100);
+            }
+        });
         await sleep(this.state.speed);
     }
 
@@ -450,7 +456,13 @@ class LinkedList extends Component {
             });
         }
 
-        this.setState({ nodes: newNodes, edges });
+        this.setState({ nodes: newNodes, edges }, () => {
+            if (this.reactFlowInstance) {
+                setTimeout(() => {
+                    this.reactFlowInstance.fitView({ duration: 500, padding: 0.3 });
+                }, 100);
+            }
+        });
         await sleep(this.state.speed);
     }
 
