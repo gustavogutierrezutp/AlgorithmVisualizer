@@ -148,7 +148,13 @@ class LinkedList extends Component {
         );
     }
     handleCreateEmpty = () => {
-        this.setState({ nodes: [], edges: [] });
+        this.setState({ nodes: [], edges: [] }, () => {
+            if (this.reactFlowInstance) {
+                setTimeout(() => {
+                    this.reactFlowInstance.fitView({ duration: 500, padding: 0.5 });
+                }, 100);
+            }
+        });
     }
 
     handleCreateRandom = () => {
