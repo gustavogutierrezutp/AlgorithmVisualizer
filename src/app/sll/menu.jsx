@@ -38,7 +38,7 @@ class Menu extends Component {
     state = {
         sequenceInput: '[1, 2, 3, 4, 5]',
         creationMode: 'random', // 'empty', 'random', 'custom'
-        insertValue: ''
+        insertValue: Math.floor(Math.random() * 100)
     }
 
     isClickable = () => {
@@ -172,7 +172,7 @@ class Menu extends Component {
                                     variant="outline"
                                     size="sm"
                                 >
-                                    Tail
+                                    push_back
                                 </Button>
                             </div>
                         </div>
