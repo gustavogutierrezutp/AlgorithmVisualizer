@@ -404,19 +404,19 @@ class LinkedList extends Component {
                 ...node,
                 style: {
                     ...node.style,
-                    background: idx === i ? '#FF5722' : this.state.nodeColor,
+                    background: idx === i ? '#FF5722' : node.style.background,
                 }
             }));
             this.setState({ nodes: tempNodes });
             await sleep(this.state.speed / 2);
         }
 
-        // Reset colors
+        // Reset colors to original
         const resetNodes = nodes.map(node => ({
             ...node,
             style: {
                 ...node.style,
-                background: this.state.nodeColor,
+                background: node.style.background,
             }
         }));
         this.setState({ nodes: resetNodes });
@@ -495,19 +495,19 @@ class LinkedList extends Component {
                 ...node,
                 style: {
                     ...node.style,
-                    background: idx === i ? '#FF5722' : this.state.nodeColor,
+                    background: idx === i ? '#FF5722' : node.style.background,
                 }
             }));
             this.setState({ nodes: tempNodes });
             await sleep(this.state.speed / 2);
         }
 
-        // Reset colors
+        // Reset colors to original
         const resetNodes = nodes.map(node => ({
             ...node,
             style: {
                 ...node.style,
-                background: this.state.nodeColor,
+                background: node.style.background,
             }
         }));
         this.setState({ nodes: resetNodes });
@@ -526,19 +526,19 @@ class LinkedList extends Component {
                 ...node,
                 style: {
                     ...node.style,
-                    background: idx === i ? '#FF5722' : this.state.nodeColor,
+                    background: idx === i ? '#FF5722' : node.style.background,
                 }
             }));
             this.setState({ nodes });
             await sleep(this.state.speed);
         }
 
-        // Reset colors
+        // Reset colors to original
         const nodes = this.state.nodes.map(node => ({
             ...node,
             style: {
                 ...node.style,
-                background: this.state.nodeColor,
+                background: node.style.background,
             }
         }));
         this.setState({ nodes });
@@ -559,7 +559,7 @@ class LinkedList extends Component {
                 ...node,
                 style: {
                     ...node.style,
-                    background: idx === current ? '#FF5722' : (idx === prev ? '#4CAF50' : this.state.nodeColor),
+                    background: idx === current ? '#FF5722' : (idx === prev ? '#4CAF50' : node.style.background),
                     border: idx === current ? '3px solid #E64A19' : '2px solid #333',
                 }
             }));
@@ -611,7 +611,7 @@ class LinkedList extends Component {
             position: { x: 50 + (idx * 150), y: 100 },
             style: {
                 ...node.style,
-                background: this.state.nodeColor,
+                background: node.style.background,
                 border: '2px solid #333',
             }
         }));
