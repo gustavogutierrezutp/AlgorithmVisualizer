@@ -54,6 +54,15 @@ class Menu extends Component {
 
                 <Button
                     className="w-full"
+                    onClick={this.props.onScramble}
+                    disabled={this.props.disable}
+                    style={this.isClickable()}
+                >
+                    Scramble Positions
+                </Button>
+
+                <Button
+                    className="w-full"
                     onClick={this.props.onVisualize}
                     disabled={this.props.disable}
                     style={this.isClickable()}

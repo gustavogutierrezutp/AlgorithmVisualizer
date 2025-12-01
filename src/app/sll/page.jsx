@@ -71,6 +71,7 @@ class LinkedList extends Component {
                         disable={this.state.isRunning}
                         onVisualize={this.handleVisualize}
                         onRandomize={this.handleRandomize}
+                        onScramble={this.handleScramble}
                         onCountChange={this.handleCountChange}
                         onOperationChanged={this.handleOperationChanged}
                         onSpeedChange={this.handleSpeedChanged}
@@ -110,6 +111,17 @@ class LinkedList extends Component {
     handleSpeedChanged = (val) => {
         const speed = (1000 - val * 9);
         this.setState({ speed });
+    }
+
+    handleScramble = () => {
+        const nodes = this.state.nodes.map(node => ({
+            ...node,
+            position: {
+                x: Math.random() * 800 + 50,
+                y: Math.random() * 400 + 50
+            }
+        }));
+        this.setState({ nodes });
     }
 
     handleVisualize = async () => {
