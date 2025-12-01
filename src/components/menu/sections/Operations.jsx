@@ -10,7 +10,7 @@ export const Operations = ({ disable, onVisualize }) => {
   );
 
   return (
-    <Section title="Operations" icon={Play} defaultOpen={false}>
+    <Section title="Operations" icon={Play} defaultOpen={false} id="operations-section">
       <div className="space-y-1 mb-4">
         <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">
           Target Value

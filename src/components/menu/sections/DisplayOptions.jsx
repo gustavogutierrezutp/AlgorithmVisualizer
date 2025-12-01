@@ -7,7 +7,7 @@ import { ColorPickerInput } from "../ColorPickerInput";
 
 export const DisplayOptions = (props) => {
   return (
-    <Section title="Display Options" icon={Settings2} defaultOpen={false}>
+    <Section title="Display Options" icon={Settings2} defaultOpen={false} id="display-options-section">
       <div className="space-y-4">
         <CustomSlider
           defaultValue={50}
@@ -27,7 +27,9 @@ export const DisplayOptions = (props) => {
           <ColorPickerInput
             label="Standard Node"
             color={props.nodeColor}
-            onChange={props.onColorChange}
+            onChange={props.onNodeColorUpdate}
+            onApply={props.onApplyNodeColor}
+            showButton={true}
             disabled={props.disable}
           />
           <ColorPickerInput

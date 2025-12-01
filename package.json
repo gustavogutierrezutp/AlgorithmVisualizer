@@ -16,6 +16,7 @@
     "bootstrap": "^5.3.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "driver.js": "^1.4.0",
     "fontsource-roboto": "^3.0.3",
     "lodash": "^4.17.21",
     "lucide-react": "^0.468.0",

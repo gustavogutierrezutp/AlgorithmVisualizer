@@ -1,0 +1,43 @@
+# Funcionalidad
+
+Las operaciones soportadas por la estructura de datos se pueden dividir en grupos:
+
+- Creación. Comprenden las diferentes formas en que se puede crear una lista
+  enlazada. Entre estas formas se incluye: vacía, de una secuencia de números o
+  de manera aleatoria.
+- Acceso. Son las operaciones que le permiten al programador acceder a los
+  elementos almacenados por la estructura de datos. En el caso de las listas
+  enlazadas es posible acceder al primer elemento, al último elemento.
+- Modificación. Contiene las operaciones que adicionan o eliminan elementos de
+  la estructura de datos. Algunos ejemplos de estas operaciones incluyen:
+  inserción por el frente y por detrás; eliminación del primero y el último
+  elemento.
+
+La interfaz de usuario del simulador consta de tres partes identificadas en la
+siguiente figura.
+
+![](figures/biglist.png)
+
+
+La parte superior contiene una barra con el título y algunos enlaces de interés.
+Las otras dos partes son las más importantes para la interacción con el
+programador. En la sección vertical izquierda se puede apreciar una barra de
+menús. En el caso de la figura todos ellos se encuentran colapsados y entre
+otros, presentan los títulos: __List Creation__, __Operations__ y __Display
+Options__. Finalmente en la sección vertical derecha se encuentra el lienzo que
+es el lugar donde aparecen las representaciones gráficas. En este caso se
+aprecia una lista de números.
+
+En las secciones siguientes se muestra detalladamente cada una de las
+funcionalidades.
+
+## Creación
+
+En el simulador las listas pueden ser creadas de diferentes maneras. Todas las
+opciones de creación se encuentran en el primer sub menu.
+
+### Creación de una lista vacía
+
+Para crear una lista vacía donde el usuario pueda comenzar a añadir elementos
+haciendo uso de las operaciones se debe hacer click en la pestaña 
+

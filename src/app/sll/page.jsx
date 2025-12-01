@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import { ReactFlow, Background, Controls, MarkerType, applyNodeChanges, SelectionMode } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 
 import Navbar from '@/components/navbar';
 import Menu from "@/components/menu/Menu";
@@ -32,6 +34,78 @@ class LinkedList extends Component {
 
     componentDidMount() {
         this.initializeList(this.state.count);
+
+        // Check if user has seen the tour before
+        const hasSeenTour = localStorage.getItem('sll-tour-completed');
+        if (!hasSeenTour) {
+            setTimeout(() => this.startTour(), 1000);
+        }
+    }
+
+    startTour = () => {
+        const driverObj = driver({
+            showProgress: true,
+            showButtons: ['next', 'previous', 'close'],
+            steps: [
+                {
+                    element: '#sll-navbar',
+                    popover: {
+                        title: 'Bienvenido a DSViz',
+                        description: 'Esta es una herramienta interactiva para visualizar listas enlazadas. Te guiaré por las principales funciones.',
+                        side: "bottom",
+                        align: 'start'
+                    }
+                },
+                {
+                    element: '#list-creation-section',
+                    popover: {
+                        title: 'Creación de Listas',
+                        description: 'Aquí puedes crear listas de diferentes formas: vacía, aleatoria o desde una secuencia personalizada.',
+                        side: "right",
+                        align: 'start'
+                    }
+                },
+                {
+                    element: '#operations-section',
+                    popover: {
+                        title: 'Operaciones',
+                        description: 'Selecciona y ejecuta operaciones como insertar, eliminar, recorrer y revertir la lista.',
+                        side: "right",
+                        align: 'start'
+                    }
+                },
+                {
+                    element: '#display-options-section',
+                    popover: {
+                        title: 'Opciones de Visualización',
+                        description: 'Personaliza la velocidad de animación, colores de nodos y resalta cabeza/cola de la lista.',
+                        side: "right",
+                        align: 'start'
+                    }
+                },
+                {
+                    element: '#canvas-area',
+                    popover: {
+                        title: 'Área de Visualización',
+                        description: 'Los nodos de la lista aparecen aquí. Puedes arrastrarlos, seleccionar múltiples nodos dibujando un rectángulo, y hacer zoom/pan.',
+                        side: "left",
+                        align: 'center'
+                    }
+                },
+                {
+                    popover: {
+                        title: '¡Listo!',
+                        description: 'Ahora estás listo para explorar las listas enlazadas. Puedes volver a ver este tutorial en cualquier momento.',
+                    }
+                }
+            ],
+            onDestroyStarted: () => {
+                localStorage.setItem('sll-tour-completed', 'true');
+                driverObj.destroy();
+            },
+        });
+
+        driverObj.drive();
     }
 
     initializeList = (count) => {
@@ -108,11 +182,14 @@ class LinkedList extends Component {
 
         return (
             <div className="flex flex-col h-screen">
-                <Navbar title="Linked List Visualizer" />
+                <div id="sll-navbar">
+                    <Navbar title="Single linked list" />
+                </div>
 
                 <div className="flex flex-1 overflow-hidden">
                     <Menu
                         ref={this.menuRef}
+                        startTour={this.startTour}
                         disable={this.state.isRunning}
                         onVisualize={this.handleVisualize}
                         onCreateEmpty={this.handleCreateEmpty}
@@ -128,13 +205,14 @@ class LinkedList extends Component {
                         onOperationChanged={this.handleOperationChanged}
                         onSpeedChange={this.handleSpeedChanged}
                         nodeColor={this.state.nodeColor}
-                        onColorChange={this.handleColorChange}
+                        onNodeColorUpdate={this.handleNodeColorUpdate}
+                        onApplyNodeColor={this.handleApplyNodeColor}
                         newNodeColor={this.state.newNodeColor}
                         onNewNodeColorChange={this.handleNewNodeColorChange}
                         iterateColor={this.state.iterateColor}
                         onIterateColorChange={this.handleIterateColorChange}
                     />
-                    <div className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50 relative">
+                    <div id="canvas-area" className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50 relative">
                         {this.state.nodes.length === 0 && (
                             <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
                                 <div className="text-center p-8 bg-white rounded-lg shadow-lg border-2 border-gray-200">
@@ -233,30 +311,32 @@ class LinkedList extends Component {
         this.setState({ highlightTail: !this.state.highlightTail });
     }
 
-    handleColorChange = (e) => {
+    handleNodeColorUpdate = (e) => {
         const newColor = e.target.value;
-        this.setState({ nodeColor: newColor }, () => {
-            const { selectedNodes } = this.state;
+        this.setState({ nodeColor: newColor });
+    }
 
-            // If there are selected nodes, only update those
-            // Otherwise, update all nodes
-            const updatedNodes = this.state.nodes.map(node => {
-                const shouldUpdate = selectedNodes.length === 0 || selectedNodes.includes(node.id);
+    handleApplyNodeColor = () => {
+        const { nodeColor, selectedNodes } = this.state;
 
-                if (shouldUpdate) {
-                    return {
-                        ...node,
-                        style: {
-                            ...node.style,
-                            background: newColor,
-                        }
-                    };
-                }
-                return node;
-            });
+        // If there are selected nodes, only update those
+        // Otherwise, update all nodes
+        const updatedNodes = this.state.nodes.map(node => {
+            const shouldUpdate = selectedNodes.length === 0 || selectedNodes.includes(node.id);
 
-            this.setState({ nodes: updatedNodes });
+            if (shouldUpdate) {
+                return {
+                    ...node,
+                    style: {
+                        ...node.style,
+                        background: nodeColor,
+                    }
+                };
+            }
+            return node;
         });
+
+        this.setState({ nodes: updatedNodes });
     }
 
     handleNewNodeColorChange = (e) => {

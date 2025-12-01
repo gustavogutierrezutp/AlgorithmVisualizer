@@ -26,7 +26,7 @@ book:
   # List your .qmd files here in the order they should appear
   chapters:
     - index.qmd       # This is usually the Preface/Welcome page
-    #- intro.qmd       # Chapter 1
+    - funcionalidad.qmd       # Chapter 1
     #- capitulo1.qmd   # Chapter 2
     #- references.qmd  # Bibliography
 

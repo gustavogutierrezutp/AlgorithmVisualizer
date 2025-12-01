@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
-export const Section = ({ title, children, defaultOpen = true, icon: Icon }) => {
+export const Section = ({ title, children, defaultOpen = true, icon: Icon, id }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-100/50 mx-4 my-3">
+    <div id={id} className="bg-white rounded-2xl shadow-lg border border-gray-100/50 mx-4 my-3">
       <button
         className="w-full px-4 py-3 flex items-center justify-between bg-white hover:bg-gray-50/70 transition-all duration-200 group rounded-t-2xl"
         onClick={() => setIsOpen(!isOpen)}
