@@ -73,6 +73,16 @@ class Menu extends Component {
 
                 <Button
                     className="w-full"
+                    onClick={this.props.onToggleTailHighlight}
+                    disabled={this.props.disable}
+                    variant={this.props.highlightTail ? "default" : "outline"}
+                    style={this.isClickable()}
+                >
+                    {this.props.highlightTail ? "Hide Tail" : "Show Tail"}
+                </Button>
+
+                <Button
+                    className="w-full"
                     onClick={this.props.onVisualize}
                     disabled={this.props.disable}
                     style={this.isClickable()}

@@ -21,6 +21,7 @@ class LinkedList extends Component {
         operation: 0, // 0: insert, 1: delete, 2: search, 3: reverse
         hoveredNodeId: null,
         highlightHead: false,
+        highlightTail: false,
     }
 
     componentDidMount() {
@@ -43,9 +44,9 @@ class LinkedList extends Component {
     }
 
     render() {
-        const { hoveredNodeId, highlightHead } = this.state;
+        const { hoveredNodeId, highlightHead, highlightTail } = this.state;
 
-        // Apply head highlighting to the first node
+        // Apply head and tail highlighting
         const highlightedNodes = this.state.nodes.map((node, idx) => {
             if (idx === 0 && highlightHead) {
                 return {
@@ -54,6 +55,16 @@ class LinkedList extends Component {
                         ...node.style,
                         background: '#9C27B0', // Purple for head
                         border: '3px solid #7B1FA2',
+                    }
+                };
+            }
+            if (idx === this.state.nodes.length - 1 && highlightTail) {
+                return {
+                    ...node,
+                    style: {
+                        ...node.style,
+                        background: '#E91E63', // Pink for tail
+                        border: '3px solid #C2185B',
                     }
                 };
             }
@@ -90,6 +101,8 @@ class LinkedList extends Component {
                         onScramble={this.handleScramble}
                         onToggleHeadHighlight={this.handleToggleHeadHighlight}
                         highlightHead={this.state.highlightHead}
+                        onToggleTailHighlight={this.handleToggleTailHighlight}
+                        highlightTail={this.state.highlightTail}
                         onCountChange={this.handleCountChange}
                         onOperationChanged={this.handleOperationChanged}
                         onSpeedChange={this.handleSpeedChanged}
@@ -144,6 +157,10 @@ class LinkedList extends Component {
 
     handleToggleHeadHighlight = () => {
         this.setState({ highlightHead: !this.state.highlightHead });
+    }
+
+    handleToggleTailHighlight = () => {
+        this.setState({ highlightTail: !this.state.highlightTail });
     }
 
     handleVisualize = async () => {
