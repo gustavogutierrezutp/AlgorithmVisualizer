@@ -293,7 +293,14 @@ class LinkedList extends Component {
     }
 
     insertAtHead = async (value) => {
-        // Demo implementation - add new node at head
+        const existingNodes = [...this.state.nodes];
+
+        // Add new node at same Y as first node, fixed distance before it in X
+        const firstNode = existingNodes.length > 0 ? existingNodes[0] : null;
+        const fixedDistance = 150;
+        const newNodeX = firstNode ? firstNode.position.x - fixedDistance : 50;
+        const newNodeY = firstNode ? firstNode.position.y : 100;
+
         const newNodeId = `node-${Date.now()}`;
         const newNode = {
             id: newNodeId,
@@ -303,7 +310,7 @@ class LinkedList extends Component {
                 nodeId: newNodeId,
                 onPointerHover: this.handlePointerHover,
             },
-            position: { x: 50, y: 100 },
+            position: { x: newNodeX, y: newNodeY },
             style: {
                 background: this.state.nodeColor,
                 color: 'white',
@@ -315,10 +322,7 @@ class LinkedList extends Component {
             }
         };
 
-        const nodes = [newNode, ...this.state.nodes.map((node, idx) => ({
-            ...node,
-            position: { x: 200 + (idx * 150), y: 100 }
-        }))];
+        const nodes = [newNode, ...existingNodes];
 
         const edges = nodes.length > 1 ? nodes.slice(0, -1).map((node, idx) => ({
             id: `edge-${idx}`,
@@ -409,7 +413,12 @@ class LinkedList extends Component {
         }));
         this.setState({ nodes: resetNodes });
 
-        // Add new node
+        // Add new node at same Y as last node, fixed distance in X
+        const lastNode = nodes.length > 0 ? nodes[nodes.length - 1] : null;
+        const fixedDistance = 150;
+        const newNodeX = lastNode ? lastNode.position.x + fixedDistance : 50;
+        const newNodeY = lastNode ? lastNode.position.y : 100;
+
         const newNodeId = `node-${Date.now()}`;
         const newNode = {
             id: newNodeId,
@@ -419,7 +428,7 @@ class LinkedList extends Component {
                 nodeId: newNodeId,
                 onPointerHover: this.handlePointerHover,
             },
-            position: { x: 50 + (nodes.length * 150), y: 100 },
+            position: { x: newNodeX, y: newNodeY },
             style: {
                 background: this.state.nodeColor,
                 color: 'white',
