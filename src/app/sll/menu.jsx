@@ -276,13 +276,14 @@ class Menu extends Component {
                                 disabled={this.props.disable}
                                 className="h-10 w-full rounded border border-gray-300 cursor-pointer disabled:cursor-not-allowed"
                             />
-                            <Input
-                                value={this.props.nodeColor}
-                                onChange={this.props.onColorChange}
+                            <Button
+                                onClick={() => this.props.onColorChange({ target: { value: this.props.nodeColor } })}
                                 disabled={this.props.disable}
-                                className="text-sm uppercase font-mono"
-                                placeholder="#2196F3"
-                            />
+                                className="text-xs uppercase font-mono min-w-[100px]"
+                                variant="outline"
+                            >
+                                {this.props.nodeColor}
+                            </Button>
                         </div>
                     </div>
 
