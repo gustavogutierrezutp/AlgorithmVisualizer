@@ -1,0 +1,53 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Simulador visual de estructuras de datos"
+  subtitle: "Versión 1.0: Listas enlazadas"
+  author: 
+    - name: "Gustavo Gutiérrez-Sabogal"
+      email: "gustavo.gutierrez@utp.edu.co"
+    - name: "Jovanny Bedoya-Guapacha"
+      email: "email@utp.edu.co"
+    - name: "Nancy Janet Castillo-Rodríguez"
+      email: "nancy@utp.edu.co"
+
+  date: "today"  # Automatically uses the current date
+  
+  # Search configuration
+  search: true
+  
+  # Navigation structure (Sidebar)
+  sidebar:
+    style: docked
+    collapse-level: 2
+  
+  # List your .qmd files here in the order they should appear
+  chapters:
+    - index.qmd       # This is usually the Preface/Welcome page
+    #- intro.qmd       # Chapter 1
+    #- capitulo1.qmd   # Chapter 2
+    #- references.qmd  # Bibliography
+
+# GLOBAL LANGUAGE SETTING
+# This translates automatic labels (like "Table of Contents" -> "Tabla de contenidos")
+lang: es 
+
+#bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo       # Other options: flatly, journal, litera, etc.
+    code-copy: true    # Adds a copy button to code blocks
+    toc: true          # Table of contents on the right
+    toc-depth: 3
+    number-sections: true
+    smooth-scroll: true
+
+  pdf:
+    documentclass: scrreprt  # 'scrreprt' is great for books (KOMA-Script)
+    papersize: letter
+    toc: true
+    number-sections: true
+    colorlinks: true

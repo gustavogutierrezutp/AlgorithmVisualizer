@@ -1,0 +1,66 @@
+# Introducción
+
+Las **estructuras de datos** son uno de los pilares del desarrollo de software.
+Estas definen como la información (los datos) son almacenados de manera
+eficiente para ser utilizados por los **algoritmos**. Es por esta razón que su
+enseñanza y aprendizaje constituyen un reto dentro de la carrera de ingeniería
+de sistemas.
+
+La idea de crear un simulador tiene diferentes fundamentos:
+
+- Proveer a los profesores del curso con una herramienta que permita mostrar
+  ideas y conceptos fundamentales a los estudiantes de una manera clara, precisa
+  y eficaz.
+
+- Permitir a los estudiantes tener un recurso de aprendizaje que puedan utilizar
+  durante la clase y también de manera asíncrona para reforzar, entender y
+  verificar los conceptos impartidos durante el curso.
+
+- Recopilar lo que por muchas iteraciones del curso de estructuras de datos se
+  ha constituido como material de estudio. Esto no solo comprende código fuente
+  sino también valoración sobre los aspectos particulares de cada estructura de
+  datos en donde se ha evidenciado que nuestros estudiantes presentan mayores
+  inconvenientes.
+  
+## Ejecución
+
+::: {.callout-warning}
+### TODO
+  Cómo vamos a distribuir el simulador?
+:::
+
+  
+
+## ¿De qué trata este libro?
+
+Aquí puedes escribir un resumen general de tu obra. Por ejemplo:
+
+> Este libro explora los fundamentos de la escritura técnica moderna, combinando texto narrativo con análisis de datos reproducible.
+
+## Estructura del libro
+
+El libro está organizado de la siguiente manera:
+
+1.  **Introducción**: Conceptos básicos y configuración.
+2.  **Capítulo 1**: El núcleo de la investigación o historia.
+3.  **Referencias**: Bibliografía y fuentes citadas.
+
+## Notas sobre la lectura
+
+A lo largo del texto encontrarás bloques de información destacados. Por ejemplo:
+
+::: {.callout-note}
+## Nota Importante
+Estos recuadros azules contienen información que no debes pasar por alto.
+:::
+
+::: {.callout-tip}
+## Consejo
+Estos recuadros verdes ofrecen sugerencias prácticas para mejorar tu flujo de trabajo.
+:::
+
+## Agradecimientos
+
+Quiero agradecer a mis colaboradores y lectores por sus comentarios continuos durante la redacción de este documento.
+
+¡Espero que disfrutes la lectura!
