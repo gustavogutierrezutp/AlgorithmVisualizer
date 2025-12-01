@@ -143,10 +143,9 @@ class Menu extends Component {
                 </CollapsibleSection>
 
                 <CollapsibleSection title="Operations" defaultOpen={true}>
-                    <div className="space-y-4">
+                    <div className="space-y-2">
                         {/* Insertion Operations */}
-                        <div className="space-y-2">
-                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Insertion</h3>
+                        <CollapsibleSection title="Insertion" defaultOpen={true}>
                             <Input
                                 value={this.state.insertValue}
                                 onChange={(e) => this.setState({ insertValue: e.target.value })}
@@ -175,11 +174,10 @@ class Menu extends Component {
                                     push_back
                                 </Button>
                             </div>
-                        </div>
+                        </CollapsibleSection>
 
                         {/* Removal Operations */}
-                        <div className="space-y-2">
-                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Removal</h3>
+                        <CollapsibleSection title="Removal" defaultOpen={true}>
                             <div className="grid grid-cols-2 gap-2">
                                 <Button
                                     onClick={() => this.props.onVisualize(1)}
@@ -200,11 +198,10 @@ class Menu extends Component {
                                     pop_back
                                 </Button>
                             </div>
-                        </div>
+                        </CollapsibleSection>
 
                         {/* Access Operations */}
-                        <div className="space-y-2">
-                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Access</h3>
+                        <CollapsibleSection title="Access" defaultOpen={true}>
                             <div className="grid grid-cols-2 gap-2">
                                 <Button
                                     onClick={this.props.onToggleHeadHighlight}
@@ -225,11 +222,10 @@ class Menu extends Component {
                                     back
                                 </Button>
                             </div>
-                        </div>
+                        </CollapsibleSection>
 
                         {/* Utility Operations */}
-                        <div className="space-y-2">
-                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Utility</h3>
+                        <CollapsibleSection title="Utility" defaultOpen={true}>
                             <div className="grid grid-cols-2 gap-2">
                                 <Button
                                     onClick={() => this.props.onVisualize(4)}
@@ -250,7 +246,7 @@ class Menu extends Component {
                                     Reverse
                                 </Button>
                             </div>
-                        </div>
+                        </CollapsibleSection>
                     </div>
                 </CollapsibleSection>
 
