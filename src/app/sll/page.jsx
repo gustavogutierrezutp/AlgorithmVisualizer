@@ -97,12 +97,15 @@ class LinkedList extends Component {
                     <Menu
                         disable={this.state.isRunning}
                         onVisualize={this.handleVisualize}
-                        onRandomize={this.handleRandomize}
+                        onCreateEmpty={this.handleCreateEmpty}
+                        onCreateRandom={this.handleCreateRandom}
+                        onCreateFromSequence={this.handleCreateFromSequence}
                         onScramble={this.handleScramble}
                         onToggleHeadHighlight={this.handleToggleHeadHighlight}
                         highlightHead={this.state.highlightHead}
                         onToggleTailHighlight={this.handleToggleTailHighlight}
                         highlightTail={this.state.highlightTail}
+                        count={this.state.count}
                         onCountChange={this.handleCountChange}
                         onOperationChanged={this.handleOperationChanged}
                         onSpeedChange={this.handleSpeedChanged}
@@ -126,13 +129,30 @@ class LinkedList extends Component {
             </div>
         );
     }
-    handleRandomize = () => {
+    handleCreateEmpty = () => {
+        this.setState({ nodes: [], edges: [] });
+    }
+
+    handleCreateRandom = () => {
         this.initializeList(this.state.count);
+    }
+
+    handleCreateFromSequence = (sequence) => {
+        try {
+            const values = JSON.parse(sequence);
+            if (!Array.isArray(values)) {
+                alert('Please enter a valid JSON array');
+                return;
+            }
+            const { nodes, edges } = createListFromSequence(values, this.handlePointerHover);
+            this.setState({ nodes, edges });
+        } catch (error) {
+            alert('Invalid JSON format. Please enter an array like [1, 2, 3]');
+        }
     }
 
     handleCountChange = (val) => {
         this.setState({ count: val });
-        this.initializeList(val);
     }
 
     handleOperationChanged = (val) => {
@@ -343,6 +363,58 @@ const createInitialList = (count, onPointerHover) => {
             type: 'linkedListNode',
             data: {
                 label: value.toString(),
+                nodeId: nodeId,
+                onPointerHover: onPointerHover,
+            },
+            position: { x: 50 + (i * 150), y: 100 },
+            style: {
+                background: '#2196F3',
+                color: 'white',
+                border: '2px solid #333',
+                borderRadius: '8px',
+                padding: '10px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+            }
+        });
+    }
+
+    for (let i = 0; i < nodes.length - 1; i++) {
+        edges.push({
+            id: `edge-${i}`,
+            source: `node-${i}`,
+            sourceHandle: 'right',
+            target: `node-${i + 1}`,
+            targetHandle: 'left',
+            animated: true,
+            type: 'smoothstep',
+            markerEnd: {
+                type: MarkerType.ArrowClosed,
+                width: 10,
+                height: 10,
+                color: '#333'
+            },
+            style: {
+                strokeWidth: 2,
+                stroke: '#333'
+            }
+        });
+    }
+
+    return { nodes, edges };
+}
+
+const createListFromSequence = (values, onPointerHover) => {
+    const nodes = [];
+    const edges = [];
+
+    for (let i = 0; i < values.length; i++) {
+        const nodeId = `node-${i}`;
+        nodes.push({
+            id: nodeId,
+            type: 'linkedListNode',
+            data: {
+                label: values[i].toString(),
                 nodeId: nodeId,
                 onPointerHover: onPointerHover,
             },
