@@ -23,6 +23,7 @@ class LinkedList extends Component {
         highlightHead: false,
         highlightTail: false,
         nodeColor: '#2196F3',
+        selectedNodes: [],
     }
 
     menuRef = React.createRef();
@@ -50,6 +51,10 @@ class LinkedList extends Component {
         this.setState({
             nodes: applyNodeChanges(changes, this.state.nodes)
         });
+    }
+
+    onSelectionChange = ({ nodes }) => {
+        this.setState({ selectedNodes: nodes.map(node => node.id) });
     }
 
     render() {
@@ -136,6 +141,7 @@ class LinkedList extends Component {
                             nodes={highlightedNodes}
                             edges={highlightedEdges}
                             onNodesChange={this.onNodesChange}
+                            onSelectionChange={this.onSelectionChange}
                             nodeTypes={nodeTypes}
                             fitView
                             nodesDraggable={true}
@@ -224,14 +230,25 @@ class LinkedList extends Component {
     handleColorChange = (e) => {
         const newColor = e.target.value;
         this.setState({ nodeColor: newColor }, () => {
-            // Update all existing nodes with the new color
-            const updatedNodes = this.state.nodes.map(node => ({
-                ...node,
-                style: {
-                    ...node.style,
-                    background: newColor,
+            const { selectedNodes } = this.state;
+
+            // If there are selected nodes, only update those
+            // Otherwise, update all nodes
+            const updatedNodes = this.state.nodes.map(node => {
+                const shouldUpdate = selectedNodes.length === 0 || selectedNodes.includes(node.id);
+
+                if (shouldUpdate) {
+                    return {
+                        ...node,
+                        style: {
+                            ...node.style,
+                            background: newColor,
+                        }
+                    };
                 }
-            }));
+                return node;
+            });
+
             this.setState({ nodes: updatedNodes });
         });
     }
