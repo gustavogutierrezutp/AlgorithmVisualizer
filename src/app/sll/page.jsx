@@ -1,6 +1,6 @@
 "use client";
 import React, { Component } from 'react';
-import { ReactFlow, Background, Controls, MarkerType } from '@xyflow/react';
+import { ReactFlow, Background, Controls, MarkerType, applyNodeChanges } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
 import Navbar from '@/components/navbar';
@@ -25,6 +25,12 @@ class LinkedList extends Component {
         this.setState({ nodes, edges });
     }
 
+    onNodesChange = (changes) => {
+        this.setState({
+            nodes: applyNodeChanges(changes, this.state.nodes)
+        });
+    }
+
     render() {
         return (
             <div className="flex flex-col h-screen">
@@ -43,10 +49,11 @@ class LinkedList extends Component {
                         <ReactFlow
                             nodes={this.state.nodes}
                             edges={this.state.edges}
+                            onNodesChange={this.onNodesChange}
                             fitView
-                            nodesDraggable={false}
+                            nodesDraggable={true}
                             nodesConnectable={false}
-                            elementsSelectable={false}
+                            elementsSelectable={true}
                         >
                             <Background />
                             <Controls />
