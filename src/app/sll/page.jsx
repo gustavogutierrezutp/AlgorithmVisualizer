@@ -204,19 +204,22 @@ class LinkedList extends Component {
         this.setState({ highlightTail: !this.state.highlightTail });
     }
 
-    handleVisualize = async () => {
+    handleVisualize = async (opIndex, value) => {
         this.setState({ isRunning: true });
 
+        const operation = opIndex !== undefined ? opIndex : this.state.operation;
+        const valToInsert = value && value !== '' ? parseInt(value) : Math.floor(Math.random() * 100);
+
         // Placeholder for different operations
-        switch (this.state.operation) {
+        switch (operation) {
             case 0:
-                await this.insertAtHead(Math.floor(Math.random() * 100));
+                await this.insertAtHead(valToInsert);
                 break;
             case 1:
                 await this.deleteAtHead();
                 break;
             case 2:
-                await this.insertAtTail(Math.floor(Math.random() * 100));
+                await this.insertAtTail(valToInsert);
                 break;
             case 3:
                 await this.deleteAtTail();

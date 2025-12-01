@@ -1,4 +1,3 @@
-import { CustomSelect } from '@/components/custom-select';
 import { CustomSlider } from '@/components/custom-slider';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -38,7 +37,8 @@ class CollapsibleSection extends Component {
 class Menu extends Component {
     state = {
         sequenceInput: '[1, 2, 3, 4, 5]',
-        creationMode: 'random' // 'empty', 'random', 'custom'
+        creationMode: 'random', // 'empty', 'random', 'custom'
+        insertValue: ''
     }
 
     isClickable = () => {
@@ -143,20 +143,90 @@ class Menu extends Component {
                 </CollapsibleSection>
 
                 <CollapsibleSection title="Operations" defaultOpen={true}>
-                    <CustomSelect
-                        title="Select Operation"
-                        options={["Insert at Head", "Delete at Head", "Insert at Tail", "Delete at Tail", "Traverse List", "Reverse List"]}
-                        onChange={this.props.onOperationChanged}
-                    />
+                    <div className="space-y-4">
+                        {/* Insertion Operations */}
+                        <div className="space-y-2">
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Insertion</h3>
+                            <Input
+                                value={this.state.insertValue}
+                                onChange={(e) => this.setState({ insertValue: e.target.value })}
+                                placeholder="Value (e.g. 42)"
+                                disabled={this.props.disable}
+                                className="text-sm mb-2"
+                                type="number"
+                            />
+                            <div className="grid grid-cols-2 gap-2">
+                                <Button
+                                    onClick={() => this.props.onVisualize(0, this.state.insertValue)}
+                                    disabled={this.props.disable}
+                                    style={this.isClickable()}
+                                    variant="outline"
+                                    size="sm"
+                                >
+                                    push_front
+                                </Button>
+                                <Button
+                                    onClick={() => this.props.onVisualize(2, this.state.insertValue)}
+                                    disabled={this.props.disable}
+                                    style={this.isClickable()}
+                                    variant="outline"
+                                    size="sm"
+                                >
+                                    Tail
+                                </Button>
+                            </div>
+                        </div>
 
-                    <Button
-                        className="w-full"
-                        onClick={this.props.onVisualize}
-                        disabled={this.props.disable}
-                        style={this.isClickable()}
-                    >
-                        Execute Operation
-                    </Button>
+                        {/* Deletion Operations */}
+                        <div className="space-y-2">
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Deletion</h3>
+                            <div className="grid grid-cols-2 gap-2">
+                                <Button
+                                    onClick={() => this.props.onVisualize(1)}
+                                    disabled={this.props.disable}
+                                    style={this.isClickable()}
+                                    variant="outline"
+                                    size="sm"
+                                >
+                                    Head
+                                </Button>
+                                <Button
+                                    onClick={() => this.props.onVisualize(3)}
+                                    disabled={this.props.disable}
+                                    style={this.isClickable()}
+                                    variant="outline"
+                                    size="sm"
+                                >
+                                    Tail
+                                </Button>
+                            </div>
+                        </div>
+
+                        {/* Utility Operations */}
+                        <div className="space-y-2">
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Utility</h3>
+                            <div className="grid grid-cols-2 gap-2">
+                                <Button
+                                    onClick={() => this.props.onVisualize(4)}
+                                    disabled={this.props.disable}
+                                    style={this.isClickable()}
+                                    variant="outline"
+                                    size="sm"
+                                >
+                                    Traverse
+                                </Button>
+                                <Button
+                                    onClick={() => this.props.onVisualize(5)}
+                                    disabled={this.props.disable}
+                                    style={this.isClickable()}
+                                    variant="outline"
+                                    size="sm"
+                                >
+                                    Reverse
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
                 </CollapsibleSection>
 
                 <CollapsibleSection title="Display Options" defaultOpen={true}>
