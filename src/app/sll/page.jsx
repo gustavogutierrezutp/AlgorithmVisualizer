@@ -183,7 +183,7 @@ class LinkedList extends Component {
         return (
             <div className="flex flex-col h-screen">
                 <div id="sll-navbar">
-                    <Navbar title="Single linked list" />
+                    <Navbar title="Single linked list" onStartTour={this.startTour} />
                 </div>
 
                 <div className="flex flex-1 overflow-hidden">
