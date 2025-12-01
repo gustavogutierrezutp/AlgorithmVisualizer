@@ -215,6 +215,15 @@ class Menu extends Component {
                                 >
                                     front
                                 </Button>
+                                <Button
+                                    onClick={this.props.onToggleTailHighlight}
+                                    disabled={this.props.disable}
+                                    style={this.isClickable()}
+                                    variant={this.props.highlightTail ? "default" : "outline"}
+                                    size="sm"
+                                >
+                                    back
+                                </Button>
                             </div>
                         </div>
 
@@ -265,16 +274,6 @@ class Menu extends Component {
                         Scramble Positions
                     </Button>
 
-
-                    <Button
-                        className="w-full"
-                        onClick={this.props.onToggleTailHighlight}
-                        disabled={this.props.disable}
-                        variant={this.props.highlightTail ? "default" : "outline"}
-                        style={this.isClickable()}
-                    >
-                        {this.props.highlightTail ? "Hide Tail" : "Show Tail"}
-                    </Button>
                 </CollapsibleSection>
             </div>
         );
