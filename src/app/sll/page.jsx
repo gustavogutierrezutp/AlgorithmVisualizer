@@ -24,6 +24,8 @@ class LinkedList extends Component {
         highlightTail: false,
     }
 
+    menuRef = React.createRef();
+
     componentDidMount() {
         this.initializeList(this.state.count);
     }
@@ -101,6 +103,7 @@ class LinkedList extends Component {
 
                 <div className="flex flex-1 overflow-hidden">
                     <Menu
+                        ref={this.menuRef}
                         disable={this.state.isRunning}
                         onVisualize={this.handleVisualize}
                         onCreateEmpty={this.handleCreateEmpty}
@@ -214,12 +217,18 @@ class LinkedList extends Component {
         switch (operation) {
             case 0:
                 await this.insertAtHead(valToInsert);
+                if (this.menuRef.current) {
+                    this.menuRef.current.refreshInsertValue();
+                }
                 break;
             case 1:
                 await this.deleteAtHead();
                 break;
             case 2:
                 await this.insertAtTail(valToInsert);
+                if (this.menuRef.current) {
+                    this.menuRef.current.refreshInsertValue();
+                }
                 break;
             case 3:
                 await this.deleteAtTail();

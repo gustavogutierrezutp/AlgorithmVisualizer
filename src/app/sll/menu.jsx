@@ -57,6 +57,10 @@ class Menu extends Component {
         this.props.onCreateFromSequence(this.state.sequenceInput);
     }
 
+    refreshInsertValue = () => {
+        this.setState({ insertValue: Math.floor(Math.random() * 100) });
+    }
+
     render() {
         return (
             <div className="w-64 bg-gray-100 p-4 space-y-3">
@@ -149,6 +153,7 @@ class Menu extends Component {
                             <Input
                                 value={this.state.insertValue}
                                 onChange={(e) => this.setState({ insertValue: e.target.value })}
+                                onFocus={(e) => e.target.select()}
                                 placeholder="Value (e.g. 42)"
                                 disabled={this.props.disable}
                                 className="text-sm mb-2"
