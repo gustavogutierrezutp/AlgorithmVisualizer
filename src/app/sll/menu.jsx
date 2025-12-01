@@ -121,6 +121,11 @@ class Menu extends Component {
                                 <Input
                                     value={this.state.sequenceInput}
                                     onChange={this.handleSequenceChange}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            this.handleCreateFromSequence();
+                                        }
+                                    }}
                                     placeholder="[1, 2, 3, 4, 5]"
                                     disabled={this.props.disable}
                                     className="text-sm"

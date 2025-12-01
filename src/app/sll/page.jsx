@@ -32,7 +32,9 @@ class LinkedList extends Component {
         const { nodes, edges } = createInitialList(count, this.handlePointerHover);
         this.setState({ nodes, edges }, () => {
             if (this.reactFlowInstance) {
-                this.reactFlowInstance.fitView({ duration: 500, padding: 0.2 });
+                setTimeout(() => {
+                    this.reactFlowInstance.fitView({ duration: 500, padding: 0.3 });
+                }, 100);
             }
         });
     }
@@ -160,7 +162,9 @@ class LinkedList extends Component {
             const { nodes, edges } = createListFromSequence(values, this.handlePointerHover);
             this.setState({ nodes, edges }, () => {
                 if (this.reactFlowInstance) {
-                    this.reactFlowInstance.fitView({ duration: 500, padding: 0.2 });
+                    setTimeout(() => {
+                        this.reactFlowInstance.fitView({ duration: 500, padding: 0.3 });
+                    }, 100);
                 }
             });
         } catch (error) {
