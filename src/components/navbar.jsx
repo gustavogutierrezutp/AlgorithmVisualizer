@@ -14,10 +14,10 @@ export default function Navbar(props) {
           </Link>
         </Button>
         <Button variant="ghost" size="lg" asChild>
-          <Link href="/about">About</Link>
+          <Link href="/about">Acerca de</Link>
         </Button>
         <Button size="icon" variant="ghost">
-          <Link href="https://github.com/TamimEhsan/AlgorithmVisualizer">
+          <Link href="https://github.com/gustavogutierrezutp/AlgorithmVisualizer/tree/ds">
             <Github className="h-5 w-5" />
           </Link>
         </Button>

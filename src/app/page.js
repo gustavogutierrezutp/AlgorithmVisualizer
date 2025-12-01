@@ -8,7 +8,7 @@ import Hero from "@/components/hero";
 export default function Page() {
   return (
     <div className="min-h-screen bg-background">
-      <Navbar title="Algorithm Visualizer"/>
+      <Navbar title="DSVizX"/>
       <Hero/>
     {/* <header className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
       <div className="container mx-auto py-16 px-4 text-center">
