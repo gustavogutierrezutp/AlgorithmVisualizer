@@ -266,6 +266,26 @@ class Menu extends Component {
                         disable={this.props.disable}
                     />
 
+                    <div className="space-y-2">
+                        <label className="text-xs text-gray-600 font-medium">Node Color</label>
+                        <div className="flex gap-2">
+                            <input
+                                type="color"
+                                value={this.props.nodeColor}
+                                onChange={this.props.onColorChange}
+                                disabled={this.props.disable}
+                                className="h-10 w-full rounded border border-gray-300 cursor-pointer disabled:cursor-not-allowed"
+                            />
+                            <Input
+                                value={this.props.nodeColor}
+                                onChange={this.props.onColorChange}
+                                disabled={this.props.disable}
+                                className="text-sm uppercase font-mono"
+                                placeholder="#2196F3"
+                            />
+                        </div>
+                    </div>
+
                     <Button
                         className="w-full"
                         onClick={this.props.onScramble}

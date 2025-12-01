@@ -22,6 +22,7 @@ class LinkedList extends Component {
         hoveredNodeId: null,
         highlightHead: false,
         highlightTail: false,
+        nodeColor: '#2196F3',
     }
 
     menuRef = React.createRef();
@@ -31,7 +32,7 @@ class LinkedList extends Component {
     }
 
     initializeList = (count) => {
-        const { nodes, edges } = createInitialList(count, this.handlePointerHover);
+        const { nodes, edges } = createInitialList(count, this.handlePointerHover, this.state.nodeColor);
         this.setState({ nodes, edges }, () => {
             if (this.reactFlowInstance) {
                 setTimeout(() => {
@@ -76,6 +77,7 @@ class LinkedList extends Component {
                     }
                 };
             }
+            // Return node as-is if it's not being highlighted
             return node;
         });
 
@@ -118,6 +120,8 @@ class LinkedList extends Component {
                         onCountChange={this.handleCountChange}
                         onOperationChanged={this.handleOperationChanged}
                         onSpeedChange={this.handleSpeedChanged}
+                        nodeColor={this.state.nodeColor}
+                        onColorChange={this.handleColorChange}
                     />
                     <div className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50 relative">
                         {this.state.nodes.length === 0 && (
@@ -172,7 +176,7 @@ class LinkedList extends Component {
                 alert('Please enter a valid JSON array');
                 return;
             }
-            const { nodes, edges } = createListFromSequence(values, this.handlePointerHover);
+            const { nodes, edges } = createListFromSequence(values, this.handlePointerHover, this.state.nodeColor);
             this.setState({ nodes, edges }, () => {
                 if (this.reactFlowInstance) {
                     setTimeout(() => {
@@ -215,6 +219,21 @@ class LinkedList extends Component {
 
     handleToggleTailHighlight = () => {
         this.setState({ highlightTail: !this.state.highlightTail });
+    }
+
+    handleColorChange = (e) => {
+        const newColor = e.target.value;
+        this.setState({ nodeColor: newColor }, () => {
+            // Update all existing nodes with the new color
+            const updatedNodes = this.state.nodes.map(node => ({
+                ...node,
+                style: {
+                    ...node.style,
+                    background: newColor,
+                }
+            }));
+            this.setState({ nodes: updatedNodes });
+        });
     }
 
     handleVisualize = async (opIndex, value) => {
@@ -269,7 +288,7 @@ class LinkedList extends Component {
             },
             position: { x: 50, y: 100 },
             style: {
-                background: '#4CAF50',
+                background: this.state.nodeColor,
                 color: 'white',
                 border: '2px solid #333',
                 borderRadius: '8px',
@@ -350,7 +369,7 @@ class LinkedList extends Component {
                 ...node,
                 style: {
                     ...node.style,
-                    background: idx === i ? '#FF5722' : '#2196F3',
+                    background: idx === i ? '#FF5722' : this.state.nodeColor,
                 }
             }));
             this.setState({ nodes: tempNodes });
@@ -362,7 +381,7 @@ class LinkedList extends Component {
             ...node,
             style: {
                 ...node.style,
-                background: '#2196F3',
+                background: this.state.nodeColor,
             }
         }));
         this.setState({ nodes: resetNodes });
@@ -379,7 +398,7 @@ class LinkedList extends Component {
             },
             position: { x: 50 + (nodes.length * 150), y: 100 },
             style: {
-                background: '#4CAF50',
+                background: this.state.nodeColor,
                 color: 'white',
                 border: '2px solid #333',
                 borderRadius: '8px',
@@ -430,7 +449,7 @@ class LinkedList extends Component {
                 ...node,
                 style: {
                     ...node.style,
-                    background: idx === i ? '#FF5722' : '#2196F3',
+                    background: idx === i ? '#FF5722' : this.state.nodeColor,
                 }
             }));
             this.setState({ nodes: tempNodes });
@@ -442,7 +461,7 @@ class LinkedList extends Component {
             ...node,
             style: {
                 ...node.style,
-                background: '#2196F3',
+                background: this.state.nodeColor,
             }
         }));
         this.setState({ nodes: resetNodes });
@@ -461,7 +480,7 @@ class LinkedList extends Component {
                 ...node,
                 style: {
                     ...node.style,
-                    background: idx === i ? '#FF5722' : '#2196F3',
+                    background: idx === i ? '#FF5722' : this.state.nodeColor,
                 }
             }));
             this.setState({ nodes });
@@ -473,7 +492,7 @@ class LinkedList extends Component {
             ...node,
             style: {
                 ...node.style,
-                background: '#2196F3',
+                background: this.state.nodeColor,
             }
         }));
         this.setState({ nodes });
@@ -494,7 +513,7 @@ class LinkedList extends Component {
                 ...node,
                 style: {
                     ...node.style,
-                    background: idx === current ? '#FF5722' : (idx === prev ? '#4CAF50' : '#2196F3'),
+                    background: idx === current ? '#FF5722' : (idx === prev ? '#4CAF50' : this.state.nodeColor),
                     border: idx === current ? '3px solid #E64A19' : '2px solid #333',
                 }
             }));
@@ -546,7 +565,7 @@ class LinkedList extends Component {
             position: { x: 50 + (idx * 150), y: 100 },
             style: {
                 ...node.style,
-                background: '#2196F3',
+                background: this.state.nodeColor,
                 border: '2px solid #333',
             }
         }));
@@ -583,7 +602,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const createInitialList = (count, onPointerHover) => {
+const createInitialList = (count, onPointerHover, nodeColor = '#2196F3') => {
     const nodes = [];
     const edges = [];
 
@@ -600,7 +619,7 @@ const createInitialList = (count, onPointerHover) => {
             },
             position: { x: 50 + (i * 150), y: 100 },
             style: {
-                background: '#2196F3',
+                background: nodeColor,
                 color: 'white',
                 border: '2px solid #333',
                 borderRadius: '8px',
@@ -636,7 +655,7 @@ const createInitialList = (count, onPointerHover) => {
     return { nodes, edges };
 }
 
-const createListFromSequence = (values, onPointerHover) => {
+const createListFromSequence = (values, onPointerHover, nodeColor = '#2196F3') => {
     const nodes = [];
     const edges = [];
 
@@ -652,7 +671,7 @@ const createListFromSequence = (values, onPointerHover) => {
             },
             position: { x: 50 + (i * 150), y: 100 },
             style: {
-                background: '#2196F3',
+                background: nodeColor,
                 color: 'white',
                 border: '2px solid #333',
                 borderRadius: '8px',
