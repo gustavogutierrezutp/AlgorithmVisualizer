@@ -10,8 +10,9 @@ const LinkedListNode = ({ data, style }) => {
                 minWidth: '80px',
                 minHeight: '40px',
                 display: 'flex',
-                alignItems: 'center',
+                alignItems: 'stretch',
                 justifyContent: 'center',
+                overflow: 'hidden',
             }}
         >
             {/* Right Handle - Source for next pointer */}
@@ -28,6 +29,7 @@ const LinkedListNode = ({ data, style }) => {
                     right: '-14px',
                     top: '50%',
                     transform: 'translateY(-50%)',
+                    zIndex: 10,
                 }}
             />
 
@@ -45,12 +47,34 @@ const LinkedListNode = ({ data, style }) => {
                     left: '-14px',
                     top: '50%',
                     transform: 'translateY(-50%)',
+                    zIndex: 10,
                 }}
             />
 
-            {/* Node Content */}
-            <div style={{ fontSize: '16px', fontWeight: 'bold' }}>
+            {/* Data Section */}
+            <div style={{
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                background: 'rgba(255, 255, 255, 0.2)',
+                borderRight: '1px solid rgba(0, 0, 0, 0.2)',
+            }}>
                 {data.label}
+            </div>
+
+            {/* Next Pointer Section */}
+            <div style={{
+                width: '30px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '20px',
+                background: 'rgba(0, 0, 0, 0.1)',
+            }}>
+                ●
             </div>
         </div>
     );
