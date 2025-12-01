@@ -110,7 +110,15 @@ class LinkedList extends Component {
                         onOperationChanged={this.handleOperationChanged}
                         onSpeedChange={this.handleSpeedChanged}
                     />
-                    <div className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50">
+                    <div className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50 relative">
+                        {this.state.nodes.length === 0 && (
+                            <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+                                <div className="text-center p-8 bg-white rounded-lg shadow-lg border-2 border-gray-200">
+                                    <p className="text-2xl font-semibold text-gray-400 mb-2">Empty List</p>
+                                    <p className="text-sm text-gray-500">Create a list to get started</p>
+                                </div>
+                            </div>
+                        )}
                         <ReactFlow
                             nodes={highlightedNodes}
                             edges={highlightedEdges}
