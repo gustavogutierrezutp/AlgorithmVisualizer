@@ -324,34 +324,102 @@ class LinkedList extends Component {
     }
 
     reverseList = async () => {
-        // Placeholder for reverse operation
-        const nodes = [...this.state.nodes].reverse().map((node, idx) => ({
+        if (this.state.nodes.length <= 1) return;
+
+        let prev = null;
+        let current = 0;
+        const nodes = [...this.state.nodes];
+        let edges = [...this.state.edges];
+
+        // Step 1: Visualize pointer reversal
+        while (current < nodes.length) {
+            // Highlight current node being processed
+            const currentNodes = nodes.map((node, idx) => ({
+                ...node,
+                style: {
+                    ...node.style,
+                    background: idx === current ? '#FF5722' : (idx === prev ? '#4CAF50' : '#2196F3'),
+                    border: idx === current ? '3px solid #E64A19' : '2px solid #333',
+                }
+            }));
+            this.setState({ nodes: currentNodes });
+            await sleep(this.state.speed);
+
+            // Remove the existing outgoing edge from current node
+            const edgeIndex = edges.findIndex(e => e.source === nodes[current].id);
+            if (edgeIndex !== -1) {
+                edges.splice(edgeIndex, 1);
+                this.setState({ edges: [...edges] });
+                await sleep(this.state.speed / 2);
+            }
+
+            // Add new edge pointing to previous node (if not null)
+            if (prev !== null) {
+                edges.push({
+                    id: `edge-rev-${current}`,
+                    source: nodes[current].id,
+                    sourceHandle: 'right',
+                    target: nodes[prev].id,
+                    targetHandle: 'left',
+                    animated: true,
+                    type: 'default', // Use default bezier for backward curves to look better
+                    markerEnd: {
+                        type: MarkerType.ArrowClosed,
+                        width: 10,
+                        height: 10,
+                        color: '#FF5722'
+                    },
+                    style: {
+                        strokeWidth: 3,
+                        stroke: '#FF5722'
+                    }
+                });
+                this.setState({ edges: [...edges] });
+                await sleep(this.state.speed);
+            }
+
+            prev = current;
+            current++;
+        }
+
+        // Step 2: Re-arrange nodes to reflect new order (Head is now the last processed node)
+        await sleep(this.state.speed);
+
+        const reversedNodes = [...this.state.nodes].reverse().map((node, idx) => ({
             ...node,
-            position: { x: 50 + (idx * 150), y: 100 }
+            position: { x: 50 + (idx * 150), y: 100 },
+            style: {
+                ...node.style,
+                background: '#2196F3',
+                border: '2px solid #333',
+            }
         }));
 
-        const edges = nodes.length > 1 ? nodes.slice(0, -1).map((node, idx) => ({
-            id: `edge-${idx}`,
-            source: node.id,
-            sourceHandle: 'right',
-            target: nodes[idx + 1].id,
-            targetHandle: 'left',
-            animated: true,
-            type: 'smoothstep',
-            markerEnd: {
-                type: MarkerType.ArrowClosed,
-                width: 10,
-                height: 10,
-                color: '#333'
-            },
-            style: {
-                strokeWidth: 2,
-                stroke: '#333'
-            }
-        })) : [];
+        // Re-create standard edges for the new order
+        const newEdges = [];
+        for (let i = 0; i < reversedNodes.length - 1; i++) {
+            newEdges.push({
+                id: `edge-${i}`,
+                source: reversedNodes[i].id,
+                sourceHandle: 'right',
+                target: reversedNodes[i + 1].id,
+                targetHandle: 'left',
+                animated: true,
+                type: 'smoothstep',
+                markerEnd: {
+                    type: MarkerType.ArrowClosed,
+                    width: 10,
+                    height: 10,
+                    color: '#333'
+                },
+                style: {
+                    strokeWidth: 2,
+                    stroke: '#333'
+                }
+            });
+        }
 
-        this.setState({ nodes, edges });
-        await sleep(this.state.speed);
+        this.setState({ nodes: reversedNodes, edges: newEdges });
     }
 }
 
