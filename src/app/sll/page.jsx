@@ -1,6 +1,6 @@
 "use client";
 import React, { Component } from 'react';
-import { ReactFlow, Background, Controls, MarkerType, applyNodeChanges } from '@xyflow/react';
+import { ReactFlow, Background, Controls, MarkerType, applyNodeChanges, SelectionMode } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
 import Navbar from '@/components/navbar';
@@ -137,6 +137,10 @@ class LinkedList extends Component {
                             nodesDraggable={true}
                             nodesConnectable={false}
                             elementsSelectable={true}
+                            selectionMode={SelectionMode.Partial}
+                            selectionOnDrag={true}
+                            panOnScroll={true}
+                            panOnDrag={[1, 2]}
                             onInit={(instance) => this.reactFlowInstance = instance}
                         >
                             <Background />
