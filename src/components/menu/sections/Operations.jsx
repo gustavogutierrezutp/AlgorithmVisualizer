@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Play, Plus, Trash2, ArrowRightLeft, Shuffle } from "lucide-react";
+import { 
+  Play, 
+  Plus, 
+  Trash2, 
+  ArrowRightLeft, 
+  Shuffle, 
+  Zap, 
+  ArrowRight 
+} from "lucide-react";
 import { Section } from "../Section";
 
 export const Operations = ({ disable, onVisualize }) => {
@@ -10,10 +18,10 @@ export const Operations = ({ disable, onVisualize }) => {
   );
 
   return (
-    <Section title="Operations" icon={Play} defaultOpen={false} id="operations-section">
+    <Section title="Operations" icon={Play} defaultOpen={false}>
       <div className="space-y-1 mb-4">
         <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">
-          Target Value
+          Insert
         </label>
         <div className="flex gap-2">
           <Input
@@ -37,43 +45,57 @@ export const Operations = ({ disable, onVisualize }) => {
 
       <div className="space-y-4">
         <div>
-          <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-1 block">
-            Insert
-          </label>
-          <div className="grid grid-cols-3 gap-2">
+          
+          <div className="space-y-2">
             <Button
               onClick={() => onVisualize(0, insertValue)}
               disabled={disable}
               variant="outline"
               size="sm"
-              className="w-full justify-center hover:bg-green-50 hover:text-green-600 hover:border-green-200"
+              className="w-full py-4 justify-start hover:bg-green-50 hover:text-green-600 hover:border-green-200"
             >
-              <Plus className="w-3 h-3 mr-1 text-green-400" /> Head
+              <Plus className="w-3 h-3 mr-2 text-green-400" /> 
+              <span className="text-left">Insert at Head</span>
             </Button>
-            <Button
-              onClick={() => onVisualize(2, insertValue)}
-              disabled={disable}
-              variant="outline"
-              size="sm"
-              className="w-full justify-center hover:bg-green-50 hover:text-green-600 hover:border-green-200"
-            >
-              <Plus className="w-3 h-3 mr-1 text-green-400" /> Tail
-            </Button>
-            <Button
-              onClick={() => onVisualize(6, insertValue)}
-              disabled={disable}
-              variant="outline"
-              size="sm"
-              className="w-full justify-center hover:bg-green-50 hover:text-green-600 hover:border-green-200"
-            >
-              <Plus className="w-3 h-3 mr-1 text-green-400" /> Tail (last)
-            </Button>
+
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                onClick={() => onVisualize(2, insertValue)}
+                disabled={disable}
+                variant="outline"
+                size="sm"
+                className="justify-start px-3 h-auto py-1 hover:bg-yellow-50 hover:text-yellow-600 hover:border-yellow-200"
+                title="Recorre toda la lista hasta el final"
+              >
+                <ArrowRight className="w-4 h-4 mr-2 text-yellow-500 shrink-0" />
+                <div className="flex flex-col items-start leading-tight">
+                  <span className="font-medium">Tail</span>
+                  <span className="text-[10px] text-gray-400 font-medium">Traverse</span>
+                </div>
+              </Button>
+
+              <Button
+                onClick={() => onVisualize(6, insertValue)}
+                disabled={disable}
+                variant="outline"
+                size="sm"
+                className="justify-start px-3 h-auto py-1 hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200"
+                title="Inserta directamente usando el puntero final"
+              >
+                <Zap className="w-4 h-4 mr-2 text-purple-500 shrink-0" />
+                <div className="flex flex-col items-start leading-tight">
+                  <span className="font-medium">Tail</span>
+                  <span className="text-[10px] text-gray-400 font-medium">Pointer</span>
+                </div>
+              </Button>
+            </div>
           </div>
         </div>
+
         <div className="h-px bg-gray-100 my-2" />
 
         <div>
-          <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-1 block">
+          <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 block">
             Remove
           </label>
           <div className="grid grid-cols-2 gap-2">
