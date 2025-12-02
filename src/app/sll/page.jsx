@@ -417,23 +417,23 @@ class LinkedList extends Component {
 
     handleAddConnectedCircle = () => {
         const timestamp = Date.now();
-        const circle1Id = `circle-head-${timestamp}`;
-        const circle2Id = `circle-tail-${timestamp}`;
+        const headPointerId = `circle-head-${timestamp}`;
+        const tailPointerId = `circle-tail-${timestamp}`;
 
-        const circle1 = {
-            id: circle1Id,
+        const headPointerNode = {
+            id: headPointerId,
             type: 'circleNode',
-            data: { label: 'H' }, // H for Head connection
+            data: { label: 'H' }, // Head Pointer Node
             position: {
                 x: Math.random() * 400 + 50,
                 y: Math.random() * 400 + 50
             },
         };
 
-        const circle2 = {
-            id: circle2Id,
+        const tailPointerNode = {
+            id: tailPointerId,
             type: 'circleNode',
-            data: { label: 'T' }, // T for Tail connection
+            data: { label: 'T' }, // Tail Pointer Node
             position: {
                 x: Math.random() * 400 + 50,
                 y: Math.random() * 400 + 50
@@ -444,13 +444,13 @@ class LinkedList extends Component {
         const headNode = listNodes.length > 0 ? listNodes[0] : null;
         const tailNode = listNodes.length > 0 ? listNodes[listNodes.length - 1] : null;
 
-        const newNodes = [circle1, circle2];
+        const newNodes = [headPointerNode, tailPointerNode];
         const newEdges = [];
 
         if (headNode) {
             newEdges.push({
-                id: `edge-${circle1Id}-${headNode.id}`,
-                source: circle1Id,
+                id: `edge-${headPointerId}-${headNode.id}`,
+                source: headPointerId,
                 target: headNode.id,
                 targetHandle: 'top',
                 animated: true,
@@ -466,8 +466,8 @@ class LinkedList extends Component {
 
         if (tailNode) {
             newEdges.push({
-                id: `edge-${circle2Id}-${tailNode.id}`,
-                source: circle2Id,
+                id: `edge-${tailPointerId}-${tailNode.id}`,
+                source: tailPointerId,
                 target: tailNode.id,
                 targetHandle: 'bottom',
                 animated: true,
