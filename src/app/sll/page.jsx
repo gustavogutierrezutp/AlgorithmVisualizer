@@ -173,8 +173,16 @@ class LinkedList extends Component {
         if (!sourceNode || !targetNode) return false;
 
         // Restrict CircleNode -> LinkedListNode connections
-        if (sourceNode.type === 'circleNode' && targetNode.type === 'linkedListNode') {
-            return targetHandle === 'top' || targetHandle === 'bottom';
+        if (sourceNode.type === 'circleNode') {
+            // Check if this circle node already has an outgoing connection
+            const hasExistingConnection = this.state.edges.some(edge => edge.source === source);
+            if (hasExistingConnection) {
+                return false;
+            }
+
+            if (targetNode.type === 'linkedListNode') {
+                return targetHandle === 'top' || targetHandle === 'bottom';
+            }
         }
 
         return true;
