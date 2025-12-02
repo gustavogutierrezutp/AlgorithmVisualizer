@@ -152,6 +152,21 @@ class LinkedList extends Component {
         });
     }
 
+    isValidConnection = (connection) => {
+        const { source, target, targetHandle } = connection;
+        const sourceNode = this.state.nodes.find(node => node.id === source);
+        const targetNode = this.state.nodes.find(node => node.id === target);
+
+        if (!sourceNode || !targetNode) return false;
+
+        // Restrict CircleNode -> LinkedListNode connections
+        if (sourceNode.type === 'circleNode' && targetNode.type === 'linkedListNode') {
+            return targetHandle === 'top' || targetHandle === 'bottom';
+        }
+
+        return true;
+    }
+
     render() {
         const { hoveredNodeId, highlightHead, highlightTail } = this.state;
 
@@ -252,6 +267,7 @@ class LinkedList extends Component {
                             nodesConnectable={true}
                             elementsSelectable={true}
                             onConnect={this.onConnect}
+                            isValidConnection={this.isValidConnection}
                             selectionMode={SelectionMode.Partial}
                             selectionOnDrag={true}
                             panOnScroll={true}
