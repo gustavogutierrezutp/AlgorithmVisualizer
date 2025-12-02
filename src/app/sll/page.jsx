@@ -404,44 +404,61 @@ class LinkedList extends Component {
     }
 
     handleAddConnectedCircle = () => {
-        const newNodeId = `circle-${Date.now()}`;
-        const newNode = {
-            id: newNodeId,
+        const timestamp = Date.now();
+        const circle1Id = `circle-head-${timestamp}`;
+        const circle2Id = `circle-tail-${timestamp}`;
+
+        const circle1 = {
+            id: circle1Id,
             type: 'circleNode',
-            data: { label: 'C' },
+            data: { label: 'H' }, // H for Head connection
             position: {
                 x: Math.random() * 400 + 50,
                 y: Math.random() * 400 + 50
             },
         };
 
-        let newEdges = [];
-        // Find the first linked list node (head)
-        // Assuming nodes are ordered or we can find the one with no incoming edges from other list nodes?
-        // Or just the first one in the array that is a linkedListNode?
-        // The initializeList puts them in order.
-        const headNode = this.state.nodes.find(n => n.type === 'linkedListNode');
+        const circle2 = {
+            id: circle2Id,
+            type: 'circleNode',
+            data: { label: 'T' }, // T for Tail connection
+            position: {
+                x: Math.random() * 400 + 50,
+                y: Math.random() * 400 + 50
+            },
+        };
+
+        const listNodes = this.state.nodes.filter(n => n.type === 'linkedListNode');
+        const headNode = listNodes.length > 0 ? listNodes[0] : null;
+        const tailNode = listNodes.length > 0 ? listNodes[listNodes.length - 1] : null;
+
+        const newNodes = [circle1, circle2];
+        const newEdges = [];
 
         if (headNode) {
-            const newEdge = {
-                id: `edge-${newNodeId}-${headNode.id}`,
-                source: newNodeId,
-                sourceHandle: null, // CircleNode has default handle or we use specific? CircleNode has Right handle.
-                // Wait, CircleNode only has a Right handle in the code I saw earlier?
-                // Let's check CircleNode again if needed.
-                // CircleNode.jsx: <Handle type="source" position={Position.Right} ... />
-                // So sourceHandle should probably be null (default) or we can specify if it has ID.
-                // The handle in CircleNode doesn't have an ID.
+            newEdges.push({
+                id: `edge-${circle1Id}-${headNode.id}`,
+                source: circle1Id,
                 target: headNode.id,
-                targetHandle: 'top', // Connect to top handle
+                targetHandle: 'top',
                 animated: true,
                 style: { stroke: '#333' },
-            };
-            newEdges = [newEdge];
+            });
+        }
+
+        if (tailNode) {
+            newEdges.push({
+                id: `edge-${circle2Id}-${tailNode.id}`,
+                source: circle2Id,
+                target: tailNode.id,
+                targetHandle: 'bottom',
+                animated: true,
+                style: { stroke: '#333' },
+            });
         }
 
         this.setState(prevState => ({
-            nodes: [...prevState.nodes, newNode],
+            nodes: [...prevState.nodes, ...newNodes],
             edges: [...prevState.edges, ...newEdges]
         }));
     }
