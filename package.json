@@ -21,20 +21,11 @@
     ]
   },
   "scripts": {
-    "dev": "next dev",
-    "start": "npx serve@latest ./build",
-    "build": "next build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
+  "dev": "next dev",  
+  "build": "EXTENSION_MODE=true next build",
+  "start": "next start",
+  "lint": "next lint"
+},
   "browserslist": {
     "production": [
       ">0.2%",

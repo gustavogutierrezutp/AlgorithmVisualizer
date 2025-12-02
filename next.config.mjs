@@ -1,11 +1,17 @@
-//  @type {import('next').NextConfig}
+/** @type {import('next').NextConfig} */
+
+const isExtensionBuild = process.env.EXTENSION_MODE === 'true';
+
 const nextConfig = {
-    images: {
-        unoptimized: true
+    output: isExtensionBuild ? 'export' : undefined,
+    
+    distDir: 'build',
+    
+    images: { 
+        unoptimized: true 
     },
-    output: 'export', // Outputs a Single-Page Application (SPA).
-    distDir: 'build', // Changes the build output directory to `./dist`.
-     assetPrefix: './', 
-}
-   
+
+    assetPrefix: isExtensionBuild ? './' : undefined,
+};
+
 export default nextConfig;
