@@ -22,20 +22,13 @@ La idea de crear un simulador tiene diferentes fundamentos:
   datos en donde se ha evidenciado que nuestros estudiantes presentan mayores
   inconvenientes.
   
-## Ejecución
+## Instalación
 
 ::: {.callout-warning}
 ### TODO
   Cómo vamos a distribuir el simulador?
 :::
 
-  
-
-## ¿De qué trata este libro?
-
-Aquí puedes escribir un resumen general de tu obra. Por ejemplo:
-
-> Este libro explora los fundamentos de la escritura técnica moderna, combinando texto narrativo con análisis de datos reproducible.
 
 ## Estructura del libro
 
@@ -45,9 +38,6 @@ El libro está organizado de la siguiente manera:
 2.  **Capítulo 1**: El núcleo de la investigación o historia.
 3.  **Referencias**: Bibliografía y fuentes citadas.
 
-## Notas sobre la lectura
-
-A lo largo del texto encontrarás bloques de información destacados. Por ejemplo:
 
 ::: {.callout-note}
 ## Nota Importante
@@ -59,8 +49,3 @@ Estos recuadros azules contienen información que no debes pasar por alto.
 Estos recuadros verdes ofrecen sugerencias prácticas para mejorar tu flujo de trabajo.
 :::
 
-## Agradecimientos
-
-Quiero agradecer a mis colaboradores y lectores por sus comentarios continuos durante la redacción de este documento.
-
-¡Espero que disfrutes la lectura!

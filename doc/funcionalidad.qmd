@@ -71,37 +71,130 @@ deben estar separado por comas.
 
 ![](figures/creation-custom.png)
 
-## Adición y borrado de elementos
+## Visualización de la lista
+
+Después de creada la lista utilizando cualquiera de las formas mencionadas, está
+será visualizada en el lienzo que hay en la parte derecha. Por ejemplo, a
+continuación se muestra la interfaz con una lista creada de 5 elementos.
+
+![](figures/random5.png)
+
+En la parte inferior izquierda del lienzo se encuentra una pequeña barra
+vertical con botones mostrada a continuación de forma aumentada:
+
+![](figures/xyflow-toolbar.png)
+
+El tercer botón de arriba a abajo permite siempre enfocar todos los elementos
+dentro del lienzo. Esto es de gran importancia porque facilita mucho la
+interacción con la visualización.
+
+Cada nodo de la lista consta de dos partes. La primera contiene el dato y la
+segunda representa el apuntador al siguiente nodo en la lista. Cuando el mouse
+se posiciona sobre este último el apuntador es resaltado en un color diferente.
+Esto es útil cuando las listas no se muestran de manera lineal. A continuación
+se muestra la misma lista después de ser reorganizada arrastrando los nodos con
+el mouse sobre el lienzo. El puntero se posicionó sobre el nodo que contiene el
+valor $14$.
+
+![](figures/next-pointer.png)
+
+
+## Operaciones sobre listas
+
+Después de tener la lista creada o una lista vacía podemos comenzar a realizar
+operaciones sobre ella. Esto con el fin de observar el comportamiento de cada
+una de ellas. Las operaciones disponibles se pueden acceder desde el menu
+__Operations__.
+
+![](figures/operations-menu.png)
+
+Con estas operaciones es posible adicionar elementos a la lista de varias formas
+y también eliminarlos. Adicionalmente hay operaciones que permiten recorrer los
+elementos de la lista.
+
+### Adición y borrado de elementos
 
 En esta sección se define la manera de insertar y borrar elementos de la lista.
-Estas operaciones están disponibles en el menu __Operations__.
+Estas operaciones están disponibles en el menu __Operations__. En particular,
+las opciones de inserción se muestran en la siguiente imagen:
 
-### Inserción
+![](figures/insert-menu.png)
 
-Existen dos maneras básicas de insertar elementos en una lista enlazada. La
-primera es insertar el nuevo elemento por el frente de la lista. Es decir, el
-nuevo elemento quedaría como nuevo primer elemento en la lista. Para esto se
-ingresa el valor a insertar en el capmo de texto _Target Value_ y se procede a
-dar click en el botón "_+ Head_". Al hacerlo el nuevo nodo se posicionará al
-inicio de la lista y tendrá un color diferente.
 
-Para insertar un elemento por el final de la lista se procede de la misma forma
-pero esta vez se pulsa el botón "_+ Tail_". Después de esto en el lienzo se
-mostrará de manera animada a recorrer cada uno de los elementos desde el inicio
-y se insertará el nuevo nodo con el elemento al final.
+#### Inserción
 
+Antes de cualquier inserción es necesario seleccionar el dato a insertar. Para
+esto se cuenta con el primer cuadro de texto.
 
 ::: {.callout-tip}
-#### Consejo
+##### Consejo
 
-Al lado del cuadro de texto donde se coloca el valor a insertar hay un botón. Al
-presionarlo se generará un número aleatorio que puede o no ser parte de la
-lista. Al presionar alguno de los botones de inserción se insertará dicho
-elemento.
+::: {layout="[1,9]"}
+![](figures/rnd-button.png)
+
+Pulsando este botón que se encuentra al lado del cuadro de texto se generará ún
+valor aleatorio. Este valor será insertado por cualquiera de las operaciones.
+:::
 
 :::
 
-### Borrado
+
+Existen tres formas básicas de insertar elementos en una lista enlazada. La
+primera es insertar el nuevo elemento por el frente de la lista. Es decir, el
+nuevo elemento quedaría como nuevo primer elemento en la lista. Para esto se
+ingresa el valor a insertar en el campo de texto _Target Value_ y se procede a
+dar click en el botón !["_+ Head_"](figures/insert-at-head.png). Al hacerlo el
+nuevo nodo se posicionará al inicio de la lista y tendrá un color diferente.
+
+En la figura siguiente se muestra como queda la lista después de la inserción
+por el frente del elemento $45$.
+
+![](figures/insert-head-45.png)
+
+Se puede apreciar que el elemento queda en un nodo con un color diferente. En
+este caso de color verde.
+
+
+::: {.callout-tip}
+##### Consejo
+
+::: {layout="[3,7]"}
+![](figures/display-options.png)
+
+En cualquier momento es posible cambiar el color de los nodos de la lista
+utilizando la funcionalidad del menu __Display Options__ presentado a la
+izquierda. En este caso se seleccionan en el lienzo los nodos a los que se les
+desea cambiar el color. Posteriormente se selecciona el color que aparece al
+lado del botón __Apply__ y se pulsa este último.
+:::
+:::
+
+
+Para insertar un elemento por el final de la lista se procede de forma similar.
+Esta vez se debe tener en cuenta que hay dos formas de insertar un elemento por
+el final. La primera es recorriendo la lista desde el comienzo. A esta
+funcionalidad se puede acceder con el botón
+![](figures/insert-tail-traverse.png). Al pulsar el botón se verá de manera
+animada el recorrido sobre la lista y la posterior adición del nodo con el
+elemento seleccionado al final de la lista.
+
+
+::: {.callout-warning}
+
+::: {layout="[2,8]"}
+![](figures/insert-tail-traverse.png)
+
+El símbolo de advertencia en la parte superior derecha de algunos botones (como
+el que aparece en la figura de la izquierda) representan funcionalidad que
+académicamente es relevante pero que debe ser evitada en código de producción.
+:::
+:::
+
+Finalmente para insertar un elemento utilizando el puntero al final de la lista
+se utiliza el botón ![](figures/insert-tail-pointer.png). En esta inserción no
+se observará recorrido, el elemento se insertará al final de la lista.
+
+#### Borrado
 
 Para eliminar un elemento de la lista se puede pulsar cualquiera de los botones
 con leyendas:"🗑 Head" o "🗑 Tail". El primero removerá el primer nodo de la
