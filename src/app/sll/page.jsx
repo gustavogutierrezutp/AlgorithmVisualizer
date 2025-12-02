@@ -1,6 +1,6 @@
 "use client";
 import React, { Component } from 'react';
-import { ReactFlow, Background, Controls, MarkerType, applyNodeChanges, SelectionMode } from '@xyflow/react';
+import { ReactFlow, Background, Controls, MarkerType, applyNodeChanges, SelectionMode, addEdge } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
@@ -146,6 +146,12 @@ class LinkedList extends Component {
         this.setState({ selectedNodes: nodes.map(node => node.id) });
     }
 
+    onConnect = (params) => {
+        this.setState({
+            edges: addEdge(params, this.state.edges),
+        });
+    }
+
     render() {
         const { hoveredNodeId, highlightHead, highlightTail } = this.state;
 
@@ -243,8 +249,9 @@ class LinkedList extends Component {
                             nodeTypes={nodeTypes}
                             fitView
                             nodesDraggable={true}
-                            nodesConnectable={false}
+                            nodesConnectable={true}
                             elementsSelectable={true}
+                            onConnect={this.onConnect}
                             selectionMode={SelectionMode.Partial}
                             selectionOnDrag={true}
                             panOnScroll={true}

@@ -51,6 +51,42 @@ const LinkedListNode = ({ data, style }) => {
                 }}
             />
 
+            {/* Top Handle - Target for incoming connections from above */}
+            <Handle
+                type="target"
+                position={Position.Top}
+                id="top"
+                style={{
+                    position: 'absolute',
+                    background: '#555',
+                    width: '12px',
+                    height: '12px',
+                    border: '2px solid white',
+                    top: '-14px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    zIndex: 10,
+                }}
+            />
+
+            {/* Bottom Handle - Source for outgoing connections to below */}
+            <Handle
+                type="target"
+                position={Position.Bottom}
+                id="bottom"
+                style={{
+                    position: 'absolute',
+                    background: '#555',
+                    width: '12px',
+                    height: '12px',
+                    border: '2px solid white',
+                    bottom: '-14px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    zIndex: 10,
+                }}
+            />
+
             {/* Data Section */}
             <div style={{
                 flex: 1,
