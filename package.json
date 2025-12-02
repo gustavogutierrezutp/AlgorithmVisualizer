@@ -16,9 +16,18 @@
     "commands": [
       {
         "command": "algorithmvisualizer.start",
-        "title": "Start Algorithm Visualizer"
+        "title": "Start Algorithm Visualizer",
+        "icon": "$(list-ordered)"
       }
-    ]
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "algorithmvisualizer.start",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
   "dev": "next dev",  
