@@ -582,6 +582,12 @@ class LinkedList extends Component {
             case 5:
                 await this.reverseList();
                 break;
+            case 6:
+                await this.insertAtTailO1(valToInsert);
+                if (this.menuRef.current) {
+                    this.menuRef.current.refreshInsertValue();
+                }
+                break;
             default:
                 await this.traverseList();
         }
@@ -742,7 +748,7 @@ class LinkedList extends Component {
         // Add edge if list was not empty
         if (nodes.length > 0) {
             edges.push({
-                id: `edge-${nodes.length - 1}`,
+                id: `edge-${nodes[nodes.length - 1].id}-${newNodeId}`,
                 source: nodes[nodes.length - 1].id,
                 sourceHandle: 'right',
                 target: newNodeId,
@@ -760,6 +766,141 @@ class LinkedList extends Component {
                     stroke: '#333'
                 }
             });
+        }
+
+        this.setState({ nodes: newNodes, edges }, () => {
+            if (this.reactFlowInstance) {
+                setTimeout(() => {
+                    this.reactFlowInstance.fitView({ duration: 500, padding: 0.3 });
+                }, 100);
+            }
+        });
+        await sleep(this.state.speed);
+    }
+
+    insertAtTailO1 = async (value) => {
+        const nodes = [...this.state.nodes];
+        let edges = [...this.state.edges];
+
+        // No traversal loop here - O(1) behavior
+
+        // Add new node at same Y as last node, fixed distance in X
+        // Filter out pointer nodes to find the actual last list node
+        const listNodes = nodes.filter(n => n.type === 'linkedListNode');
+        const lastNode = listNodes.length > 0 ? listNodes[listNodes.length - 1] : null;
+
+        const fixedDistance = 150;
+        const newNodeX = lastNode ? lastNode.position.x + fixedDistance : 50;
+        const newNodeY = lastNode ? lastNode.position.y : 100;
+
+        const newNodeId = `node-${Date.now()}`;
+        const newNode = {
+            id: newNodeId,
+            type: 'linkedListNode',
+            data: {
+                label: value.toString(),
+                nodeId: newNodeId,
+                onPointerHover: this.handlePointerHover,
+            },
+            position: { x: newNodeX, y: newNodeY },
+            style: {
+                background: this.state.newNodeColor,
+                color: 'white',
+                border: '2px solid #333',
+                borderRadius: '8px',
+                padding: '10px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+            }
+        };
+
+        const newNodes = [...nodes, newNode];
+
+        // Add edge if list was not empty
+        if (lastNode) {
+            edges.push({
+                id: `edge-${lastNode.id}-${newNodeId}`, // Use unique ID based on nodes
+                source: lastNode.id,
+                sourceHandle: 'right',
+                target: newNodeId,
+                targetHandle: 'left',
+                animated: true,
+                type: 'smoothstep',
+                markerEnd: {
+                    type: MarkerType.ArrowClosed,
+                    width: 10,
+                    height: 10,
+                    color: '#333'
+                },
+                style: {
+                    strokeWidth: 2,
+                    stroke: '#333'
+                }
+            });
+        }
+
+        // Update Tail Pointer Position if it exists
+        if (this.state.showPointers) {
+            const tailPointerIndex = newNodes.findIndex(n => n.id === 'pointer-tail');
+            if (tailPointerIndex !== -1) {
+                // Update pointer node position
+                newNodes[tailPointerIndex] = {
+                    ...newNodes[tailPointerIndex],
+                    position: {
+                        x: newNodeX,
+                        y: newNodeY + 100
+                    }
+                };
+
+                // Update pointer edge
+                const pointerEdgeIndex = edges.findIndex(e => e.source === 'pointer-tail');
+                if (pointerEdgeIndex !== -1) {
+                    edges[pointerEdgeIndex] = {
+                        ...edges[pointerEdgeIndex],
+                        target: newNodeId
+                    };
+                } else {
+                    // If edge didn't exist (e.g. list was empty), create it
+                    edges.push({
+                        id: `edge-pointer-tail`,
+                        source: 'pointer-tail',
+                        sourceHandle: 'right',
+                        target: newNodeId,
+                        targetHandle: 'bottom',
+                        animated: true,
+                        type: 'default',
+                        style: { stroke: '#FF5722', strokeWidth: 2 },
+                        markerEnd: { type: MarkerType.ArrowClosed, color: '#FF5722' },
+                    });
+                }
+            }
+
+            // Also handle Head pointer if list was empty
+            if (listNodes.length === 0) {
+                const headPointerIndex = newNodes.findIndex(n => n.id === 'pointer-head');
+                if (headPointerIndex !== -1) {
+                    newNodes[headPointerIndex] = {
+                        ...newNodes[headPointerIndex],
+                        position: {
+                            x: newNodeX,
+                            y: newNodeY - 100
+                        }
+                    };
+
+                    // Create head edge
+                    edges.push({
+                        id: `edge-pointer-head`,
+                        source: 'pointer-head',
+                        sourceHandle: 'right',
+                        target: newNodeId,
+                        targetHandle: 'top',
+                        animated: true,
+                        type: 'default',
+                        style: { stroke: '#FF5722', strokeWidth: 2 },
+                        markerEnd: { type: MarkerType.ArrowClosed, color: '#FF5722' },
+                    });
+                }
+            }
         }
 
         this.setState({ nodes: newNodes, edges }, () => {

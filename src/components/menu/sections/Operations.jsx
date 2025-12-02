@@ -40,27 +40,37 @@ export const Operations = ({ disable, onVisualize }) => {
           <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-1 block">
             Insert
           </label>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-3 gap-2">
             <Button
               onClick={() => onVisualize(0, insertValue)}
               disabled={disable}
               variant="outline"
               size="sm"
-              className="justify-start hover:bg-green-50 hover:text-green-600 hover:border-green-200"
+              className="w-full justify-center hover:bg-green-50 hover:text-green-600 hover:border-green-200"
             >
-              <Plus className="w-3 h-3 mr-2 text-green-400" /> Head
+              <Plus className="w-3 h-3 mr-1 text-green-400" /> Head
             </Button>
             <Button
               onClick={() => onVisualize(2, insertValue)}
               disabled={disable}
               variant="outline"
               size="sm"
-              className="justify-start hover:bg-green-50 hover:text-green-600 hover:border-green-200"
+              className="w-full justify-center hover:bg-green-50 hover:text-green-600 hover:border-green-200"
             >
-              <Plus className="w-3 h-3 mr-2 text-green-400" /> Tail
+              <Plus className="w-3 h-3 mr-1 text-green-400" /> Tail
+            </Button>
+            <Button
+              onClick={() => onVisualize(6, insertValue)}
+              disabled={disable}
+              variant="outline"
+              size="sm"
+              className="w-full justify-center hover:bg-green-50 hover:text-green-600 hover:border-green-200"
+            >
+              <Plus className="w-3 h-3 mr-1 text-green-400" /> Tail (last)
             </Button>
           </div>
         </div>
+        <div className="h-px bg-gray-100 my-2" />
 
         <div>
           <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-1 block">
