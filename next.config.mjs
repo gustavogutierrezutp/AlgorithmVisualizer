@@ -4,9 +4,8 @@ const nextConfig = {
         unoptimized: true
     },
     output: 'export', // Outputs a Single-Page Application (SPA).
-    distDir: './build', // Changes the build output directory to `./dist`.
-    assetPrefix: '/AlgorithmVisualizer',
-    basePath: '/AlgorithmVisualizer',
+    distDir: 'build', // Changes the build output directory to `./dist`.
+     assetPrefix: './', 
 }
    
 export default nextConfig;
