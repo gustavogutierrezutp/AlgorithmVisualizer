@@ -1,6 +1,6 @@
 "use client";
 import React, { Component } from 'react';
-import { ReactFlow, Background, Controls, MarkerType, applyNodeChanges, SelectionMode, addEdge } from '@xyflow/react';
+import { ReactFlow, Background, Controls, MarkerType, applyNodeChanges, SelectionMode, addEdge, reconnectEdge } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
@@ -31,6 +31,7 @@ class LinkedList extends Component {
         iterateColor: '#FF5722',
         selectedNodes: [],
         showPointers: false,
+        isReconnecting: false,
     }
 
     menuRef = React.createRef();
@@ -165,6 +166,20 @@ class LinkedList extends Component {
         });
     }
 
+    onReconnect = (oldEdge, newConnection) => {
+        this.setState({
+            edges: reconnectEdge(oldEdge, newConnection, this.state.edges),
+        });
+    }
+
+    onReconnectStart = () => {
+        this.setState({ isReconnecting: true });
+    }
+
+    onReconnectEnd = () => {
+        this.setState({ isReconnecting: false });
+    }
+
     isValidConnection = (connection) => {
         const { source, target, targetHandle } = connection;
         const sourceNode = this.state.nodes.find(node => node.id === source);
@@ -175,9 +190,12 @@ class LinkedList extends Component {
         // Restrict CircleNode -> LinkedListNode connections
         if (sourceNode.type === 'circleNode') {
             // Check if this circle node already has an outgoing connection
-            const hasExistingConnection = this.state.edges.some(edge => edge.source === source);
-            if (hasExistingConnection) {
-                return false;
+            // BUT allow it if we are currently reconnecting (moving an existing edge)
+            if (!this.state.isReconnecting) {
+                const hasExistingConnection = this.state.edges.some(edge => edge.source === source);
+                if (hasExistingConnection) {
+                    return false;
+                }
             }
 
             if (targetNode.type === 'linkedListNode') {
@@ -291,6 +309,9 @@ class LinkedList extends Component {
                             nodesConnectable={true}
                             elementsSelectable={true}
                             onConnect={this.onConnect}
+                            onReconnect={this.onReconnect}
+                            onReconnectStart={this.onReconnectStart}
+                            onReconnectEnd={this.onReconnectEnd}
                             isValidConnection={this.isValidConnection}
                             selectionMode={SelectionMode.Partial}
                             selectionOnDrag={true}
