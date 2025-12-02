@@ -30,6 +30,7 @@ class LinkedList extends Component {
         newNodeColor: '#4CAF50',
         iterateColor: '#FF5722',
         selectedNodes: [],
+        showPointers: false,
     }
 
     menuRef = React.createRef();
@@ -258,7 +259,9 @@ class LinkedList extends Component {
                         iterateColor={this.state.iterateColor}
                         onIterateColorChange={this.handleIterateColorChange}
                         onAddCircularNode={this.handleAddCircularNode}
-                        onAddConnectedCircle={this.handleAddConnectedCircle}
+                        onTogglePointers={this.handleTogglePointers}
+                        showPointers={this.state.showPointers}
+                        isListEmpty={this.state.nodes.filter(n => n.type === 'linkedListNode').length === 0}
                     />
                     <div id="canvas-area" className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50 relative">
                         {this.state.nodes.length === 0 && (
@@ -415,86 +418,95 @@ class LinkedList extends Component {
         }));
     }
 
-    handleAddConnectedCircle = () => {
-        const timestamp = Date.now();
-        const headPointerId = `circle-head-${timestamp}`;
-        const tailPointerId = `circle-tail-${timestamp}`;
+    handleTogglePointers = () => {
+        const { showPointers } = this.state;
 
-        const listNodes = this.state.nodes.filter(n => n.type === 'linkedListNode');
-        const headNode = listNodes.length > 0 ? listNodes[0] : null;
-        const tailNode = listNodes.length > 0 ? listNodes[listNodes.length - 1] : null;
+        if (showPointers) {
+            // Remove pointers
+            this.setState(prevState => ({
+                nodes: prevState.nodes.filter(n => n.id !== 'pointer-head' && n.id !== 'pointer-tail'),
+                edges: prevState.edges.filter(e => !e.id.startsWith('edge-pointer-')),
+                showPointers: false
+            }));
+        } else {
+            // Add pointers
+            const listNodes = this.state.nodes.filter(n => n.type === 'linkedListNode');
+            const headNode = listNodes.length > 0 ? listNodes[0] : null;
+            const tailNode = listNodes.length > 0 ? listNodes[listNodes.length - 1] : null;
 
-        const headPointerPos = headNode ? {
-            x: headNode.position.x,
-            y: headNode.position.y - 100
-        } : {
-            x: Math.random() * 400 + 50,
-            y: Math.random() * 400 + 50
-        };
+            const headPointerPos = headNode ? {
+                x: headNode.position.x,
+                y: headNode.position.y - 100
+            } : {
+                x: Math.random() * 400 + 50,
+                y: Math.random() * 400 + 50
+            };
 
-        const headPointerNode = {
-            id: headPointerId,
-            type: 'circleNode',
-            data: { label: 'H' }, // Head Pointer Node
-            position: headPointerPos,
-        };
+            const headPointerNode = {
+                id: 'pointer-head',
+                type: 'circleNode',
+                data: { label: 'H' },
+                position: headPointerPos,
+            };
 
-        const tailPointerPos = tailNode ? {
-            x: tailNode.position.x,
-            y: tailNode.position.y + 100
-        } : {
-            x: Math.random() * 400 + 50,
-            y: Math.random() * 400 + 50
-        };
+            const tailPointerPos = tailNode ? {
+                x: tailNode.position.x,
+                y: tailNode.position.y + 100
+            } : {
+                x: Math.random() * 400 + 50,
+                y: Math.random() * 400 + 50
+            };
 
-        const tailPointerNode = {
-            id: tailPointerId,
-            type: 'circleNode',
-            data: { label: 'T' }, // Tail Pointer Node
-            position: tailPointerPos,
-        };
+            const tailPointerNode = {
+                id: 'pointer-tail',
+                type: 'circleNode',
+                data: { label: 'T' },
+                position: tailPointerPos,
+            };
 
-        const newNodes = [headPointerNode, tailPointerNode];
-        const newEdges = [];
+            const newNodes = [headPointerNode, tailPointerNode];
+            const newEdges = [];
 
-        if (headNode) {
-            newEdges.push({
-                id: `edge-${headPointerId}-${headNode.id}`,
-                source: headPointerId,
-                target: headNode.id,
-                targetHandle: 'top',
-                animated: true,
-                style: { stroke: '#333', strokeWidth: 2 },
-                markerEnd: {
-                    type: MarkerType.ArrowClosed,
-                    width: 10,
-                    height: 10,
-                    color: '#333'
-                },
-            });
+            if (headNode) {
+                newEdges.push({
+                    id: `edge-pointer-head-${headNode.id}`,
+                    source: 'pointer-head',
+                    target: headNode.id,
+                    targetHandle: 'top',
+                    animated: true,
+                    style: { stroke: '#333', strokeWidth: 2 },
+                    markerEnd: {
+                        type: MarkerType.ArrowClosed,
+                        width: 10,
+                        height: 10,
+                        color: '#333'
+                    },
+                });
+            }
+
+            if (tailNode) {
+                newEdges.push({
+                    id: `edge-pointer-tail-${tailNode.id}`,
+                    source: 'pointer-tail',
+                    target: tailNode.id,
+                    targetHandle: 'bottom',
+                    animated: true,
+                    style: { stroke: '#333', strokeWidth: 2 },
+                    markerEnd: {
+                        type: MarkerType.ArrowClosed,
+                        width: 10,
+                        height: 10,
+                        color: '#333'
+                    },
+                });
+            }
+
+            this.setState(prevState => ({
+                nodes: [...prevState.nodes, ...newNodes],
+                edges: [...prevState.edges, ...newEdges],
+                showPointers: true
+            }));
         }
-
-        if (tailNode) {
-            newEdges.push({
-                id: `edge-${tailPointerId}-${tailNode.id}`,
-                source: tailPointerId,
-                target: tailNode.id,
-                targetHandle: 'bottom',
-                animated: true,
-                style: { stroke: '#333', strokeWidth: 2 },
-                markerEnd: {
-                    type: MarkerType.ArrowClosed,
-                    width: 10,
-                    height: 10,
-                    color: '#333'
-                },
-            });
-        }
-
-        this.setState(prevState => ({
-            nodes: [...prevState.nodes, ...newNodes],
-            edges: [...prevState.edges, ...newEdges]
-        }));
     }
 
     handleVisualize = async (opIndex, value) => {

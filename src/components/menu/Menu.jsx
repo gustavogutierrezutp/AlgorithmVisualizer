@@ -47,7 +47,9 @@ export default function Menu(props) {
 
         <TestSection
           onAddCircularNode={props.onAddCircularNode}
-          onAddConnectedCircle={props.onAddConnectedCircle}
+          onTogglePointers={props.onTogglePointers}
+          showPointers={props.showPointers}
+          isListEmpty={props.isListEmpty}
         />
 
         <DisplayOptions
