@@ -68,6 +68,11 @@ export const ListCreation = ({
           <Input
             value={sequenceInput}
             onChange={(e) => setSequenceInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !disable) {
+                onCreateFromSequence(sequenceInput);
+              }
+            }}
             placeholder="[1, 2, 3...]"
             disabled={disable}
             className="font-mono text-xs"

@@ -440,6 +440,7 @@ class LinkedList extends Component {
                 label: 'C',
                 nodeId: newNodeId,
                 onPointerHover: this.handlePointerHover,
+                onLabelChange: this.handleCircleNodeLabelChange,
             },
             position: {
                 x: Math.random() * 400 + 50,
@@ -448,6 +449,16 @@ class LinkedList extends Component {
         };
         this.setState(prevState => ({
             nodes: [...prevState.nodes, newNode]
+        }));
+    }
+
+    handleCircleNodeLabelChange = (nodeId, newLabel) => {
+        this.setState(prevState => ({
+            nodes: prevState.nodes.map(node =>
+                node.id === nodeId
+                    ? { ...node, data: { ...node.data, label: newLabel } }
+                    : node
+            )
         }));
     }
 
@@ -482,6 +493,7 @@ class LinkedList extends Component {
                     label: 'H',
                     nodeId: 'pointer-head',
                     onPointerHover: this.handlePointerHover,
+                    onLabelChange: this.handleCircleNodeLabelChange,
                 },
                 position: headPointerPos,
             };
@@ -501,6 +513,7 @@ class LinkedList extends Component {
                     label: 'T',
                     nodeId: 'pointer-tail',
                     onPointerHover: this.handlePointerHover,
+                    onLabelChange: this.handleCircleNodeLabelChange,
                 },
                 position: tailPointerPos,
             };
