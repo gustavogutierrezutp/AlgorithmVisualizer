@@ -39,7 +39,6 @@ export const ListCreation = ({
             className="w-full"
             onClick={onCreateEmpty}
             disabled={disable}
-            variant="outline"
           >
             Create Empty List
           </Button>
