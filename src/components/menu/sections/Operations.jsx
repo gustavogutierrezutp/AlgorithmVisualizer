@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { 
-  Play, 
-  Plus, 
-  Trash2, 
-  ArrowRightLeft, 
-  Shuffle, 
-  Zap, 
-  ArrowRight 
+import {
+  Play,
+  Plus,
+  Trash2,
+  ArrowRightLeft,
+  Shuffle,
+  Zap,
+  ArrowRight,
+  AlertTriangle
 } from "lucide-react";
 import { Section } from "../Section";
 
@@ -45,7 +46,6 @@ export const Operations = ({ disable, onVisualize }) => {
 
       <div className="space-y-4">
         <div>
-          
           <div className="space-y-2">
             <Button
               onClick={() => onVisualize(0, insertValue)}
@@ -54,7 +54,7 @@ export const Operations = ({ disable, onVisualize }) => {
               size="sm"
               className="w-full py-4 justify-start hover:bg-green-50 hover:text-green-600 hover:border-green-200"
             >
-              <Plus className="w-3 h-3 mr-2 text-green-400" /> 
+              <Plus className="w-3 h-3 mr-2 text-green-400" />
               <span className="text-left">Insert at Head</span>
             </Button>
 
@@ -64,13 +64,19 @@ export const Operations = ({ disable, onVisualize }) => {
                 disabled={disable}
                 variant="outline"
                 size="sm"
-                className="justify-start px-3 h-auto py-1 hover:bg-yellow-50 hover:text-yellow-600 hover:border-yellow-200"
+                className="relative overflow-visible justify-start px-3 h-auto py-1 hover:bg-yellow-50 hover:text-yellow-600 hover:border-yellow-200"
                 title="Recorre toda la lista hasta el final"
               >
                 <ArrowRight className="w-4 h-4 mr-2 text-yellow-500 shrink-0" />
                 <div className="flex flex-col items-start leading-tight">
                   <span className="font-medium">Tail</span>
-                  <span className="text-[10px] text-gray-400 font-medium">Traverse</span>
+                  <span className="text-[10px] text-gray-400 font-medium">
+                    Traverse
+                  </span>
+                </div>
+
+                <div className="absolute  -top-1.5 -right-1.5 bg-yellow-400 text-yellow-900 rounded-full p-[2px] border border-white shadow-sm z-10 flex items-center justify-center">
+                  <AlertTriangle size={8} strokeWidth={2.5} className="p-[.15rem]" />
                 </div>
               </Button>
 
@@ -85,7 +91,9 @@ export const Operations = ({ disable, onVisualize }) => {
                 <Zap className="w-4 h-4 mr-2 text-purple-500 shrink-0" />
                 <div className="flex flex-col items-start leading-tight">
                   <span className="font-medium">Tail</span>
-                  <span className="text-[10px] text-gray-400 font-medium">Pointer</span>
+                  <span className="text-[10px] text-gray-400 font-medium">
+                    Pointer
+                  </span>
                 </div>
               </Button>
             </div>
