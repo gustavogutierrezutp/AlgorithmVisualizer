@@ -1,7 +1,9 @@
-import React from 'react';
-import { Handle, Position } from '@xyflow/react';
+import React, { useState } from 'react';
+import { Handle, Position, useHandleConnections } from '@xyflow/react';
 
 const LinkedListNode = ({ data, style }) => {
+    const connections = useHandleConnections({ type: 'source', id: 'right' });
+    const [isHovered, setIsHovered] = useState(false);
     return (
         <div
             style={{
@@ -109,11 +111,18 @@ const LinkedListNode = ({ data, style }) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontSize: '20px',
-                    background: 'rgba(0, 0, 0, 0.1)',
+                    background: (isHovered && connections.length === 0) ? '#F44336' : 'rgba(0, 0, 0, 0.1)',
                     cursor: 'pointer',
+                    transition: 'background 0.3s ease',
                 }}
-                onMouseEnter={() => data.onPointerHover && data.onPointerHover(data.nodeId)}
-                onMouseLeave={() => data.onPointerHover && data.onPointerHover(null)}
+                onMouseEnter={() => {
+                    setIsHovered(true);
+                    data.onPointerHover && data.onPointerHover(data.nodeId);
+                }}
+                onMouseLeave={() => {
+                    setIsHovered(false);
+                    data.onPointerHover && data.onPointerHover(null);
+                }}
             >
                 ●
             </div>
