@@ -420,29 +420,39 @@ class LinkedList extends Component {
         const headPointerId = `circle-head-${timestamp}`;
         const tailPointerId = `circle-tail-${timestamp}`;
 
+        const listNodes = this.state.nodes.filter(n => n.type === 'linkedListNode');
+        const headNode = listNodes.length > 0 ? listNodes[0] : null;
+        const tailNode = listNodes.length > 0 ? listNodes[listNodes.length - 1] : null;
+
+        const headPointerPos = headNode ? {
+            x: headNode.position.x,
+            y: headNode.position.y - 100
+        } : {
+            x: Math.random() * 400 + 50,
+            y: Math.random() * 400 + 50
+        };
+
         const headPointerNode = {
             id: headPointerId,
             type: 'circleNode',
             data: { label: 'H' }, // Head Pointer Node
-            position: {
-                x: Math.random() * 400 + 50,
-                y: Math.random() * 400 + 50
-            },
+            position: headPointerPos,
+        };
+
+        const tailPointerPos = tailNode ? {
+            x: tailNode.position.x,
+            y: tailNode.position.y + 100
+        } : {
+            x: Math.random() * 400 + 50,
+            y: Math.random() * 400 + 50
         };
 
         const tailPointerNode = {
             id: tailPointerId,
             type: 'circleNode',
             data: { label: 'T' }, // Tail Pointer Node
-            position: {
-                x: Math.random() * 400 + 50,
-                y: Math.random() * 400 + 50
-            },
+            position: tailPointerPos,
         };
-
-        const listNodes = this.state.nodes.filter(n => n.type === 'linkedListNode');
-        const headNode = listNodes.length > 0 ? listNodes[0] : null;
-        const tailNode = listNodes.length > 0 ? listNodes[listNodes.length - 1] : null;
 
         const newNodes = [headPointerNode, tailPointerNode];
         const newEdges = [];
