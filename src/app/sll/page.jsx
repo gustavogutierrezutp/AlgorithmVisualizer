@@ -246,6 +246,7 @@ class LinkedList extends Component {
                         iterateColor={this.state.iterateColor}
                         onIterateColorChange={this.handleIterateColorChange}
                         onAddCircularNode={this.handleAddCircularNode}
+                        onAddConnectedCircle={this.handleAddConnectedCircle}
                     />
                     <div id="canvas-area" className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50 relative">
                         {this.state.nodes.length === 0 && (
@@ -399,6 +400,49 @@ class LinkedList extends Component {
         };
         this.setState(prevState => ({
             nodes: [...prevState.nodes, newNode]
+        }));
+    }
+
+    handleAddConnectedCircle = () => {
+        const newNodeId = `circle-${Date.now()}`;
+        const newNode = {
+            id: newNodeId,
+            type: 'circleNode',
+            data: { label: 'C' },
+            position: {
+                x: Math.random() * 400 + 50,
+                y: Math.random() * 400 + 50
+            },
+        };
+
+        let newEdges = [];
+        // Find the first linked list node (head)
+        // Assuming nodes are ordered or we can find the one with no incoming edges from other list nodes?
+        // Or just the first one in the array that is a linkedListNode?
+        // The initializeList puts them in order.
+        const headNode = this.state.nodes.find(n => n.type === 'linkedListNode');
+
+        if (headNode) {
+            const newEdge = {
+                id: `edge-${newNodeId}-${headNode.id}`,
+                source: newNodeId,
+                sourceHandle: null, // CircleNode has default handle or we use specific? CircleNode has Right handle.
+                // Wait, CircleNode only has a Right handle in the code I saw earlier?
+                // Let's check CircleNode again if needed.
+                // CircleNode.jsx: <Handle type="source" position={Position.Right} ... />
+                // So sourceHandle should probably be null (default) or we can specify if it has ID.
+                // The handle in CircleNode doesn't have an ID.
+                target: headNode.id,
+                targetHandle: 'top', // Connect to top handle
+                animated: true,
+                style: { stroke: '#333' },
+            };
+            newEdges = [newEdge];
+        }
+
+        this.setState(prevState => ({
+            nodes: [...prevState.nodes, newNode],
+            edges: [...prevState.edges, ...newEdges]
         }));
     }
 
