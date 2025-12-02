@@ -196,8 +196,12 @@ se observará recorrido, el elemento se insertará al final de la lista.
 
 #### Borrado
 
-Para eliminar un elemento de la lista se puede pulsar cualquiera de los botones
-con leyendas:"🗑 Head" o "🗑 Tail". El primero removerá el primer nodo de la
-lista mientras que el segundo presentará la animación del último nodo. En este
-último caso se visualizará el recorrido de la lista y la eliminación del último
-nodo.
+Para eliminar un elemento de la lista existen dos operaciones. La primera se
+puede ejecutar haciendo click en el botón ![](figures/remove-head.png). De esta
+forma se removerá el primer elemento de la lista. Después de pulsarlo se
+mostrará de manera animada sobre el lienzo.
+
+La segunda forma se accede con el botón ![](figures/remove-tail.png). Para esta
+operación se muestra todo el recorrido desde el inicio hasta el penúltimo
+elemento de la lista (que se convertirá en el nuevo último).
+
