@@ -148,7 +148,19 @@ class LinkedList extends Component {
 
     onConnect = (params) => {
         this.setState({
-            edges: addEdge(params, this.state.edges),
+            edges: addEdge({
+                ...params,
+                markerEnd: {
+                    type: MarkerType.ArrowClosed,
+                    width: 10,
+                    height: 10,
+                    color: '#333'
+                },
+                style: {
+                    strokeWidth: 2,
+                    stroke: '#333'
+                }
+            }, this.state.edges),
         });
     }
 
@@ -442,7 +454,13 @@ class LinkedList extends Component {
                 target: headNode.id,
                 targetHandle: 'top',
                 animated: true,
-                style: { stroke: '#333' },
+                style: { stroke: '#333', strokeWidth: 2 },
+                markerEnd: {
+                    type: MarkerType.ArrowClosed,
+                    width: 10,
+                    height: 10,
+                    color: '#333'
+                },
             });
         }
 
@@ -453,7 +471,13 @@ class LinkedList extends Component {
                 target: tailNode.id,
                 targetHandle: 'bottom',
                 animated: true,
-                style: { stroke: '#333' },
+                style: { stroke: '#333', strokeWidth: 2 },
+                markerEnd: {
+                    type: MarkerType.ArrowClosed,
+                    width: 10,
+                    height: 10,
+                    color: '#333'
+                },
             });
         }
 
