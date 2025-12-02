@@ -407,7 +407,11 @@ class LinkedList extends Component {
         const newNode = {
             id: newNodeId,
             type: 'circleNode',
-            data: { label: 'C' },
+            data: {
+                label: 'C',
+                nodeId: newNodeId,
+                onPointerHover: this.handlePointerHover,
+            },
             position: {
                 x: Math.random() * 400 + 50,
                 y: Math.random() * 400 + 50
@@ -445,7 +449,11 @@ class LinkedList extends Component {
             const headPointerNode = {
                 id: 'pointer-head',
                 type: 'circleNode',
-                data: { label: 'H' },
+                data: {
+                    label: 'H',
+                    nodeId: 'pointer-head',
+                    onPointerHover: this.handlePointerHover,
+                },
                 position: headPointerPos,
             };
 
@@ -460,7 +468,11 @@ class LinkedList extends Component {
             const tailPointerNode = {
                 id: 'pointer-tail',
                 type: 'circleNode',
-                data: { label: 'T' },
+                data: {
+                    label: 'T',
+                    nodeId: 'pointer-tail',
+                    onPointerHover: this.handlePointerHover,
+                },
                 position: tailPointerPos,
             };
 

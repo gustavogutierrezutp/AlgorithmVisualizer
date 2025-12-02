@@ -4,6 +4,8 @@ import { Handle, Position } from '@xyflow/react';
 const CircleNode = ({ data, style }) => {
   return (
     <div
+      onMouseEnter={() => data.onPointerHover && data.onPointerHover(data.nodeId)}
+      onMouseLeave={() => data.onPointerHover && data.onPointerHover(null)}
       style={{
         ...style,
         width: '50px',
@@ -17,6 +19,7 @@ const CircleNode = ({ data, style }) => {
         fontWeight: 'bold',
         border: '2px solid #E64A19',
         boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
+        cursor: 'pointer',
       }}
     >
       {data.label || 'C'}
