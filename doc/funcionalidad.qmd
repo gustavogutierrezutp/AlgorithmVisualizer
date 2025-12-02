@@ -28,11 +28,11 @@ funcionalidad de cada parte.
 Las otras dos partes son las más importantes para la interacción con el
 programador. En la sección vertical izquierda se puede apreciar una barra de
 menús. En el caso de la figura todos ellos se encuentran colapsados y entre
-otros, presentan los títulos: __List Creation__, __Operations__ y __Display
-Options__. Finalmente en la sección vertical derecha se encuentra el lienzo que
-es el lugar donde aparecen las representaciones gráficas. En este caso se
-aprecia una lista de números. En las secciones siguientes se muestra
-detalladamente cada una de las funcionalidades.
+otros, presentan los títulos: __List Creation__, __Operations__, __Programmer
+Tools__ y __Display Options__. Finalmente en la sección vertical derecha se
+encuentra el lienzo que es el lugar donde aparecen las representaciones
+gráficas. En este caso se aprecia una lista de números. En las secciones
+siguientes se muestra detalladamente cada una de las funcionalidades.
 
 ## Creación
 
@@ -41,6 +41,8 @@ opciones de creación se encuentran en el primer sub menu con el título __List
 Creation__.
 
 ### Lista vacía {.unnumbered}
+
+![](figures/creation-empty.png)
 
 Para crear una lista vacía donde el usuario pueda comenzar a añadir elementos
 haciendo uso de las operaciones se debe hacer click en la pestaña _Empty_ y a
@@ -57,6 +59,8 @@ esta opción es cuestión de seleccionar el número de nodos utilizando el eleme
 deslizante y posteriormente pulsar el botón _Generate Random_. Al presionar el
 botón aparecerá la lista en el lienzo de la derecha junto con sus elementos.
 
+![](figures/creation-random.png)
+
 ### Lista personalizada {.unnumbered}
 
 Cuando se requiere una lista con elementos específicos la tercera opción es la
@@ -64,6 +68,8 @@ indicada. Haciendo click en _Custom_ aparecerá un cuadro de texto para insertar
 cada uno de los elementos de la lista. El formato es simple: los elementos deben
 estar encerrados por los símbolos `[`y `]`. Adicionalmente los números en la
 deben estar separado por comas.
+
+![](figures/creation-custom.png)
 
 ## Adición y borrado de elementos
 
