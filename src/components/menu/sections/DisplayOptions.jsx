@@ -1,13 +1,18 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Settings2, Eye } from "lucide-react";
+import { Settings2, Eye, Dices } from "lucide-react";
 import { CustomSlider } from "@/components/custom-slider";
 import { Section } from "../Section";
 import { ColorPickerInput } from "../ColorPickerInput";
 
 export const DisplayOptions = (props) => {
   return (
-    <Section title="Display Options" icon={Settings2} defaultOpen={false} id="display-options-section">
+    <Section
+      title="Display Options"
+      icon={Settings2}
+      defaultOpen={false}
+      id="display-options-section"
+    >
       <div className="space-y-4">
         <CustomSlider
           defaultValue={50}
@@ -73,11 +78,12 @@ export const DisplayOptions = (props) => {
         </div>
 
         <Button
-          className="w-full mt-2"
+          className="w-full mt-2 bg-pink-50 text-pink-600 border border-pink-200 hover:bg-pink-100 hover:text-pink-700 hover:border-pink-300 transition-all shadow-sm"
           size="sm"
           onClick={props.onScramble}
           disabled={props.disable}
         >
+          <Dices className="w-4 h-4 mr-2 opacity-80" />
           Scramble Layout
         </Button>
       </div>

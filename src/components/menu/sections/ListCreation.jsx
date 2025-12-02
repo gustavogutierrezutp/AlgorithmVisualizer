@@ -35,11 +35,8 @@ export const ListCreation = ({
 
       {creationMode === "empty" && (
         <div className="text-center py-2">
-          <Button
-            className="w-full"
-            onClick={onCreateEmpty}
-            disabled={disable}
-          >
+          <Button className="w-full bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 hover:text-blue-700 hover:border-blue-300 transition-all shadow-sm"
+           onClick={onCreateEmpty} disabled={disable}>
             Create Empty List
           </Button>
         </div>
@@ -57,7 +54,7 @@ export const ListCreation = ({
             disable={disable}
           />
           <Button
-            className="w-full"
+            className="w-full bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 hover:text-blue-700 hover:border-blue-300 transition-all shadow-sm"
             onClick={onCreateRandom}
             disabled={disable}
           >
@@ -76,7 +73,7 @@ export const ListCreation = ({
             className="font-mono text-xs"
           />
           <Button
-            className="w-full"
+            className="w-full bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 hover:text-blue-700 hover:border-blue-300 transition-all shadow-sm"
             onClick={() => onCreateFromSequence(sequenceInput)}
             disabled={disable}
           >
