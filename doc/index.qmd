@@ -43,18 +43,9 @@ requiere de ninguna otra dependencia.
 
 El libro está organizado de la siguiente manera:
 
-1.  **Introducción**: Conceptos básicos y configuración.
-2.  **Capítulo 1**: El núcleo de la investigación o historia.
-3.  **Referencias**: Bibliografía y fuentes citadas.
+- En el @sec-funcionalidad se describe la funcionalidad de la aplicación y las
+  operaciones que se encuentran disponibles para el usuario.
+- En el @sec-futuro se describen algunas ideas de trabajo futuro que los autores
+  consideran interesantes desde la perspectiva académica.
 
-
-::: {.callout-note}
-## Nota Importante
-Estos recuadros azules contienen información que no debes pasar por alto.
-:::
-
-::: {.callout-tip}
-## Consejo
-Estos recuadros verdes ofrecen sugerencias prácticas para mejorar tu flujo de trabajo.
-:::
 

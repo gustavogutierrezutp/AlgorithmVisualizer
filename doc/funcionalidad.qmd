@@ -1,4 +1,4 @@
-# Funcionalidad
+# Funcionalidad {#sec-funcionalidad}
 
 Las operaciones soportadas por la estructura de datos se pueden dividir en grupos:
 
@@ -42,13 +42,17 @@ Creation__.
 
 ### Lista vacía {.unnumbered}
 
+::: {#fig-creation-empty}
 ![](figures/creation-empty.png)
+
+Interfaz para la creación de una lista vacía.
+:::
 
 Para crear una lista vacía donde el usuario pueda comenzar a añadir elementos
 haciendo uso de las operaciones se debe hacer click en la pestaña _Empty_ y a
-continuación hacer click en el botón _Create Empty List_. Al dar click en el
-aparecerá un mensaje en el lienzo de la derecha informando que la lista
-actualmente visualizada se encuentra vacía.
+continuación hacer click en el botón _Create Empty List_ (ver
+@fig-creation-empty). Al dar click en el aparecerá un mensaje en el lienzo de la
+derecha informando que la lista actualmente visualizada se encuentra vacía.
 
 ### Lista con números aleatorios {.unnumbered}
 
@@ -56,28 +60,46 @@ La siguiente opción para crear una lista es con elementos aleatorios. Esto es
 especialmente útil cuando el usuario desea ver como se comporta una operación
 sobre una lista que ya contiene elementos y no desea insertarlos uno a uno. En
 esta opción es cuestión de seleccionar el número de nodos utilizando el elemento
-deslizante y posteriormente pulsar el botón _Generate Random_. Al presionar el
-botón aparecerá la lista en el lienzo de la derecha junto con sus elementos.
+deslizante y posteriormente pulsar el botón _Generate Random_ (ver
+@fig-creation-random). Al presionar el botón aparecerá la lista en el lienzo de
+la derecha junto con sus elementos.
 
+::: {#fig-creation-random}
 ![](figures/creation-random.png)
+
+Interfaz para la creación de una lista inicializada de forma aleatoria.
+:::
 
 ### Lista personalizada {.unnumbered}
 
 Cuando se requiere una lista con elementos específicos la tercera opción es la
 indicada. Haciendo click en _Custom_ aparecerá un cuadro de texto para insertar
-cada uno de los elementos de la lista. El formato es simple: los elementos deben
-estar encerrados por los símbolos `[`y `]`. Adicionalmente los números en la
-deben estar separado por comas.
+cada uno de los elementos de la lista (ver @fig-creation-random). El formato es
+simple: los elementos deben estar encerrados por los símbolos `[`y `]`.
+Adicionalmente los números en la deben estar separado por comas. Por ejemplo, al
+introducir `[1,2,3,4,5]` se creará y visualizará la lista que contiene los
+elementos del $1$ al $5$.
 
+::: {#fig-creation-custom}
 ![](figures/creation-custom.png)
+
+Interfaz para la creación de una lista con elementos puntuales.
+:::
 
 ## Visualización de la lista
 
 Después de creada la lista utilizando cualquiera de las formas mencionadas, está
-será visualizada en el lienzo que hay en la parte derecha. Por ejemplo, a
-continuación se muestra la interfaz con una lista creada de 5 elementos.
+será visualizada en el lienzo que hay en la parte derecha. Por ejemplo, en la
+@fig-rand5-commented se muestra la interfaz con una lista creada de 5 elementos.
+En esta figura se encuentran las anotaciones muestran los diferentes nodos de la
+lista y los componentes de uno de ellos.
 
-![](figures/random5.png)
+::: {#fig-rand5-commented}
+![](figures/random5-commented.png)
+
+Visualización anotada de la visualización de una lista enlazada de 5 elementos
+en el lienzo.
+:::
 
 Existen diferentes formas de interactuar con la representación visual de la
 lista enlazada. Los nodos de la lista pueden ser reposicionados y su
@@ -102,16 +124,21 @@ visualización del lienzo.
 :::
 
 
-Cada nodo de la lista consta de dos partes. La primera contiene el dato y la
-segunda representa el apuntador al siguiente nodo en la lista. Cuando el mouse
-se posiciona sobre este último el apuntador es resaltado en un color diferente.
-Esto es útil cuando las listas no se muestran de manera lineal. A continuación
-se muestra la misma lista después de ser reorganizada arrastrando los nodos con
-el mouse sobre el lienzo. El puntero se posicionó sobre el nodo que contiene el
-valor $14$.
+Cada nodo de la lista consta de dos partes como se identifican en la
+@fig-rand5-commented. La primera contiene el dato y la segunda representa el
+apuntador al siguiente nodo en la lista. Cuando el _mouse_ se posiciona sobre
+este último el apuntador es resaltado en un color diferente (ver
+@fig-next-pointer). Esto es útil cuando las listas no se muestran de manera
+lineal. A continuación se muestra la misma lista después de ser reorganizada
+arrastrando los nodos con el mouse sobre el lienzo. El puntero se posicionó
+sobre el nodo que contiene el valor $14$.
 
+::: {#fig-next-pointer}
 ![](figures/next-pointer.png)
 
+Visualización del puntero al siguiente elemento de un nodo. Esta visualización
+se logra al colocar el puntero del ratón sobre el apuntador del nodo.
+:::
 
 ## Operaciones sobre listas
 
