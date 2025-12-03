@@ -14,17 +14,7 @@
     "href": "index.html#instalación",
     "title": "DSViz: Listas enlazadas",
     "section": "1.1 Instalación",
-    "text": "1.1 Instalación\nEl software aquí descrito se puede acceder a través del siguiente enlace:\nhttps://gustavogutierrezutp.github.io/AlgorithmVisualizer/sll\nDespués de hacer click en el enlace, se abrirá el navegador en una página como la que se presenta a continuación.\n\nComo se trata de una herramienta pedagógica que tiene como objetivo ser fácilmente accesible los autores optaron por la manera más sencilla y con cero requisitos de instalación. Todo corre completamente en el navegador y no requiere de ninguna otra dependencia.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducción</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#estructura-de-este-documento",
-    "href": "index.html#estructura-de-este-documento",
-    "title": "DSViz: Listas enlazadas",
-    "section": "1.2 Estructura de este documento",
-    "text": "1.2 Estructura de este documento\nEl libro está organizado de la siguiente manera:\n\nEn el Capítulo 2 se describe la funcionalidad de la aplicación y las operaciones que se encuentran disponibles para el usuario.\nEn el ?sec-futuro se describen algunas ideas de trabajo futuro que los autores consideran interesantes desde la perspectiva académica.",
+    "text": "1.1 Instalación\nEl software aquí descrito se puede acceder a través del siguiente enlace:\nhttps://gustavogutierrezutp.github.io/AlgorithmVisualizer/sll\nDespués de hacer click en el enlace, se abrirá el navegador en una página como la que se presenta a continuación.\n\nComo se trata de una herramienta pedagógica que tiene como objetivo ser fácilmente accesible los autores optaron por la manera más sencilla y con cero requisitos de instalación. Todo corre completamente en el navegador y no requiere de ninguna otra dependencia. En el Capítulo 2 se describe en detalle el funcionamiento de la aplicación.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducción</span>"
     ]

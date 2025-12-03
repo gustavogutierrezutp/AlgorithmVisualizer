@@ -36,16 +36,8 @@ la que se presenta a continuación.
 Como se trata de una herramienta pedagógica que tiene como objetivo ser
 fácilmente accesible los autores optaron por la manera más sencilla y con cero
 requisitos de instalación. Todo corre completamente en el navegador y no
-requiere de ninguna otra dependencia.
+requiere de ninguna otra dependencia. En el @sec-funcionalidad se describe en
+detalle el funcionamiento de la aplicación.
 
-
-## Estructura de este documento
-
-El libro está organizado de la siguiente manera:
-
-- En el @sec-funcionalidad se describe la funcionalidad de la aplicación y las
-  operaciones que se encuentran disponibles para el usuario.
-- En el @sec-futuro se describen algunas ideas de trabajo futuro que los autores
-  consideran interesantes desde la perspectiva académica.
 
 
