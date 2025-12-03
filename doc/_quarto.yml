@@ -3,8 +3,8 @@ project:
   output-dir: _book
 
 book:
-  title: "Simulador visual de estructuras de datos"
-  subtitle: "Versión 1.0: Listas enlazadas"
+  title: "DSViz: Listas enlazadas"
+  subtitle: "Versión 1.0: Visualización e interacción con listas enlazadas"
   author: 
     - name: "Gustavo Gutiérrez-Sabogal"
       email: "gustavo.gutierrez@utp.edu.co"
@@ -25,9 +25,9 @@ book:
   
   # List your .qmd files here in the order they should appear
   chapters:
-    - index.qmd       # This is usually the Preface/Welcome page
-    - funcionalidad.qmd       # Chapter 1
-    #- capitulo1.qmd   # Chapter 2
+    - index.qmd
+    - funcionalidad.qmd
+    - futuro.qmd 
     #- references.qmd  # Bibliography
 
 # GLOBAL LANGUAGE SETTING

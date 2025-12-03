@@ -1,0 +1,7 @@
+## Trabajo futuro
+
+A continuación se presentan algunas ideas que pueden ser desarrolladas como
+trabajo futuro en la forma de versiones posteriores.
+
+1. Lasser pointer
+2. Drawing with tablet on the canvas

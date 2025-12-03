@@ -24,13 +24,22 @@ La idea de crear un simulador tiene diferentes fundamentos:
   
 ## Instalación
 
-::: {.callout-warning}
-### TODO
-  Cómo vamos a distribuir el simulador?
-:::
+El software aquí descrito se puede acceder a través del siguiente enlace:
+
+[https://gustavogutierrezutp.github.io/AlgorithmVisualizer/sll](https://gustavogutierrezutp.github.io/AlgorithmVisualizer/sll)
+
+Después de hacer click en el enlace, se abrirá el navegador en una página como
+la que se presenta a continuación.
+
+![](figures/random5.png)
+
+Como se trata de una herramienta pedagógica que tiene como objetivo ser
+fácilmente accesible los autores optaron por la manera más sencilla y con cero
+requisitos de instalación. Todo corre completamente en el navegador y no
+requiere de ninguna otra dependencia.
 
 
-## Estructura del libro
+## Estructura de este documento
 
 El libro está organizado de la siguiente manera:
 

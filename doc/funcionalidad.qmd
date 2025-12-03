@@ -79,14 +79,28 @@ continuación se muestra la interfaz con una lista creada de 5 elementos.
 
 ![](figures/random5.png)
 
-En la parte inferior izquierda del lienzo se encuentra una pequeña barra
-vertical con botones mostrada a continuación de forma aumentada:
+Existen diferentes formas de interactuar con la representación visual de la
+lista enlazada. Los nodos de la lista pueden ser reposicionados y su
+encadenamiento puede ser alterado. En la parte inferior izquierda del lienzo se
+encuentra una pequeña barra vertical con botones que tienen acción sobre la
+visualización del lienzo.
 
+::: {.callout-tip}
+##### Consejos
+
+::: {layout="[1,9]"}
 ![](figures/xyflow-toolbar.png)
 
-El tercer botón de arriba a abajo permite siempre enfocar todos los elementos
-dentro del lienzo. Esto es de gran importancia porque facilita mucho la
-interacción con la visualización.
+- El tercer botón de arriba a abajo permite siempre enfocar todos los elementos
+  dentro del lienzo. Esto es de gran importancia porque facilita mucho la
+  interacción con la visualización.
+- El botón inferior con el símbolo ![](figures/lock.png) protege el lienzo de
+  cualquier tipo de interacción. Esta opción es muy útil cuando se desean tomar
+  imágenes de captura de pantalla o realizar explicaciones sin que se altere la
+  visualización.
+:::
+:::
+
 
 Cada nodo de la lista consta de dos partes. La primera contiene el dato y la
 segunda representa el apuntador al siguiente nodo en la lista. Cuando el mouse
