@@ -5,7 +5,7 @@ import '@xyflow/react/dist/style.css';
 import { toPng } from 'html-to-image';
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
-import { Download } from 'lucide-react';
+import { Download, Pointer } from 'lucide-react';
 
 import Navbar from '@/components/navbar';
 import Menu from "@/components/menu/Menu";
@@ -34,6 +34,8 @@ class LinkedList extends Component {
         selectedNodes: [],
         showPointers: false,
         isReconnecting: false,
+        laserPointerEnabled: false,
+        laserPointerPosition: { x: 0, y: 0 },
     }
 
     menuRef = React.createRef();
@@ -409,7 +411,31 @@ class LinkedList extends Component {
                         showPointers={this.state.showPointers}
                         isListEmpty={this.state.nodes.filter(n => n.type === 'linkedListNode').length === 0}
                     />
-                    <div id="canvas-area" className="flex flex-1 flex-col overflow-auto bg-gray-50 relative">
+                    <div
+                        id="canvas-area"
+                        className="flex flex-1 flex-col overflow-auto bg-gray-50 relative"
+                        onMouseMove={this.handleMouseMove}
+                        style={{ cursor: this.state.laserPointerEnabled ? 'none' : 'default' }}
+                    >
+                        {/* Laser Pointer */}
+                        {this.state.laserPointerEnabled && (
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    left: this.state.laserPointerPosition.x,
+                                    top: this.state.laserPointerPosition.y,
+                                    width: '20px',
+                                    height: '20px',
+                                    borderRadius: '50%',
+                                    backgroundColor: 'rgba(255, 0, 0, 0.7)',
+                                    boxShadow: '0 0 20px 5px rgba(255, 0, 0, 0.5)',
+                                    transform: 'translate(-50%, -50%)',
+                                    pointerEvents: 'none',
+                                    zIndex: 9999,
+                                }}
+                            />
+                        )}
+
                         {this.state.nodes.length === 0 && (
                             <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
                                 <div className="text-center p-8 bg-white rounded-lg shadow-lg border-2 border-gray-200">
@@ -444,6 +470,16 @@ class LinkedList extends Component {
                             <Controls>
                                 <ControlButton onClick={this.handleExportPNG} title="Export PNG">
                                     <Download className="h-4 w-4" />
+                                </ControlButton>
+                                <ControlButton
+                                    onClick={this.handleToggleLaserPointer}
+                                    title={this.state.laserPointerEnabled ? "Disable Laser Pointer" : "Enable Laser Pointer"}
+                                    style={{
+                                        backgroundColor: this.state.laserPointerEnabled ? '#ef4444' : 'white',
+                                        color: this.state.laserPointerEnabled ? 'white' : 'black'
+                                    }}
+                                >
+                                    <Pointer className="h-4 w-4" />
                                 </ControlButton>
                             </Controls>
                         </ReactFlow>
@@ -602,6 +638,27 @@ class LinkedList extends Component {
         this.setState(prevState => ({
             showPointers: !prevState.showPointers
         }));
+    }
+
+    handleToggleLaserPointer = () => {
+        this.setState(prevState => ({
+            laserPointerEnabled: !prevState.laserPointerEnabled
+        }));
+    }
+
+    handleMouseMove = (event) => {
+        if (this.state.laserPointerEnabled) {
+            const canvasArea = document.getElementById('canvas-area');
+            if (canvasArea) {
+                const rect = canvasArea.getBoundingClientRect();
+                this.setState({
+                    laserPointerPosition: {
+                        x: event.clientX - rect.left,
+                        y: event.clientY - rect.top
+                    }
+                });
+            }
+        }
     }
 
     handleExportPNG = () => {
