@@ -197,7 +197,7 @@ en el botón mencionado. Al hacerlo el nuevo nodo se posicionará al inicio de l
 lista y tendrá un color diferente.
 
 ::: {#fig-operations-insert-commented}
-![](figures/insert-commented.png)
+![](figures/insert-commented.png){width=50% .html width=50% .pdf}
 
 Menu para las operaciones de inserción.
 :::
@@ -248,8 +248,8 @@ intermedio para deducir otra operación (ver @tip-simbolo-warning).
 
 ::: {#tip-simbolo-warning .callout-warning}
 
-::: {layout="[2,8]"}
-![](figures/insert-tail-traverse.png)
+::: {layout="[3,7]"}
+![](figures/insert-tail-traverse.png){width=50% .pdf}
 
 El símbolo de advertencia en la parte superior derecha de algunos botones (como
 el que aparece en la figura de la izquierda) representan funcionalidad que
@@ -268,7 +268,7 @@ todo el recorrido desde el inicio hasta el penúltimo elemento de la lista (que
 se convertirá en el nuevo último).
 
 ::: {#fig-operations-remove-commented}
-![](figures/remove-commented.png)
+![](figures/remove-commented.png){width=50% .html width=50% .pdf}
 
 Operaciones para el borrado de elementos.
 :::
