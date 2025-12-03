@@ -5,7 +5,7 @@ export const ColorPickerInput = ({ label, color, onChange, disabled, showButton,
   <div className="flex items-center justify-between gap-3 p-2 rounded-lg border border-gray-100 hover:border-gray-200 transition-colors">
     <label className="text-xs font-medium text-gray-600">{label}</label>
     <div className="flex items-center gap-2">
-      {showButton ? (
+      {showButton && (
         <Button
           onClick={onApply}
           disabled={disabled}
@@ -15,8 +15,6 @@ export const ColorPickerInput = ({ label, color, onChange, disabled, showButton,
         >
           Apply
         </Button>
-      ) : (
-        <span className="text-xs font-mono text-gray-400 uppercase">{color}</span>
       )}
       <div className="relative w-6 h-6 rounded-full overflow-hidden border border-gray-200 shadow-sm cursor-pointer hover:scale-110 transition-transform">
         <input
