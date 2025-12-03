@@ -1246,26 +1246,39 @@ class LinkedList extends Component {
     }
 
     traverseList = async () => {
-        for (let i = 0; i < this.state.nodes.length; i++) {
-            const nodes = this.state.nodes.map((node, idx) => ({
-                ...node,
-                style: {
-                    ...node.style,
-                    background: idx === i ? this.state.iterateColor : node.style.background,
+        const listNodes = this.state.nodes.filter(n => n.type === 'linkedListNode');
+
+        for (let i = 0; i < listNodes.length; i++) {
+            const nodes = this.state.nodes.map((node) => {
+                if (node.type === 'linkedListNode') {
+                    const listIndex = listNodes.findIndex(n => n.id === node.id);
+                    return {
+                        ...node,
+                        style: {
+                            ...node.style,
+                            background: listIndex === i ? this.state.iterateColor : node.style.background,
+                        }
+                    };
                 }
-            }));
+                return node;
+            });
             this.setState({ nodes });
             await sleep(this.state.speed);
         }
 
         // Reset colors to original
-        const nodes = this.state.nodes.map(node => ({
-            ...node,
-            style: {
-                ...node.style,
-                background: node.style.background,
+        const nodes = this.state.nodes.map(node => {
+            if (node.type === 'linkedListNode' && node.style) {
+                return {
+                    ...node,
+                    style: {
+                        ...node.style,
+                        background: node.style.background,
+                    }
+                };
             }
-        }));
+            return node;
+        });
         this.setState({ nodes });
     }
 
