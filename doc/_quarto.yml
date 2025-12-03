@@ -13,9 +13,8 @@ book:
     - name: "Nancy Janet Castillo-Rodríguez"
       email: "nancycastillo@utp.edu.co"
 
-  date: "today"  # Automatically uses the current date
+  date: "today"
   
-  # Search configuration
   search: true
   
   # Navigation structure (Sidebar)
@@ -23,15 +22,12 @@ book:
     style: docked
     collapse-level: 2
   
-  # List your .qmd files here in the order they should appear
   chapters:
     - index.qmd
     - funcionalidad.qmd
     - futuro.qmd 
     #- references.qmd  # Bibliography
 
-# GLOBAL LANGUAGE SETTING
-# This translates automatic labels (like "Table of Contents" -> "Tabla de contenidos")
 lang: es 
 
 #bibliography: references.bib
@@ -49,5 +45,6 @@ format:
     documentclass: scrreprt  # 'scrreprt' is great for books (KOMA-Script)
     papersize: letter
     toc: true
+    lof: true
     number-sections: true
     colorlinks: true
