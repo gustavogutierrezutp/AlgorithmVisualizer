@@ -9,9 +9,9 @@ book:
     - name: "Gustavo Gutiérrez-Sabogal"
       email: "gustavo.gutierrez@utp.edu.co"
     - name: "Jovanny Bedoya-Guapacha"
-      email: "email@utp.edu.co"
+      email: "jovan@utp.edu.co"
     - name: "Nancy Janet Castillo-Rodríguez"
-      email: "nancy@utp.edu.co"
+      email: "nancycastillo@utp.edu.co"
 
   date: "today"  # Automatically uses the current date
   
