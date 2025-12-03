@@ -260,12 +260,19 @@ académicamente es relevante pero que debe ser evitada en código de producción
 
 #### Borrado
 
-Para eliminar un elemento de la lista existen dos operaciones. La primera se
-puede ejecutar haciendo click en el botón ![](figures/remove-head.png). De esta
-forma se removerá el primer elemento de la lista. Después de pulsarlo se
-mostrará de manera animada sobre el lienzo.
+Para eliminar un elemento de la lista existen dos operaciones mostradas en la
+@fig-operations-remove-commented. Con la opción 1 se removerá el primer elemento
+de la lista. Después de pulsarlo se mostrará de manera animada sobre el lienzo.
+La opción 2 es para remover el último elemento. Para esta operación se muestra
+todo el recorrido desde el inicio hasta el penúltimo elemento de la lista (que
+se convertirá en el nuevo último).
 
-La segunda forma se accede con el botón ![](figures/remove-tail.png). Para esta
-operación se muestra todo el recorrido desde el inicio hasta el penúltimo
-elemento de la lista (que se convertirá en el nuevo último).
+::: {#fig-operations-remove-commented}
+![](figures/remove-commented.png)
+
+Operaciones para el borrado de elementos.
+:::
+
+
+
 

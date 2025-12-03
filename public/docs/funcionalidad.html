@@ -267,7 +267,7 @@ Figura&nbsp;2.3: Interfaz para la creación de una lista con elementos puntuales
 <img src="figures/random5-commented.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rand5-commented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2.4: Visualización anotada de la visualización de una lista enlazada de 5 elementos en el lienzo.
+Figura&nbsp;2.4: Imagen anotada de la visualización de una lista enlazada de 5 elementos en el lienzo.
 </figcaption>
 </figure>
 </div>
@@ -311,13 +311,31 @@ Figura&nbsp;2.5: Visualización del puntero al siguiente elemento de un nodo. Es
 </section>
 <section id="operaciones-sobre-listas" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="operaciones-sobre-listas"><span class="header-section-number">2.3</span> Operaciones sobre listas</h2>
-<p>Después de tener la lista creada o una lista vacía podemos comenzar a realizar operaciones sobre ella. Esto con el fin de observar el comportamiento de cada una de ellas. Las operaciones disponibles se pueden acceder desde el menu <strong>Operations</strong>.</p>
-<p><img src="figures/operations-menu.png" class="img-fluid"></p>
-<p>Con estas operaciones es posible adicionar elementos a la lista de varias formas y también eliminarlos. Adicionalmente hay operaciones que permiten recorrer los elementos de la lista.</p>
+<p>Después de tener la lista creada o una lista vacía podemos comenzar a realizar operaciones sobre ella. Esto con el fin de observar el comportamiento de cada una de ellas. Las operaciones disponibles se pueden acceder desde el menu <strong>Operations</strong> (ver <a href="#fig-operations" class="quarto-xref">Figura&nbsp;<span>2.6</span></a>).</p>
+<div id="fig-operations" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-operations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/operations-menu.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-operations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.6: Panel de operaciones
+</figcaption>
+</figure>
+</div>
+<p>A continuación se describen las diferentes operaciones que pueden ser visualizadas sobre la lista. Todas ellas pueden ser accedidas desde el panel mostrado en la <a href="#fig-operations" class="quarto-xref">Figura&nbsp;<span>2.6</span></a>.</p>
 <section id="adición-y-borrado-de-elementos" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="adición-y-borrado-de-elementos"><span class="header-section-number">2.3.1</span> Adición y borrado de elementos</h3>
-<p>En esta sección se define la manera de insertar y borrar elementos de la lista. Estas operaciones están disponibles en el menu <strong>Operations</strong>. En particular, las opciones de inserción se muestran en la siguiente imagen:</p>
-<p><img src="figures/insert-menu.png" class="img-fluid"></p>
+<p>En esta sección se define la manera de insertar y borrar elementos de la lista. Estas operaciones están disponibles en el menu <strong>Operations</strong>. En particular, las opciones de inserción se muestran en la <a href="#fig-operations-insert" class="quarto-xref">Figura&nbsp;<span>2.7</span></a>.</p>
+<div id="fig-operations-insert" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-operations-insert-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/insert-menu.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-operations-insert-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.7: Operaciones de inserción.
+</figcaption>
+</figure>
+</div>
 <section id="inserción" class="level4" data-number="2.3.1.1">
 <h4 data-number="2.3.1.1" class="anchored" data-anchor-id="inserción"><span class="header-section-number">2.3.1.1</span> Inserción</h4>
 <p>Antes de cualquier inserción es necesario seleccionar el dato a insertar. Para esto se cuenta con el primer cuadro de texto.</p>
@@ -343,17 +361,38 @@ Figura&nbsp;2.5: Visualización del puntero al siguiente elemento de un nodo. Es
 </div>
 </div>
 </div>
-<p>Existen tres formas básicas de insertar elementos en una lista enlazada. La primera es insertar el nuevo elemento por el frente de la lista. Es decir, el nuevo elemento quedaría como nuevo primer elemento en la lista. Para esto se ingresa el valor a insertar en el campo de texto <em>Target Value</em> y se procede a dar click en el botón <img src="figures/insert-at-head.png" class="img-fluid" alt="“+ Head”">. Al hacerlo el nuevo nodo se posicionará al inicio de la lista y tendrá un color diferente.</p>
-<p>En la figura siguiente se muestra como queda la lista después de la inserción por el frente del elemento <span class="math inline">\(45\)</span>.</p>
-<p><img src="figures/insert-head-45.png" class="img-fluid"></p>
-<p>Se puede apreciar que el elemento queda en un nodo con un color diferente. En este caso de color verde.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<p>Existen tres formas básicas de insertar elementos en una lista enlazada. Las tres pueden ser ejecutadas desde la interfaz gráfica visualizada en la <a href="#fig-operations-insert-commented" class="quarto-xref">Figura&nbsp;<span>2.8</span></a>. La primera es insertar el nuevo elemento por el frente de la lista (opción marcada con 1 en la figura). Es decir, el nuevo elemento quedaría como nuevo primer elemento en la lista. Para esto se ingresa el valor a insertar en el campo de texto <em>Target Value</em> y se procede a dar click en el botón mencionado. Al hacerlo el nuevo nodo se posicionará al inicio de la lista y tendrá un color diferente.</p>
+<div id="fig-operations-insert-commented" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-operations-insert-commented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/insert-commented.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-operations-insert-commented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.8: Menu para las operaciones de inserción.
+</figcaption>
+</figure>
+</div>
+<p>En la <a href="#fig-operations-insert-head45" class="quarto-xref">Figura&nbsp;<span>2.9</span></a> se muestra como queda la lista después de la inserción por el frente del elemento <span class="math inline">\(45\)</span> sobre una lista inicializada de manera aleatoria. Se puede apreciar que el elemento queda en un nodo con un color diferente. En este caso de color verde.</p>
+<div id="fig-operations-insert-head45" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-operations-insert-head45-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/insert-head-45.png" id="fig-operations-insert-head45" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-operations-insert-head45-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.9
+</figcaption>
+</figure>
+</div>
+<p>Para insertar un elemento por el final de la lista se procede de forma similar. Esta vez se debe tener en cuenta que hay dos formas de hacerlo (denotadas como 2 y 3 en <a href="#fig-operations-insert-commented" class="quarto-xref">Figura&nbsp;<span>2.8</span></a>). La primera es recorriendo la lista desde el comienzo: opción 2. Al pulsar el botón marcado en la figura se verá de manera animada el recorrido sobre la lista y la posterior adición del nodo con el elemento seleccionado al final de la misma.</p>
+<p>Finalmente también es posible insertar un elemento utilizando el puntero al final de la lista (opción 3 de la <a href="#fig-operations-insert-commented" class="quarto-xref">Figura&nbsp;<span>2.8</span></a>). Durante esta inserción no se observará recorrido, el elemento se insertará al final de la lista.</p>
+<p>Los nodos insertados se colorean del color definido en el campo <strong>New node</strong> en el menú <strong>Display Options</strong>. Esto se hace con el fin de poder diferenciar los nodos anteriores del nuevo nodo. En cualquier momento se puede utilizar <a href="#tip-cambiar-color" class="quarto-xref">Tip&nbsp;<span>2.1</span></a> para modificar el color de cualquier nodo.</p>
+<div id="tip-cambiar-color" class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Consejo
+Tip&nbsp;2.1: Consejo
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -369,14 +408,14 @@ Figura&nbsp;2.5: Visualización del puntero al siguiente elemento de un nodo. Es
 </div>
 </div>
 </div>
-<p>Para insertar un elemento por el final de la lista se procede de forma similar. Esta vez se debe tener en cuenta que hay dos formas de insertar un elemento por el final. La primera es recorriendo la lista desde el comienzo. A esta funcionalidad se puede acceder con el botón <img src="figures/insert-tail-traverse.png" class="img-fluid">. Al pulsar el botón se verá de manera animada el recorrido sobre la lista y la posterior adición del nodo con el elemento seleccionado al final de la lista.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
+<p>Es importante destacar que el simulador incluye operaciones que no necesariamente hacen parte de las estructuras de datos utilizadas en producción (por ejemplo en el desarrollo de aplicaciones comerciales). Lo anterior sucede cuando la operación tiene una intensión pedagógica o llega a ser un paso intermedio para deducir otra operación (ver <a href="#tip-simbolo-warning" class="quarto-xref">Tip&nbsp;<span>2.2</span></a>).</p>
+<div id="tip-simbolo-warning" class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Advertencia
+Advertencia&nbsp;2.2
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -392,12 +431,20 @@ Advertencia
 </div>
 </div>
 </div>
-<p>Finalmente para insertar un elemento utilizando el puntero al final de la lista se utiliza el botón <img src="figures/insert-tail-pointer.png" class="img-fluid">. En esta inserción no se observará recorrido, el elemento se insertará al final de la lista.</p>
 </section>
 <section id="borrado" class="level4" data-number="2.3.1.2">
 <h4 data-number="2.3.1.2" class="anchored" data-anchor-id="borrado"><span class="header-section-number">2.3.1.2</span> Borrado</h4>
-<p>Para eliminar un elemento de la lista existen dos operaciones. La primera se puede ejecutar haciendo click en el botón <img src="figures/remove-head.png" class="img-fluid">. De esta forma se removerá el primer elemento de la lista. Después de pulsarlo se mostrará de manera animada sobre el lienzo.</p>
-<p>La segunda forma se accede con el botón <img src="figures/remove-tail.png" class="img-fluid">. Para esta operación se muestra todo el recorrido desde el inicio hasta el penúltimo elemento de la lista (que se convertirá en el nuevo último).</p>
+<p>Para eliminar un elemento de la lista existen dos operaciones mostradas en la <a href="#fig-operations-remove-commented" class="quarto-xref">Figura&nbsp;<span>2.10</span></a>. Con la opción 1 se removerá el primer elemento de la lista. Después de pulsarlo se mostrará de manera animada sobre el lienzo. La opción 2 es para remover el último elemento. Para esta operación se muestra todo el recorrido desde el inicio hasta el penúltimo elemento de la lista (que se convertirá en el nuevo último).</p>
+<div id="fig-operations-remove-commented" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-operations-remove-commented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/remove-commented.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-operations-remove-commented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.10: Operaciones para el borrado de elementos.
+</figcaption>
+</figure>
+</div>
 
 
 </section>
