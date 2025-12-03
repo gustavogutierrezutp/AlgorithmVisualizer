@@ -80,3 +80,61 @@ For graph-based structures (Linked Lists, Trees, Graphs), `@xyflow/react` is use
 The project uses a "utility-first" approach with Tailwind CSS.
 -   **Responsiveness**: Layouts are designed to adapt to mobile and desktop screens.
 -   **Theming**: Colors are chosen to be accessible and visually distinct (e.g., highlighting active nodes in red, sorted nodes in green).
+
+## Documentation
+
+The project documentation is built using [Quarto](https://quarto.org/), a scientific and technical publishing system that generates HTML and PDF documentation from markdown files.
+
+### Documentation Structure
+
+-   **`doc/`**: Contains Quarto source files (.qmd)
+    -   `index.qmd`: Main documentation page
+    -   `funcionalidad.qmd`: Functionality documentation
+    -   `_quarto.yml`: Quarto configuration file
+-   **`doc/_book/`**: Generated documentation output (HTML, PDF)
+-   **`public/docs/`**: Documentation synced for deployment
+
+### Building the Documentation
+
+The documentation must be built manually before deploying to GitHub Pages.
+
+**Prerequisites:**
+-   Quarto must be installed on your system ([installation guide](https://quarto.org/docs/get-started/))
+
+**Build Commands:**
+
+```bash
+# Build documentation and sync to public/docs
+npm run docs:build
+
+# Or run the steps separately:
+npm run docs:sync
+```
+
+The `docs:build` script performs two actions:
+1. Renders the Quarto documentation in the `doc/` directory
+2. Copies the generated files from `doc/_book/` to `public/docs/`
+
+### Deployment Workflow
+
+To deploy updated documentation to GitHub Pages:
+
+```bash
+# 1. Build the documentation
+npm run docs:build
+
+# 2. Build the Next.js site (includes public/docs)
+npm run build
+
+# 3. Commit and push
+git add .
+git commit -m "Update documentation"
+git push
+```
+
+The GitHub Actions workflow will automatically deploy the built documentation along with the Next.js application.
+
+### Accessing Documentation
+
+-   **Local development**: After building, open `doc/_book/index.html` in your browser
+-   **Deployed site**: Click the "Documentación" button in the navbar, which links to `/AlgorithmVisualizer/docs/index.html`
