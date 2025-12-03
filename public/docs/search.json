@@ -70,6 +70,26 @@
     ]
   },
   {
+    "objectID": "funcionalidad.html#herramientas-de-programador",
+    "href": "funcionalidad.html#herramientas-de-programador",
+    "title": "2  Funcionalidad",
+    "section": "2.4 Herramientas de programador",
+    "text": "2.4 Herramientas de programador\nUna característica importante que tiene este módulo de visualización es la separación de conceptos. Por ejemplo, una lista, conceptualmente, es una secuencia de elementos. A nivel de programación surgen algunos conceptos que son importantes a la hora de implementar esta secuencia. Por ejemplo, se hace necesario hablar de punteros y direcciones de memoria. Por esta razón el simulador incluye un conjunto de herramientas en el menú Programmer Tools que se muestra en la Figura 2.11.\n\n\n\n\n\n\nFigura 2.11: Vista de herramientas de programador.\n\n\n\n\n2.4.1 Apuntadores al primer y último nodo\nEl botón Show head and tail pointers hará visibles los punteros al primer y último elemento en la lista. Hasta ahora las listas que se han mostrado como la de la Figura 2.10 no tienen esta opción activada. Es posible apreciar la diferencia con la lista que se muestra en la Figura 2.12. Los nodos naranja representan cada uno de los punteros. Si el usuario localiza el puntero del mouse sobre alguno de ellos la conexión se resaltará.\n\n\n\n\n\n\nFigura 2.12: Visualización de los punteros al inicio y al final de la lista.\n\n\n\n\n\n2.4.2 Apuntadores adicionales\nDurante el diseño de una operación sobre listas es siempre importante considerar el movimiento de los punteros. Incluso operaciones como remover un elemento en una posición de la lista usan punteros adicionales. Para este tipo de operaciones la aplicación cuenta con la funcionalidad de crear nodos de tipo apuntador. Esto se logra haciendo click en el botón Add pointer (ver Figura 2.11). Cuando se pulsa este botón se adiciona un nuevo nodo circular al lienzo y este se puede conectar a cualquiera de los nodos de la lista.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Funcionalidad</span>"
+    ]
+  },
+  {
+    "objectID": "funcionalidad.html#otras-operaciones",
+    "href": "funcionalidad.html#otras-operaciones",
+    "title": "2  Funcionalidad",
+    "section": "2.5 Otras operaciones",
+    "text": "2.5 Otras operaciones",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Funcionalidad</span>"
+    ]
+  },
+  {
     "objectID": "futuro.html",
     "href": "futuro.html",
     "title": "3  Trabajo futuro",

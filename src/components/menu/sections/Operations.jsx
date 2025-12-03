@@ -130,23 +130,28 @@ export const Operations = ({ disable, onVisualize }) => {
 
         <div className="h-px bg-gray-100 my-2" />
 
-        <div className="grid grid-cols-2 gap-2">
-          <Button
-            onClick={() => onVisualize(4)}
-            disabled={disable}
-            variant="secondary"
-            size="sm"
-          >
-            <ArrowRightLeft className="w-3 h-3 mr-2" /> Traverse
-          </Button>
-          <Button
-            onClick={() => onVisualize(5)}
-            disabled={disable}
-            variant="secondary"
-            size="sm"
-          >
-            <Shuffle className="w-3 h-3 mr-2" /> Reverse
-          </Button>
+        <div>
+          <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 block">
+            Algorithms
+          </label>
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              onClick={() => onVisualize(4)}
+              disabled={disable}
+              variant="secondary"
+              size="sm"
+            >
+              <ArrowRightLeft className="w-3 h-3 mr-2" /> Traverse
+            </Button>
+            <Button
+              onClick={() => onVisualize(5)}
+              disabled={disable}
+              variant="secondary"
+              size="sm"
+            >
+              <Shuffle className="w-3 h-3 mr-2" /> Reverse
+            </Button>
+          </div>
         </div>
       </div>
     </Section>
