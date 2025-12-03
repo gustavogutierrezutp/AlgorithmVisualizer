@@ -611,8 +611,9 @@ class LinkedList extends Component {
     insertAtHead = async (value) => {
         const existingNodes = [...this.state.nodes];
 
-        // Add new node at same Y as first node, fixed distance before it in X
-        const firstNode = existingNodes.length > 0 ? existingNodes[0] : null;
+        // Filter to get only linked list nodes
+        const listNodes = existingNodes.filter(n => n.type === 'linkedListNode');
+        const firstNode = listNodes.length > 0 ? listNodes[0] : null;
         const fixedDistance = 150;
         const newNodeX = firstNode ? firstNode.position.x - fixedDistance : 50;
         const newNodeY = firstNode ? firstNode.position.y : 100;
@@ -638,13 +639,22 @@ class LinkedList extends Component {
             }
         };
 
-        const nodes = [newNode, ...existingNodes];
+        // Insert new node at the beginning, maintaining pointer nodes at their positions
+        const nodes = existingNodes.map(n => n);
+        const firstListNodeIndex = nodes.findIndex(n => n.type === 'linkedListNode');
+        if (firstListNodeIndex !== -1) {
+            nodes.splice(firstListNodeIndex, 0, newNode);
+        } else {
+            nodes.push(newNode);
+        }
 
-        const edges = nodes.length > 1 ? nodes.slice(0, -1).map((node, idx) => ({
+        // Rebuild edges for linked list nodes only
+        const updatedListNodes = nodes.filter(n => n.type === 'linkedListNode');
+        let edges = updatedListNodes.length > 1 ? updatedListNodes.slice(0, -1).map((node, idx) => ({
             id: `edge-${idx}`,
             source: node.id,
             sourceHandle: 'right',
-            target: nodes[idx + 1].id,
+            target: updatedListNodes[idx + 1].id,
             targetHandle: 'left',
             animated: true,
             type: 'smoothstep',
@@ -659,6 +669,71 @@ class LinkedList extends Component {
                 stroke: '#333'
             }
         })) : [];
+
+        // Update Head Pointer if it exists
+        if (this.state.showPointers) {
+            const headPointerIndex = nodes.findIndex(n => n.id === 'pointer-head');
+            if (headPointerIndex !== -1) {
+                nodes[headPointerIndex] = {
+                    ...nodes[headPointerIndex],
+                    position: {
+                        x: newNodeX,
+                        y: newNodeY - 100
+                    }
+                };
+
+                // Update head pointer edge
+                edges.push({
+                    id: `edge-pointer-head-${newNodeId}`,
+                    source: 'pointer-head',
+                    target: newNodeId,
+                    targetHandle: 'top',
+                    animated: true,
+                    style: { stroke: '#333', strokeWidth: 2 },
+                    markerEnd: {
+                        type: MarkerType.ArrowClosed,
+                        width: 10,
+                        height: 10,
+                        color: '#333'
+                    },
+                });
+            }
+
+            // Update Tail Pointer if list was empty
+            if (listNodes.length === 0) {
+                const tailPointerIndex = nodes.findIndex(n => n.id === 'pointer-tail');
+                if (tailPointerIndex !== -1) {
+                    nodes[tailPointerIndex] = {
+                        ...nodes[tailPointerIndex],
+                        position: {
+                            x: newNodeX,
+                            y: newNodeY + 100
+                        }
+                    };
+
+                    edges.push({
+                        id: `edge-pointer-tail-${newNodeId}`,
+                        source: 'pointer-tail',
+                        target: newNodeId,
+                        targetHandle: 'bottom',
+                        animated: true,
+                        style: { stroke: '#333', strokeWidth: 2 },
+                        markerEnd: {
+                            type: MarkerType.ArrowClosed,
+                            width: 10,
+                            height: 10,
+                            color: '#333'
+                        },
+                    });
+                }
+            } else {
+                // Keep existing tail pointer edge
+                const tailPointerEdge = this.state.edges.find(e => e.source === 'pointer-tail');
+                if (tailPointerEdge) {
+                    edges.push(tailPointerEdge);
+                }
+            }
+        }
 
         this.setState({ nodes, edges }, () => {
             if (this.reactFlowInstance) {
@@ -671,18 +746,20 @@ class LinkedList extends Component {
     }
 
     deleteAtHead = async () => {
-        if (this.state.nodes.length === 0) return;
+        const listNodes = this.state.nodes.filter(n => n.type === 'linkedListNode');
+        if (listNodes.length === 0) return;
 
-        const nodes = this.state.nodes.slice(1).map((node, idx) => ({
-            ...node,
-            position: { x: 50 + (idx * 150), y: 100 }
-        }));
+        // Remove first list node, keep pointer nodes
+        const pointerNodes = this.state.nodes.filter(n => n.type !== 'linkedListNode');
+        const remainingListNodes = listNodes.slice(1);
+        const nodes = [...pointerNodes, ...remainingListNodes];
 
-        const edges = nodes.length > 1 ? nodes.slice(0, -1).map((node, idx) => ({
+        // Rebuild edges for linked list nodes
+        let edges = remainingListNodes.length > 1 ? remainingListNodes.slice(0, -1).map((node, idx) => ({
             id: `edge-${idx}`,
             source: node.id,
             sourceHandle: 'right',
-            target: nodes[idx + 1].id,
+            target: remainingListNodes[idx + 1].id,
             targetHandle: 'left',
             animated: true,
             type: 'smoothstep',
@@ -698,6 +775,44 @@ class LinkedList extends Component {
             }
         })) : [];
 
+        // Update Head Pointer if it exists
+        if (this.state.showPointers) {
+            const headPointerIndex = nodes.findIndex(n => n.id === 'pointer-head');
+            if (headPointerIndex !== -1 && remainingListNodes.length > 0) {
+                const newHead = remainingListNodes[0];
+                nodes[headPointerIndex] = {
+                    ...nodes[headPointerIndex],
+                    position: {
+                        x: newHead.position.x,
+                        y: newHead.position.y - 100
+                    }
+                };
+
+                edges.push({
+                    id: `edge-pointer-head-${newHead.id}`,
+                    source: 'pointer-head',
+                    target: newHead.id,
+                    targetHandle: 'top',
+                    animated: true,
+                    style: { stroke: '#333', strokeWidth: 2 },
+                    markerEnd: {
+                        type: MarkerType.ArrowClosed,
+                        width: 10,
+                        height: 10,
+                        color: '#333'
+                    },
+                });
+            }
+
+            // Update Tail Pointer edge (tail stays the same unless list becomes empty)
+            if (remainingListNodes.length > 0) {
+                const tailPointerEdge = this.state.edges.find(e => e.source === 'pointer-tail');
+                if (tailPointerEdge) {
+                    edges.push(tailPointerEdge);
+                }
+            }
+        }
+
         this.setState({ nodes, edges });
         await sleep(this.state.speed);
     }
@@ -706,31 +821,45 @@ class LinkedList extends Component {
         const nodes = [...this.state.nodes];
         let edges = [...this.state.edges];
 
+        // Filter to get only linked list nodes for traversal
+        const listNodes = nodes.filter(n => n.type === 'linkedListNode');
+
         // Traverse to the end
-        for (let i = 0; i < nodes.length; i++) {
-            const tempNodes = nodes.map((node, idx) => ({
-                ...node,
-                style: {
-                    ...node.style,
-                    background: idx === i ? this.state.iterateColor : node.style.background,
+        for (let i = 0; i < listNodes.length; i++) {
+            const tempNodes = nodes.map((node) => {
+                if (node.type === 'linkedListNode') {
+                    const listIndex = listNodes.findIndex(n => n.id === node.id);
+                    return {
+                        ...node,
+                        style: {
+                            ...node.style,
+                            background: listIndex === i ? this.state.iterateColor : node.style.background,
+                        }
+                    };
                 }
-            }));
+                return node;
+            });
             this.setState({ nodes: tempNodes });
             await sleep(this.state.speed / 2);
         }
 
         // Reset colors to original
-        const resetNodes = nodes.map(node => ({
-            ...node,
-            style: {
-                ...node.style,
-                background: node.style.background,
+        const resetNodes = nodes.map(node => {
+            if (node.type === 'linkedListNode' && node.style) {
+                return {
+                    ...node,
+                    style: {
+                        ...node.style,
+                        background: node.style.background,
+                    }
+                };
             }
-        }));
+            return node;
+        });
         this.setState({ nodes: resetNodes });
 
-        // Add new node at same Y as last node, fixed distance in X
-        const lastNode = nodes.length > 0 ? nodes[nodes.length - 1] : null;
+        // Add new node at same Y as last list node, fixed distance in X
+        const lastNode = listNodes.length > 0 ? listNodes[listNodes.length - 1] : null;
         const fixedDistance = 150;
         const newNodeX = lastNode ? lastNode.position.x + fixedDistance : 50;
         const newNodeY = lastNode ? lastNode.position.y : 100;
@@ -759,10 +888,11 @@ class LinkedList extends Component {
         const newNodes = [...resetNodes, newNode];
 
         // Add edge if list was not empty
-        if (nodes.length > 0) {
+        if (lastNode) {
+            edges = edges.filter(e => !e.id.startsWith('edge-') || e.source !== lastNode.id || e.target.startsWith('node-'));
             edges.push({
-                id: `edge-${nodes[nodes.length - 1].id}-${newNodeId}`,
-                source: nodes[nodes.length - 1].id,
+                id: `edge-${lastNode.id}-${newNodeId}`,
+                source: lastNode.id,
                 sourceHandle: 'right',
                 target: newNodeId,
                 targetHandle: 'left',
@@ -779,6 +909,66 @@ class LinkedList extends Component {
                     stroke: '#333'
                 }
             });
+        }
+
+        // Update Tail Pointer if it exists
+        if (this.state.showPointers) {
+            const tailPointerIndex = newNodes.findIndex(n => n.id === 'pointer-tail');
+            if (tailPointerIndex !== -1) {
+                newNodes[tailPointerIndex] = {
+                    ...newNodes[tailPointerIndex],
+                    position: {
+                        x: newNodeX,
+                        y: newNodeY + 100
+                    }
+                };
+
+                // Remove old tail pointer edge and add new one
+                edges = edges.filter(e => e.source !== 'pointer-tail');
+                edges.push({
+                    id: `edge-pointer-tail-${newNodeId}`,
+                    source: 'pointer-tail',
+                    target: newNodeId,
+                    targetHandle: 'bottom',
+                    animated: true,
+                    style: { stroke: '#333', strokeWidth: 2 },
+                    markerEnd: {
+                        type: MarkerType.ArrowClosed,
+                        width: 10,
+                        height: 10,
+                        color: '#333'
+                    },
+                });
+            }
+
+            // Update Head Pointer if list was empty
+            if (listNodes.length === 0) {
+                const headPointerIndex = newNodes.findIndex(n => n.id === 'pointer-head');
+                if (headPointerIndex !== -1) {
+                    newNodes[headPointerIndex] = {
+                        ...newNodes[headPointerIndex],
+                        position: {
+                            x: newNodeX,
+                            y: newNodeY - 100
+                        }
+                    };
+
+                    edges.push({
+                        id: `edge-pointer-head-${newNodeId}`,
+                        source: 'pointer-head',
+                        target: newNodeId,
+                        targetHandle: 'top',
+                        animated: true,
+                        style: { stroke: '#333', strokeWidth: 2 },
+                        markerEnd: {
+                            type: MarkerType.ArrowClosed,
+                            width: 10,
+                            height: 10,
+                            color: '#333'
+                        },
+                    });
+                }
+            }
         }
 
         this.setState({ nodes: newNodes, edges }, () => {
@@ -927,37 +1117,110 @@ class LinkedList extends Component {
     }
 
     deleteAtTail = async () => {
-        if (this.state.nodes.length === 0) return;
+        const listNodes = this.state.nodes.filter(n => n.type === 'linkedListNode');
+        if (listNodes.length === 0) return;
 
         const nodes = [...this.state.nodes];
         let edges = [...this.state.edges];
 
         // Traverse to the second to last node
-        for (let i = 0; i < nodes.length - 1; i++) {
-            const tempNodes = nodes.map((node, idx) => ({
-                ...node,
-                style: {
-                    ...node.style,
-                    background: idx === i ? this.state.iterateColor : node.style.background,
+        for (let i = 0; i < listNodes.length - 1; i++) {
+            const tempNodes = nodes.map((node) => {
+                if (node.type === 'linkedListNode') {
+                    const listIndex = listNodes.findIndex(n => n.id === node.id);
+                    return {
+                        ...node,
+                        style: {
+                            ...node.style,
+                            background: listIndex === i ? this.state.iterateColor : node.style.background,
+                        }
+                    };
                 }
-            }));
+                return node;
+            });
             this.setState({ nodes: tempNodes });
             await sleep(this.state.speed / 2);
         }
 
         // Reset colors to original
-        const resetNodes = nodes.map(node => ({
-            ...node,
-            style: {
-                ...node.style,
-                background: node.style.background,
+        const resetNodes = nodes.map(node => {
+            if (node.type === 'linkedListNode' && node.style) {
+                return {
+                    ...node,
+                    style: {
+                        ...node.style,
+                        background: node.style.background,
+                    }
+                };
             }
-        }));
+            return node;
+        });
         this.setState({ nodes: resetNodes });
 
-        // Remove last node and edge
-        const newNodes = resetNodes.slice(0, -1);
-        const newEdges = edges.slice(0, -1);
+        // Remove last list node
+        const nodeToRemove = listNodes[listNodes.length - 1];
+        const pointerNodes = resetNodes.filter(n => n.type !== 'linkedListNode');
+        const remainingListNodes = listNodes.slice(0, -1);
+        const newNodes = [...pointerNodes, ...remainingListNodes];
+
+        // Rebuild edges for linked list nodes
+        let newEdges = remainingListNodes.length > 1 ? remainingListNodes.slice(0, -1).map((node, idx) => ({
+            id: `edge-${idx}`,
+            source: node.id,
+            sourceHandle: 'right',
+            target: remainingListNodes[idx + 1].id,
+            targetHandle: 'left',
+            animated: true,
+            type: 'smoothstep',
+            markerEnd: {
+                type: MarkerType.ArrowClosed,
+                width: 10,
+                height: 10,
+                color: '#333'
+            },
+            style: {
+                strokeWidth: 2,
+                stroke: '#333'
+            }
+        })) : [];
+
+        // Update Tail Pointer if it exists
+        if (this.state.showPointers) {
+            const tailPointerIndex = newNodes.findIndex(n => n.id === 'pointer-tail');
+            if (tailPointerIndex !== -1 && remainingListNodes.length > 0) {
+                const newTail = remainingListNodes[remainingListNodes.length - 1];
+                newNodes[tailPointerIndex] = {
+                    ...newNodes[tailPointerIndex],
+                    position: {
+                        x: newTail.position.x,
+                        y: newTail.position.y + 100
+                    }
+                };
+
+                newEdges.push({
+                    id: `edge-pointer-tail-${newTail.id}`,
+                    source: 'pointer-tail',
+                    target: newTail.id,
+                    targetHandle: 'bottom',
+                    animated: true,
+                    style: { stroke: '#333', strokeWidth: 2 },
+                    markerEnd: {
+                        type: MarkerType.ArrowClosed,
+                        width: 10,
+                        height: 10,
+                        color: '#333'
+                    },
+                });
+            }
+
+            // Update Head Pointer edge (head stays the same unless list becomes empty)
+            if (remainingListNodes.length > 0) {
+                const headPointerEdge = this.state.edges.find(e => e.source === 'pointer-head');
+                if (headPointerEdge) {
+                    newEdges.push(headPointerEdge);
+                }
+            }
+        }
 
         this.setState({ nodes: newNodes, edges: newEdges });
         await sleep(this.state.speed);
