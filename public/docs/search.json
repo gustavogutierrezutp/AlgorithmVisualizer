@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Simulador visual de estructuras de datos",
+    "section": "",
+    "text": "1 Introducción\nLas estructuras de datos son uno de los pilares del desarrollo de software. Estas definen como la información (los datos) son almacenados de manera eficiente para ser utilizados por los algoritmos. Es por esta razón que su enseñanza y aprendizaje constituyen un reto dentro de la carrera de ingeniería de sistemas.\nLa idea de crear un simulador tiene diferentes fundamentos:",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducción</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#instalación",
+    "href": "index.html#instalación",
+    "title": "Simulador visual de estructuras de datos",
+    "section": "1.1 Instalación",
+    "text": "1.1 Instalación\n\n\n\n\n\n\nAdvertenciaTODO\n\n\n\nCómo vamos a distribuir el simulador?",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducción</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#estructura-del-libro",
+    "href": "index.html#estructura-del-libro",
+    "title": "Simulador visual de estructuras de datos",
+    "section": "1.2 Estructura del libro",
+    "text": "1.2 Estructura del libro\nEl libro está organizado de la siguiente manera:\n\nIntroducción: Conceptos básicos y configuración.\nCapítulo 1: El núcleo de la investigación o historia.\nReferencias: Bibliografía y fuentes citadas.\n\n\n\n\n\n\n\nNotaNota Importante\n\n\n\nEstos recuadros azules contienen información que no debes pasar por alto.\n\n\n\n\n\n\n\n\nTipConsejo\n\n\n\nEstos recuadros verdes ofrecen sugerencias prácticas para mejorar tu flujo de trabajo.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducción</span>"
+    ]
+  },
+  {
+    "objectID": "funcionalidad.html",
+    "href": "funcionalidad.html",
+    "title": "2  Funcionalidad",
+    "section": "",
+    "text": "2.1 Creación\nLas operaciones soportadas por la estructura de datos se pueden dividir en grupos:\nLa interfaz de usuario del simulador consta de tres partes identificadas en la siguiente figura.\nLa parte superior contiene una barra con el título y algunos enlaces de interés. Tal vez el más importante es el botón con el texto Tour en la parte superior derecha. Pulsar este botón activará una especie de tour por cada uno de los elementos de la interfaz gráfica y le proporcionará al usuario una idea de la funcionalidad de cada parte.\nLas otras dos partes son las más importantes para la interacción con el programador. En la sección vertical izquierda se puede apreciar una barra de menús. En el caso de la figura todos ellos se encuentran colapsados y entre otros, presentan los títulos: List Creation, Operations, Programmer Tools y Display Options. Finalmente en la sección vertical derecha se encuentra el lienzo que es el lugar donde aparecen las representaciones gráficas. En este caso se aprecia una lista de números. En las secciones siguientes se muestra detalladamente cada una de las funcionalidades.\nEn el simulador las listas pueden ser creadas de diferentes maneras. Todas las opciones de creación se encuentran en el primer sub menu con el título List Creation.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Funcionalidad</span>"
+    ]
+  },
+  {
+    "objectID": "funcionalidad.html#creación",
+    "href": "funcionalidad.html#creación",
+    "title": "2  Funcionalidad",
+    "section": "",
+    "text": "Lista vacía\n\nPara crear una lista vacía donde el usuario pueda comenzar a añadir elementos haciendo uso de las operaciones se debe hacer click en la pestaña Empty y a continuación hacer click en el botón Create Empty List. Al dar click en el aparecerá un mensaje en el lienzo de la derecha informando que la lista actualmente visualizada se encuentra vacía.\n\n\nLista con números aleatorios\nLa siguiente opción para crear una lista es con elementos aleatorios. Esto es especialmente útil cuando el usuario desea ver como se comporta una operación sobre una lista que ya contiene elementos y no desea insertarlos uno a uno. En esta opción es cuestión de seleccionar el número de nodos utilizando el elemento deslizante y posteriormente pulsar el botón Generate Random. Al presionar el botón aparecerá la lista en el lienzo de la derecha junto con sus elementos.\n\n\n\nLista personalizada\nCuando se requiere una lista con elementos específicos la tercera opción es la indicada. Haciendo click en Custom aparecerá un cuadro de texto para insertar cada uno de los elementos de la lista. El formato es simple: los elementos deben estar encerrados por los símbolos [y ]. Adicionalmente los números en la deben estar separado por comas.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Funcionalidad</span>"
+    ]
+  },
+  {
+    "objectID": "funcionalidad.html#visualización-de-la-lista",
+    "href": "funcionalidad.html#visualización-de-la-lista",
+    "title": "2  Funcionalidad",
+    "section": "2.2 Visualización de la lista",
+    "text": "2.2 Visualización de la lista\nDespués de creada la lista utilizando cualquiera de las formas mencionadas, está será visualizada en el lienzo que hay en la parte derecha. Por ejemplo, a continuación se muestra la interfaz con una lista creada de 5 elementos.\n\nEn la parte inferior izquierda del lienzo se encuentra una pequeña barra vertical con botones mostrada a continuación de forma aumentada:\n\nEl tercer botón de arriba a abajo permite siempre enfocar todos los elementos dentro del lienzo. Esto es de gran importancia porque facilita mucho la interacción con la visualización.\nCada nodo de la lista consta de dos partes. La primera contiene el dato y la segunda representa el apuntador al siguiente nodo en la lista. Cuando el mouse se posiciona sobre este último el apuntador es resaltado en un color diferente. Esto es útil cuando las listas no se muestran de manera lineal. A continuación se muestra la misma lista después de ser reorganizada arrastrando los nodos con el mouse sobre el lienzo. El puntero se posicionó sobre el nodo que contiene el valor \\(14\\).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Funcionalidad</span>"
+    ]
+  },
+  {
+    "objectID": "funcionalidad.html#operaciones-sobre-listas",
+    "href": "funcionalidad.html#operaciones-sobre-listas",
+    "title": "2  Funcionalidad",
+    "section": "2.3 Operaciones sobre listas",
+    "text": "2.3 Operaciones sobre listas\nDespués de tener la lista creada o una lista vacía podemos comenzar a realizar operaciones sobre ella. Esto con el fin de observar el comportamiento de cada una de ellas. Las operaciones disponibles se pueden acceder desde el menu Operations.\n\nCon estas operaciones es posible adicionar elementos a la lista de varias formas y también eliminarlos. Adicionalmente hay operaciones que permiten recorrer los elementos de la lista.\n\n2.3.1 Adición y borrado de elementos\nEn esta sección se define la manera de insertar y borrar elementos de la lista. Estas operaciones están disponibles en el menu Operations. En particular, las opciones de inserción se muestran en la siguiente imagen:\n\n\n2.3.1.1 Inserción\nAntes de cualquier inserción es necesario seleccionar el dato a insertar. Para esto se cuenta con el primer cuadro de texto.\n\n\n\n\n\n\nTipConsejo\n\n\n\n\n\n\n\n\n\nPulsando este botón que se encuentra al lado del cuadro de texto se generará ún valor aleatorio. Este valor será insertado por cualquiera de las operaciones.\n\n\n\n\n\nExisten tres formas básicas de insertar elementos en una lista enlazada. La primera es insertar el nuevo elemento por el frente de la lista. Es decir, el nuevo elemento quedaría como nuevo primer elemento en la lista. Para esto se ingresa el valor a insertar en el campo de texto Target Value y se procede a dar click en el botón . Al hacerlo el nuevo nodo se posicionará al inicio de la lista y tendrá un color diferente.\nEn la figura siguiente se muestra como queda la lista después de la inserción por el frente del elemento \\(45\\).\n\nSe puede apreciar que el elemento queda en un nodo con un color diferente. En este caso de color verde.\n\n\n\n\n\n\nTipConsejo\n\n\n\n\n\n\n\n\n\nEn cualquier momento es posible cambiar el color de los nodos de la lista utilizando la funcionalidad del menu Display Options presentado a la izquierda. En este caso se seleccionan en el lienzo los nodos a los que se les desea cambiar el color. Posteriormente se selecciona el color que aparece al lado del botón Apply y se pulsa este último.\n\n\n\n\n\nPara insertar un elemento por el final de la lista se procede de forma similar. Esta vez se debe tener en cuenta que hay dos formas de insertar un elemento por el final. La primera es recorriendo la lista desde el comienzo. A esta funcionalidad se puede acceder con el botón . Al pulsar el botón se verá de manera animada el recorrido sobre la lista y la posterior adición del nodo con el elemento seleccionado al final de la lista.\n\n\n\n\n\n\nAdvertencia\n\n\n\n\n\n\n\n\n\nEl símbolo de advertencia en la parte superior derecha de algunos botones (como el que aparece en la figura de la izquierda) representan funcionalidad que académicamente es relevante pero que debe ser evitada en código de producción.\n\n\n\n\n\nFinalmente para insertar un elemento utilizando el puntero al final de la lista se utiliza el botón . En esta inserción no se observará recorrido, el elemento se insertará al final de la lista.\n\n\n2.3.1.2 Borrado\nPara eliminar un elemento de la lista existen dos operaciones. La primera se puede ejecutar haciendo click en el botón . De esta forma se removerá el primer elemento de la lista. Después de pulsarlo se mostrará de manera animada sobre el lienzo.\nLa segunda forma se accede con el botón . Para esta operación se muestra todo el recorrido desde el inicio hasta el penúltimo elemento de la lista (que se convertirá en el nuevo último).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Funcionalidad</span>"
+    ]
+  }
+]
