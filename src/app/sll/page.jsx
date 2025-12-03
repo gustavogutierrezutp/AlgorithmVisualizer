@@ -1283,29 +1283,36 @@ class LinkedList extends Component {
     }
 
     reverseList = async () => {
-        if (this.state.nodes.length <= 1) return;
+        const listNodes = this.state.nodes.filter(n => n.type === 'linkedListNode');
+        if (listNodes.length <= 1) return;
 
+        const pointerNodes = this.state.nodes.filter(n => n.type === 'circleNode');
         let prev = null;
         let current = 0;
-        const nodes = [...this.state.nodes];
         let edges = [...this.state.edges];
 
         // Step 1: Visualize pointer reversal
-        while (current < nodes.length) {
+        while (current < listNodes.length) {
             // Highlight current node being processed
-            const currentNodes = nodes.map((node, idx) => ({
-                ...node,
-                style: {
-                    ...node.style,
-                    background: idx === current ? this.state.iterateColor : (idx === prev ? '#4CAF50' : node.style.background),
-                    border: idx === current ? '3px solid #E64A19' : '2px solid #333',
+            const currentNodes = this.state.nodes.map((node) => {
+                if (node.type === 'linkedListNode') {
+                    const listIndex = listNodes.findIndex(n => n.id === node.id);
+                    return {
+                        ...node,
+                        style: {
+                            ...node.style,
+                            background: listIndex === current ? this.state.iterateColor : (listIndex === prev ? '#4CAF50' : node.style.background),
+                            border: listIndex === current ? '3px solid #E64A19' : '2px solid #333',
+                        }
+                    };
                 }
-            }));
+                return node;
+            });
             this.setState({ nodes: currentNodes });
             await sleep(this.state.speed);
 
             // Remove the existing outgoing edge from current node
-            const edgeIndex = edges.findIndex(e => e.source === nodes[current].id);
+            const edgeIndex = edges.findIndex(e => e.source === listNodes[current].id);
             if (edgeIndex !== -1) {
                 edges.splice(edgeIndex, 1);
                 this.setState({ edges: [...edges] });
@@ -1316,9 +1323,9 @@ class LinkedList extends Component {
             if (prev !== null) {
                 edges.push({
                     id: `edge-rev-${current}`,
-                    source: nodes[current].id,
+                    source: listNodes[current].id,
                     sourceHandle: 'right',
-                    target: nodes[prev].id,
+                    target: listNodes[prev].id,
                     targetHandle: 'left',
                     animated: true,
                     type: 'default', // Use default bezier for backward curves to look better
@@ -1344,7 +1351,7 @@ class LinkedList extends Component {
         // Step 2: Re-arrange nodes to reflect new order (Head is now the last processed node)
         await sleep(this.state.speed);
 
-        const reversedNodes = [...this.state.nodes].reverse().map((node, idx) => ({
+        const reversedListNodes = [...listNodes].reverse().map((node, idx) => ({
             ...node,
             position: { x: 50 + (idx * 150), y: 100 },
             style: {
@@ -1355,13 +1362,13 @@ class LinkedList extends Component {
         }));
 
         // Re-create standard edges for the new order
-        const newEdges = [];
-        for (let i = 0; i < reversedNodes.length - 1; i++) {
+        let newEdges = [];
+        for (let i = 0; i < reversedListNodes.length - 1; i++) {
             newEdges.push({
                 id: `edge-${i}`,
-                source: reversedNodes[i].id,
+                source: reversedListNodes[i].id,
                 sourceHandle: 'right',
-                target: reversedNodes[i + 1].id,
+                target: reversedListNodes[i + 1].id,
                 targetHandle: 'left',
                 animated: true,
                 type: 'smoothstep',
@@ -1378,7 +1385,11 @@ class LinkedList extends Component {
             });
         }
 
-        this.setState({ nodes: reversedNodes, edges: newEdges });
+        // Update pointer positions and edges
+        const allNodes = [...pointerNodes, ...reversedListNodes];
+        const updatedState = this.updatePointerPositions(allNodes, newEdges);
+
+        this.setState({ nodes: updatedState.nodes, edges: updatedState.edges });
     }
 }
 
