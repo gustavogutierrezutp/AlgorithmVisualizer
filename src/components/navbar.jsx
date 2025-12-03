@@ -35,7 +35,7 @@ export default function Navbar(props) {
           </Button>
         )}
         <Button size="icon" variant="ghost">
-          <Link href="https://github.com/gustavogutierrezutp/AlgorithmVisualizer/tree/ds">
+          <Link href="https://github.com/gustavogutierrezutp/AlgorithmVisualizer">
             <Github className="h-5 w-5" />
           </Link>
         </Button>
