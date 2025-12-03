@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Github, Home, HelpCircle, BookOpen } from 'lucide-react'
+import { Github, Home, HelpCircle, BookOpen, Download } from 'lucide-react'
 
 export default function Navbar(props) {
   return (
@@ -20,6 +20,12 @@ export default function Navbar(props) {
           <a href="/AlgorithmVisualizer/docs/index.html" target="_blank" rel="noopener noreferrer">
             <BookOpen className="h-4 w-4" />
             Documentación
+          </a>
+        </Button>
+        <Button variant="ghost" size="lg" asChild>
+          <a href="/AlgorithmVisualizer/docs/DSViz--Listas-enlazadas.pdf" download>
+            <Download className="h-4 w-4" />
+            PDF
           </a>
         </Button>
         {props.onStartTour && (
