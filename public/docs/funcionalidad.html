@@ -30,7 +30,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./futuro.html" rel="next">
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -148,12 +147,6 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./funcionalidad.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Funcionalidad</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./futuro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Trabajo futuro</span></span></a>
   </div>
 </li>
     </ul>
@@ -278,13 +271,13 @@ Figura&nbsp;2.4: Imagen anotada de la visualización de una lista enlazada de 5 
 </figure>
 </div>
 <p>Existen diferentes formas de interactuar con la representación visual de la lista enlazada. Los nodos de la lista pueden ser reposicionados y su encadenamiento puede ser alterado. En la parte inferior izquierda del lienzo se encuentra una pequeña barra vertical con botones que tienen acción sobre la visualización del lienzo.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div id="tip-canvas-toolbar" class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Consejos
+Tip&nbsp;2.1: Consejos
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -296,7 +289,7 @@ Figura&nbsp;2.4: Imagen anotada de la visualización de una lista enlazada de 5 
 <div class="quarto-layout-cell" style="flex-basis: 90.0%;justify-content: flex-start;">
 <ul>
 <li>El tercer botón de arriba a abajo permite siempre enfocar todos los elementos dentro del lienzo. Esto es de gran importancia porque facilita mucho la interacción con la visualización.</li>
-<li>El botón inferior con el símbolo <img src="figures/lock.png" class="img-fluid"> protege el lienzo de cualquier tipo de interacción. Esta opción es muy útil cuando se desean tomar imágenes de captura de pantalla o realizar explicaciones sin que se altere la visualización.</li>
+<li>El cuarto botón con el símbolo <img src="figures/lock.png" class="img-fluid"> protege el lienzo de cualquier tipo de interacción. Esta opción es muy útil cuando se desean tomar imágenes de captura de pantalla o realizar explicaciones sin que se altere la visualización.</li>
 </ul>
 </div>
 </div>
@@ -391,14 +384,14 @@ Figura&nbsp;2.9
 </div>
 <p>Para insertar un elemento por el final de la lista se procede de forma similar. Esta vez se debe tener en cuenta que hay dos formas de hacerlo (denotadas como 2 y 3 en <a href="#fig-operations-insert-commented" class="quarto-xref">Figura&nbsp;<span>2.8</span></a>). La primera es recorriendo la lista desde el comienzo: opción 2. Al pulsar el botón marcado en la figura se verá de manera animada el recorrido sobre la lista y la posterior adición del nodo con el elemento seleccionado al final de la misma.</p>
 <p>Finalmente también es posible insertar un elemento utilizando el puntero al final de la lista (opción 3 de la <a href="#fig-operations-insert-commented" class="quarto-xref">Figura&nbsp;<span>2.8</span></a>). Durante esta inserción no se observará recorrido, el elemento se insertará al final de la lista.</p>
-<p>Los nodos insertados se colorean del color definido en el campo <strong>New node</strong> en el menú <strong>Display Options</strong>. Esto se hace con el fin de poder diferenciar los nodos anteriores del nuevo nodo. En cualquier momento se puede utilizar <a href="#tip-cambiar-color" class="quarto-xref">Tip&nbsp;<span>2.1</span></a> para modificar el color de cualquier nodo.</p>
+<p>Los nodos insertados se colorean del color definido en el campo <strong>New node</strong> en el menú <strong>Display Options</strong>. Esto se hace con el fin de poder diferenciar los nodos anteriores del nuevo nodo. En cualquier momento se puede utilizar <a href="#tip-cambiar-color" class="quarto-xref">Tip&nbsp;<span>2.2</span></a> para modificar el color de cualquier nodo.</p>
 <div id="tip-cambiar-color" class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tip&nbsp;2.1: Consejo
+Tip&nbsp;2.2: Consejo
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -414,14 +407,14 @@ Tip&nbsp;2.1: Consejo
 </div>
 </div>
 </div>
-<p>Es importante destacar que el simulador incluye operaciones que no necesariamente hacen parte de las estructuras de datos utilizadas en producción (por ejemplo en el desarrollo de aplicaciones comerciales). Lo anterior sucede cuando la operación tiene una intensión pedagógica o llega a ser un paso intermedio para deducir otra operación (ver <a href="#tip-simbolo-warning" class="quarto-xref">Tip&nbsp;<span>2.2</span></a>).</p>
+<p>Es importante destacar que el simulador incluye operaciones que no necesariamente hacen parte de las estructuras de datos utilizadas en producción (por ejemplo en el desarrollo de aplicaciones comerciales). Lo anterior sucede cuando la operación tiene una intensión pedagógica o llega a ser un paso intermedio para deducir otra operación (ver <a href="#tip-simbolo-warning" class="quarto-xref">Tip&nbsp;<span>2.3</span></a>).</p>
 <div id="tip-simbolo-warning" class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Advertencia&nbsp;2.2
+Advertencia&nbsp;2.3
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -484,10 +477,27 @@ Figura&nbsp;2.12: Visualización de los punteros al inicio y al final de la list
 <section id="apuntadores-adicionales" class="level3" data-number="2.4.2">
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="apuntadores-adicionales"><span class="header-section-number">2.4.2</span> Apuntadores adicionales</h3>
 <p>Durante el diseño de una operación sobre listas es siempre importante considerar el movimiento de los punteros. Incluso operaciones como remover un elemento en una posición de la lista usan punteros adicionales. Para este tipo de operaciones la aplicación cuenta con la funcionalidad de crear nodos de tipo apuntador. Esto se logra haciendo click en el botón <strong>Add pointer</strong> (ver <a href="#fig-programmer-tools" class="quarto-xref">Figura&nbsp;<span>2.11</span></a>). Cuando se pulsa este botón se adiciona un nuevo nodo circular al lienzo y este se puede conectar a cualquiera de los nodos de la lista.</p>
+<div id="fig-additional-pointers" class="html pdf quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-additional-pointers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/additional-pointers.png" class="html pdf img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-additional-pointers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.13: Visualización de los punteros adicionales insertados por el usuario.
+</figcaption>
+</figure>
+</div>
+<p>La <a href="#fig-additional-pointers" class="quarto-xref">Figura&nbsp;<span>2.13</span></a> muestra una lista que incluye los punteros a la cabeza y a la cola. Adicionalmente también hay dos punteros llamados <span class="math inline">\(P\)</span> y <span class="math inline">\(Q\)</span> que apuntan al segundo y al cuarto elemento.</p>
+<p>Los punteros pueden ser reposicionados utilizando el mouse y arrastrando la conexión a otro nodo. Haciendo doble click sobre el nodo es posible cambiar el nombre del puntero. Esto es muy útil en labores de enseñanza.</p>
 </section>
 </section>
 <section id="otras-operaciones" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="otras-operaciones"><span class="header-section-number">2.5</span> Otras operaciones</h2>
+<p>La aplicación cuenta con algunas funcionalidades que no son propias de las estructuras de datos pero si lo son de la enseñanza y el aprendizaje. Por ejemplo, en el <a href="#tip-canvas-toolbar" class="quarto-xref">Tip&nbsp;<span>2.1</span></a> se observa la barra de herramientas que tiene el lienzo en su parte inferior izquierda.</p>
+<ul>
+<li>El botón <img src="figures/png-export.png" class="img-fluid"> exporta el lienzo en su estado actual a un archivo de imagen con extensión <strong>png</strong>.</li>
+<li>El botón <img src="figures/pointer.png" class="img-fluid"> activa la opción de puntero, la cual actúa como un señalador y ayuda a la comunicación efectiva de las ideas. El puntero del mouse va a estar acompañado de un punto rojo de color atractivo. Para desactivarla se debe dar click de nuevo en el mismo botón.</li>
+</ul>
 
 
 </section>
@@ -900,9 +910,6 @@ Figura&nbsp;2.12: Visualización de los punteros al inicio y al final de la list
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./futuro.html" class="pagination-link" aria-label="Trabajo futuro">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Trabajo futuro</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

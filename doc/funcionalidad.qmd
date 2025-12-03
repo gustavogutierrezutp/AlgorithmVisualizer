@@ -18,7 +18,6 @@ siguiente figura.
 
 ![](figures/biglist.png)
 
-
 La parte superior contiene una barra con el título y algunos enlaces de interés.
 Tal vez el más importante es el botón con el texto __Tour__ en la parte superior
 derecha. Pulsar este botón activará una especie de tour por cada uno de los
@@ -107,7 +106,7 @@ encadenamiento puede ser alterado. En la parte inferior izquierda del lienzo se
 encuentra una pequeña barra vertical con botones que tienen acción sobre la
 visualización del lienzo.
 
-::: {.callout-tip}
+::: {#tip-canvas-toolbar .callout-tip}
 ##### Consejos
 
 ::: {layout="[1,9]"}
@@ -116,7 +115,7 @@ visualización del lienzo.
 - El tercer botón de arriba a abajo permite siempre enfocar todos los elementos
   dentro del lienzo. Esto es de gran importancia porque facilita mucho la
   interacción con la visualización.
-- El botón inferior con el símbolo ![](figures/lock.png) protege el lienzo de
+- El cuarto botón con el símbolo ![](figures/lock.png) protege el lienzo de
   cualquier tipo de interacción. Esta opción es muy útil cuando se desean tomar
   imágenes de captura de pantalla o realizar explicaciones sin que se altere la
   visualización.
@@ -168,7 +167,6 @@ las opciones de inserción se muestran en la @fig-operations-insert.
 
 Operaciones de inserción.
 :::
-
 
 #### Inserción
 
@@ -313,10 +311,34 @@ operaciones la aplicación cuenta con la funcionalidad de crear nodos de tipo
 apuntador. Esto se logra haciendo click en el botón __Add pointer__ (ver
 @fig-programmer-tools). Cuando se pulsa este botón se adiciona un nuevo nodo
 circular al lienzo y este se puede conectar a cualquiera de los nodos de la
-lista.
+lista. 
 
+::: {#fig-additional-pointers}
+![](figures/additional-pointers.png){width=70% .html width=50% .pdf}
+
+Visualización de los punteros adicionales insertados por el usuario.
+:::
+
+La @fig-additional-pointers muestra una lista que incluye los punteros a la
+cabeza y a la cola. Adicionalmente también hay dos punteros llamados $P$ y $Q$
+que apuntan al segundo y al cuarto elemento.
+
+Los punteros pueden ser reposicionados utilizando el mouse y arrastrando la
+conexión a otro nodo. Haciendo doble click sobre el nodo es posible cambiar el
+nombre del puntero. Esto es muy útil en labores de enseñanza.
 
 ## Otras operaciones
 
+La aplicación cuenta con algunas funcionalidades que no son propias de las
+estructuras de datos pero si lo son de la enseñanza y el aprendizaje. Por
+ejemplo, en el @tip-canvas-toolbar se observa la barra de herramientas que tiene
+el lienzo en su parte inferior izquierda.
+
+- El botón ![](figures/png-export.png) exporta el lienzo en su estado actual a
+  un archivo de imagen con extensión __png__.
+- El botón ![](figures/pointer.png) activa la opción de puntero, la cual actúa
+  como un señalador y ayuda a la comunicación efectiva de las ideas. El puntero
+  del mouse va a estar acompañado de un punto rojo de color atractivo. Para
+  desactivarla se debe dar click de nuevo en el mismo botón.
 
 
