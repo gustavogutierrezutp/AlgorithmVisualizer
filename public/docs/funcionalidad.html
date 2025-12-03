@@ -185,7 +185,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Funcionalidad</span></h1>
+<h1 class="title"><span id="sec-funcionalidad" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Funcionalidad</span></span></h1>
 </div>
 
 
@@ -217,24 +217,60 @@ window.Quarto = {
 <p>En el simulador las listas pueden ser creadas de diferentes maneras. Todas las opciones de creación se encuentran en el primer sub menu con el título <strong>List Creation</strong>.</p>
 <section id="lista-vacía" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="lista-vacía">Lista vacía</h3>
-<p><img src="figures/creation-empty.png" class="img-fluid"></p>
-<p>Para crear una lista vacía donde el usuario pueda comenzar a añadir elementos haciendo uso de las operaciones se debe hacer click en la pestaña <em>Empty</em> y a continuación hacer click en el botón <em>Create Empty List</em>. Al dar click en el aparecerá un mensaje en el lienzo de la derecha informando que la lista actualmente visualizada se encuentra vacía.</p>
+<div id="fig-creation-empty" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-creation-empty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/creation-empty.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-creation-empty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.1: Interfaz para la creación de una lista vacía.
+</figcaption>
+</figure>
+</div>
+<p>Para crear una lista vacía donde el usuario pueda comenzar a añadir elementos haciendo uso de las operaciones se debe hacer click en la pestaña <em>Empty</em> y a continuación hacer click en el botón <em>Create Empty List</em> (ver <a href="#fig-creation-empty" class="quarto-xref">Figura&nbsp;<span>2.1</span></a>). Al dar click en el aparecerá un mensaje en el lienzo de la derecha informando que la lista actualmente visualizada se encuentra vacía.</p>
 </section>
 <section id="lista-con-números-aleatorios" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="lista-con-números-aleatorios">Lista con números aleatorios</h3>
-<p>La siguiente opción para crear una lista es con elementos aleatorios. Esto es especialmente útil cuando el usuario desea ver como se comporta una operación sobre una lista que ya contiene elementos y no desea insertarlos uno a uno. En esta opción es cuestión de seleccionar el número de nodos utilizando el elemento deslizante y posteriormente pulsar el botón <em>Generate Random</em>. Al presionar el botón aparecerá la lista en el lienzo de la derecha junto con sus elementos.</p>
-<p><img src="figures/creation-random.png" class="img-fluid"></p>
+<p>La siguiente opción para crear una lista es con elementos aleatorios. Esto es especialmente útil cuando el usuario desea ver como se comporta una operación sobre una lista que ya contiene elementos y no desea insertarlos uno a uno. En esta opción es cuestión de seleccionar el número de nodos utilizando el elemento deslizante y posteriormente pulsar el botón <em>Generate Random</em> (ver <a href="#fig-creation-random" class="quarto-xref">Figura&nbsp;<span>2.2</span></a>). Al presionar el botón aparecerá la lista en el lienzo de la derecha junto con sus elementos.</p>
+<div id="fig-creation-random" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-creation-random-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/creation-random.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-creation-random-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.2: Interfaz para la creación de una lista inicializada de forma aleatoria.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="lista-personalizada" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="lista-personalizada">Lista personalizada</h3>
-<p>Cuando se requiere una lista con elementos específicos la tercera opción es la indicada. Haciendo click en <em>Custom</em> aparecerá un cuadro de texto para insertar cada uno de los elementos de la lista. El formato es simple: los elementos deben estar encerrados por los símbolos <code>[</code>y <code>]</code>. Adicionalmente los números en la deben estar separado por comas.</p>
-<p><img src="figures/creation-custom.png" class="img-fluid"></p>
+<p>Cuando se requiere una lista con elementos específicos la tercera opción es la indicada. Haciendo click en <em>Custom</em> aparecerá un cuadro de texto para insertar cada uno de los elementos de la lista (ver <a href="#fig-creation-random" class="quarto-xref">Figura&nbsp;<span>2.2</span></a>). El formato es simple: los elementos deben estar encerrados por los símbolos <code>[</code>y <code>]</code>. Adicionalmente los números en la deben estar separado por comas. Por ejemplo, al introducir <code>[1,2,3,4,5]</code> se creará y visualizará la lista que contiene los elementos del <span class="math inline">\(1\)</span> al <span class="math inline">\(5\)</span>.</p>
+<div id="fig-creation-custom" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-creation-custom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/creation-custom.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-creation-custom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.3: Interfaz para la creación de una lista con elementos puntuales.
+</figcaption>
+</figure>
+</div>
 </section>
 </section>
 <section id="visualización-de-la-lista" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="visualización-de-la-lista"><span class="header-section-number">2.2</span> Visualización de la lista</h2>
-<p>Después de creada la lista utilizando cualquiera de las formas mencionadas, está será visualizada en el lienzo que hay en la parte derecha. Por ejemplo, a continuación se muestra la interfaz con una lista creada de 5 elementos.</p>
-<p><img src="figures/random5.png" class="img-fluid"></p>
+<p>Después de creada la lista utilizando cualquiera de las formas mencionadas, está será visualizada en el lienzo que hay en la parte derecha. Por ejemplo, en la <a href="#fig-rand5-commented" class="quarto-xref">Figura&nbsp;<span>2.4</span></a> se muestra la interfaz con una lista creada de 5 elementos. En esta figura se encuentran las anotaciones muestran los diferentes nodos de la lista y los componentes de uno de ellos.</p>
+<div id="fig-rand5-commented" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rand5-commented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/random5-commented.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rand5-commented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.4: Visualización anotada de la visualización de una lista enlazada de 5 elementos en el lienzo.
+</figcaption>
+</figure>
+</div>
 <p>Existen diferentes formas de interactuar con la representación visual de la lista enlazada. Los nodos de la lista pueden ser reposicionados y su encadenamiento puede ser alterado. En la parte inferior izquierda del lienzo se encuentra una pequeña barra vertical con botones que tienen acción sobre la visualización del lienzo.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -261,8 +297,17 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Cada nodo de la lista consta de dos partes. La primera contiene el dato y la segunda representa el apuntador al siguiente nodo en la lista. Cuando el mouse se posiciona sobre este último el apuntador es resaltado en un color diferente. Esto es útil cuando las listas no se muestran de manera lineal. A continuación se muestra la misma lista después de ser reorganizada arrastrando los nodos con el mouse sobre el lienzo. El puntero se posicionó sobre el nodo que contiene el valor <span class="math inline">\(14\)</span>.</p>
-<p><img src="figures/next-pointer.png" class="img-fluid"></p>
+<p>Cada nodo de la lista consta de dos partes como se identifican en la <a href="#fig-rand5-commented" class="quarto-xref">Figura&nbsp;<span>2.4</span></a>. La primera contiene el dato y la segunda representa el apuntador al siguiente nodo en la lista. Cuando el <em>mouse</em> se posiciona sobre este último el apuntador es resaltado en un color diferente (ver <a href="#fig-next-pointer" class="quarto-xref">Figura&nbsp;<span>2.5</span></a>). Esto es útil cuando las listas no se muestran de manera lineal. A continuación se muestra la misma lista después de ser reorganizada arrastrando los nodos con el mouse sobre el lienzo. El puntero se posicionó sobre el nodo que contiene el valor <span class="math inline">\(14\)</span>.</p>
+<div id="fig-next-pointer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-next-pointer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/next-pointer.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-next-pointer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.5: Visualización del puntero al siguiente elemento de un nodo. Esta visualización se logra al colocar el puntero del ratón sobre el apuntador del nodo.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="operaciones-sobre-listas" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="operaciones-sobre-listas"><span class="header-section-number">2.3</span> Operaciones sobre listas</h2>
