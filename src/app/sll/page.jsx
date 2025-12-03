@@ -1,9 +1,11 @@
 "use client";
 import React, { Component } from 'react';
-import { ReactFlow, Background, Controls, MarkerType, applyNodeChanges, SelectionMode, addEdge, reconnectEdge } from '@xyflow/react';
+import { ReactFlow, Background, Controls, ControlButton, MarkerType, applyNodeChanges, SelectionMode, addEdge, reconnectEdge, getNodesBounds, getViewportForBounds } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { toPng } from 'html-to-image';
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
+import { Download } from 'lucide-react';
 
 import Navbar from '@/components/navbar';
 import Menu from "@/components/menu/Menu";
@@ -407,7 +409,7 @@ class LinkedList extends Component {
                         showPointers={this.state.showPointers}
                         isListEmpty={this.state.nodes.filter(n => n.type === 'linkedListNode').length === 0}
                     />
-                    <div id="canvas-area" className="flex flex-1 flex-col items-center justify-center overflow-auto bg-gray-50 relative">
+                    <div id="canvas-area" className="flex flex-1 flex-col overflow-auto bg-gray-50 relative">
                         {this.state.nodes.length === 0 && (
                             <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
                                 <div className="text-center p-8 bg-white rounded-lg shadow-lg border-2 border-gray-200">
@@ -416,7 +418,8 @@ class LinkedList extends Component {
                                 </div>
                             </div>
                         )}
-                        <ReactFlow
+                        <div className="flex-1">
+                            <ReactFlow
                             nodes={highlightedNodes}
                             edges={highlightedEdges}
                             onNodesChange={this.onNodesChange}
@@ -438,8 +441,13 @@ class LinkedList extends Component {
                             onInit={(instance) => this.reactFlowInstance = instance}
                         >
                             <Background />
-                            <Controls />
+                            <Controls>
+                                <ControlButton onClick={this.handleExportPNG} title="Export PNG">
+                                    <Download className="h-4 w-4" />
+                                </ControlButton>
+                            </Controls>
                         </ReactFlow>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -594,6 +602,39 @@ class LinkedList extends Component {
         this.setState(prevState => ({
             showPointers: !prevState.showPointers
         }));
+    }
+
+    handleExportPNG = () => {
+        const nodesBounds = getNodesBounds(this.state.nodes);
+        const viewport = getViewportForBounds(
+            nodesBounds,
+            nodesBounds.width,
+            nodesBounds.height,
+            0.5,
+            2,
+            0.1
+        );
+
+        const flowElement = document.querySelector('.react-flow__viewport');
+        if (!flowElement) return;
+
+        toPng(flowElement, {
+            backgroundColor: '#f9fafb',
+            width: nodesBounds.width * viewport.zoom + 100,
+            height: nodesBounds.height * viewport.zoom + 100,
+            style: {
+                width: nodesBounds.width * viewport.zoom + 100,
+                height: nodesBounds.height * viewport.zoom + 100,
+                transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
+            },
+        }).then((dataUrl) => {
+            const a = document.createElement('a');
+            a.setAttribute('download', 'linked-list.png');
+            a.setAttribute('href', dataUrl);
+            a.click();
+        }).catch((error) => {
+            console.error('Error exporting PNG:', error);
+        });
     }
 
     handleVisualize = async (opIndex, value) => {

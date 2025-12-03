@@ -274,5 +274,7 @@ Operaciones para el borrado de elementos.
 :::
 
 
+## Otras operaciones
+
 
 
