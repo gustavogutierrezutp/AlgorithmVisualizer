@@ -5,10 +5,14 @@ import '@xyflow/react/dist/style.css';
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 
+import { useTourStore } from '@/store/tourStore';
+
+
 import Navbar from '@/components/navbar';
 import Menu from "@/components/menu/Menu";
 import LinkedListNode from './sll/LinkedListNode';
 import CircleNode from './sll/CircleNode';
+
 
 const nodeTypes = {
     linkedListNode: LinkedListNode,
@@ -38,11 +42,11 @@ class LinkedList extends Component {
 
     componentDidMount() {
         this.initializeList(this.state.count);
+    }
 
-        // Check if user has seen the tour before
-        const hasSeenTour = localStorage.getItem('sll-tour-completed');
-        if (!hasSeenTour) {
-            setTimeout(() => this.startTour(), 1000);
+    componentDidUpdate(prevProps) {
+        if (this.props.isTourActive && !prevProps.isTourActive) {
+            this.startTour();
         }
     }
 
@@ -115,8 +119,10 @@ class LinkedList extends Component {
                 }
             ],
             onDestroyStarted: () => {
-                localStorage.setItem('sll-tour-completed', 'true');
                 driverObj.destroy();
+                if (this.props.stopTour) {
+                    this.props.stopTour(); 
+                }
             },
         });
 
@@ -256,13 +262,12 @@ class LinkedList extends Component {
         return (
             <div className="flex flex-col h-screen">
                 <div id="sll-navbar">
-                    <Navbar title="Single linked list" onStartTour={this.startTour} />
+                    <Navbar title="Single linked list"  />
                 </div>
 
                 <div className="flex flex-1 overflow-hidden">
                     <Menu
                         ref={this.menuRef}
-                        startTour={this.startTour}
                         disable={this.state.isRunning}
                         onVisualize={this.handleVisualize}
                         onCreateEmpty={this.handleCreateEmpty}
@@ -1183,4 +1188,18 @@ const createListFromSequence = (values, onPointerHover, nodeColor = '#2196F3') =
     return { nodes, edges };
 }
 
-export default LinkedList;
+
+
+
+export default function LinkedListWrapper(props) {
+    const isTourActive = useTourStore((state) => state.isTourActive);
+    const stopTour = useTourStore((state) => state.stopTour);
+
+    return (
+        <LinkedList 
+            {...props} 
+            isTourActive={isTourActive} 
+            stopTour={stopTour} 
+        />
+    );
+}
