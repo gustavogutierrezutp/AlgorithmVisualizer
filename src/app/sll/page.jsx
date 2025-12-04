@@ -467,7 +467,7 @@ class LinkedList extends Component {
                             onInit={(instance) => this.reactFlowInstance = instance}
                         >
                             <Background />
-                            <Controls>
+                            <Controls style={{ transform: 'scale(1.3)', transformOrigin: 'bottom left' }}>
                                 <ControlButton onClick={this.handleExportPNG} title="Export PNG">
                                     <Download className="h-4 w-4" />
                                 </ControlButton>
