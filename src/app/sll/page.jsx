@@ -12,10 +12,10 @@ import Menu from "@/components/menu/Menu";
 import LinkedListNode from './LinkedListNode';
 import CircleNode from './CircleNode';
 import { LAYOUT, COLORS, EDGE_STYLE, ANIMATION, INITIAL_STATE, SCRAMBLE, CIRCULAR_NODE, EXPORT, LASER_POINTER, NODE_IDS, OPERATIONS } from './constants';
-import { createListNode, createCircleNode } from './utils/nodeFactory';
-import { createEdgesForList } from './utils/edgeFactory';
+import { createCircleNode } from './utils/nodeFactory';
 import { getListNodes, getPointerNodes, getHeadNode, getTailNode, removePointerNodes } from './utils/nodeFilters';
 import { updatePointers, createPointerEdges, removePointerEdges } from './utils/pointerHelpers';
+import { createInitialList, createListFromSequence } from './utils/listHelpers';
 import * as operations from './operations';
 
 const nodeTypes = {
@@ -178,16 +178,21 @@ function LinkedList() {
         driverObj.drive();
     }, []);
 
-    // Effect for component mount
+    // Effect for component mount - initialization
     useEffect(() => {
-        initializeList(count);
-        initializePointers();
+        const initialize = () => {
+            initializeList(INITIAL_STATE.COUNT);
+            initializePointers();
 
-        const hasSeenTour = localStorage.getItem('sll-tour-completed');
-        if (!hasSeenTour) {
-            setTimeout(() => startTour(), 1000);
-        }
-    }, []); // Empty deps - only run on mount
+            const hasSeenTour = localStorage.getItem('sll-tour-completed');
+            if (!hasSeenTour) {
+                setTimeout(() => startTour(), 1000);
+            }
+        };
+
+        initialize();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // Intentionally empty - only run once on mount
 
     const onNodesChange = useCallback((changes) => {
         setNodes(currentNodes => applyNodeChanges(changes, currentNodes));
@@ -427,126 +432,67 @@ function LinkedList() {
         });
     }, [nodes]);
 
+    // Helper to create operation context
+    const createOperationContext = useCallback((includeNewNodeColor = false, includeReactFlow = false) => {
+        const stateData = { nodes, edges, speed, iterateColor };
+        if (includeNewNodeColor) stateData.newNodeColor = newNodeColor;
+
+        const context = {
+            state: stateData,
+            setState: (updates, callback) => {
+                if (typeof updates === 'function') {
+                    setNodes(currentNodes => {
+                        setEdges(currentEdges => {
+                            updates({ nodes: currentNodes, edges: currentEdges });
+                            if (callback) callback();
+                            return currentEdges;
+                        });
+                        return currentNodes;
+                    });
+                } else {
+                    if (updates.nodes !== undefined) setNodes(updates.nodes);
+                    if (updates.edges !== undefined) setEdges(updates.edges);
+                    if (callback) callback();
+                }
+            }
+        };
+
+        if (includeReactFlow) {
+            context.reactFlowInstance = reactFlowInstance.current;
+            context.handlePointerHover = handlePointerHover;
+        }
+
+        return context;
+    }, [nodes, edges, speed, newNodeColor, iterateColor, handlePointerHover]);
+
     // Operation wrapper functions
     const insertAtHead = useCallback(async (value) => {
-        const context = {
-            state: { nodes, edges, speed, newNodeColor, iterateColor },
-            setState: (updates, callback) => {
-                if (typeof updates === 'function') {
-                    // Handle functional updates
-                    setNodes(currentNodes => {
-                        setEdges(currentEdges => {
-                            updates({ nodes: currentNodes, edges: currentEdges });
-                            if (callback) callback();
-                            return currentEdges;
-                        });
-                        return currentNodes;
-                    });
-                } else {
-                    if (updates.nodes !== undefined) setNodes(updates.nodes);
-                    if (updates.edges !== undefined) setEdges(updates.edges);
-                    if (callback) callback();
-                }
-            },
-            reactFlowInstance: reactFlowInstance.current,
-            handlePointerHover
-        };
-        await operations.insertAtHead(context, value);
-    }, [nodes, edges, speed, newNodeColor, iterateColor, handlePointerHover]);
+        await operations.insertAtHead(createOperationContext(true, true), value);
+    }, [createOperationContext]);
 
     const deleteAtHead = useCallback(async () => {
-        const context = {
-            state: { nodes, edges, speed, iterateColor },
-            setState: (updates) => {
-                if (updates.nodes !== undefined) setNodes(updates.nodes);
-                if (updates.edges !== undefined) setEdges(updates.edges);
-            }
-        };
-        await operations.deleteAtHead(context);
-    }, [nodes, edges, speed, iterateColor]);
+        await operations.deleteAtHead(createOperationContext());
+    }, [createOperationContext]);
 
     const insertAtTail = useCallback(async (value) => {
-        const context = {
-            state: { nodes, edges, speed, newNodeColor, iterateColor },
-            setState: (updates, callback) => {
-                if (typeof updates === 'function') {
-                    setNodes(currentNodes => {
-                        setEdges(currentEdges => {
-                            updates({ nodes: currentNodes, edges: currentEdges });
-                            if (callback) callback();
-                            return currentEdges;
-                        });
-                        return currentNodes;
-                    });
-                } else {
-                    if (updates.nodes !== undefined) setNodes(updates.nodes);
-                    if (updates.edges !== undefined) setEdges(updates.edges);
-                    if (callback) callback();
-                }
-            },
-            reactFlowInstance: reactFlowInstance.current,
-            handlePointerHover
-        };
-        await operations.insertAtTail(context, value);
-    }, [nodes, edges, speed, newNodeColor, iterateColor, handlePointerHover]);
+        await operations.insertAtTail(createOperationContext(true, true), value);
+    }, [createOperationContext]);
 
     const insertAtTailO1 = useCallback(async (value) => {
-        const context = {
-            state: { nodes, edges, speed, newNodeColor, iterateColor },
-            setState: (updates, callback) => {
-                if (typeof updates === 'function') {
-                    setNodes(currentNodes => {
-                        setEdges(currentEdges => {
-                            updates({ nodes: currentNodes, edges: currentEdges });
-                            if (callback) callback();
-                            return currentEdges;
-                        });
-                        return currentNodes;
-                    });
-                } else {
-                    if (updates.nodes !== undefined) setNodes(updates.nodes);
-                    if (updates.edges !== undefined) setEdges(updates.edges);
-                    if (callback) callback();
-                }
-            },
-            reactFlowInstance: reactFlowInstance.current,
-            handlePointerHover
-        };
-        await operations.insertAtTailO1(context, value);
-    }, [nodes, edges, speed, newNodeColor, iterateColor, handlePointerHover]);
+        await operations.insertAtTailO1(createOperationContext(true, true), value);
+    }, [createOperationContext]);
 
     const deleteAtTail = useCallback(async () => {
-        const context = {
-            state: { nodes, edges, speed, iterateColor },
-            setState: (updates) => {
-                if (updates.nodes !== undefined) setNodes(updates.nodes);
-                if (updates.edges !== undefined) setEdges(updates.edges);
-            }
-        };
-        await operations.deleteAtTail(context);
-    }, [nodes, edges, speed, iterateColor]);
+        await operations.deleteAtTail(createOperationContext());
+    }, [createOperationContext]);
 
     const traverseList = useCallback(async () => {
-        const context = {
-            state: { nodes, edges, speed, iterateColor },
-            setState: (updates) => {
-                if (updates.nodes !== undefined) setNodes(updates.nodes);
-                if (updates.edges !== undefined) setEdges(updates.edges);
-            }
-        };
-        await operations.traverseList(context);
-    }, [nodes, edges, speed, iterateColor]);
+        await operations.traverseList(createOperationContext());
+    }, [createOperationContext]);
 
     const reverseList = useCallback(async () => {
-        const context = {
-            state: { nodes, edges, speed, iterateColor },
-            setState: (updates) => {
-                if (updates.nodes !== undefined) setNodes(updates.nodes);
-                if (updates.edges !== undefined) setEdges(updates.edges);
-            }
-        };
-        await operations.reverseList(context);
-    }, [nodes, edges, speed, iterateColor]);
+        await operations.reverseList(createOperationContext());
+    }, [createOperationContext]);
 
     const handleVisualize = useCallback(async (opIndex, value) => {
         setIsRunning(true);
@@ -757,35 +703,6 @@ function LinkedList() {
             </div>
         </div>
     );
-}
-
-const createInitialList = (count, onPointerHover, nodeColor = COLORS.NODE_DEFAULT) => {
-    const nodes = [];
-
-    for (let i = 0; i < count; i++) {
-        const value = Math.floor(Math.random() * 100);
-        const nodeId = `node-${i}`;
-        const x = LAYOUT.INITIAL_X + (i * LAYOUT.NODE_HORIZONTAL_SPACING);
-        const y = LAYOUT.INITIAL_Y;
-        nodes.push(createListNode(nodeId, value, x, y, nodeColor, onPointerHover));
-    }
-
-    const edges = createEdgesForList(nodes);
-    return { nodes, edges };
-}
-
-const createListFromSequence = (values, onPointerHover, nodeColor = COLORS.NODE_DEFAULT) => {
-    const nodes = [];
-
-    for (let i = 0; i < values.length; i++) {
-        const nodeId = `node-${i}`;
-        const x = LAYOUT.INITIAL_X + (i * LAYOUT.NODE_HORIZONTAL_SPACING);
-        const y = LAYOUT.INITIAL_Y;
-        nodes.push(createListNode(nodeId, values[i], x, y, nodeColor, onPointerHover));
-    }
-
-    const edges = createEdgesForList(nodes);
-    return { nodes, edges };
 }
 
 export default LinkedList;
