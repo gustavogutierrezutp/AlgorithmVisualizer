@@ -13,9 +13,9 @@ import LinkedListNode from './LinkedListNode';
 import CircleNode from './CircleNode';
 import { LAYOUT, COLORS, EDGE_STYLE, ANIMATION, INITIAL_STATE, NODE_STYLE, SCRAMBLE, CIRCULAR_NODE, EXPORT, LASER_POINTER, NODE_IDS, OPERATIONS } from './constants';
 import { createListNode, createCircleNode } from './utils/nodeFactory';
-import { createEdgesForList } from './utils/edgeFactory';
+import { createListEdge, createHeadPointerEdge, createTailPointerEdge, createEdgesForList } from './utils/edgeFactory';
 import { getListNodes, getPointerNodes, getHeadNode, getTailNode, removePointerNodes } from './utils/nodeFilters';
-import { updatePointers, createPointerEdges, removePointerEdges } from './utils/pointerHelpers';
+import { updatePointers, createPointerEdges, removePointerEdges, getHeadPointerPosition, getTailPointerPosition } from './utils/pointerHelpers';
 
 const nodeTypes = {
     linkedListNode: LinkedListNode,
@@ -716,27 +716,9 @@ class LinkedList extends Component {
         if (headPointerIndex !== -1) {
             nodes[headPointerIndex] = {
                 ...nodes[headPointerIndex],
-                position: {
-                    x: newNodeX,
-                    y: newNodeY - 100
-                }
+                position: getHeadPointerPosition(newNode)
             };
-
-            // Update head pointer edge
-            edges.push({
-                id: `edge-pointer-head-${newNodeId}`,
-                source: NODE_IDS.POINTER_HEAD,
-                target: newNodeId,
-                targetHandle: 'top',
-                animated: true,
-                style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
-                markerEnd: {
-                    type: MarkerType.ArrowClosed,
-                    width: EDGE_STYLE.MARKER_WIDTH,
-                    height: EDGE_STYLE.MARKER_HEIGHT,
-                    color: COLORS.EDGE_DEFAULT
-                },
-            });
+            edges.push(createHeadPointerEdge(newNodeId));
         }
 
         // Update Tail Pointer if list was empty
@@ -745,26 +727,9 @@ class LinkedList extends Component {
             if (tailPointerIndex !== -1) {
                 nodes[tailPointerIndex] = {
                     ...nodes[tailPointerIndex],
-                    position: {
-                        x: newNodeX,
-                        y: newNodeY + 100
-                    }
+                    position: getTailPointerPosition(newNode)
                 };
-
-                edges.push({
-                    id: `edge-pointer-tail-${newNodeId}`,
-                    source: NODE_IDS.POINTER_TAIL,
-                    target: newNodeId,
-                    targetHandle: 'bottom',
-                    animated: true,
-                    style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
-                    markerEnd: {
-                        type: MarkerType.ArrowClosed,
-                        width: 10,
-                        height: 10,
-                        color: '#333'
-                    },
-                });
+                edges.push(createTailPointerEdge(newNodeId));
             }
         } else {
             // Keep existing tail pointer edge
@@ -802,26 +767,10 @@ class LinkedList extends Component {
             const newHead = remainingListNodes[0];
             nodes[headPointerIndex] = {
                 ...nodes[headPointerIndex],
-                position: {
-                    x: newHead.position.x,
-                    y: newHead.position.y - 100
-                }
+                position: getHeadPointerPosition(newHead)
             };
 
-            edges.push({
-                id: `edge-pointer-head-${newHead.id}`,
-                source: NODE_IDS.POINTER_HEAD,
-                target: newHead.id,
-                targetHandle: 'top',
-                animated: true,
-                style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
-                markerEnd: {
-                    type: MarkerType.ArrowClosed,
-                    width: EDGE_STYLE.MARKER_WIDTH,
-                    height: EDGE_STYLE.MARKER_HEIGHT,
-                    color: COLORS.EDGE_DEFAULT
-                },
-            });
+            edges.push(createHeadPointerEdge(newHead.id));
         }
 
         // Update Tail Pointer edge (tail stays the same unless list becomes empty)
@@ -898,25 +847,7 @@ class LinkedList extends Component {
         // Add edge if list was not empty
         if (lastNode) {
             edges = edges.filter(e => !e.id.startsWith('edge-') || e.source !== lastNode.id || e.target.startsWith('node-'));
-            edges.push({
-                id: `edge-${lastNode.id}-${newNodeId}`,
-                source: lastNode.id,
-                sourceHandle: 'right',
-                target: newNodeId,
-                targetHandle: 'left',
-                animated: true,
-                type: 'smoothstep',
-                markerEnd: {
-                    type: MarkerType.ArrowClosed,
-                    width: EDGE_STYLE.MARKER_WIDTH,
-                    height: EDGE_STYLE.MARKER_HEIGHT,
-                    color: COLORS.EDGE_DEFAULT
-                },
-                style: {
-                    strokeWidth: 2,
-                    stroke: '#333'
-                }
-            });
+            edges.push(createListEdge(lastNode.id, newNodeId, `${lastNode.id}-${newNodeId}`));
         }
 
         // Update Tail Pointer
@@ -924,28 +855,12 @@ class LinkedList extends Component {
         if (tailPointerIndex !== -1) {
             newNodes[tailPointerIndex] = {
                 ...newNodes[tailPointerIndex],
-                position: {
-                    x: newNodeX,
-                    y: newNodeY + 100
-                }
+                position: getTailPointerPosition(newNode)
             };
 
             // Remove old tail pointer edge and add new one
             edges = edges.filter(e => e.source !== NODE_IDS.POINTER_TAIL);
-            edges.push({
-                id: `edge-pointer-tail-${newNodeId}`,
-                source: NODE_IDS.POINTER_TAIL,
-                target: newNodeId,
-                targetHandle: 'bottom',
-                animated: true,
-                style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
-                markerEnd: {
-                    type: MarkerType.ArrowClosed,
-                    width: EDGE_STYLE.MARKER_WIDTH,
-                    height: EDGE_STYLE.MARKER_HEIGHT,
-                    color: COLORS.EDGE_DEFAULT
-                },
-            });
+            edges.push(createTailPointerEdge(newNodeId));
         }
 
         // Update Head Pointer if list was empty
@@ -954,26 +869,9 @@ class LinkedList extends Component {
             if (headPointerIndex !== -1) {
                 newNodes[headPointerIndex] = {
                     ...newNodes[headPointerIndex],
-                    position: {
-                        x: newNodeX,
-                        y: newNodeY - 100
-                    }
+                    position: getHeadPointerPosition(newNode)
                 };
-
-                edges.push({
-                    id: `edge-pointer-head-${newNodeId}`,
-                    source: NODE_IDS.POINTER_HEAD,
-                    target: newNodeId,
-                    targetHandle: 'top',
-                    animated: true,
-                    style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
-                    markerEnd: {
-                        type: MarkerType.ArrowClosed,
-                        width: 10,
-                        height: 10,
-                        color: '#333'
-                    },
-                });
+                edges.push(createHeadPointerEdge(newNodeId));
             }
         }
 
@@ -1016,40 +914,18 @@ class LinkedList extends Component {
 
         // Add edge if list was not empty
         if (lastNode) {
-            edges.push({
-                id: `edge-${lastNode.id}-${newNodeId}`, // Use unique ID based on nodes
-                source: lastNode.id,
-                sourceHandle: 'right',
-                target: newNodeId,
-                targetHandle: 'left',
-                animated: true,
-                type: 'smoothstep',
-                markerEnd: {
-                    type: MarkerType.ArrowClosed,
-                    width: EDGE_STYLE.MARKER_WIDTH,
-                    height: EDGE_STYLE.MARKER_HEIGHT,
-                    color: COLORS.EDGE_DEFAULT
-                },
-                style: {
-                    strokeWidth: 2,
-                    stroke: '#333'
-                }
-            });
+            edges.push(createListEdge(lastNode.id, newNodeId, `${lastNode.id}-${newNodeId}`));
         }
 
         // Update Tail Pointer Position
         const tailPointerIndex = newNodes.findIndex(n => n.id === NODE_IDS.POINTER_TAIL);
         if (tailPointerIndex !== -1) {
-            // Update pointer node position
             newNodes[tailPointerIndex] = {
                 ...newNodes[tailPointerIndex],
-                position: {
-                    x: newNodeX,
-                    y: newNodeY + 100
-                }
+                position: getTailPointerPosition(newNode)
             };
 
-            // Update pointer edge
+            // Update or create pointer edge
             const pointerEdgeIndex = edges.findIndex(e => e.source === NODE_IDS.POINTER_TAIL);
             if (pointerEdgeIndex !== -1) {
                 edges[pointerEdgeIndex] = {
@@ -1057,16 +933,7 @@ class LinkedList extends Component {
                     target: newNodeId
                 };
             } else {
-                // If edge didn't exist (e.g. list was empty), create it
-                edges.push({
-                    id: `edge-pointer-tail-${newNodeId}`,
-                    source: NODE_IDS.POINTER_TAIL,
-                    target: newNodeId,
-                    targetHandle: 'bottom',
-                    animated: true,
-                    style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
-                    markerEnd: { type: MarkerType.ArrowClosed, width: 10, height: 10, color: '#333' },
-                });
+                edges.push(createTailPointerEdge(newNodeId));
             }
         }
 
@@ -1076,22 +943,9 @@ class LinkedList extends Component {
             if (headPointerIndex !== -1) {
                 newNodes[headPointerIndex] = {
                     ...newNodes[headPointerIndex],
-                    position: {
-                        x: newNodeX,
-                        y: newNodeY - 100
-                    }
+                    position: getHeadPointerPosition(newNode)
                 };
-
-                // Create head edge
-                edges.push({
-                    id: `edge-pointer-head-${newNodeId}`,
-                    source: NODE_IDS.POINTER_HEAD,
-                    target: newNodeId,
-                    targetHandle: 'top',
-                    animated: true,
-                    style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
-                    markerEnd: { type: MarkerType.ArrowClosed, width: 10, height: 10, color: '#333' },
-                });
+                edges.push(createHeadPointerEdge(newNodeId));
             }
         }
 
@@ -1110,7 +964,6 @@ class LinkedList extends Component {
         if (listNodes.length === 0) return;
 
         const nodes = [...this.state.nodes];
-        let edges = [...this.state.edges];
 
         // Traverse to the second to last node
         for (let i = 0; i < listNodes.length - 1; i++) {
@@ -1147,7 +1000,6 @@ class LinkedList extends Component {
         this.setState({ nodes: resetNodes });
 
         // Remove last list node
-        const nodeToRemove = listNodes[listNodes.length - 1];
         const pointerNodes = getPointerNodes(resetNodes);
         const remainingListNodes = listNodes.slice(0, -1);
         const newNodes = [...pointerNodes, ...remainingListNodes];
@@ -1161,26 +1013,9 @@ class LinkedList extends Component {
             const newTail = remainingListNodes[remainingListNodes.length - 1];
             newNodes[tailPointerIndex] = {
                 ...newNodes[tailPointerIndex],
-                position: {
-                    x: newTail.position.x,
-                    y: newTail.position.y + 100
-                }
+                position: getTailPointerPosition(newTail)
             };
-
-            newEdges.push({
-                id: `edge-pointer-tail-${newTail.id}`,
-                source: NODE_IDS.POINTER_TAIL,
-                target: newTail.id,
-                targetHandle: 'bottom',
-                animated: true,
-                style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
-                markerEnd: {
-                    type: MarkerType.ArrowClosed,
-                    width: EDGE_STYLE.MARKER_WIDTH,
-                    height: EDGE_STYLE.MARKER_HEIGHT,
-                    color: COLORS.EDGE_DEFAULT
-                },
-            });
+            newEdges.push(createTailPointerEdge(newTail.id));
         }
 
         // Update Head Pointer edge (head stays the same unless list becomes empty)
@@ -1312,28 +1147,7 @@ class LinkedList extends Component {
         }));
 
         // Re-create standard edges for the new order
-        let newEdges = [];
-        for (let i = 0; i < reversedListNodes.length - 1; i++) {
-            newEdges.push({
-                id: `edge-${i}`,
-                source: reversedListNodes[i].id,
-                sourceHandle: 'right',
-                target: reversedListNodes[i + 1].id,
-                targetHandle: 'left',
-                animated: true,
-                type: 'smoothstep',
-                markerEnd: {
-                    type: MarkerType.ArrowClosed,
-                    width: EDGE_STYLE.MARKER_WIDTH,
-                    height: EDGE_STYLE.MARKER_HEIGHT,
-                    color: COLORS.EDGE_DEFAULT
-                },
-                style: {
-                    strokeWidth: 2,
-                    stroke: '#333'
-                }
-            });
-        }
+        let newEdges = createEdgesForList(reversedListNodes);
 
         // Update pointer positions and edges
         const allNodes = [...pointerNodes, ...reversedListNodes];
