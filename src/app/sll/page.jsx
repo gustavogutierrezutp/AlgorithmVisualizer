@@ -11,6 +11,7 @@ import Navbar from '@/components/navbar';
 import Menu from "@/components/menu/Menu";
 import LinkedListNode from './LinkedListNode';
 import CircleNode from './CircleNode';
+import { LAYOUT, COLORS, EDGE_STYLE, ANIMATION, INITIAL_STATE, NODE_STYLE, SCRAMBLE, CIRCULAR_NODE, EXPORT, LASER_POINTER, NODE_IDS, OPERATIONS } from './constants';
 
 const nodeTypes = {
     linkedListNode: LinkedListNode,
@@ -19,18 +20,18 @@ const nodeTypes = {
 
 class LinkedList extends Component {
     state = {
-        count: 5,
+        count: INITIAL_STATE.COUNT,
         nodes: [],
         edges: [],
-        speed: 500,
+        speed: ANIMATION.DEFAULT_SPEED,
         isRunning: false,
         operation: 0, // 0: insert, 1: delete, 2: search, 3: reverse
         hoveredNodeId: null,
         highlightHead: false,
         highlightTail: false,
-        nodeColor: '#2196F3',
-        newNodeColor: '#4CAF50',
-        iterateColor: '#FF5722',
+        nodeColor: COLORS.NODE_DEFAULT,
+        newNodeColor: COLORS.NODE_NEW,
+        iterateColor: COLORS.NODE_ITERATE,
         selectedNodes: [],
         showPointers: false,
         isReconnecting: false,
@@ -54,27 +55,27 @@ class LinkedList extends Component {
     initializePointers = () => {
         // Create head and tail pointer nodes (always exist, visibility controlled by toggle)
         const headPointerNode = {
-            id: 'pointer-head',
+            id: NODE_IDS.POINTER_HEAD,
             type: 'circleNode',
             data: {
                 label: 'H',
-                nodeId: 'pointer-head',
+                nodeId: NODE_IDS.POINTER_HEAD,
                 onPointerHover: this.handlePointerHover,
                 onLabelChange: this.handleCircleNodeLabelChange,
             },
-            position: { x: 50, y: 0 },
+            position: { x: LAYOUT.INITIAL_X, y: 0 },
         };
 
         const tailPointerNode = {
-            id: 'pointer-tail',
+            id: NODE_IDS.POINTER_TAIL,
             type: 'circleNode',
             data: {
                 label: 'T',
-                nodeId: 'pointer-tail',
+                nodeId: NODE_IDS.POINTER_TAIL,
                 onPointerHover: this.handlePointerHover,
                 onLabelChange: this.handleCircleNodeLabelChange,
             },
-            position: { x: 50, y: 200 },
+            position: { x: LAYOUT.INITIAL_X, y: LAYOUT.POINTER_VERTICAL_OFFSET * 2 },
         };
 
         this.setState(prevState => ({
@@ -171,8 +172,8 @@ class LinkedList extends Component {
         this.setState({ nodes: updatedNodes.nodes, edges: updatedNodes.edges }, () => {
             if (this.reactFlowInstance) {
                 setTimeout(() => {
-                    this.reactFlowInstance.fitView({ duration: 500, padding: 0.3 });
-                }, 100);
+                    this.reactFlowInstance.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
+                }, ANIMATION.FIT_VIEW_DELAY);
             }
         });
     }
@@ -183,21 +184,21 @@ class LinkedList extends Component {
         const tailNode = listNodes.length > 0 ? listNodes[listNodes.length - 1] : null;
 
         const updatedNodes = nodes.map(node => {
-            if (node.id === 'pointer-head' && headNode) {
+            if (node.id === NODE_IDS.POINTER_HEAD && headNode) {
                 return {
                     ...node,
                     position: {
                         x: headNode.position.x,
-                        y: headNode.position.y - 100
+                        y: headNode.position.y - LAYOUT.POINTER_VERTICAL_OFFSET
                     }
                 };
             }
-            if (node.id === 'pointer-tail' && tailNode) {
+            if (node.id === NODE_IDS.POINTER_TAIL && tailNode) {
                 return {
                     ...node,
                     position: {
                         x: tailNode.position.x,
-                        y: tailNode.position.y + 100
+                        y: tailNode.position.y + LAYOUT.POINTER_VERTICAL_OFFSET
                     }
                 };
             }
@@ -210,16 +211,16 @@ class LinkedList extends Component {
         if (headNode) {
             updatedEdges.push({
                 id: `edge-pointer-head-${headNode.id}`,
-                source: 'pointer-head',
+                source: NODE_IDS.POINTER_HEAD,
                 target: headNode.id,
                 targetHandle: 'top',
                 animated: true,
-                style: { stroke: '#333', strokeWidth: 2 },
+                style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
                 markerEnd: {
                     type: MarkerType.ArrowClosed,
-                    width: 10,
-                    height: 10,
-                    color: '#333'
+                    width: EDGE_STYLE.MARKER_WIDTH,
+                    height: EDGE_STYLE.MARKER_HEIGHT,
+                    color: COLORS.EDGE_DEFAULT
                 },
             });
         }
@@ -227,16 +228,16 @@ class LinkedList extends Component {
         if (tailNode) {
             updatedEdges.push({
                 id: `edge-pointer-tail-${tailNode.id}`,
-                source: 'pointer-tail',
+                source: NODE_IDS.POINTER_TAIL,
                 target: tailNode.id,
                 targetHandle: 'bottom',
                 animated: true,
-                style: { stroke: '#333', strokeWidth: 2 },
+                style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
                 markerEnd: {
                     type: MarkerType.ArrowClosed,
-                    width: 10,
-                    height: 10,
-                    color: '#333'
+                    width: EDGE_STYLE.MARKER_WIDTH,
+                    height: EDGE_STYLE.MARKER_HEIGHT,
+                    color: COLORS.EDGE_DEFAULT
                 },
             });
         }
@@ -264,9 +265,9 @@ class LinkedList extends Component {
                 ...params,
                 markerEnd: {
                     type: MarkerType.ArrowClosed,
-                    width: 10,
-                    height: 10,
-                    color: '#333'
+                    width: EDGE_STYLE.MARKER_WIDTH,
+                    height: EDGE_STYLE.MARKER_HEIGHT,
+                    color: COLORS.EDGE_DEFAULT
                 },
                 style: {
                     strokeWidth: 2,
@@ -324,7 +325,7 @@ class LinkedList extends Component {
         let edgesToRender = this.state.edges;
 
         if (!showPointers) {
-            nodesToRender = this.state.nodes.filter(n => n.id !== 'pointer-head' && n.id !== 'pointer-tail');
+            nodesToRender = this.state.nodes.filter(n => n.id !== NODE_IDS.POINTER_HEAD && n.id !== NODE_IDS.POINTER_TAIL);
             edgesToRender = this.state.edges.filter(e => !e.id.startsWith('edge-pointer-'));
         }
 
@@ -338,8 +339,8 @@ class LinkedList extends Component {
                     ...node,
                     style: {
                         ...node.style,
-                        background: '#9C27B0', // Purple for head
-                        border: '3px solid #7B1FA2',
+                        background: COLORS.HEAD_HIGHLIGHT,
+                        border: `3px solid ${COLORS.HEAD_BORDER}`,
                     }
                 };
             }
@@ -348,8 +349,8 @@ class LinkedList extends Component {
                     ...node,
                     style: {
                         ...node.style,
-                        background: '#E91E63', // Pink for tail
-                        border: '3px solid #C2185B',
+                        background: COLORS.TAIL_HIGHLIGHT,
+                        border: `3px solid ${COLORS.TAIL_BORDER}`,
                     }
                 };
             }
@@ -365,12 +366,12 @@ class LinkedList extends Component {
                 animated: isHighlighted ? true : edge.animated,
                 style: {
                     ...edge.style,
-                    strokeWidth: isHighlighted ? 4 : 2,
-                    stroke: isHighlighted ? this.state.iterateColor : '#333',
+                    strokeWidth: isHighlighted ? EDGE_STYLE.STROKE_WIDTH_HIGHLIGHTED : EDGE_STYLE.STROKE_WIDTH_DEFAULT,
+                    stroke: isHighlighted ? this.state.iterateColor : COLORS.EDGE_DEFAULT,
                 },
                 markerEnd: {
                     ...edge.markerEnd,
-                    color: isHighlighted ? this.state.iterateColor : '#333',
+                    color: isHighlighted ? this.state.iterateColor : COLORS.EDGE_DEFAULT,
                 }
             };
         });
@@ -424,11 +425,11 @@ class LinkedList extends Component {
                                     position: 'absolute',
                                     left: this.state.laserPointerPosition.x,
                                     top: this.state.laserPointerPosition.y,
-                                    width: '20px',
-                                    height: '20px',
+                                    width: `${LASER_POINTER.SIZE}px`,
+                                    height: `${LASER_POINTER.SIZE}px`,
                                     borderRadius: '50%',
-                                    backgroundColor: 'rgba(255, 0, 0, 0.7)',
-                                    boxShadow: '0 0 20px 5px rgba(255, 0, 0, 0.5)',
+                                    backgroundColor: LASER_POINTER.COLOR,
+                                    boxShadow: `${LASER_POINTER.GLOW_SIZE} ${LASER_POINTER.GLOW_COLOR}`,
                                     transform: 'translate(-50%, -50%)',
                                     pointerEvents: 'none',
                                     zIndex: 9999,
@@ -495,7 +496,7 @@ class LinkedList extends Component {
         this.setState({ nodes: pointerNodes, edges: [] }, () => {
             if (this.reactFlowInstance) {
                 setTimeout(() => {
-                    this.reactFlowInstance.fitView({ duration: 500, padding: 0.5 });
+                    this.reactFlowInstance.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING_LARGE });
                 }, 100);
             }
         });
@@ -523,7 +524,7 @@ class LinkedList extends Component {
             this.setState({ nodes: updatedNodes.nodes, edges: updatedNodes.edges }, () => {
                 if (this.reactFlowInstance) {
                     setTimeout(() => {
-                        this.reactFlowInstance.fitView({ duration: 500, padding: 0.3 });
+                        this.reactFlowInstance.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
                     }, 100);
                 }
             });
@@ -549,8 +550,8 @@ class LinkedList extends Component {
         const nodes = this.state.nodes.map(node => ({
             ...node,
             position: {
-                x: Math.random() * 800 + 50,
-                y: Math.random() * 400 + 50
+                x: Math.random() * SCRAMBLE.X_RANGE + SCRAMBLE.X_OFFSET,
+                y: Math.random() * SCRAMBLE.Y_RANGE + SCRAMBLE.Y_OFFSET
             }
         }));
         this.setState({ nodes });
@@ -614,8 +615,8 @@ class LinkedList extends Component {
                 onLabelChange: this.handleCircleNodeLabelChange,
             },
             position: {
-                x: Math.random() * 400 + 50,
-                y: Math.random() * 400 + 50
+                x: Math.random() * CIRCULAR_NODE.X_RANGE + CIRCULAR_NODE.X_OFFSET,
+                y: Math.random() * CIRCULAR_NODE.Y_RANGE + CIRCULAR_NODE.Y_OFFSET
             },
         };
         this.setState(prevState => ({
@@ -667,21 +668,21 @@ class LinkedList extends Component {
             nodesBounds,
             nodesBounds.width,
             nodesBounds.height,
-            0.5,
-            2,
-            0.1
+            EXPORT.VIEWPORT_MIN_SCALE,
+            EXPORT.VIEWPORT_MAX_SCALE,
+            EXPORT.VIEWPORT_PADDING
         );
 
         const flowElement = document.querySelector('.react-flow__viewport');
         if (!flowElement) return;
 
         toPng(flowElement, {
-            backgroundColor: '#f9fafb',
-            width: nodesBounds.width * viewport.zoom + 100,
-            height: nodesBounds.height * viewport.zoom + 100,
+            backgroundColor: EXPORT.BACKGROUND_COLOR,
+            width: nodesBounds.width * viewport.zoom + EXPORT.EXTRA_PADDING,
+            height: nodesBounds.height * viewport.zoom + EXPORT.EXTRA_PADDING,
             style: {
-                width: nodesBounds.width * viewport.zoom + 100,
-                height: nodesBounds.height * viewport.zoom + 100,
+                width: nodesBounds.width * viewport.zoom + EXPORT.EXTRA_PADDING,
+                height: nodesBounds.height * viewport.zoom + EXPORT.EXTRA_PADDING,
                 transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
             },
         }).then((dataUrl) => {
@@ -702,31 +703,31 @@ class LinkedList extends Component {
 
         // Placeholder for different operations
         switch (operation) {
-            case 0:
+            case OPERATIONS.INSERT_HEAD:
                 await this.insertAtHead(valToInsert);
                 if (this.menuRef.current) {
                     this.menuRef.current.refreshInsertValue();
                 }
                 break;
-            case 1:
+            case OPERATIONS.DELETE_HEAD:
                 await this.deleteAtHead();
                 break;
-            case 2:
+            case OPERATIONS.INSERT_TAIL:
                 await this.insertAtTail(valToInsert);
                 if (this.menuRef.current) {
                     this.menuRef.current.refreshInsertValue();
                 }
                 break;
-            case 3:
+            case OPERATIONS.DELETE_TAIL:
                 await this.deleteAtTail();
                 break;
-            case 4:
+            case OPERATIONS.TRAVERSE:
                 await this.traverseList();
                 break;
-            case 5:
+            case OPERATIONS.REVERSE:
                 await this.reverseList();
                 break;
-            case 6:
+            case OPERATIONS.INSERT_TAIL_O1:
                 await this.insertAtTailO1(valToInsert);
                 if (this.menuRef.current) {
                     this.menuRef.current.refreshInsertValue();
@@ -745,7 +746,7 @@ class LinkedList extends Component {
         // Filter to get only linked list nodes
         const listNodes = existingNodes.filter(n => n.type === 'linkedListNode');
         const firstNode = listNodes.length > 0 ? listNodes[0] : null;
-        const fixedDistance = 150;
+        const fixedDistance = LAYOUT.NODE_HORIZONTAL_SPACING;
         const newNodeX = firstNode ? firstNode.position.x - fixedDistance : 50;
         const newNodeY = firstNode ? firstNode.position.y : 100;
 
@@ -761,12 +762,12 @@ class LinkedList extends Component {
             position: { x: newNodeX, y: newNodeY },
             style: {
                 background: this.state.newNodeColor,
-                color: 'white',
-                border: '2px solid #333',
-                borderRadius: '8px',
-                padding: '10px',
-                fontSize: '16px',
-                fontWeight: 'bold',
+                color: NODE_STYLE.COLOR,
+                border: NODE_STYLE.BORDER,
+                borderRadius: NODE_STYLE.BORDER_RADIUS,
+                padding: NODE_STYLE.PADDING,
+                fontSize: NODE_STYLE.FONT_SIZE,
+                fontWeight: NODE_STYLE.FONT_WEIGHT,
             }
         };
 
@@ -796,13 +797,13 @@ class LinkedList extends Component {
                 color: '#333'
             },
             style: {
-                strokeWidth: 2,
-                stroke: '#333'
+                strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT,
+                stroke: COLORS.EDGE_DEFAULT
             }
         })) : [];
 
         // Update Head Pointer (always exists)
-        const headPointerIndex = nodes.findIndex(n => n.id === 'pointer-head');
+        const headPointerIndex = nodes.findIndex(n => n.id === NODE_IDS.POINTER_HEAD);
         if (headPointerIndex !== -1) {
             nodes[headPointerIndex] = {
                 ...nodes[headPointerIndex],
@@ -815,23 +816,23 @@ class LinkedList extends Component {
             // Update head pointer edge
             edges.push({
                 id: `edge-pointer-head-${newNodeId}`,
-                source: 'pointer-head',
+                source: NODE_IDS.POINTER_HEAD,
                 target: newNodeId,
                 targetHandle: 'top',
                 animated: true,
-                style: { stroke: '#333', strokeWidth: 2 },
+                style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
                 markerEnd: {
                     type: MarkerType.ArrowClosed,
-                    width: 10,
-                    height: 10,
-                    color: '#333'
+                    width: EDGE_STYLE.MARKER_WIDTH,
+                    height: EDGE_STYLE.MARKER_HEIGHT,
+                    color: COLORS.EDGE_DEFAULT
                 },
             });
         }
 
         // Update Tail Pointer if list was empty
         if (listNodes.length === 0) {
-            const tailPointerIndex = nodes.findIndex(n => n.id === 'pointer-tail');
+            const tailPointerIndex = nodes.findIndex(n => n.id === NODE_IDS.POINTER_TAIL);
             if (tailPointerIndex !== -1) {
                 nodes[tailPointerIndex] = {
                     ...nodes[tailPointerIndex],
@@ -843,11 +844,11 @@ class LinkedList extends Component {
 
                 edges.push({
                     id: `edge-pointer-tail-${newNodeId}`,
-                    source: 'pointer-tail',
+                    source: NODE_IDS.POINTER_TAIL,
                     target: newNodeId,
                     targetHandle: 'bottom',
                     animated: true,
-                    style: { stroke: '#333', strokeWidth: 2 },
+                    style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
                     markerEnd: {
                         type: MarkerType.ArrowClosed,
                         width: 10,
@@ -858,7 +859,7 @@ class LinkedList extends Component {
             }
         } else {
             // Keep existing tail pointer edge
-            const tailPointerEdge = this.state.edges.find(e => e.source === 'pointer-tail');
+            const tailPointerEdge = this.state.edges.find(e => e.source === NODE_IDS.POINTER_TAIL);
             if (tailPointerEdge) {
                 edges.push(tailPointerEdge);
             }
@@ -867,7 +868,7 @@ class LinkedList extends Component {
         this.setState({ nodes, edges }, () => {
             if (this.reactFlowInstance) {
                 setTimeout(() => {
-                    this.reactFlowInstance.fitView({ duration: 500, padding: 0.3 });
+                    this.reactFlowInstance.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
                 }, 100);
             }
         });
@@ -899,13 +900,13 @@ class LinkedList extends Component {
                 color: '#333'
             },
             style: {
-                strokeWidth: 2,
-                stroke: '#333'
+                strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT,
+                stroke: COLORS.EDGE_DEFAULT
             }
         })) : [];
 
         // Update Head Pointer
-        const headPointerIndex = nodes.findIndex(n => n.id === 'pointer-head');
+        const headPointerIndex = nodes.findIndex(n => n.id === NODE_IDS.POINTER_HEAD);
         if (headPointerIndex !== -1 && remainingListNodes.length > 0) {
             const newHead = remainingListNodes[0];
             nodes[headPointerIndex] = {
@@ -918,23 +919,23 @@ class LinkedList extends Component {
 
             edges.push({
                 id: `edge-pointer-head-${newHead.id}`,
-                source: 'pointer-head',
+                source: NODE_IDS.POINTER_HEAD,
                 target: newHead.id,
                 targetHandle: 'top',
                 animated: true,
-                style: { stroke: '#333', strokeWidth: 2 },
+                style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
                 markerEnd: {
                     type: MarkerType.ArrowClosed,
-                    width: 10,
-                    height: 10,
-                    color: '#333'
+                    width: EDGE_STYLE.MARKER_WIDTH,
+                    height: EDGE_STYLE.MARKER_HEIGHT,
+                    color: COLORS.EDGE_DEFAULT
                 },
             });
         }
 
         // Update Tail Pointer edge (tail stays the same unless list becomes empty)
         if (remainingListNodes.length > 0) {
-            const tailPointerEdge = this.state.edges.find(e => e.source === 'pointer-tail');
+            const tailPointerEdge = this.state.edges.find(e => e.source === NODE_IDS.POINTER_TAIL);
             if (tailPointerEdge) {
                 edges.push(tailPointerEdge);
             }
@@ -987,7 +988,7 @@ class LinkedList extends Component {
 
         // Add new node at same Y as last list node, fixed distance in X
         const lastNode = listNodes.length > 0 ? listNodes[listNodes.length - 1] : null;
-        const fixedDistance = 150;
+        const fixedDistance = LAYOUT.NODE_HORIZONTAL_SPACING;
         const newNodeX = lastNode ? lastNode.position.x + fixedDistance : 50;
         const newNodeY = lastNode ? lastNode.position.y : 100;
 
@@ -1003,12 +1004,12 @@ class LinkedList extends Component {
             position: { x: newNodeX, y: newNodeY },
             style: {
                 background: this.state.newNodeColor,
-                color: 'white',
-                border: '2px solid #333',
-                borderRadius: '8px',
-                padding: '10px',
-                fontSize: '16px',
-                fontWeight: 'bold',
+                color: NODE_STYLE.COLOR,
+                border: NODE_STYLE.BORDER,
+                borderRadius: NODE_STYLE.BORDER_RADIUS,
+                padding: NODE_STYLE.PADDING,
+                fontSize: NODE_STYLE.FONT_SIZE,
+                fontWeight: NODE_STYLE.FONT_WEIGHT,
             }
         };
 
@@ -1027,9 +1028,9 @@ class LinkedList extends Component {
                 type: 'smoothstep',
                 markerEnd: {
                     type: MarkerType.ArrowClosed,
-                    width: 10,
-                    height: 10,
-                    color: '#333'
+                    width: EDGE_STYLE.MARKER_WIDTH,
+                    height: EDGE_STYLE.MARKER_HEIGHT,
+                    color: COLORS.EDGE_DEFAULT
                 },
                 style: {
                     strokeWidth: 2,
@@ -1039,7 +1040,7 @@ class LinkedList extends Component {
         }
 
         // Update Tail Pointer
-        const tailPointerIndex = newNodes.findIndex(n => n.id === 'pointer-tail');
+        const tailPointerIndex = newNodes.findIndex(n => n.id === NODE_IDS.POINTER_TAIL);
         if (tailPointerIndex !== -1) {
             newNodes[tailPointerIndex] = {
                 ...newNodes[tailPointerIndex],
@@ -1050,26 +1051,26 @@ class LinkedList extends Component {
             };
 
             // Remove old tail pointer edge and add new one
-            edges = edges.filter(e => e.source !== 'pointer-tail');
+            edges = edges.filter(e => e.source !== NODE_IDS.POINTER_TAIL);
             edges.push({
                 id: `edge-pointer-tail-${newNodeId}`,
-                source: 'pointer-tail',
+                source: NODE_IDS.POINTER_TAIL,
                 target: newNodeId,
                 targetHandle: 'bottom',
                 animated: true,
-                style: { stroke: '#333', strokeWidth: 2 },
+                style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
                 markerEnd: {
                     type: MarkerType.ArrowClosed,
-                    width: 10,
-                    height: 10,
-                    color: '#333'
+                    width: EDGE_STYLE.MARKER_WIDTH,
+                    height: EDGE_STYLE.MARKER_HEIGHT,
+                    color: COLORS.EDGE_DEFAULT
                 },
             });
         }
 
         // Update Head Pointer if list was empty
         if (listNodes.length === 0) {
-            const headPointerIndex = newNodes.findIndex(n => n.id === 'pointer-head');
+            const headPointerIndex = newNodes.findIndex(n => n.id === NODE_IDS.POINTER_HEAD);
             if (headPointerIndex !== -1) {
                 newNodes[headPointerIndex] = {
                     ...newNodes[headPointerIndex],
@@ -1081,11 +1082,11 @@ class LinkedList extends Component {
 
                 edges.push({
                     id: `edge-pointer-head-${newNodeId}`,
-                    source: 'pointer-head',
+                    source: NODE_IDS.POINTER_HEAD,
                     target: newNodeId,
                     targetHandle: 'top',
                     animated: true,
-                    style: { stroke: '#333', strokeWidth: 2 },
+                    style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
                     markerEnd: {
                         type: MarkerType.ArrowClosed,
                         width: 10,
@@ -1099,7 +1100,7 @@ class LinkedList extends Component {
         this.setState({ nodes: newNodes, edges }, () => {
             if (this.reactFlowInstance) {
                 setTimeout(() => {
-                    this.reactFlowInstance.fitView({ duration: 500, padding: 0.3 });
+                    this.reactFlowInstance.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
                 }, 100);
             }
         });
@@ -1117,7 +1118,7 @@ class LinkedList extends Component {
         const listNodes = nodes.filter(n => n.type === 'linkedListNode');
         const lastNode = listNodes.length > 0 ? listNodes[listNodes.length - 1] : null;
 
-        const fixedDistance = 150;
+        const fixedDistance = LAYOUT.NODE_HORIZONTAL_SPACING;
         const newNodeX = lastNode ? lastNode.position.x + fixedDistance : 50;
         const newNodeY = lastNode ? lastNode.position.y : 100;
 
@@ -1133,12 +1134,12 @@ class LinkedList extends Component {
             position: { x: newNodeX, y: newNodeY },
             style: {
                 background: this.state.newNodeColor,
-                color: 'white',
-                border: '2px solid #333',
-                borderRadius: '8px',
-                padding: '10px',
-                fontSize: '16px',
-                fontWeight: 'bold',
+                color: NODE_STYLE.COLOR,
+                border: NODE_STYLE.BORDER,
+                borderRadius: NODE_STYLE.BORDER_RADIUS,
+                padding: NODE_STYLE.PADDING,
+                fontSize: NODE_STYLE.FONT_SIZE,
+                fontWeight: NODE_STYLE.FONT_WEIGHT,
             }
         };
 
@@ -1156,9 +1157,9 @@ class LinkedList extends Component {
                 type: 'smoothstep',
                 markerEnd: {
                     type: MarkerType.ArrowClosed,
-                    width: 10,
-                    height: 10,
-                    color: '#333'
+                    width: EDGE_STYLE.MARKER_WIDTH,
+                    height: EDGE_STYLE.MARKER_HEIGHT,
+                    color: COLORS.EDGE_DEFAULT
                 },
                 style: {
                     strokeWidth: 2,
@@ -1168,7 +1169,7 @@ class LinkedList extends Component {
         }
 
         // Update Tail Pointer Position
-        const tailPointerIndex = newNodes.findIndex(n => n.id === 'pointer-tail');
+        const tailPointerIndex = newNodes.findIndex(n => n.id === NODE_IDS.POINTER_TAIL);
         if (tailPointerIndex !== -1) {
             // Update pointer node position
             newNodes[tailPointerIndex] = {
@@ -1180,7 +1181,7 @@ class LinkedList extends Component {
             };
 
             // Update pointer edge
-            const pointerEdgeIndex = edges.findIndex(e => e.source === 'pointer-tail');
+            const pointerEdgeIndex = edges.findIndex(e => e.source === NODE_IDS.POINTER_TAIL);
             if (pointerEdgeIndex !== -1) {
                 edges[pointerEdgeIndex] = {
                     ...edges[pointerEdgeIndex],
@@ -1190,11 +1191,11 @@ class LinkedList extends Component {
                 // If edge didn't exist (e.g. list was empty), create it
                 edges.push({
                     id: `edge-pointer-tail-${newNodeId}`,
-                    source: 'pointer-tail',
+                    source: NODE_IDS.POINTER_TAIL,
                     target: newNodeId,
                     targetHandle: 'bottom',
                     animated: true,
-                    style: { stroke: '#333', strokeWidth: 2 },
+                    style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
                     markerEnd: { type: MarkerType.ArrowClosed, width: 10, height: 10, color: '#333' },
                 });
             }
@@ -1202,7 +1203,7 @@ class LinkedList extends Component {
 
         // Also handle Head pointer if list was empty
         if (listNodes.length === 0) {
-            const headPointerIndex = newNodes.findIndex(n => n.id === 'pointer-head');
+            const headPointerIndex = newNodes.findIndex(n => n.id === NODE_IDS.POINTER_HEAD);
             if (headPointerIndex !== -1) {
                 newNodes[headPointerIndex] = {
                     ...newNodes[headPointerIndex],
@@ -1215,11 +1216,11 @@ class LinkedList extends Component {
                 // Create head edge
                 edges.push({
                     id: `edge-pointer-head-${newNodeId}`,
-                    source: 'pointer-head',
+                    source: NODE_IDS.POINTER_HEAD,
                     target: newNodeId,
                     targetHandle: 'top',
                     animated: true,
-                    style: { stroke: '#333', strokeWidth: 2 },
+                    style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
                     markerEnd: { type: MarkerType.ArrowClosed, width: 10, height: 10, color: '#333' },
                 });
             }
@@ -1228,7 +1229,7 @@ class LinkedList extends Component {
         this.setState({ nodes: newNodes, edges }, () => {
             if (this.reactFlowInstance) {
                 setTimeout(() => {
-                    this.reactFlowInstance.fitView({ duration: 500, padding: 0.3 });
+                    this.reactFlowInstance.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
                 }, 100);
             }
         });
@@ -1298,13 +1299,13 @@ class LinkedList extends Component {
                 color: '#333'
             },
             style: {
-                strokeWidth: 2,
-                stroke: '#333'
+                strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT,
+                stroke: COLORS.EDGE_DEFAULT
             }
         })) : [];
 
         // Update Tail Pointer
-        const tailPointerIndex = newNodes.findIndex(n => n.id === 'pointer-tail');
+        const tailPointerIndex = newNodes.findIndex(n => n.id === NODE_IDS.POINTER_TAIL);
         if (tailPointerIndex !== -1 && remainingListNodes.length > 0) {
             const newTail = remainingListNodes[remainingListNodes.length - 1];
             newNodes[tailPointerIndex] = {
@@ -1317,23 +1318,23 @@ class LinkedList extends Component {
 
             newEdges.push({
                 id: `edge-pointer-tail-${newTail.id}`,
-                source: 'pointer-tail',
+                source: NODE_IDS.POINTER_TAIL,
                 target: newTail.id,
                 targetHandle: 'bottom',
                 animated: true,
-                style: { stroke: '#333', strokeWidth: 2 },
+                style: { stroke: COLORS.EDGE_DEFAULT, strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT },
                 markerEnd: {
                     type: MarkerType.ArrowClosed,
-                    width: 10,
-                    height: 10,
-                    color: '#333'
+                    width: EDGE_STYLE.MARKER_WIDTH,
+                    height: EDGE_STYLE.MARKER_HEIGHT,
+                    color: COLORS.EDGE_DEFAULT
                 },
             });
         }
 
         // Update Head Pointer edge (head stays the same unless list becomes empty)
         if (remainingListNodes.length > 0) {
-            const headPointerEdge = this.state.edges.find(e => e.source === 'pointer-head');
+            const headPointerEdge = this.state.edges.find(e => e.source === NODE_IDS.POINTER_HEAD);
             if (headPointerEdge) {
                 newEdges.push(headPointerEdge);
             }
@@ -1399,8 +1400,8 @@ class LinkedList extends Component {
                         ...node,
                         style: {
                             ...node.style,
-                            background: listIndex === current ? this.state.iterateColor : (listIndex === prev ? '#4CAF50' : node.style.background),
-                            border: listIndex === current ? '3px solid #E64A19' : '2px solid #333',
+                            background: listIndex === current ? this.state.iterateColor : (listIndex === prev ? COLORS.NODE_NEW : node.style.background),
+                            border: listIndex === current ? NODE_STYLE.BORDER_HIGHLIGHTED : NODE_STYLE.BORDER,
                         }
                     };
                 }
@@ -1429,12 +1430,12 @@ class LinkedList extends Component {
                     type: 'default', // Use default bezier for backward curves to look better
                     markerEnd: {
                         type: MarkerType.ArrowClosed,
-                        width: 10,
-                        height: 10,
+                        width: EDGE_STYLE.MARKER_WIDTH,
+                        height: EDGE_STYLE.MARKER_HEIGHT,
                         color: this.state.iterateColor
                     },
                     style: {
-                        strokeWidth: 3,
+                        strokeWidth: EDGE_STYLE.STROKE_WIDTH_REVERSE,
                         stroke: this.state.iterateColor
                     }
                 });
@@ -1451,11 +1452,11 @@ class LinkedList extends Component {
 
         const reversedListNodes = [...listNodes].reverse().map((node, idx) => ({
             ...node,
-            position: { x: 50 + (idx * 150), y: 100 },
+            position: { x: LAYOUT.INITIAL_X + (idx * LAYOUT.NODE_HORIZONTAL_SPACING), y: LAYOUT.INITIAL_Y },
             style: {
                 ...node.style,
                 background: node.style.background,
-                border: '2px solid #333',
+                border: NODE_STYLE.BORDER,
             }
         }));
 
@@ -1472,9 +1473,9 @@ class LinkedList extends Component {
                 type: 'smoothstep',
                 markerEnd: {
                     type: MarkerType.ArrowClosed,
-                    width: 10,
-                    height: 10,
-                    color: '#333'
+                    width: EDGE_STYLE.MARKER_WIDTH,
+                    height: EDGE_STYLE.MARKER_HEIGHT,
+                    color: COLORS.EDGE_DEFAULT
                 },
                 style: {
                     strokeWidth: 2,
@@ -1495,7 +1496,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const createInitialList = (count, onPointerHover, nodeColor = '#2196F3') => {
+const createInitialList = (count, onPointerHover, nodeColor = COLORS.NODE_DEFAULT) => {
     const nodes = [];
     const edges = [];
 
@@ -1510,15 +1511,15 @@ const createInitialList = (count, onPointerHover, nodeColor = '#2196F3') => {
                 nodeId: nodeId,
                 onPointerHover: onPointerHover,
             },
-            position: { x: 50 + (i * 150), y: 100 },
+            position: { x: LAYOUT.INITIAL_X + (i * LAYOUT.NODE_HORIZONTAL_SPACING), y: LAYOUT.INITIAL_Y },
             style: {
                 background: nodeColor,
-                color: 'white',
-                border: '2px solid #333',
-                borderRadius: '8px',
-                padding: '10px',
-                fontSize: '16px',
-                fontWeight: 'bold',
+                color: NODE_STYLE.COLOR,
+                border: NODE_STYLE.BORDER,
+                borderRadius: NODE_STYLE.BORDER_RADIUS,
+                padding: NODE_STYLE.PADDING,
+                fontSize: NODE_STYLE.FONT_SIZE,
+                fontWeight: NODE_STYLE.FONT_WEIGHT,
             }
         });
     }
@@ -1539,8 +1540,8 @@ const createInitialList = (count, onPointerHover, nodeColor = '#2196F3') => {
                 color: '#333'
             },
             style: {
-                strokeWidth: 2,
-                stroke: '#333'
+                strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT,
+                stroke: COLORS.EDGE_DEFAULT
             }
         });
     }
@@ -1548,7 +1549,7 @@ const createInitialList = (count, onPointerHover, nodeColor = '#2196F3') => {
     return { nodes, edges };
 }
 
-const createListFromSequence = (values, onPointerHover, nodeColor = '#2196F3') => {
+const createListFromSequence = (values, onPointerHover, nodeColor = COLORS.NODE_DEFAULT) => {
     const nodes = [];
     const edges = [];
 
@@ -1562,15 +1563,15 @@ const createListFromSequence = (values, onPointerHover, nodeColor = '#2196F3') =
                 nodeId: nodeId,
                 onPointerHover: onPointerHover,
             },
-            position: { x: 50 + (i * 150), y: 100 },
+            position: { x: LAYOUT.INITIAL_X + (i * LAYOUT.NODE_HORIZONTAL_SPACING), y: LAYOUT.INITIAL_Y },
             style: {
                 background: nodeColor,
-                color: 'white',
-                border: '2px solid #333',
-                borderRadius: '8px',
-                padding: '10px',
-                fontSize: '16px',
-                fontWeight: 'bold',
+                color: NODE_STYLE.COLOR,
+                border: NODE_STYLE.BORDER,
+                borderRadius: NODE_STYLE.BORDER_RADIUS,
+                padding: NODE_STYLE.PADDING,
+                fontSize: NODE_STYLE.FONT_SIZE,
+                fontWeight: NODE_STYLE.FONT_WEIGHT,
             }
         });
     }
@@ -1591,8 +1592,8 @@ const createListFromSequence = (values, onPointerHover, nodeColor = '#2196F3') =
                 color: '#333'
             },
             style: {
-                strokeWidth: 2,
-                stroke: '#333'
+                strokeWidth: EDGE_STYLE.STROKE_WIDTH_DEFAULT,
+                stroke: COLORS.EDGE_DEFAULT
             }
         });
     }
