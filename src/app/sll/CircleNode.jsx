@@ -34,8 +34,8 @@ const CircleNode = ({ data, style }) => {
       onDoubleClick={handleDoubleClick}
       style={{
         ...style,
-        width: '50px',
-        height: '50px',
+        width: '45px',
+        height: '45px',
         borderRadius: '50%',
         background: '#FF5722',
         display: 'flex',
@@ -43,8 +43,8 @@ const CircleNode = ({ data, style }) => {
         justifyContent: 'center',
         color: 'white',
         fontWeight: 'bold',
-        border: '2px solid #E64A19',
-        boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
+        border: '1.8px solid #E64A19',
+        boxShadow: '0 1.8px 4.5px rgba(0,0,0,0.2)',
         cursor: 'pointer',
       }}
     >
@@ -58,14 +58,14 @@ const CircleNode = ({ data, style }) => {
           autoFocus
           maxLength={3}
           style={{
-            width: '40px',
-            height: '40px',
+            width: '36px',
+            height: '36px',
             textAlign: 'center',
             border: 'none',
             background: 'transparent',
             color: 'white',
             fontWeight: 'bold',
-            fontSize: '14px',
+            fontSize: '12.6px',
             outline: 'none',
           }}
         />
