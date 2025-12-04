@@ -1,10 +1,8 @@
 "use client";
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { ReactFlow, Background, Controls, ControlButton, MarkerType, applyNodeChanges, SelectionMode, addEdge, reconnectEdge, getNodesBounds, getViewportForBounds } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { toPng } from 'html-to-image';
-import { driver } from "driver.js";
-import "driver.js/dist/driver.css";
 import { Download, Pointer } from 'lucide-react';
 
 import Navbar from '@/components/navbar';
@@ -13,10 +11,11 @@ import LinkedListNode from './LinkedListNode';
 import CircleNode from './CircleNode';
 import { LAYOUT, COLORS, EDGE_STYLE, ANIMATION, INITIAL_STATE, SCRAMBLE, CIRCULAR_NODE, EXPORT, LASER_POINTER, NODE_IDS, OPERATIONS } from './constants';
 import { createCircleNode } from './utils/nodeFactory';
-import { getListNodes, getPointerNodes, getHeadNode, getTailNode, removePointerNodes } from './utils/nodeFilters';
-import { updatePointers, createPointerEdges, removePointerEdges } from './utils/pointerHelpers';
-import { createInitialList, createListFromSequence } from './utils/listHelpers';
-import * as operations from './operations';
+import { getListNodes, getPointerNodes, getHeadNode, getTailNode } from './utils/nodeFilters';
+import { updatePointers, createPointerEdges } from './utils/pointerHelpers';
+import { useListOperations } from './hooks/useListOperations';
+import { useListVisualization } from './hooks/useListVisualization';
+import { useListInitialization } from './hooks/useListInitialization';
 
 const nodeTypes = {
     linkedListNode: LinkedListNode,
@@ -51,6 +50,14 @@ function LinkedList() {
         setHoveredNodeId(nodeId);
     }, []);
 
+    const handleCircleNodeLabelChange = useCallback((nodeId, newLabel) => {
+        setNodes(currentNodes => currentNodes.map(node =>
+            node.id === nodeId
+                ? { ...node, data: { ...node.data, label: newLabel } }
+                : node
+        ));
+    }, []);
+
     const updatePointerPositions = useCallback((nodesList, edgesList) => {
         const listNodes = getListNodes(nodesList);
         const headNode = getHeadNode(listNodes);
@@ -62,137 +69,39 @@ function LinkedList() {
         return { nodes: updatedNodes, edges: updatedEdges };
     }, []);
 
-    const initializePointers = useCallback(() => {
-        const headPointerNode = createCircleNode(
-            NODE_IDS.POINTER_HEAD,
-            'H',
-            LAYOUT.INITIAL_X,
-            0,
-            handlePointerHover,
-            handleCircleNodeLabelChange
-        );
+    // Use custom hooks
+    const { initializeList, initializePointers, startTour, handleCreateFromSequence } = useListInitialization({
+        nodes,
+        nodeColor,
+        setNodes,
+        setEdges,
+        reactFlowInstance,
+        handlePointerHover,
+        handleCircleNodeLabelChange,
+        updatePointerPositions
+    });
 
-        const tailPointerNode = createCircleNode(
-            NODE_IDS.POINTER_TAIL,
-            'T',
-            LAYOUT.INITIAL_X,
-            LAYOUT.POINTER_VERTICAL_OFFSET * 2,
-            handlePointerHover,
-            handleCircleNodeLabelChange
-        );
+    const listOperations = useListOperations({
+        nodes,
+        edges,
+        speed,
+        newNodeColor,
+        iterateColor,
+        setNodes,
+        setEdges,
+        reactFlowInstance,
+        handlePointerHover
+    });
 
-        setNodes(prevNodes => [headPointerNode, tailPointerNode, ...prevNodes]);
-    }, [handlePointerHover]);
-
-    const initializeList = useCallback((listCount) => {
-        const { nodes: newNodes, edges: newEdges } = createInitialList(listCount, handlePointerHover, nodeColor);
-        const pointerNodes = nodes ? getPointerNodes(nodes) : [];
-        const allNodes = [...pointerNodes, ...newNodes];
-
-        const updatedData = updatePointerPositions(allNodes, newEdges);
-
-        setNodes(updatedData.nodes);
-        setEdges(updatedData.edges);
-
-        if (reactFlowInstance.current) {
-            setTimeout(() => {
-                reactFlowInstance.current.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
-            }, ANIMATION.FIT_VIEW_DELAY);
-        }
-    }, [handlePointerHover, nodeColor, nodes, updatePointerPositions]);
-
-    const startTour = useCallback(() => {
-        const driverObj = driver({
-            showProgress: true,
-            showButtons: ['next', 'previous', 'close'],
-            steps: [
-                {
-                    element: '#sll-navbar',
-                    popover: {
-                        title: 'Bienvenido a DSViz',
-                        description: 'Esta es una herramienta interactiva para visualizar listas enlazadas. Te guiaré por las principales funciones.',
-                        side: "bottom",
-                        align: 'start',
-                        nextBtnText: 'Siguiente',
-                        prevBtnText: 'Anterior'
-                    }
-                },
-                {
-                    element: '#list-creation-section',
-                    popover: {
-                        title: 'Creación de Listas',
-                        description: 'Aquí puedes crear listas de diferentes formas: vacía, aleatoria o desde una secuencia personalizada.',
-                        side: "right",
-                        align: 'start',
-                        nextBtnText: 'Siguiente',
-                        prevBtnText: 'Anterior'
-                    }
-                },
-                {
-                    element: '#operations-section',
-                    popover: {
-                        title: 'Operaciones',
-                        description: 'Selecciona y ejecuta operaciones como insertar, eliminar, recorrer y revertir la lista.',
-                        side: "right",
-                        align: 'start',
-                        nextBtnText: 'Siguiente',
-                        prevBtnText: 'Anterior'
-                    }
-                },
-                {
-                    element: '#display-options-section',
-                    popover: {
-                        title: 'Opciones de Visualización',
-                        description: 'Personaliza la velocidad de animación, colores de nodos y resalta cabeza/cola de la lista.',
-                        side: "right",
-                        align: 'start',
-                        nextBtnText: 'Siguiente',
-                        prevBtnText: 'Anterior'
-                    }
-                },
-                {
-                    element: '#canvas-area',
-                    popover: {
-                        title: 'Área de Visualización',
-                        description: 'Los nodos de la lista aparecen aquí. Puedes arrastrarlos, seleccionar múltiples nodos dibujando un rectángulo, y hacer zoom/pan.',
-                        side: "left",
-                        align: 'center',
-                        nextBtnText: 'Siguiente',
-                        prevBtnText: 'Anterior'
-                    }
-                },
-                {
-                    popover: {
-                        title: '¡Listo!',
-                        description: 'Ahora estás listo para explorar las listas enlazadas. Puedes volver a ver este tutorial en cualquier momento.',
-                        doneBtnText: 'Cerrar'
-                    }
-                }
-            ],
-            onDestroyStarted: () => {
-                localStorage.setItem('sll-tour-completed', 'true');
-                driverObj.destroy();
-            },
-        });
-
-        driverObj.drive();
-    }, []);
-
-    // Effect for component mount - initialization
-    useEffect(() => {
-        const initialize = () => {
-            initializeList(INITIAL_STATE.COUNT);
-            initializePointers();
-
-            const hasSeenTour = localStorage.getItem('sll-tour-completed');
-            if (!hasSeenTour) {
-                setTimeout(() => startTour(), 1000);
-            }
-        };
-
-        initialize();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []); // Intentionally empty - only run once on mount
+    const { highlightedNodes, highlightedEdges } = useListVisualization({
+        nodes,
+        edges,
+        showPointers,
+        highlightHead,
+        highlightTail,
+        hoveredNodeId,
+        iterateColor
+    });
 
     const onNodesChange = useCallback((changes) => {
         setNodes(currentNodes => applyNodeChanges(changes, currentNodes));
@@ -269,31 +178,6 @@ function LinkedList() {
         initializeList(count);
     }, [count, initializeList]);
 
-    const handleCreateFromSequence = useCallback((sequence) => {
-        try {
-            const values = JSON.parse(sequence);
-            if (!Array.isArray(values)) {
-                alert('Please enter a valid JSON array');
-                return;
-            }
-            const { nodes: newNodes, edges: newEdges } = createListFromSequence(values, handlePointerHover, nodeColor);
-            const pointerNodes = getPointerNodes(nodes);
-            const allNodes = [...pointerNodes, ...newNodes];
-
-            const updatedData = updatePointerPositions(allNodes, newEdges);
-
-            setNodes(updatedData.nodes);
-            setEdges(updatedData.edges);
-
-            if (reactFlowInstance.current) {
-                setTimeout(() => {
-                    reactFlowInstance.current.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
-                }, 100);
-            }
-        } catch (error) {
-            alert('Invalid JSON format. Please enter an array like [1, 2, 3]');
-        }
-    }, [handlePointerHover, nodeColor, nodes, updatePointerPositions]);
 
     const handleCountChange = useCallback((val) => {
         setCount(val);
@@ -353,14 +237,6 @@ function LinkedList() {
 
     const handleIterateColorChange = useCallback((e) => {
         setIterateColor(e.target.value);
-    }, []);
-
-    const handleCircleNodeLabelChange = useCallback((nodeId, newLabel) => {
-        setNodes(currentNodes => currentNodes.map(node =>
-            node.id === nodeId
-                ? { ...node, data: { ...node.data, label: newLabel } }
-                : node
-        ));
     }, []);
 
     const handleAddCircularNode = useCallback(() => {
@@ -432,68 +308,6 @@ function LinkedList() {
         });
     }, [nodes]);
 
-    // Helper to create operation context
-    const createOperationContext = useCallback((includeNewNodeColor = false, includeReactFlow = false) => {
-        const stateData = { nodes, edges, speed, iterateColor };
-        if (includeNewNodeColor) stateData.newNodeColor = newNodeColor;
-
-        const context = {
-            state: stateData,
-            setState: (updates, callback) => {
-                if (typeof updates === 'function') {
-                    setNodes(currentNodes => {
-                        setEdges(currentEdges => {
-                            updates({ nodes: currentNodes, edges: currentEdges });
-                            if (callback) callback();
-                            return currentEdges;
-                        });
-                        return currentNodes;
-                    });
-                } else {
-                    if (updates.nodes !== undefined) setNodes(updates.nodes);
-                    if (updates.edges !== undefined) setEdges(updates.edges);
-                    if (callback) callback();
-                }
-            }
-        };
-
-        if (includeReactFlow) {
-            context.reactFlowInstance = reactFlowInstance.current;
-            context.handlePointerHover = handlePointerHover;
-        }
-
-        return context;
-    }, [nodes, edges, speed, newNodeColor, iterateColor, handlePointerHover]);
-
-    // Operation wrapper functions
-    const insertAtHead = useCallback(async (value) => {
-        await operations.insertAtHead(createOperationContext(true, true), value);
-    }, [createOperationContext]);
-
-    const deleteAtHead = useCallback(async () => {
-        await operations.deleteAtHead(createOperationContext());
-    }, [createOperationContext]);
-
-    const insertAtTail = useCallback(async (value) => {
-        await operations.insertAtTail(createOperationContext(true, true), value);
-    }, [createOperationContext]);
-
-    const insertAtTailO1 = useCallback(async (value) => {
-        await operations.insertAtTailO1(createOperationContext(true, true), value);
-    }, [createOperationContext]);
-
-    const deleteAtTail = useCallback(async () => {
-        await operations.deleteAtTail(createOperationContext());
-    }, [createOperationContext]);
-
-    const traverseList = useCallback(async () => {
-        await operations.traverseList(createOperationContext());
-    }, [createOperationContext]);
-
-    const reverseList = useCallback(async () => {
-        await operations.reverseList(createOperationContext());
-    }, [createOperationContext]);
-
     const handleVisualize = useCallback(async (opIndex, value) => {
         setIsRunning(true);
 
@@ -502,94 +316,41 @@ function LinkedList() {
 
         switch (op) {
             case OPERATIONS.INSERT_HEAD:
-                await insertAtHead(valToInsert);
+                await listOperations.insertAtHead(valToInsert);
                 if (menuRef.current) {
                     menuRef.current.refreshInsertValue();
                 }
                 break;
             case OPERATIONS.DELETE_HEAD:
-                await deleteAtHead();
+                await listOperations.deleteAtHead();
                 break;
             case OPERATIONS.INSERT_TAIL:
-                await insertAtTail(valToInsert);
+                await listOperations.insertAtTail(valToInsert);
                 if (menuRef.current) {
                     menuRef.current.refreshInsertValue();
                 }
                 break;
             case OPERATIONS.DELETE_TAIL:
-                await deleteAtTail();
+                await listOperations.deleteAtTail();
                 break;
             case OPERATIONS.TRAVERSE:
-                await traverseList();
+                await listOperations.traverseList();
                 break;
             case OPERATIONS.REVERSE:
-                await reverseList();
+                await listOperations.reverseList();
                 break;
             case OPERATIONS.INSERT_TAIL_O1:
-                await insertAtTailO1(valToInsert);
+                await listOperations.insertAtTailO1(valToInsert);
                 if (menuRef.current) {
                     menuRef.current.refreshInsertValue();
                 }
                 break;
             default:
-                await traverseList();
+                await listOperations.traverseList();
         }
 
         setIsRunning(false);
-    }, [operation, insertAtHead, deleteAtHead, insertAtTail, deleteAtTail, traverseList, reverseList, insertAtTailO1]);
-
-    // Render logic
-    let nodesToRender = nodes;
-    let edgesToRender = edges;
-
-    if (!showPointers) {
-        nodesToRender = removePointerNodes(nodes);
-        edgesToRender = removePointerEdges(edges);
-    }
-
-    const listNodes = getListNodes(nodesToRender);
-    const highlightedNodes = nodesToRender.map((node) => {
-        const listIndex = listNodes.findIndex(n => n.id === node.id);
-
-        if (listIndex === 0 && highlightHead && node.type === 'linkedListNode') {
-            return {
-                ...node,
-                style: {
-                    ...node.style,
-                    background: COLORS.HEAD_HIGHLIGHT,
-                    border: `3px solid ${COLORS.HEAD_BORDER}`,
-                }
-            };
-        }
-        if (listIndex === listNodes.length - 1 && highlightTail && node.type === 'linkedListNode') {
-            return {
-                ...node,
-                style: {
-                    ...node.style,
-                    background: COLORS.TAIL_HIGHLIGHT,
-                    border: `3px solid ${COLORS.TAIL_BORDER}`,
-                }
-            };
-        }
-        return node;
-    });
-
-    const highlightedEdges = edgesToRender.map(edge => {
-        const isHighlighted = hoveredNodeId && edge.source === hoveredNodeId;
-        return {
-            ...edge,
-            animated: isHighlighted ? true : edge.animated,
-            style: {
-                ...edge.style,
-                strokeWidth: isHighlighted ? EDGE_STYLE.STROKE_WIDTH_HIGHLIGHTED : EDGE_STYLE.STROKE_WIDTH_DEFAULT,
-                stroke: isHighlighted ? iterateColor : COLORS.EDGE_DEFAULT,
-            },
-            markerEnd: {
-                ...edge.markerEnd,
-                color: isHighlighted ? iterateColor : COLORS.EDGE_DEFAULT,
-            }
-        };
-    });
+    }, [operation, listOperations]);
 
     return (
         <div className="flex flex-col h-screen">
