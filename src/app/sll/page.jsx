@@ -11,11 +11,12 @@ import Navbar from '@/components/navbar';
 import Menu from "@/components/menu/Menu";
 import LinkedListNode from './LinkedListNode';
 import CircleNode from './CircleNode';
-import { LAYOUT, COLORS, EDGE_STYLE, ANIMATION, INITIAL_STATE, NODE_STYLE, SCRAMBLE, CIRCULAR_NODE, EXPORT, LASER_POINTER, NODE_IDS, OPERATIONS } from './constants';
+import { LAYOUT, COLORS, EDGE_STYLE, ANIMATION, INITIAL_STATE, SCRAMBLE, CIRCULAR_NODE, EXPORT, LASER_POINTER, NODE_IDS, OPERATIONS } from './constants';
 import { createListNode, createCircleNode } from './utils/nodeFactory';
-import { createListEdge, createHeadPointerEdge, createTailPointerEdge, createEdgesForList } from './utils/edgeFactory';
+import { createEdgesForList } from './utils/edgeFactory';
 import { getListNodes, getPointerNodes, getHeadNode, getTailNode, removePointerNodes } from './utils/nodeFilters';
-import { updatePointers, createPointerEdges, removePointerEdges, getHeadPointerPosition, getTailPointerPosition } from './utils/pointerHelpers';
+import { updatePointers, createPointerEdges, removePointerEdges } from './utils/pointerHelpers';
+import * as operations from './operations';
 
 const nodeTypes = {
     linkedListNode: LinkedListNode,
@@ -679,486 +680,66 @@ class LinkedList extends Component {
     }
 
     insertAtHead = async (value) => {
-        const existingNodes = [...this.state.nodes];
-
-        // Filter to get only linked list nodes
-        const listNodes = getListNodes(existingNodes);
-        const firstNode = getHeadNode(listNodes);
-        const fixedDistance = LAYOUT.NODE_HORIZONTAL_SPACING;
-        const newNodeX = firstNode ? firstNode.position.x - fixedDistance : 50;
-        const newNodeY = firstNode ? firstNode.position.y : 100;
-
-        const newNodeId = `node-${Date.now()}`;
-        const newNode = createListNode(
-            newNodeId,
-            value,
-            newNodeX,
-            newNodeY,
-            this.state.newNodeColor,
-            this.handlePointerHover
-        );
-
-        // Insert new node at the beginning, maintaining pointer nodes at their positions
-        const nodes = existingNodes.map(n => n);
-        const firstListNodeIndex = nodes.findIndex(n => n.type === 'linkedListNode');
-        if (firstListNodeIndex !== -1) {
-            nodes.splice(firstListNodeIndex, 0, newNode);
-        } else {
-            nodes.push(newNode);
-        }
-
-        // Rebuild edges for linked list nodes only
-        const updatedListNodes = getListNodes(nodes);
-        let edges = createEdgesForList(updatedListNodes);
-
-        // Update Head Pointer (always exists)
-        const headPointerIndex = nodes.findIndex(n => n.id === NODE_IDS.POINTER_HEAD);
-        if (headPointerIndex !== -1) {
-            nodes[headPointerIndex] = {
-                ...nodes[headPointerIndex],
-                position: getHeadPointerPosition(newNode)
-            };
-            edges.push(createHeadPointerEdge(newNodeId));
-        }
-
-        // Update Tail Pointer if list was empty
-        if (listNodes.length === 0) {
-            const tailPointerIndex = nodes.findIndex(n => n.id === NODE_IDS.POINTER_TAIL);
-            if (tailPointerIndex !== -1) {
-                nodes[tailPointerIndex] = {
-                    ...nodes[tailPointerIndex],
-                    position: getTailPointerPosition(newNode)
-                };
-                edges.push(createTailPointerEdge(newNodeId));
-            }
-        } else {
-            // Keep existing tail pointer edge
-            const tailPointerEdge = this.state.edges.find(e => e.source === NODE_IDS.POINTER_TAIL);
-            if (tailPointerEdge) {
-                edges.push(tailPointerEdge);
-            }
-        }
-
-        this.setState({ nodes, edges }, () => {
-            if (this.reactFlowInstance) {
-                setTimeout(() => {
-                    this.reactFlowInstance.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
-                }, 100);
-            }
-        });
-        await sleep(this.state.speed);
+        const context = {
+            state: this.state,
+            setState: this.setState.bind(this),
+            reactFlowInstance: this.reactFlowInstance,
+            handlePointerHover: this.handlePointerHover
+        };
+        await operations.insertAtHead(context, value);
     }
 
     deleteAtHead = async () => {
-        const listNodes = getListNodes(this.state.nodes);
-        if (listNodes.length === 0) return;
-
-        // Remove first list node, keep pointer nodes
-        const pointerNodes = getPointerNodes(this.state.nodes);
-        const remainingListNodes = listNodes.slice(1);
-        const nodes = [...pointerNodes, ...remainingListNodes];
-
-        // Rebuild edges for linked list nodes
-        let edges = createEdgesForList(remainingListNodes);
-
-        // Update Head Pointer
-        const headPointerIndex = nodes.findIndex(n => n.id === NODE_IDS.POINTER_HEAD);
-        if (headPointerIndex !== -1 && remainingListNodes.length > 0) {
-            const newHead = remainingListNodes[0];
-            nodes[headPointerIndex] = {
-                ...nodes[headPointerIndex],
-                position: getHeadPointerPosition(newHead)
-            };
-
-            edges.push(createHeadPointerEdge(newHead.id));
-        }
-
-        // Update Tail Pointer edge (tail stays the same unless list becomes empty)
-        if (remainingListNodes.length > 0) {
-            const tailPointerEdge = this.state.edges.find(e => e.source === NODE_IDS.POINTER_TAIL);
-            if (tailPointerEdge) {
-                edges.push(tailPointerEdge);
-            }
-        }
-
-        this.setState({ nodes, edges });
-        await sleep(this.state.speed);
+        const context = {
+            state: this.state,
+            setState: this.setState.bind(this)
+        };
+        await operations.deleteAtHead(context);
     }
 
     insertAtTail = async (value) => {
-        const nodes = [...this.state.nodes];
-        let edges = [...this.state.edges];
-
-        // Filter to get only linked list nodes for traversal
-        const listNodes = getListNodes(nodes);
-
-        // Traverse to the end
-        for (let i = 0; i < listNodes.length; i++) {
-            const tempNodes = nodes.map((node) => {
-                if (node.type === 'linkedListNode') {
-                    const listIndex = listNodes.findIndex(n => n.id === node.id);
-                    return {
-                        ...node,
-                        style: {
-                            ...node.style,
-                            background: listIndex === i ? this.state.iterateColor : node.style.background,
-                        }
-                    };
-                }
-                return node;
-            });
-            this.setState({ nodes: tempNodes });
-            await sleep(this.state.speed / 2);
-        }
-
-        // Reset colors to original
-        const resetNodes = nodes.map(node => {
-            if (node.type === 'linkedListNode' && node.style) {
-                return {
-                    ...node,
-                    style: {
-                        ...node.style,
-                        background: node.style.background,
-                    }
-                };
-            }
-            return node;
-        });
-        this.setState({ nodes: resetNodes });
-
-        // Add new node at same Y as last list node, fixed distance in X
-        const lastNode = listNodes.length > 0 ? listNodes[listNodes.length - 1] : null;
-        const fixedDistance = LAYOUT.NODE_HORIZONTAL_SPACING;
-        const newNodeX = lastNode ? lastNode.position.x + fixedDistance : 50;
-        const newNodeY = lastNode ? lastNode.position.y : 100;
-
-        const newNodeId = `node-${Date.now()}`;
-        const newNode = createListNode(
-            newNodeId,
-            value,
-            newNodeX,
-            newNodeY,
-            this.state.newNodeColor,
-            this.handlePointerHover
-        );
-
-        const newNodes = [...resetNodes, newNode];
-
-        // Add edge if list was not empty
-        if (lastNode) {
-            edges = edges.filter(e => !e.id.startsWith('edge-') || e.source !== lastNode.id || e.target.startsWith('node-'));
-            edges.push(createListEdge(lastNode.id, newNodeId, `${lastNode.id}-${newNodeId}`));
-        }
-
-        // Update Tail Pointer
-        const tailPointerIndex = newNodes.findIndex(n => n.id === NODE_IDS.POINTER_TAIL);
-        if (tailPointerIndex !== -1) {
-            newNodes[tailPointerIndex] = {
-                ...newNodes[tailPointerIndex],
-                position: getTailPointerPosition(newNode)
-            };
-
-            // Remove old tail pointer edge and add new one
-            edges = edges.filter(e => e.source !== NODE_IDS.POINTER_TAIL);
-            edges.push(createTailPointerEdge(newNodeId));
-        }
-
-        // Update Head Pointer if list was empty
-        if (listNodes.length === 0) {
-            const headPointerIndex = newNodes.findIndex(n => n.id === NODE_IDS.POINTER_HEAD);
-            if (headPointerIndex !== -1) {
-                newNodes[headPointerIndex] = {
-                    ...newNodes[headPointerIndex],
-                    position: getHeadPointerPosition(newNode)
-                };
-                edges.push(createHeadPointerEdge(newNodeId));
-            }
-        }
-
-        this.setState({ nodes: newNodes, edges }, () => {
-            if (this.reactFlowInstance) {
-                setTimeout(() => {
-                    this.reactFlowInstance.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
-                }, 100);
-            }
-        });
-        await sleep(this.state.speed);
+        const context = {
+            state: this.state,
+            setState: this.setState.bind(this),
+            reactFlowInstance: this.reactFlowInstance,
+            handlePointerHover: this.handlePointerHover
+        };
+        await operations.insertAtTail(context, value);
     }
 
     insertAtTailO1 = async (value) => {
-        const nodes = [...this.state.nodes];
-        let edges = [...this.state.edges];
-
-        // No traversal loop here - O(1) behavior
-
-        // Add new node at same Y as last node, fixed distance in X
-        // Filter out pointer nodes to find the actual last list node
-        const listNodes = getListNodes(nodes);
-        const lastNode = getTailNode(listNodes);
-
-        const fixedDistance = LAYOUT.NODE_HORIZONTAL_SPACING;
-        const newNodeX = lastNode ? lastNode.position.x + fixedDistance : 50;
-        const newNodeY = lastNode ? lastNode.position.y : 100;
-
-        const newNodeId = `node-${Date.now()}`;
-        const newNode = createListNode(
-            newNodeId,
-            value,
-            newNodeX,
-            newNodeY,
-            this.state.newNodeColor,
-            this.handlePointerHover
-        );
-
-        const newNodes = [...nodes, newNode];
-
-        // Add edge if list was not empty
-        if (lastNode) {
-            edges.push(createListEdge(lastNode.id, newNodeId, `${lastNode.id}-${newNodeId}`));
-        }
-
-        // Update Tail Pointer Position
-        const tailPointerIndex = newNodes.findIndex(n => n.id === NODE_IDS.POINTER_TAIL);
-        if (tailPointerIndex !== -1) {
-            newNodes[tailPointerIndex] = {
-                ...newNodes[tailPointerIndex],
-                position: getTailPointerPosition(newNode)
-            };
-
-            // Update or create pointer edge
-            const pointerEdgeIndex = edges.findIndex(e => e.source === NODE_IDS.POINTER_TAIL);
-            if (pointerEdgeIndex !== -1) {
-                edges[pointerEdgeIndex] = {
-                    ...edges[pointerEdgeIndex],
-                    target: newNodeId
-                };
-            } else {
-                edges.push(createTailPointerEdge(newNodeId));
-            }
-        }
-
-        // Also handle Head pointer if list was empty
-        if (listNodes.length === 0) {
-            const headPointerIndex = newNodes.findIndex(n => n.id === NODE_IDS.POINTER_HEAD);
-            if (headPointerIndex !== -1) {
-                newNodes[headPointerIndex] = {
-                    ...newNodes[headPointerIndex],
-                    position: getHeadPointerPosition(newNode)
-                };
-                edges.push(createHeadPointerEdge(newNodeId));
-            }
-        }
-
-        this.setState({ nodes: newNodes, edges }, () => {
-            if (this.reactFlowInstance) {
-                setTimeout(() => {
-                    this.reactFlowInstance.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
-                }, 100);
-            }
-        });
-        await sleep(this.state.speed);
+        const context = {
+            state: this.state,
+            setState: this.setState.bind(this),
+            reactFlowInstance: this.reactFlowInstance,
+            handlePointerHover: this.handlePointerHover
+        };
+        await operations.insertAtTailO1(context, value);
     }
 
     deleteAtTail = async () => {
-        const listNodes = getListNodes(this.state.nodes);
-        if (listNodes.length === 0) return;
-
-        const nodes = [...this.state.nodes];
-
-        // Traverse to the second to last node
-        for (let i = 0; i < listNodes.length - 1; i++) {
-            const tempNodes = nodes.map((node) => {
-                if (node.type === 'linkedListNode') {
-                    const listIndex = listNodes.findIndex(n => n.id === node.id);
-                    return {
-                        ...node,
-                        style: {
-                            ...node.style,
-                            background: listIndex === i ? this.state.iterateColor : node.style.background,
-                        }
-                    };
-                }
-                return node;
-            });
-            this.setState({ nodes: tempNodes });
-            await sleep(this.state.speed / 2);
-        }
-
-        // Reset colors to original
-        const resetNodes = nodes.map(node => {
-            if (node.type === 'linkedListNode' && node.style) {
-                return {
-                    ...node,
-                    style: {
-                        ...node.style,
-                        background: node.style.background,
-                    }
-                };
-            }
-            return node;
-        });
-        this.setState({ nodes: resetNodes });
-
-        // Remove last list node
-        const pointerNodes = getPointerNodes(resetNodes);
-        const remainingListNodes = listNodes.slice(0, -1);
-        const newNodes = [...pointerNodes, ...remainingListNodes];
-
-        // Rebuild edges for linked list nodes
-        let newEdges = createEdgesForList(remainingListNodes);
-
-        // Update Tail Pointer
-        const tailPointerIndex = newNodes.findIndex(n => n.id === NODE_IDS.POINTER_TAIL);
-        if (tailPointerIndex !== -1 && remainingListNodes.length > 0) {
-            const newTail = remainingListNodes[remainingListNodes.length - 1];
-            newNodes[tailPointerIndex] = {
-                ...newNodes[tailPointerIndex],
-                position: getTailPointerPosition(newTail)
-            };
-            newEdges.push(createTailPointerEdge(newTail.id));
-        }
-
-        // Update Head Pointer edge (head stays the same unless list becomes empty)
-        if (remainingListNodes.length > 0) {
-            const headPointerEdge = this.state.edges.find(e => e.source === NODE_IDS.POINTER_HEAD);
-            if (headPointerEdge) {
-                newEdges.push(headPointerEdge);
-            }
-        }
-
-        this.setState({ nodes: newNodes, edges: newEdges });
-        await sleep(this.state.speed);
+        const context = {
+            state: this.state,
+            setState: this.setState.bind(this)
+        };
+        await operations.deleteAtTail(context);
     }
 
     traverseList = async () => {
-        const listNodes = getListNodes(this.state.nodes);
-
-        for (let i = 0; i < listNodes.length; i++) {
-            const nodes = this.state.nodes.map((node) => {
-                if (node.type === 'linkedListNode') {
-                    const listIndex = listNodes.findIndex(n => n.id === node.id);
-                    return {
-                        ...node,
-                        style: {
-                            ...node.style,
-                            background: listIndex === i ? this.state.iterateColor : node.style.background,
-                        }
-                    };
-                }
-                return node;
-            });
-            this.setState({ nodes });
-            await sleep(this.state.speed);
-        }
-
-        // Reset colors to original
-        const nodes = this.state.nodes.map(node => {
-            if (node.type === 'linkedListNode' && node.style) {
-                return {
-                    ...node,
-                    style: {
-                        ...node.style,
-                        background: node.style.background,
-                    }
-                };
-            }
-            return node;
-        });
-        this.setState({ nodes });
+        const context = {
+            state: this.state,
+            setState: this.setState.bind(this)
+        };
+        await operations.traverseList(context);
     }
 
     reverseList = async () => {
-        const listNodes = getListNodes(this.state.nodes);
-        if (listNodes.length <= 1) return;
-
-        const pointerNodes = getPointerNodes(this.state.nodes);
-        let prev = null;
-        let current = 0;
-        let edges = [...this.state.edges];
-
-        // Step 1: Visualize pointer reversal
-        while (current < listNodes.length) {
-            // Highlight current node being processed
-            const currentNodes = this.state.nodes.map((node) => {
-                if (node.type === 'linkedListNode') {
-                    const listIndex = listNodes.findIndex(n => n.id === node.id);
-                    return {
-                        ...node,
-                        style: {
-                            ...node.style,
-                            background: listIndex === current ? this.state.iterateColor : (listIndex === prev ? COLORS.NODE_NEW : node.style.background),
-                            border: listIndex === current ? NODE_STYLE.BORDER_HIGHLIGHTED : NODE_STYLE.BORDER,
-                        }
-                    };
-                }
-                return node;
-            });
-            this.setState({ nodes: currentNodes });
-            await sleep(this.state.speed);
-
-            // Remove the existing outgoing edge from current node
-            const edgeIndex = edges.findIndex(e => e.source === listNodes[current].id);
-            if (edgeIndex !== -1) {
-                edges.splice(edgeIndex, 1);
-                this.setState({ edges: [...edges] });
-                await sleep(this.state.speed / 2);
-            }
-
-            // Add new edge pointing to previous node (if not null)
-            if (prev !== null) {
-                edges.push({
-                    id: `edge-rev-${current}`,
-                    source: listNodes[current].id,
-                    sourceHandle: 'right',
-                    target: listNodes[prev].id,
-                    targetHandle: 'left',
-                    animated: true,
-                    type: 'default', // Use default bezier for backward curves to look better
-                    markerEnd: {
-                        type: MarkerType.ArrowClosed,
-                        width: EDGE_STYLE.MARKER_WIDTH,
-                        height: EDGE_STYLE.MARKER_HEIGHT,
-                        color: this.state.iterateColor
-                    },
-                    style: {
-                        strokeWidth: EDGE_STYLE.STROKE_WIDTH_REVERSE,
-                        stroke: this.state.iterateColor
-                    }
-                });
-                this.setState({ edges: [...edges] });
-                await sleep(this.state.speed);
-            }
-
-            prev = current;
-            current++;
-        }
-
-        // Step 2: Re-arrange nodes to reflect new order (Head is now the last processed node)
-        await sleep(this.state.speed);
-
-        const reversedListNodes = [...listNodes].reverse().map((node, idx) => ({
-            ...node,
-            position: { x: LAYOUT.INITIAL_X + (idx * LAYOUT.NODE_HORIZONTAL_SPACING), y: LAYOUT.INITIAL_Y },
-            style: {
-                ...node.style,
-                background: node.style.background,
-                border: NODE_STYLE.BORDER,
-            }
-        }));
-
-        // Re-create standard edges for the new order
-        let newEdges = createEdgesForList(reversedListNodes);
-
-        // Update pointer positions and edges
-        const allNodes = [...pointerNodes, ...reversedListNodes];
-        const updatedState = this.updatePointerPositions(allNodes, newEdges);
-
-        this.setState({ nodes: updatedState.nodes, edges: updatedState.edges });
+        const context = {
+            state: this.state,
+            setState: this.setState.bind(this)
+        };
+        await operations.reverseList(context);
     }
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 const createInitialList = (count, onPointerHover, nodeColor = COLORS.NODE_DEFAULT) => {
