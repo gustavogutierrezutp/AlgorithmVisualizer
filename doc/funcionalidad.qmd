@@ -1,22 +1,61 @@
 # Funcionalidad {#sec-funcionalidad}
 
-Las operaciones soportadas por la estructura de datos se pueden dividir en grupos:
+Antes de comenzar a describir cada una de las funcionalidades de la aplicación
+es importante describir la interfaz de usuario y las partes que la componen.
+Cuando el usuario (estudiante o profesor) ejecuta la aplicación por primera vez
+se encuentra con una interfaz como la presentada en la @fig-main-window.
+
+::: {#fig-main-window}
+![](figures/biglist.png)
+
+Ventana principal con lista de ejemplo desplegada.
+:::
+
+## Interfaz de usuario
+
+La @fig-main-window-annotated presenta cada una de las partes en las que está
+dividida la interfaz de usuario:
+
+1. Barra de navegación. Aquí se encuentran enlaces a la documentación y al
+   repositorio con el código fuente. También un enlace a un tour que lleva al
+   usuario por cada uno de los componentes y funcionalidades más importantes de
+   la aplicación.
+2. Lienzo. Esta es la parte donde toda la visualización tiene lugar. Es el lugar
+   donde se visualizará la lista y se presentaran las animaciones de las
+   operaciones según sean seleccionadas por el usuario.
+3. Menu de operaciones. En este lugar se encuentran de manera agrupada por
+   funcionalidad las acciones que el usuario puede realizar en la aplicación.
+
+El flujo de trabajo que se espera por parte del usuario está enfocado a utilizar
+las partes 2 y 3 de la interfaz de usuario. La idea es que este último
+selecciona la operación en la parte 3 y visualiza su ejecución en la parte 2.
+
+::: {#fig-main-window-annotated}
+![](figures/main-annotated.png)
+
+Partes principales de la interfaz de usuario.
+:::
+
+Las operaciones soportadas por la aplicación están divididas por funcionalidad y
+presentadas de esta manera en la parte 3:
 
 - Creación. Comprenden las diferentes formas en que se puede crear una lista
   enlazada. Entre estas formas se incluye: vacía, de una secuencia de números o
   de manera aleatoria.
-- Acceso. Son las operaciones que le permiten al programador acceder a los
-  elementos almacenados por la estructura de datos. En el caso de las listas
-  enlazadas es posible acceder al primer elemento, al último elemento.
-- Modificación. Contiene las operaciones que adicionan o eliminan elementos de
-  la estructura de datos. Algunos ejemplos de estas operaciones incluyen:
-  inserción por el frente y por detrás; eliminación del primero y el último
-  elemento.
+- Operaciones sobre la estructura de datos. Son las operaciones que le permiten
+  al programador interactuar con la estructura de datos. En esta sección se
+  incluyen operaciones de inserción, acceso y eliminación entre otras.
+- Herramientas de programación. Permiten la visualización de componentes de
+  programación como punteros. Estos elementos no son conceptuales pero si son
+  relevantes a la hora de la implementación de la estructura de datos.
+- Opciones de visualización. Permiten al usuario alterar algunas características
+  de la visualización de la estructura de datos. Estas opciones son útilies para
+  la presentación y visualización de la estructura de datos en entornos de
+  estudio o de docencia.
 
-La interfaz de usuario del simulador consta de tres partes identificadas en la
-siguiente figura.
 
-![](figures/biglist.png)
+
+A continuación describiremos cada una de las partes 
 
 La parte superior contiene una barra con el título y algunos enlaces de interés.
 Tal vez el más importante es el botón con el texto __Tour__ en la parte superior
@@ -33,13 +72,15 @@ encuentra el lienzo que es el lugar donde aparecen las representaciones
 gráficas. En este caso se aprecia una lista de números. En las secciones
 siguientes se muestra detalladamente cada una de las funcionalidades.
 
-## Creación
+## Operaciones
+
+### Creación
 
 En el simulador las listas pueden ser creadas de diferentes maneras. Todas las
 opciones de creación se encuentran en el primer sub menu con el título __List
 Creation__.
 
-### Lista vacía {.unnumbered}
+#### Lista vacía {.unnumbered}
 
 ::: {#fig-creation-empty}
 ![](figures/creation-empty.png)
@@ -53,7 +94,7 @@ continuación hacer click en el botón _Create Empty List_ (ver
 @fig-creation-empty). Al dar click en el aparecerá un mensaje en el lienzo de la
 derecha informando que la lista actualmente visualizada se encuentra vacía.
 
-### Lista con números aleatorios {.unnumbered}
+#### Lista con números aleatorios {.unnumbered}
 
 La siguiente opción para crear una lista es con elementos aleatorios. Esto es
 especialmente útil cuando el usuario desea ver como se comporta una operación
@@ -69,7 +110,7 @@ la derecha junto con sus elementos.
 Interfaz para la creación de una lista inicializada de forma aleatoria.
 :::
 
-### Lista personalizada {.unnumbered}
+#### Lista personalizada {.unnumbered}
 
 Cuando se requiere una lista con elementos específicos la tercera opción es la
 indicada. Haciendo click en _Custom_ aparecerá un cuadro de texto para insertar
@@ -85,7 +126,7 @@ elementos del $1$ al $5$.
 Interfaz para la creación de una lista con elementos puntuales.
 :::
 
-## Visualización de la lista
+### Visualización de la lista
 
 Después de creada la lista utilizando cualquiera de las formas mencionadas, está
 será visualizada en el lienzo que hay en la parte derecha. Por ejemplo, en la
@@ -107,7 +148,7 @@ encuentra una pequeña barra vertical con botones que tienen acción sobre la
 visualización del lienzo.
 
 ::: {#tip-canvas-toolbar .callout-tip}
-##### Consejos
+###### Consejos
 
 ::: {layout="[1,9]"}
 ![](figures/xyflow-toolbar.png)
@@ -139,7 +180,7 @@ Visualización del puntero al siguiente elemento de un nodo. Esta visualización
 se logra al colocar el puntero del ratón sobre el apuntador del nodo.
 :::
 
-## Operaciones sobre listas
+### Operaciones sobre la lista
 
 Después de tener la lista creada o una lista vacía podemos comenzar a realizar
 operaciones sobre ella. Esto con el fin de observar el comportamiento de cada
@@ -156,7 +197,7 @@ A continuación se describen las diferentes operaciones que pueden ser
 visualizadas sobre la lista. Todas ellas pueden ser accedidas desde el panel
 mostrado en la @fig-operations.
 
-### Adición y borrado de elementos
+#### Adición y borrado de elementos
 
 En esta sección se define la manera de insertar y borrar elementos de la lista.
 Estas operaciones están disponibles en el menu __Operations__. En particular,
@@ -168,13 +209,13 @@ las opciones de inserción se muestran en la @fig-operations-insert.
 Operaciones de inserción.
 :::
 
-#### Inserción
+##### Inserción
 
 Antes de cualquier inserción es necesario seleccionar el dato a insertar. Para
 esto se cuenta con el primer cuadro de texto.
 
 ::: {.callout-tip}
-##### Consejo
+###### Consejo
 
 ::: {layout="[1,9]"}
 ![](figures/rnd-button.png)
@@ -225,7 +266,7 @@ nodos anteriores del nuevo nodo. En cualquier momento se puede utilizar
 @tip-cambiar-color para modificar el color de cualquier nodo.
 
 ::: {#tip-cambiar-color .callout-tip}
-##### Consejo
+###### Consejo
 
 ::: {layout="[3,7]"}
 ![](figures/display-options.png)
@@ -256,7 +297,7 @@ académicamente es relevante pero que debe ser evitada en código de producción
 :::
 
 
-#### Borrado
+##### Borrado
 
 Para eliminar un elemento de la lista existen dos operaciones mostradas en la
 @fig-operations-remove-commented. Con la opción 1 se removerá el primer elemento
@@ -271,7 +312,7 @@ se convertirá en el nuevo último).
 Operaciones para el borrado de elementos.
 :::
 
-## Herramientas de programador
+### Herramientas de programador
 
 Una característica importante que tiene este módulo de visualización es la
 separación de conceptos. Por ejemplo, una lista, conceptualmente, es una
@@ -287,7 +328,7 @@ que se muestra en la @fig-programmer-tools.
 Vista de herramientas de programador.
 :::
 
-### Apuntadores al primer y último nodo
+#### Apuntadores al primer y último nodo
 
 El botón __Show head and tail pointers__ hará visibles los punteros al primer y
 último elemento en la lista. Hasta ahora las listas que se han mostrado como la
@@ -302,7 +343,7 @@ el puntero del mouse sobre alguno de ellos la conexión se resaltará.
 Visualización de los punteros al inicio y al final de la lista.
 :::
 
-### Apuntadores adicionales
+#### Apuntadores adicionales
 
 Durante el diseño de una operación sobre listas es siempre importante considerar
 el movimiento de los punteros. Incluso operaciones como remover un elemento en
