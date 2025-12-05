@@ -16,6 +16,7 @@ import { updatePointers, createPointerEdges } from './utils/pointerHelpers';
 import { useListOperations } from './hooks/useListOperations';
 import { useListVisualization } from './hooks/useListVisualization';
 import { useListInitialization } from './hooks/useListInitialization';
+import { getAutoLayoutedNodes } from './utils/elkLayout';
 
 const nodeTypes = {
     linkedListNode: LinkedListNode,
@@ -203,6 +204,21 @@ function LinkedList() {
             }
         })));
     }, []);
+
+    const handleAutoLayout = useCallback(async () => {
+        const layoutedNodes = await getAutoLayoutedNodes(nodes, edges);
+        setNodes(layoutedNodes);
+
+        // Fit view after layout
+        if (reactFlowInstance.current) {
+            setTimeout(() => {
+                reactFlowInstance.current.fitView({
+                    duration: ANIMATION.FIT_VIEW_DURATION,
+                    padding: LAYOUT.FIT_VIEW_PADDING
+                });
+            }, ANIMATION.FIT_VIEW_DELAY);
+        }
+    }, [nodes, edges]);
 
     const handleToggleHeadHighlight = useCallback(() => {
         setHighlightHead(current => !current);
@@ -410,6 +426,7 @@ function LinkedList() {
                     onCreateRandom={handleCreateRandom}
                     onCreateFromSequence={handleCreateFromSequence}
                     onScramble={handleScramble}
+                    onAutoLayout={handleAutoLayout}
                     onToggleHeadHighlight={handleToggleHeadHighlight}
                     highlightHead={highlightHead}
                     onToggleTailHighlight={handleToggleTailHighlight}

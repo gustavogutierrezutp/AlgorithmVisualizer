@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Settings2, Eye, Dices } from "lucide-react";
+import { Settings2, Eye, Dices, Network } from "lucide-react";
 import { CustomSlider } from "@/components/custom-slider";
 import { Section } from "../Section";
 import { ColorPickerInput } from "../ColorPickerInput";
@@ -85,6 +85,16 @@ export const DisplayOptions = (props) => {
         >
           <Dices className="w-4 h-4 mr-2 opacity-80" />
           Scramble Layout
+        </Button>
+
+        <Button
+          className="w-full mt-2 bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 hover:text-blue-700 hover:border-blue-300 transition-all shadow-sm"
+          size="sm"
+          onClick={props.onAutoLayout}
+          disabled={props.disable}
+        >
+          <Network className="w-4 h-4 mr-2 opacity-80" />
+          Auto Layout
         </Button>
       </div>
     </Section>
