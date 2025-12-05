@@ -16,7 +16,7 @@ export const ListCreation = ({
   const [sequenceInput, setSequenceInput] = useState("[1, 2, 3, 4, 5]");
 
   return (
-    <Section title="List Creation" icon={ListPlus} id="list-creation-section">
+    <Section title="Creation" icon={ListPlus} id="list-creation-section">
       <div className="bg-gray-100/50 p-1 rounded-lg flex gap-1">
         {["Empty", "Random", "Custom"].map((mode) => (
           <button
