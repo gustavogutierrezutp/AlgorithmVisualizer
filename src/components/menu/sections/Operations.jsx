@@ -12,7 +12,8 @@ import {
   AlertTriangle,
   Target,
   Hash,
-  Search
+  Search,
+  Circle
 } from "lucide-react";
 import { Section } from "../Section";
 
@@ -286,6 +287,16 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
                 <Shuffle className="w-3 h-3 mr-2" /> Reverse
               </Button>
             </div>
+            <Button
+              onClick={() => onVisualize(10)}
+              disabled={disable}
+              variant="secondary"
+              size="sm"
+              className="w-full"
+              title="Finds the middle node using two-pointer technique"
+            >
+              <Circle className="w-3 h-3 mr-2" /> Find Middle
+            </Button>
             <Button
               onClick={() => onVisualize(8)}
               disabled={disable}

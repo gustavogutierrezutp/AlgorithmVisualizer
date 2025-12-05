@@ -377,6 +377,9 @@ function LinkedList() {
                 const searchRes = await listOperations.searchValue(searchValue);
                 setSearchResult(searchRes);
                 break;
+            case OPERATIONS.FIND_MIDDLE:
+                await listOperations.findMiddle();
+                break;
             default:
                 await listOperations.traverseList();
         }

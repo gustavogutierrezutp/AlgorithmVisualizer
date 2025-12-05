@@ -90,6 +90,10 @@ export function useListOperations({
         return await operations.searchValue(createOperationContext(), value);
     }, [createOperationContext]);
 
+    const findMiddle = useCallback(async () => {
+        return await operations.findMiddle(createOperationContext());
+    }, [createOperationContext]);
+
     return {
         insertAtHead,
         deleteAtHead,
@@ -100,6 +104,7 @@ export function useListOperations({
         reverseList,
         insertAtPosition,
         getLength,
-        searchValue
+        searchValue,
+        findMiddle
     };
 }
