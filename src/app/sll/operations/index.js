@@ -15,3 +15,4 @@ export { getLength } from './getLength';
 export { searchValue } from './searchValue';
 export { findMiddle } from './findMiddle';
 export { deleteAtPosition } from './deleteAtPosition';
+export { removeDuplicates } from './removeDuplicates';

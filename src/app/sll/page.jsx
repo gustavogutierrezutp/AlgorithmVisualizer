@@ -384,6 +384,9 @@ function LinkedList() {
                 const deletePosition = position !== undefined ? position : 0;
                 await listOperations.deleteAtPosition(deletePosition);
                 break;
+            case OPERATIONS.REMOVE_DUPLICATES:
+                await listOperations.removeDuplicates();
+                break;
             default:
                 await listOperations.traverseList();
         }

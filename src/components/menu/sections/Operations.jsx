@@ -13,7 +13,8 @@ import {
   Target,
   Hash,
   Search,
-  Circle
+  Circle,
+  Filter
 } from "lucide-react";
 import { Section } from "../Section";
 
@@ -358,6 +359,16 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
               <div className="absolute -top-1.5 -right-1.5 bg-yellow-400 text-yellow-900 rounded-full p-[2px] border border-white shadow-sm z-10 flex items-center justify-center">
                 <AlertTriangle size={8} strokeWidth={2.5} className="p-[.15rem]" />
               </div>
+            </Button>
+            <Button
+              onClick={() => onVisualize(12)}
+              disabled={disable}
+              variant="secondary"
+              size="sm"
+              className="w-full"
+              title="Removes duplicate values from the list"
+            >
+              <Filter className="w-3 h-3 mr-2" /> Remove Duplicates
             </Button>
           </div>
         </div>

@@ -98,6 +98,10 @@ export function useListOperations({
         await operations.deleteAtPosition(createOperationContext(false, true), position);
     }, [createOperationContext]);
 
+    const removeDuplicates = useCallback(async () => {
+        await operations.removeDuplicates(createOperationContext(false, true));
+    }, [createOperationContext]);
+
     return {
         insertAtHead,
         deleteAtHead,
@@ -110,6 +114,7 @@ export function useListOperations({
         getLength,
         searchValue,
         findMiddle,
-        deleteAtPosition
+        deleteAtPosition,
+        removeDuplicates
     };
 }
