@@ -108,7 +108,7 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
                 disabled={disable || !isPositionValid}
                 variant="outline"
                 size="sm"
-                className="relative overflow-visible h-9 flex-1 justify-start hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="h-9 flex-1 justify-start hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 title={
                   !isPositionValid
                     ? `Position must be between 0 and ${listLength}`
@@ -117,10 +117,6 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
               >
                 <Target className="w-3 h-3 mr-2 text-blue-400" />
                 <span className="text-left">Insert at pos.</span>
-
-                <div className="absolute -top-1.5 -right-1.5 bg-yellow-400 text-yellow-900 rounded-full p-[2px] border border-white shadow-sm z-10 flex items-center justify-center">
-                  <AlertTriangle size={8} strokeWidth={2.5} className="p-[.15rem]" />
-                </div>
               </Button>
             </div>
 
