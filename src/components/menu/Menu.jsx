@@ -45,6 +45,8 @@ export default function Menu(props) {
           onVisualize={props.onVisualize}
           listLength={props.listLength}
           lengthResult={props.lengthResult}
+          searchResult={props.searchResult}
+          onSearchValueChange={props.onSearchValueChange}
         />
 
         <TestSection

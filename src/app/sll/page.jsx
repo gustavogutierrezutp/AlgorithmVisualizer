@@ -42,6 +42,7 @@ function LinkedList() {
     const [laserPointerEnabled, setLaserPointerEnabled] = useState(false);
     const [laserPointerPosition, setLaserPointerPosition] = useState({ x: 0, y: 0 });
     const [lengthResult, setLengthResult] = useState(null);
+    const [searchResult, setSearchResult] = useState(null);
 
     // Refs
     const menuRef = useRef();
@@ -263,6 +264,10 @@ function LinkedList() {
         setLaserPointerEnabled(current => !current);
     }, []);
 
+    const handleSearchValueChange = useCallback(() => {
+        setSearchResult(null);
+    }, []);
+
     const handleMouseMove = useCallback((event) => {
         if (laserPointerEnabled) {
             const canvasArea = document.getElementById('canvas-area');
@@ -320,6 +325,11 @@ function LinkedList() {
             setLengthResult(null);
         }
 
+        // Clear search result for all operations except SEARCH_VALUE
+        if (op !== OPERATIONS.SEARCH_VALUE) {
+            setSearchResult(null);
+        }
+
         switch (op) {
             case OPERATIONS.INSERT_HEAD:
                 await listOperations.insertAtHead(valToInsert);
@@ -361,6 +371,11 @@ function LinkedList() {
             case OPERATIONS.GET_LENGTH:
                 const result = await listOperations.getLength();
                 setLengthResult(result);
+                break;
+            case OPERATIONS.SEARCH_VALUE:
+                const searchValue = value && value !== '' ? parseInt(value) : Math.floor(Math.random() * 100);
+                const searchRes = await listOperations.searchValue(searchValue);
+                setSearchResult(searchRes);
                 break;
             default:
                 await listOperations.traverseList();
@@ -406,6 +421,8 @@ function LinkedList() {
                     isListEmpty={getListNodes(nodes).length === 0}
                     listLength={getListNodes(nodes).length}
                     lengthResult={lengthResult}
+                    searchResult={searchResult}
+                    onSearchValueChange={handleSearchValueChange}
                 />
                 <div
                     id="canvas-area"

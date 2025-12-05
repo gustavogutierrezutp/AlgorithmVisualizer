@@ -11,15 +11,19 @@ import {
   ArrowRight,
   AlertTriangle,
   Target,
-  Hash
+  Hash,
+  Search
 } from "lucide-react";
 import { Section } from "../Section";
 
-export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult = null }) => {
+export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult = null, searchResult = null, onSearchValueChange = () => {} }) => {
   const [insertValue, setInsertValue] = useState(
     Math.floor(Math.random() * 100)
   );
   const [insertPosition, setInsertPosition] = useState(0);
+  const [searchValue, setSearchValue] = useState(
+    Math.floor(Math.random() * 100)
+  );
 
   // Check if position is valid (0 to listLength inclusive)
   const isPositionValid = insertPosition >= 0 && insertPosition <= listLength;
@@ -30,20 +34,28 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
         <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">
           Insert
         </label>
-        <div className="flex gap-2">
+        <div className="relative">
           <Input
             type="number"
             value={insertValue}
             onChange={(e) => setInsertValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !disable) {
+                onVisualize(0, insertValue);
+              }
+            }}
             placeholder="42"
             disabled={disable}
-            className="font-mono"
+            className="font-mono pr-10 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            style={{ MozAppearance: 'textfield' }}
           />
           <Button
-            variant="secondary"
+            variant="ghost"
             size="icon"
             onClick={() => setInsertValue(Math.floor(Math.random() * 100))}
             title="Random Value"
+            disabled={disable}
+            className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 hover:bg-gray-100"
           >
             <Shuffle className="w-3 h-3" />
           </Button>
@@ -75,6 +87,11 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
                   type="number"
                   value={insertPosition}
                   onChange={(e) => setInsertPosition(Math.max(0, parseInt(e.target.value) || 0))}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !disable && isPositionValid) {
+                      onVisualize(7, insertValue, insertPosition);
+                    }
+                  }}
                   placeholder="0"
                   disabled={disable}
                   className={`font-mono h-9 transition-colors ${
@@ -172,6 +189,74 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
               className="justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-200"
             >
               <Trash2 className="w-3 h-3 mr-2 text-red-400" /> Tail
+            </Button>
+          </div>
+        </div>
+
+        <div className="h-px bg-gray-100 my-2" />
+
+        <div>
+          <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 block">
+            Search
+          </label>
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <Input
+                type="number"
+                value={searchValue}
+                onChange={(e) => {
+                  setSearchValue(e.target.value);
+                  onSearchValueChange();
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !disable) {
+                    onVisualize(9, searchValue);
+                  }
+                }}
+                placeholder="42"
+                disabled={disable}
+                className="font-mono pr-10 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                style={{ MozAppearance: 'textfield' }}
+              />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  setSearchValue(Math.floor(Math.random() * 100));
+                  onSearchValueChange();
+                }}
+                title="Random Value"
+                disabled={disable}
+                className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 hover:bg-gray-100"
+              >
+                <Shuffle className="w-3 h-3" />
+              </Button>
+            </div>
+            <Button
+              onClick={() => onVisualize(9, searchValue)}
+              disabled={disable}
+              variant="outline"
+              size="sm"
+              className={`flex-1 justify-start transition-colors ${
+                searchResult === null
+                  ? 'hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200'
+                  : searchResult.found
+                  ? 'bg-green-500 hover:bg-green-600 text-white border-green-600'
+                  : 'bg-red-500 hover:bg-red-600 text-white border-red-600'
+              }`}
+            >
+              <Search className={`w-3 h-3 mr-2 ${
+                searchResult === null
+                  ? 'text-purple-400'
+                  : 'text-white'
+              }`} />
+              <span className="text-left">
+                {searchResult === null
+                  ? 'Search'
+                  : searchResult.found
+                  ? `pos. ${searchResult.position}`
+                  : 'Not Found'}
+              </span>
             </Button>
           </div>
         </div>

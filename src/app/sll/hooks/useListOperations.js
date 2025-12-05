@@ -86,6 +86,10 @@ export function useListOperations({
         return await operations.getLength(createOperationContext());
     }, [createOperationContext]);
 
+    const searchValue = useCallback(async (value) => {
+        return await operations.searchValue(createOperationContext(), value);
+    }, [createOperationContext]);
+
     return {
         insertAtHead,
         deleteAtHead,
@@ -95,6 +99,7 @@ export function useListOperations({
         traverseList,
         reverseList,
         insertAtPosition,
-        getLength
+        getLength,
+        searchValue
     };
 }

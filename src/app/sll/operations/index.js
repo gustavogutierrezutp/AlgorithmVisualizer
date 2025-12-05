@@ -12,3 +12,4 @@ export { traverseList } from './traverseList';
 export { reverseList } from './reverseList';
 export { insertAtPosition } from './insertAtPosition';
 export { getLength } from './getLength';
+export { searchValue } from './searchValue';
