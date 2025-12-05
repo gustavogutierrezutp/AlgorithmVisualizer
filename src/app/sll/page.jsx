@@ -380,6 +380,10 @@ function LinkedList() {
             case OPERATIONS.FIND_MIDDLE:
                 await listOperations.findMiddle();
                 break;
+            case OPERATIONS.DELETE_AT_POSITION:
+                const deletePosition = position !== undefined ? position : 0;
+                await listOperations.deleteAtPosition(deletePosition);
+                break;
             default:
                 await listOperations.traverseList();
         }

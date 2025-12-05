@@ -14,3 +14,4 @@ export { insertAtPosition } from './insertAtPosition';
 export { getLength } from './getLength';
 export { searchValue } from './searchValue';
 export { findMiddle } from './findMiddle';
+export { deleteAtPosition } from './deleteAtPosition';

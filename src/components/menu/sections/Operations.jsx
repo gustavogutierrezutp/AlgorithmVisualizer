@@ -22,12 +22,14 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
     Math.floor(Math.random() * 100)
   );
   const [insertPosition, setInsertPosition] = useState(0);
+  const [deletePosition, setDeletePosition] = useState(0);
   const [searchValue, setSearchValue] = useState(
     Math.floor(Math.random() * 100)
   );
 
-  // Check if position is valid (0 to listLength inclusive)
-  const isPositionValid = insertPosition >= 0 && insertPosition <= listLength;
+  // Check if position is valid (0 to listLength inclusive for insert, 0 to listLength-1 for delete)
+  const isInsertPositionValid = insertPosition >= 0 && insertPosition <= listLength;
+  const isDeletePositionValid = deletePosition >= 0 && deletePosition < listLength;
 
   return (
     <Section title="Operations" icon={Play} defaultOpen={false}>
@@ -79,7 +81,7 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
 
             <div className="flex gap-2 items-end">
               <div className="flex-1">
-                {!isPositionValid && (
+                {!isInsertPositionValid && (
                   <label className="text-[10px] font-normal text-red-500 tracking-wider mb-1 block">
                     (max: {listLength})
                   </label>
@@ -89,14 +91,14 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
                   value={insertPosition}
                   onChange={(e) => setInsertPosition(Math.max(0, parseInt(e.target.value) || 0))}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !disable && isPositionValid) {
+                    if (e.key === 'Enter' && !disable && isInsertPositionValid) {
                       onVisualize(7, insertValue, insertPosition);
                     }
                   }}
                   placeholder="0"
                   disabled={disable}
                   className={`font-mono h-9 transition-colors ${
-                    !isPositionValid
+                    !isInsertPositionValid
                       ? 'bg-red-50 border-red-300 text-red-700 focus:border-red-400 focus:ring-red-400'
                       : ''
                   }`}
@@ -105,12 +107,12 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
               </div>
               <Button
                 onClick={() => onVisualize(7, insertValue, insertPosition)}
-                disabled={disable || !isPositionValid}
+                disabled={disable || !isInsertPositionValid}
                 variant="outline"
                 size="sm"
                 className="h-9 flex-1 justify-start hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 title={
-                  !isPositionValid
+                  !isInsertPositionValid
                     ? `Position must be between 0 and ${listLength}`
                     : "Insert at specific position (requires traversal)"
                 }
@@ -168,25 +170,72 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
           <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 block">
             Remove
           </label>
-          <div className="grid grid-cols-2 gap-2">
-            <Button
-              onClick={() => onVisualize(1)}
-              disabled={disable}
-              variant="outline"
-              size="sm"
-              className="justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-200"
-            >
-              <Trash2 className="w-3 h-3 mr-2 text-red-400" /> Head
-            </Button>
-            <Button
-              onClick={() => onVisualize(3)}
-              disabled={disable}
-              variant="outline"
-              size="sm"
-              className="justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-200"
-            >
-              <Trash2 className="w-3 h-3 mr-2 text-red-400" /> Tail
-            </Button>
+          <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                onClick={() => onVisualize(1)}
+                disabled={disable}
+                variant="outline"
+                size="sm"
+                className="justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-200"
+              >
+                <Trash2 className="w-3 h-3 mr-2 text-red-400" /> Head
+              </Button>
+              <Button
+                onClick={() => onVisualize(3)}
+                disabled={disable}
+                variant="outline"
+                size="sm"
+                className="justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-200"
+              >
+                <Trash2 className="w-3 h-3 mr-2 text-red-400" /> Tail
+              </Button>
+            </div>
+
+            <div className="flex gap-2 items-end">
+              <div className="flex-1">
+                {!isDeletePositionValid && listLength > 0 && (
+                  <label className="text-[10px] font-normal text-red-500 tracking-wider mb-1 block">
+                    (max: {listLength - 1})
+                  </label>
+                )}
+                <Input
+                  type="number"
+                  value={deletePosition}
+                  onChange={(e) => setDeletePosition(Math.max(0, parseInt(e.target.value) || 0))}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !disable && isDeletePositionValid) {
+                      onVisualize(11, null, deletePosition);
+                    }
+                  }}
+                  placeholder="0"
+                  disabled={disable || listLength === 0}
+                  className={`font-mono h-9 transition-colors ${
+                    !isDeletePositionValid && listLength > 0
+                      ? 'bg-red-50 border-red-300 text-red-700 focus:border-red-400 focus:ring-red-400'
+                      : ''
+                  }`}
+                  min="0"
+                />
+              </div>
+              <Button
+                onClick={() => onVisualize(11, null, deletePosition)}
+                disabled={disable || !isDeletePositionValid}
+                variant="outline"
+                size="sm"
+                className="h-9 flex-1 justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                title={
+                  !isDeletePositionValid
+                    ? listLength === 0
+                      ? "List is empty"
+                      : `Position must be between 0 and ${listLength - 1}`
+                    : "Remove at specific position (requires traversal)"
+                }
+              >
+                <Trash2 className="w-3 h-3 mr-2 text-red-400" />
+                <span className="text-left">Remove at pos.</span>
+              </Button>
+            </div>
           </div>
         </div>
 

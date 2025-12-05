@@ -94,6 +94,10 @@ export function useListOperations({
         return await operations.findMiddle(createOperationContext());
     }, [createOperationContext]);
 
+    const deleteAtPosition = useCallback(async (position) => {
+        await operations.deleteAtPosition(createOperationContext(false, true), position);
+    }, [createOperationContext]);
+
     return {
         insertAtHead,
         deleteAtHead,
@@ -105,6 +109,7 @@ export function useListOperations({
         insertAtPosition,
         getLength,
         searchValue,
-        findMiddle
+        findMiddle,
+        deleteAtPosition
     };
 }
