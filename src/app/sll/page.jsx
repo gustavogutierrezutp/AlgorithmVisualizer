@@ -41,6 +41,7 @@ function LinkedList() {
     const [isReconnecting, setIsReconnecting] = useState(false);
     const [laserPointerEnabled, setLaserPointerEnabled] = useState(false);
     const [laserPointerPosition, setLaserPointerPosition] = useState({ x: 0, y: 0 });
+    const [lengthResult, setLengthResult] = useState(null);
 
     // Refs
     const menuRef = useRef();
@@ -314,6 +315,11 @@ function LinkedList() {
         const op = opIndex !== undefined ? opIndex : operation;
         const valToInsert = value && value !== '' ? parseInt(value) : Math.floor(Math.random() * 100);
 
+        // Clear length result for all operations except GET_LENGTH
+        if (op !== OPERATIONS.GET_LENGTH) {
+            setLengthResult(null);
+        }
+
         switch (op) {
             case OPERATIONS.INSERT_HEAD:
                 await listOperations.insertAtHead(valToInsert);
@@ -351,6 +357,10 @@ function LinkedList() {
                 if (menuRef.current) {
                     menuRef.current.refreshInsertValue();
                 }
+                break;
+            case OPERATIONS.GET_LENGTH:
+                const result = await listOperations.getLength();
+                setLengthResult(result);
                 break;
             default:
                 await listOperations.traverseList();
@@ -395,6 +405,7 @@ function LinkedList() {
                     showPointers={showPointers}
                     isListEmpty={getListNodes(nodes).length === 0}
                     listLength={getListNodes(nodes).length}
+                    lengthResult={lengthResult}
                 />
                 <div
                     id="canvas-area"

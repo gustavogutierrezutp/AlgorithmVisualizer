@@ -44,6 +44,7 @@ export default function Menu(props) {
           disable={props.disable}
           onVisualize={props.onVisualize}
           listLength={props.listLength}
+          lengthResult={props.lengthResult}
         />
 
         <TestSection

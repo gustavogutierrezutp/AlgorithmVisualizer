@@ -10,11 +10,12 @@ import {
   Zap,
   ArrowRight,
   AlertTriangle,
-  Target
+  Target,
+  Hash
 } from "lucide-react";
 import { Section } from "../Section";
 
-export const Operations = ({ disable, onVisualize, listLength = 0 }) => {
+export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult = null }) => {
   const [insertValue, setInsertValue] = useState(
     Math.floor(Math.random() * 100)
   );
@@ -181,22 +182,41 @@ export const Operations = ({ disable, onVisualize, listLength = 0 }) => {
           <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 block">
             Algorithms
           </label>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                onClick={() => onVisualize(4)}
+                disabled={disable}
+                variant="secondary"
+                size="sm"
+              >
+                <ArrowRightLeft className="w-3 h-3 mr-2" /> Traverse
+              </Button>
+              <Button
+                onClick={() => onVisualize(5)}
+                disabled={disable}
+                variant="secondary"
+                size="sm"
+              >
+                <Shuffle className="w-3 h-3 mr-2" /> Reverse
+              </Button>
+            </div>
             <Button
-              onClick={() => onVisualize(4)}
+              onClick={() => onVisualize(8)}
               disabled={disable}
               variant="secondary"
               size="sm"
+              className={`w-full relative overflow-visible transition-colors ${
+                lengthResult !== null
+                  ? 'bg-green-500 hover:bg-green-600 text-white border-green-600'
+                  : ''
+              }`}
+              title="Counts nodes by traversing the entire list"
             >
-              <ArrowRightLeft className="w-3 h-3 mr-2" /> Traverse
-            </Button>
-            <Button
-              onClick={() => onVisualize(5)}
-              disabled={disable}
-              variant="secondary"
-              size="sm"
-            >
-              <Shuffle className="w-3 h-3 mr-2" /> Reverse
+              <Hash className="w-3 h-3 mr-2" /> Get Length{lengthResult !== null ? `: ${lengthResult}` : ''}
+              <div className="absolute -top-1.5 -right-1.5 bg-yellow-400 text-yellow-900 rounded-full p-[2px] border border-white shadow-sm z-10 flex items-center justify-center">
+                <AlertTriangle size={8} strokeWidth={2.5} className="p-[.15rem]" />
+              </div>
             </Button>
           </div>
         </div>

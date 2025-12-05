@@ -11,3 +11,4 @@ export { deleteAtTail } from './deleteAtTail';
 export { traverseList } from './traverseList';
 export { reverseList } from './reverseList';
 export { insertAtPosition } from './insertAtPosition';
+export { getLength } from './getLength';

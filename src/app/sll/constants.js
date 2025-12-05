@@ -109,4 +109,5 @@ export const OPERATIONS = {
   REVERSE: 5,
   INSERT_TAIL_O1: 6,
   INSERT_AT_POSITION: 7,
+  GET_LENGTH: 8,
 };
