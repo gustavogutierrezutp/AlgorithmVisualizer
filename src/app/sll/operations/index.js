@@ -10,3 +10,4 @@ export { insertAtTailO1 } from './insertAtTailO1';
 export { deleteAtTail } from './deleteAtTail';
 export { traverseList } from './traverseList';
 export { reverseList } from './reverseList';
+export { insertAtPosition } from './insertAtPosition';

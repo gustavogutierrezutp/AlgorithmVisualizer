@@ -43,6 +43,7 @@ export default function Menu(props) {
         <Operations
           disable={props.disable}
           onVisualize={props.onVisualize}
+          listLength={props.listLength}
         />
 
         <TestSection

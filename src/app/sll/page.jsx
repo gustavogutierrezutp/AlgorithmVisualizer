@@ -308,7 +308,7 @@ function LinkedList() {
         });
     }, [nodes]);
 
-    const handleVisualize = useCallback(async (opIndex, value) => {
+    const handleVisualize = useCallback(async (opIndex, value, position) => {
         setIsRunning(true);
 
         const op = opIndex !== undefined ? opIndex : operation;
@@ -341,6 +341,13 @@ function LinkedList() {
                 break;
             case OPERATIONS.INSERT_TAIL_O1:
                 await listOperations.insertAtTailO1(valToInsert);
+                if (menuRef.current) {
+                    menuRef.current.refreshInsertValue();
+                }
+                break;
+            case OPERATIONS.INSERT_AT_POSITION:
+                const insertPosition = position !== undefined ? position : 0;
+                await listOperations.insertAtPosition(valToInsert, insertPosition);
                 if (menuRef.current) {
                     menuRef.current.refreshInsertValue();
                 }
@@ -387,6 +394,7 @@ function LinkedList() {
                     onTogglePointers={handleTogglePointers}
                     showPointers={showPointers}
                     isListEmpty={getListNodes(nodes).length === 0}
+                    listLength={getListNodes(nodes).length}
                 />
                 <div
                     id="canvas-area"

@@ -9,14 +9,19 @@ import {
   Shuffle,
   Zap,
   ArrowRight,
-  AlertTriangle
+  AlertTriangle,
+  Target
 } from "lucide-react";
 import { Section } from "../Section";
 
-export const Operations = ({ disable, onVisualize }) => {
+export const Operations = ({ disable, onVisualize, listLength = 0 }) => {
   const [insertValue, setInsertValue] = useState(
     Math.floor(Math.random() * 100)
   );
+  const [insertPosition, setInsertPosition] = useState(0);
+
+  // Check if position is valid (0 to listLength inclusive)
+  const isPositionValid = insertPosition >= 0 && insertPosition <= listLength;
 
   return (
     <Section title="Operations" icon={Play} defaultOpen={false}>
@@ -57,6 +62,48 @@ export const Operations = ({ disable, onVisualize }) => {
               <Plus className="w-3 h-3 mr-2 text-green-400" />
               <span className="text-left">Insert at Head</span>
             </Button>
+
+            <div className="flex gap-2 items-end">
+              <div className="flex-1">
+                {!isPositionValid && (
+                  <label className="text-[10px] font-normal text-red-500 tracking-wider mb-1 block">
+                    (max: {listLength})
+                  </label>
+                )}
+                <Input
+                  type="number"
+                  value={insertPosition}
+                  onChange={(e) => setInsertPosition(Math.max(0, parseInt(e.target.value) || 0))}
+                  placeholder="0"
+                  disabled={disable}
+                  className={`font-mono h-9 transition-colors ${
+                    !isPositionValid
+                      ? 'bg-red-50 border-red-300 text-red-700 focus:border-red-400 focus:ring-red-400'
+                      : ''
+                  }`}
+                  min="0"
+                />
+              </div>
+              <Button
+                onClick={() => onVisualize(7, insertValue, insertPosition)}
+                disabled={disable || !isPositionValid}
+                variant="outline"
+                size="sm"
+                className="relative overflow-visible h-9 flex-1 justify-start hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                title={
+                  !isPositionValid
+                    ? `Position must be between 0 and ${listLength}`
+                    : "Insert at specific position (requires traversal)"
+                }
+              >
+                <Target className="w-3 h-3 mr-2 text-blue-400" />
+                <span className="text-left">Insert at pos.</span>
+
+                <div className="absolute -top-1.5 -right-1.5 bg-yellow-400 text-yellow-900 rounded-full p-[2px] border border-white shadow-sm z-10 flex items-center justify-center">
+                  <AlertTriangle size={8} strokeWidth={2.5} className="p-[.15rem]" />
+                </div>
+              </Button>
+            </div>
 
             <div className="grid grid-cols-2 gap-2">
               <Button

@@ -78,6 +78,10 @@ export function useListOperations({
         await operations.reverseList(createOperationContext());
     }, [createOperationContext]);
 
+    const insertAtPosition = useCallback(async (value, position) => {
+        await operations.insertAtPosition(createOperationContext(true, true), value, position);
+    }, [createOperationContext]);
+
     return {
         insertAtHead,
         deleteAtHead,
@@ -85,6 +89,7 @@ export function useListOperations({
         insertAtTailO1,
         deleteAtTail,
         traverseList,
-        reverseList
+        reverseList,
+        insertAtPosition
     };
 }
