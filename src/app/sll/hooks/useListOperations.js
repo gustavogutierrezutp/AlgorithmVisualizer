@@ -102,6 +102,14 @@ export function useListOperations({
         await operations.removeDuplicates(createOperationContext(false, true));
     }, [createOperationContext]);
 
+    const accessFront = useCallback(async () => {
+        await operations.accessFront(createOperationContext());
+    }, [createOperationContext]);
+
+    const accessBack = useCallback(async () => {
+        await operations.accessBack(createOperationContext());
+    }, [createOperationContext]);
+
     return {
         insertAtHead,
         deleteAtHead,
@@ -115,6 +123,8 @@ export function useListOperations({
         searchValue,
         findMiddle,
         deleteAtPosition,
-        removeDuplicates
+        removeDuplicates,
+        accessFront,
+        accessBack
     };
 }

@@ -244,6 +244,34 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
 
         <div>
           <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 block">
+            Access
+          </label>
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              onClick={() => onVisualize(13)}
+              disabled={disable}
+              variant="secondary"
+              size="sm"
+              className="justify-start"
+            >
+              <Circle className="w-3 h-3 mr-2" /> Front
+            </Button>
+            <Button
+              onClick={() => onVisualize(14)}
+              disabled={disable}
+              variant="secondary"
+              size="sm"
+              className="justify-start"
+            >
+              <Circle className="w-3 h-3 mr-2" /> Back
+            </Button>
+          </div>
+        </div>
+
+        <div className="h-px bg-gray-100 my-2" />
+
+        <div>
+          <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 block">
             Search
           </label>
           <div className="flex gap-2">

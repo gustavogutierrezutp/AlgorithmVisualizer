@@ -16,3 +16,5 @@ export { searchValue } from './searchValue';
 export { findMiddle } from './findMiddle';
 export { deleteAtPosition } from './deleteAtPosition';
 export { removeDuplicates } from './removeDuplicates';
+export { accessFront } from './accessFront';
+export { accessBack } from './accessBack';

@@ -403,6 +403,12 @@ function LinkedList() {
             case OPERATIONS.REMOVE_DUPLICATES:
                 await listOperations.removeDuplicates();
                 break;
+            case OPERATIONS.ACCESS_FRONT:
+                await listOperations.accessFront();
+                break;
+            case OPERATIONS.ACCESS_BACK:
+                await listOperations.accessBack();
+                break;
             default:
                 await listOperations.traverseList();
         }
