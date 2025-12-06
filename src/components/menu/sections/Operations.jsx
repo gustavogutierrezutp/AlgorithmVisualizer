@@ -14,11 +14,59 @@ import {
   Hash,
   Search,
   Circle,
-  Filter
+  Filter,
+  ChevronDown,
 } from "lucide-react";
 import { Section } from "../Section";
 
-export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult = null, searchResult = null, onSearchValueChange = () => {} }) => {
+const SubSection = ({
+  title,
+  icon: Icon,
+  children,
+  badge,
+  defaultOpen = false,
+}) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  return (
+    <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full px-3 py-2 flex items-center justify-between hover:bg-gray-50 transition-colors group"
+      >
+        <div className="flex items-center gap-2">
+          <Icon className="w-3.5 h-3.5 text-gray-500 group-hover:text-gray-700" />
+          <span className="text-xs font-semibold text-gray-700">{title}</span>
+          {badge && (
+            <span className="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-[10px] font-bold rounded">
+              {badge}
+            </span>
+          )}
+        </div>
+        <ChevronDown
+          className={`w-3.5 h-3.5 text-gray-400 transition-transform ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {isOpen && (
+        <div className="px-3 pb-3 pt-1 border-t border-gray-100 animate-in slide-in-from-top-2 duration-200">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export const Operations = ({
+  disable,
+  onVisualize,
+  listLength = 0,
+  lengthResult = null,
+  searchResult = null,
+  onSearchValueChange = () => {},
+}) => {
   const [insertValue, setInsertValue] = useState(
     Math.floor(Math.random() * 100)
   );
@@ -29,121 +77,130 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
     Math.floor(Math.random() * 100)
   );
 
-  // Check if position is valid (0 to listLength inclusive for insert, 0 to listLength-1 for delete and nth)
-  const isInsertPositionValid = insertPosition >= 0 && insertPosition <= listLength;
-  const isDeletePositionValid = deletePosition >= 0 && deletePosition < listLength;
+  const isInsertPositionValid =
+    insertPosition >= 0 && insertPosition <= listLength;
+  const isDeletePositionValid =
+    deletePosition >= 0 && deletePosition < listLength;
   const isNthPositionValid = nthPosition >= 0 && nthPosition < listLength;
 
   return (
     <Section title="Operations" icon={Play} defaultOpen={false}>
-      <div className="space-y-1 mb-4">
-        <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">
-          Insert
-        </label>
-        <div className="relative">
-          <Input
-            type="number"
-            value={insertValue}
-            onChange={(e) => setInsertValue(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !disable) {
-                onVisualize(0, insertValue);
-              }
-            }}
-            placeholder="42"
-            disabled={disable}
-            className="font-mono pr-10 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-            style={{ MozAppearance: 'textfield' }}
-          />
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setInsertValue(Math.floor(Math.random() * 100))}
-            title="Random Value"
-            disabled={disable}
-            className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 hover:bg-gray-100"
-          >
-            <Shuffle className="w-3 h-3" />
-          </Button>
-        </div>
-      </div>
+      <div className="space-y-2">
+        {/* INSERT SECTION */}
+        <SubSection title="Insert" icon={Plus} badge="4" defaultOpen={true}>
+          <div className="mb-3 p-3 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
+            <div className="relative">
+              <Input
+                type="number"
+                value={insertValue}
+                onChange={(e) => setInsertValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !disable) {
+                    onVisualize(0, insertValue);
+                  }
+                }}
+                placeholder="42"
+                disabled={disable}
+                className="font-mono font-bold text-base pr-10 bg-white border-blue-200 focus:border-blue-400 focus:ring-blue-400 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                style={{ MozAppearance: "textfield" }}
+              />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setInsertValue(Math.floor(Math.random() * 100))}
+                title="Random Value"
+                disabled={disable}
+                className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 hover:bg-blue-100 text-blue-600"
+              >
+                <Shuffle className="w-3.5 h-3.5" />
+              </Button>
+            </div>
+          </div>
 
-      <div className="space-y-4">
-        <div>
-          <div className="space-y-2">
+          <div className="space-y-2 pt-1">
             <Button
               onClick={() => onVisualize(0, insertValue)}
               disabled={disable}
               variant="outline"
               size="sm"
-              className="w-full py-4 justify-start hover:bg-green-50 hover:text-green-600 hover:border-green-200"
+              className="w-full justify-start hover:bg-green-50 hover:text-green-600 hover:border-green-300 font-medium"
             >
-              <Plus className="w-3 h-3 mr-2 text-green-400" />
-              <span className="text-left">Insert at Head</span>
+              <Plus className="w-3.5 h-3.5 mr-2 text-green-500" />
+              At Head
             </Button>
 
-            <div className="flex gap-2 items-end">
-              <div className="flex-1">
-                {!isInsertPositionValid && (
-                  <label className="text-[10px] font-normal text-red-500 tracking-wider mb-1 block">
-                    (max: {listLength})
-                  </label>
-                )}
+            <div className="space-y-1.5">
+              <div className="flex gap-1.5">
                 <Input
                   type="number"
                   value={insertPosition}
-                  onChange={(e) => setInsertPosition(Math.max(0, parseInt(e.target.value) || 0))}
+                  onChange={(e) =>
+                    setInsertPosition(
+                      Math.max(0, parseInt(e.target.value) || 0)
+                    )
+                  }
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !disable && isInsertPositionValid) {
+                    if (
+                      e.key === "Enter" &&
+                      !disable &&
+                      isInsertPositionValid
+                    ) {
                       onVisualize(7, insertValue, insertPosition);
                     }
                   }}
-                  placeholder="0"
+                  placeholder="pos"
                   disabled={disable}
-                  className={`font-mono h-9 transition-colors ${
+                  className={`font-mono h-8 w-16 text-center text-xs transition-colors ${
                     !isInsertPositionValid
-                      ? 'bg-red-50 border-red-300 text-red-700 focus:border-red-400 focus:ring-red-400'
-                      : ''
+                      ? "bg-red-50 border-red-300 text-red-700"
+                      : "border-gray-300"
                   }`}
                   min="0"
                 />
+                <Button
+                  onClick={() => onVisualize(7, insertValue, insertPosition)}
+                  disabled={disable || !isInsertPositionValid}
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 h-8 justify-start hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 disabled:opacity-50 font-medium"
+                  title={
+                    !isInsertPositionValid
+                      ? `Max: ${listLength}`
+                      : "Insert at position"
+                  }
+                >
+                  <Target className="w-3.5 h-3.5 mr-2 text-blue-500" />
+                  At Position
+                </Button>
               </div>
-              <Button
-                onClick={() => onVisualize(7, insertValue, insertPosition)}
-                disabled={disable || !isInsertPositionValid}
-                variant="outline"
-                size="sm"
-                className="h-9 flex-1 justify-start hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                title={
-                  !isInsertPositionValid
-                    ? `Position must be between 0 and ${listLength}`
-                    : "Insert at specific position (requires traversal)"
-                }
-              >
-                <Target className="w-3 h-3 mr-2 text-blue-400" />
-                <span className="text-left">Insert at pos.</span>
-              </Button>
+              {!isInsertPositionValid && (
+                <p className="text-[10px] text-red-500 font-medium pl-1">
+                  ⚠ Max position: {listLength}
+                </p>
+              )}
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-1.5">
               <Button
                 onClick={() => onVisualize(2, insertValue)}
                 disabled={disable}
                 variant="outline"
                 size="sm"
-                className="relative overflow-visible justify-start px-3 h-auto py-1 hover:bg-yellow-50 hover:text-yellow-600 hover:border-yellow-200"
-                title="Recorre toda la lista hasta el final"
+                className="relative h-auto py-2 flex-col items-start hover:bg-yellow-50 hover:border-yellow-300"
               >
-                <ArrowRight className="w-4 h-4 mr-2 text-yellow-500 shrink-0" />
-                <div className="flex flex-col items-start leading-tight">
-                  <span className="font-medium">Tail</span>
-                  <span className="text-[10px] text-gray-400 font-medium">
-                    Traverse
-                  </span>
+                <div className="flex items-center gap-1.5 w-full">
+                  <ArrowRight className="w-3.5 h-3.5 text-yellow-600" />
+                  <span className="font-semibold text-xs">At Tail</span>
                 </div>
-
-                <div className="absolute  -top-1.5 -right-1.5 bg-yellow-400 text-yellow-900 rounded-full p-[2px] border border-white shadow-sm z-10 flex items-center justify-center">
-                  <AlertTriangle size={8} strokeWidth={2.5} className="p-[.15rem]" />
+                <span className="text-[9px] text-gray-500 mt-[-.5rem]">
+                  Traverse
+                </span>
+                <div className="absolute -top-1 -right-1 bg-yellow-400 rounded-full p-0.5 border border-white shadow-sm">
+                  <AlertTriangle
+                    size={9}
+                    strokeWidth={2.5}
+                    className="text-yellow-900"
+                  />
                 </div>
               </Button>
 
@@ -152,303 +209,311 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
                 disabled={disable}
                 variant="outline"
                 size="sm"
-                className="justify-start px-3 h-auto py-1 hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200"
-                title="Inserta directamente usando el puntero final"
+                className="h-auto py-2 flex-col items-start hover:bg-purple-50 hover:border-purple-300"
               >
-                <Zap className="w-4 h-4 mr-2 text-purple-500 shrink-0" />
-                <div className="flex flex-col items-start leading-tight">
-                  <span className="font-medium">Tail</span>
-                  <span className="text-[10px] text-gray-400 font-medium">
-                    Pointer
-                  </span>
+                <div className="flex items-center gap-1.5 w-full">
+                  <Zap className="w-3.5 h-3.5 text-purple-600" />
+                  <span className="font-semibold text-xs">At Tail</span>
                 </div>
+                <span className="text-[9px] text-gray-500 mt-[-.5rem]">
+                  Pointer
+                </span>
               </Button>
             </div>
           </div>
-        </div>
+        </SubSection>
 
-        <div className="h-px bg-gray-100 my-2" />
-
-        <div>
-          <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 block">
-            Remove
-          </label>
-          <div className="space-y-2">
-            <div className="grid grid-cols-2 gap-2">
+        {/* REMOVE SECTION */}
+        <SubSection title="Remove" icon={Trash2} badge="3">
+          <div className="space-y-2 pt-1">
+            <div className="grid grid-cols-2 gap-1.5">
               <Button
                 onClick={() => onVisualize(1)}
                 disabled={disable}
                 variant="outline"
                 size="sm"
-                className="justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-200"
+                className="h-8 justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-300 font-medium"
               >
-                <Trash2 className="w-3 h-3 mr-2 text-red-400" /> Head
+                <Trash2 className="w-3.5 h-3.5 mr-1.5 text-red-500" />
+                Head
               </Button>
               <Button
                 onClick={() => onVisualize(3)}
                 disabled={disable}
                 variant="outline"
                 size="sm"
-                className="justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-200"
+                className="h-8 justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-300 font-medium"
               >
-                <Trash2 className="w-3 h-3 mr-2 text-red-400" /> Tail
+                <Trash2 className="w-3.5 h-3.5 mr-1.5 text-red-500" />
+                Tail
               </Button>
             </div>
 
-            <div className="flex gap-2 items-end">
-              <div className="flex-1">
-                {!isDeletePositionValid && listLength > 0 && (
-                  <label className="text-[10px] font-normal text-red-500 tracking-wider mb-1 block">
-                    (max: {listLength - 1})
-                  </label>
-                )}
+            <div className="space-y-1.5">
+              <div className="flex gap-1.5">
                 <Input
                   type="number"
                   value={deletePosition}
-                  onChange={(e) => setDeletePosition(Math.max(0, parseInt(e.target.value) || 0))}
+                  onChange={(e) =>
+                    setDeletePosition(
+                      Math.max(0, parseInt(e.target.value) || 0)
+                    )
+                  }
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !disable && isDeletePositionValid) {
+                    if (
+                      e.key === "Enter" &&
+                      !disable &&
+                      isDeletePositionValid
+                    ) {
                       onVisualize(11, null, deletePosition);
                     }
                   }}
-                  placeholder="0"
+                  placeholder="pos"
                   disabled={disable || listLength === 0}
-                  className={`font-mono h-9 transition-colors ${
+                  className={`font-mono h-8 w-16 text-center text-xs transition-colors ${
                     !isDeletePositionValid && listLength > 0
-                      ? 'bg-red-50 border-red-300 text-red-700 focus:border-red-400 focus:ring-red-400'
-                      : ''
+                      ? "bg-red-50 border-red-300 text-red-700"
+                      : "border-gray-300"
                   }`}
                   min="0"
                 />
+                <Button
+                  onClick={() => onVisualize(11, null, deletePosition)}
+                  disabled={disable || !isDeletePositionValid}
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 h-8 justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-300 disabled:opacity-50 font-medium"
+                  title={
+                    !isDeletePositionValid
+                      ? listLength === 0
+                        ? "Empty list"
+                        : `Max: ${listLength - 1}`
+                      : "Remove at position"
+                  }
+                >
+                  <Trash2 className="w-3.5 h-3.5 mr-2 text-red-500" />
+                  At Position
+                </Button>
               </div>
-              <Button
-                onClick={() => onVisualize(11, null, deletePosition)}
-                disabled={disable || !isDeletePositionValid}
-                variant="outline"
-                size="sm"
-                className="h-9 flex-1 justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                title={
-                  !isDeletePositionValid
-                    ? listLength === 0
-                      ? "List is empty"
-                      : `Position must be between 0 and ${listLength - 1}`
-                    : "Remove at specific position (requires traversal)"
-                }
-              >
-                <Trash2 className="w-3 h-3 mr-2 text-red-400" />
-                <span className="text-left">Remove at pos.</span>
-              </Button>
+              {!isDeletePositionValid && listLength > 0 && (
+                <p className="text-[10px] text-red-500 font-medium pl-1">
+                  ⚠ Max position: {listLength - 1}
+                </p>
+              )}
             </div>
           </div>
-        </div>
+        </SubSection>
 
-        <div className="h-px bg-gray-100 my-2" />
-
-        <div>
-          <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 block">
-            Access
-          </label>
-          <div className="space-y-2">
-            <div className="grid grid-cols-2 gap-2">
+        {/* ACCESS SECTION - NUEVA DEL JEFE */}
+        <SubSection title="Access" icon={Circle} badge="3">
+          <div className="space-y-2 pt-1">
+            <div className="grid grid-cols-2 gap-1.5">
               <Button
                 onClick={() => onVisualize(13)}
                 disabled={disable}
                 variant="secondary"
                 size="sm"
-                className="justify-start"
+                className="h-8 justify-start font-medium"
               >
-                <Circle className="w-3 h-3 mr-2" /> Front
+                <Circle className="w-3.5 h-3.5 mr-1.5" />
+                Front
               </Button>
               <Button
                 onClick={() => onVisualize(14)}
                 disabled={disable}
                 variant="secondary"
                 size="sm"
-                className="justify-start"
+                className="h-8 justify-start font-medium"
               >
-                <Circle className="w-3 h-3 mr-2" /> Back
+                <Circle className="w-3.5 h-3.5 mr-1.5" />
+                Back
               </Button>
             </div>
 
-            <div className="flex gap-2 items-end">
-              <div className="flex-1">
-                {!isNthPositionValid && listLength > 0 && (
-                  <label className="text-[10px] font-normal text-red-500 tracking-wider mb-1 block">
-                    (max: {listLength - 1})
-                  </label>
-                )}
+            <div className="space-y-1.5">
+              <div className="flex gap-1.5">
                 <Input
                   type="number"
                   value={nthPosition}
-                  onChange={(e) => setNthPosition(Math.max(0, parseInt(e.target.value) || 0))}
+                  onChange={(e) =>
+                    setNthPosition(Math.max(0, parseInt(e.target.value) || 0))
+                  }
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !disable && isNthPositionValid) {
+                    if (e.key === "Enter" && !disable && isNthPositionValid) {
                       onVisualize(15, null, nthPosition);
                     }
                   }}
-                  placeholder="0"
+                  placeholder="pos"
                   disabled={disable || listLength === 0}
-                  className={`font-mono h-9 transition-colors ${
+                  className={`font-mono h-8 w-16 text-center text-xs transition-colors ${
                     !isNthPositionValid && listLength > 0
-                      ? 'bg-red-50 border-red-300 text-red-700 focus:border-red-400 focus:ring-red-400'
-                      : ''
+                      ? "bg-red-50 border-red-300 text-red-700"
+                      : "border-gray-300"
                   }`}
                   min="0"
                 />
+                <Button
+                  onClick={() => onVisualize(15, null, nthPosition)}
+                  disabled={disable || !isNthPositionValid}
+                  variant="secondary"
+                  size="sm"
+                  className="flex-1 h-8 justify-start disabled:opacity-50 font-medium"
+                  title={
+                    !isNthPositionValid
+                      ? listLength === 0
+                        ? "Empty list"
+                        : `Max: ${listLength - 1}`
+                      : "Access nth element"
+                  }
+                >
+                  <Circle className="w-3.5 h-3.5 mr-2" />
+                  Nth
+                </Button>
+              </div>
+              {!isNthPositionValid && listLength > 0 && (
+                <p className="text-[10px] text-red-500 font-medium pl-1">
+                  ⚠ Max position: {listLength - 1}
+                </p>
+              )}
+            </div>
+          </div>
+        </SubSection>
+
+        {/* SEARCH SECTION */}
+        <SubSection title="Search" icon={Search} badge="1">
+          <div className="space-y-2 pt-1">
+            <div className="flex gap-1.5">
+              <div className="relative flex-1">
+                <Input
+                  type="number"
+                  value={searchValue}
+                  onChange={(e) => {
+                    setSearchValue(e.target.value);
+                    onSearchValueChange();
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !disable) {
+                      onVisualize(9, searchValue);
+                    }
+                  }}
+                  placeholder="value"
+                  disabled={disable}
+                  className="font-mono h-8 text-xs pr-8 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                  style={{ MozAppearance: "textfield" }}
+                />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    setSearchValue(Math.floor(Math.random() * 100));
+                    onSearchValueChange();
+                  }}
+                  title="Random"
+                  disabled={disable}
+                  className="absolute right-0.5 top-1/2 -translate-y-1/2 h-6 w-6 hover:bg-gray-100"
+                >
+                  <Shuffle className="w-3 h-3" />
+                </Button>
               </div>
               <Button
-                onClick={() => onVisualize(15, null, nthPosition)}
-                disabled={disable || !isNthPositionValid}
-                variant="secondary"
+                onClick={() => onVisualize(9, searchValue)}
+                disabled={disable}
+                variant="outline"
                 size="sm"
-                className="h-9 flex-1 justify-start disabled:opacity-50 disabled:cursor-not-allowed"
-                title={
-                  !isNthPositionValid
-                    ? listLength === 0
-                      ? "List is empty"
-                      : `Position must be between 0 and ${listLength - 1}`
-                    : "Access element at specific position"
-                }
+                className={`h-8 px-3 font-medium transition-all ${
+                  searchResult === null
+                    ? "hover:bg-purple-50 hover:text-purple-600 hover:border-purple-300"
+                    : searchResult.found
+                    ? "bg-green-500 hover:bg-green-600 text-white border-green-600"
+                    : "bg-red-500 hover:bg-red-600 text-white border-red-600"
+                }`}
               >
-                <Circle className="w-3 h-3 mr-2" />
-                <span className="text-left">Nth</span>
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <div className="h-px bg-gray-100 my-2" />
-
-        <div>
-          <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 block">
-            Search
-          </label>
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <Input
-                type="number"
-                value={searchValue}
-                onChange={(e) => {
-                  setSearchValue(e.target.value);
-                  onSearchValueChange();
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !disable) {
-                    onVisualize(9, searchValue);
-                  }
-                }}
-                placeholder="42"
-                disabled={disable}
-                className="font-mono pr-10 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                style={{ MozAppearance: 'textfield' }}
-              />
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => {
-                  setSearchValue(Math.floor(Math.random() * 100));
-                  onSearchValueChange();
-                }}
-                title="Random Value"
-                disabled={disable}
-                className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 hover:bg-gray-100"
-              >
-                <Shuffle className="w-3 h-3" />
-              </Button>
-            </div>
-            <Button
-              onClick={() => onVisualize(9, searchValue)}
-              disabled={disable}
-              variant="outline"
-              size="sm"
-              className={`flex-1 justify-start transition-colors ${
-                searchResult === null
-                  ? 'hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200'
-                  : searchResult.found
-                  ? 'bg-green-500 hover:bg-green-600 text-white border-green-600'
-                  : 'bg-red-500 hover:bg-red-600 text-white border-red-600'
-              }`}
-            >
-              <Search className={`w-3 h-3 mr-2 ${
-                searchResult === null
-                  ? 'text-purple-400'
-                  : 'text-white'
-              }`} />
-              <span className="text-left">
+                <Search
+                  className={`w-3.5 h-3.5 mr-1.5 ${
+                    searchResult === null ? "text-purple-500" : "text-white"
+                  }`}
+                />
                 {searchResult === null
-                  ? 'Search'
+                  ? "Find"
                   : searchResult.found
-                  ? `pos. ${searchResult.position}`
-                  : 'Not Found'}
-              </span>
-            </Button>
+                  ? `#${searchResult.position}`
+                  : "N/A"}
+              </Button>
+            </div>
           </div>
-        </div>
+        </SubSection>
 
-        <div className="h-px bg-gray-100 my-2" />
-
-        <div>
-          <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 block">
-            Algorithms
-          </label>
-          <div className="space-y-2">
-            <div className="grid grid-cols-2 gap-2">
+        {/* ALGORITHMS SECTION */}
+        <SubSection title="Algorithms" icon={ArrowRightLeft} badge="5">
+          <div className="space-y-1.5 pt-1">
+            <div className="grid grid-cols-2 gap-1.5">
               <Button
                 onClick={() => onVisualize(4)}
                 disabled={disable}
                 variant="secondary"
                 size="sm"
+                className="h-8 text-xs font-medium"
               >
-                <ArrowRightLeft className="w-3 h-3 mr-2" /> Traverse
+                <ArrowRightLeft className="w-3.5 h-3.5 mr-1.5" />
+                Traverse
               </Button>
               <Button
                 onClick={() => onVisualize(5)}
                 disabled={disable}
                 variant="secondary"
                 size="sm"
+                className="h-8 text-xs font-medium"
               >
-                <Shuffle className="w-3 h-3 mr-2" /> Reverse
+                <Shuffle className="w-3.5 h-3.5 mr-1.5" />
+                Reverse
               </Button>
             </div>
+
             <Button
               onClick={() => onVisualize(10)}
               disabled={disable}
               variant="secondary"
               size="sm"
-              className="w-full"
-              title="Finds the middle node using two-pointer technique"
+              className="w-full h-8 text-xs font-medium"
             >
-              <Circle className="w-3 h-3 mr-2" /> Find Middle
+              <Circle className="w-3.5 h-3.5 mr-1.5" />
+              Find Middle
             </Button>
+
             <Button
               onClick={() => onVisualize(8)}
               disabled={disable}
               variant="secondary"
               size="sm"
-              className={`w-full relative overflow-visible transition-colors ${
+              className={`w-full h-8 text-xs font-medium relative overflow-visible transition-colors ${
                 lengthResult !== null
-                  ? 'bg-green-500 hover:bg-green-600 text-white border-green-600'
-                  : ''
+                  ? "bg-green-500 hover:bg-green-600 text-white"
+                  : ""
               }`}
-              title="Counts nodes by traversing the entire list"
             >
-              <Hash className="w-3 h-3 mr-2" /> Get Length{lengthResult !== null ? `: ${lengthResult}` : ''}
-              <div className="absolute -top-1.5 -right-1.5 bg-yellow-400 text-yellow-900 rounded-full p-[2px] border border-white shadow-sm z-10 flex items-center justify-center">
-                <AlertTriangle size={8} strokeWidth={2.5} className="p-[.15rem]" />
+              <Hash className="w-3.5 h-3.5 mr-1.5" />
+              Get Length{lengthResult !== null ? `: ${lengthResult}` : ""}
+              <div className="absolute -top-1 -right-1 bg-yellow-400 rounded-full p-0.5 border border-white shadow-sm">
+                <AlertTriangle
+                  size={9}
+                  strokeWidth={2.5}
+                  className="text-yellow-900"
+                />
               </div>
             </Button>
+
             <Button
               onClick={() => onVisualize(12)}
               disabled={disable}
               variant="secondary"
               size="sm"
-              className="w-full"
-              title="Removes duplicate values from the list"
+              className="w-full h-8 text-xs font-medium"
             >
-              <Filter className="w-3 h-3 mr-2" /> Remove Duplicates
+              <Filter className="w-3.5 h-3.5 mr-1.5" />
+              Remove Duplicates
             </Button>
           </div>
-        </div>
+        </SubSection>
       </div>
     </Section>
   );
