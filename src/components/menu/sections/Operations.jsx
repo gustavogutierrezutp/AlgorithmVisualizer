@@ -24,13 +24,15 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
   );
   const [insertPosition, setInsertPosition] = useState(0);
   const [deletePosition, setDeletePosition] = useState(0);
+  const [nthPosition, setNthPosition] = useState(0);
   const [searchValue, setSearchValue] = useState(
     Math.floor(Math.random() * 100)
   );
 
-  // Check if position is valid (0 to listLength inclusive for insert, 0 to listLength-1 for delete)
+  // Check if position is valid (0 to listLength inclusive for insert, 0 to listLength-1 for delete and nth)
   const isInsertPositionValid = insertPosition >= 0 && insertPosition <= listLength;
   const isDeletePositionValid = deletePosition >= 0 && deletePosition < listLength;
+  const isNthPositionValid = nthPosition >= 0 && nthPosition < listLength;
 
   return (
     <Section title="Operations" icon={Play} defaultOpen={false}>
@@ -246,25 +248,72 @@ export const Operations = ({ disable, onVisualize, listLength = 0, lengthResult 
           <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-2 block">
             Access
           </label>
-          <div className="grid grid-cols-2 gap-2">
-            <Button
-              onClick={() => onVisualize(13)}
-              disabled={disable}
-              variant="secondary"
-              size="sm"
-              className="justify-start"
-            >
-              <Circle className="w-3 h-3 mr-2" /> Front
-            </Button>
-            <Button
-              onClick={() => onVisualize(14)}
-              disabled={disable}
-              variant="secondary"
-              size="sm"
-              className="justify-start"
-            >
-              <Circle className="w-3 h-3 mr-2" /> Back
-            </Button>
+          <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                onClick={() => onVisualize(13)}
+                disabled={disable}
+                variant="secondary"
+                size="sm"
+                className="justify-start"
+              >
+                <Circle className="w-3 h-3 mr-2" /> Front
+              </Button>
+              <Button
+                onClick={() => onVisualize(14)}
+                disabled={disable}
+                variant="secondary"
+                size="sm"
+                className="justify-start"
+              >
+                <Circle className="w-3 h-3 mr-2" /> Back
+              </Button>
+            </div>
+
+            <div className="flex gap-2 items-end">
+              <div className="flex-1">
+                {!isNthPositionValid && listLength > 0 && (
+                  <label className="text-[10px] font-normal text-red-500 tracking-wider mb-1 block">
+                    (max: {listLength - 1})
+                  </label>
+                )}
+                <Input
+                  type="number"
+                  value={nthPosition}
+                  onChange={(e) => setNthPosition(Math.max(0, parseInt(e.target.value) || 0))}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !disable && isNthPositionValid) {
+                      onVisualize(15, null, nthPosition);
+                    }
+                  }}
+                  placeholder="0"
+                  disabled={disable || listLength === 0}
+                  className={`font-mono h-9 transition-colors ${
+                    !isNthPositionValid && listLength > 0
+                      ? 'bg-red-50 border-red-300 text-red-700 focus:border-red-400 focus:ring-red-400'
+                      : ''
+                  }`}
+                  min="0"
+                />
+              </div>
+              <Button
+                onClick={() => onVisualize(15, null, nthPosition)}
+                disabled={disable || !isNthPositionValid}
+                variant="secondary"
+                size="sm"
+                className="h-9 flex-1 justify-start disabled:opacity-50 disabled:cursor-not-allowed"
+                title={
+                  !isNthPositionValid
+                    ? listLength === 0
+                      ? "List is empty"
+                      : `Position must be between 0 and ${listLength - 1}`
+                    : "Access element at specific position"
+                }
+              >
+                <Circle className="w-3 h-3 mr-2" />
+                <span className="text-left">Nth</span>
+              </Button>
+            </div>
           </div>
         </div>
 

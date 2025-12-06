@@ -409,6 +409,10 @@ function LinkedList() {
             case OPERATIONS.ACCESS_BACK:
                 await listOperations.accessBack();
                 break;
+            case OPERATIONS.ACCESS_NTH:
+                const nthPosition = position !== undefined ? position : 0;
+                await listOperations.accessNth(nthPosition);
+                break;
             default:
                 await listOperations.traverseList();
         }

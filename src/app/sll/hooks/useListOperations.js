@@ -110,6 +110,10 @@ export function useListOperations({
         await operations.accessBack(createOperationContext());
     }, [createOperationContext]);
 
+    const accessNth = useCallback(async (position) => {
+        return await operations.accessNth(createOperationContext(), position);
+    }, [createOperationContext]);
+
     return {
         insertAtHead,
         deleteAtHead,
@@ -125,6 +129,7 @@ export function useListOperations({
         deleteAtPosition,
         removeDuplicates,
         accessFront,
-        accessBack
+        accessBack,
+        accessNth
     };
 }

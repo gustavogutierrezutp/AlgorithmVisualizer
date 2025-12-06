@@ -18,3 +18,4 @@ export { deleteAtPosition } from './deleteAtPosition';
 export { removeDuplicates } from './removeDuplicates';
 export { accessFront } from './accessFront';
 export { accessBack } from './accessBack';
+export { accessNth } from './accessNth';
