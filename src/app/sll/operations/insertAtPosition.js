@@ -1,4 +1,4 @@
-import { LAYOUT, ANIMATION, COLORS, NODE_IDS } from '../constants';
+import { LAYOUT, COLORS, NODE_IDS } from '../constants';
 import { createListNode } from '../utils/nodeFactory';
 import { createEdgesForList, createHeadPointerEdge, createTailPointerEdge } from '../utils/edgeFactory';
 import { getListNodes } from '../utils/nodeFilters';
@@ -13,7 +13,7 @@ import { sleep } from '../utils/helpers';
  * @returns {Promise<void>}
  */
 export async function insertAtPosition(context, value, position) {
-  const { state, setState, reactFlowInstance, handlePointerHover } = context;
+  const { state, setState, handlePointerHover } = context;
   const existingNodes = [...state.nodes];
   const listNodes = getListNodes(existingNodes);
 
@@ -78,13 +78,7 @@ export async function insertAtPosition(context, value, position) {
       }
     }
 
-    setState({ nodes, edges }, () => {
-      if (reactFlowInstance) {
-        setTimeout(() => {
-          reactFlowInstance.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
-        }, 100);
-      }
-    });
+    setState({ nodes, edges });
     await sleep(state.speed);
     return;
   }
@@ -171,12 +165,6 @@ export async function insertAtPosition(context, value, position) {
     }
   }
 
-  setState({ nodes, edges }, () => {
-    if (reactFlowInstance) {
-      setTimeout(() => {
-        reactFlowInstance.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
-      }, 100);
-    }
-  });
+  setState({ nodes, edges });
   await sleep(state.speed);
 }

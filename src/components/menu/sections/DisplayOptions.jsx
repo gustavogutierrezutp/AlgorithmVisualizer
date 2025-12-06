@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Settings2, Eye, Dices, Network } from "lucide-react";
+import { Settings2, Eye, Dices, Network, Maximize2 } from "lucide-react";
 import { CustomSlider } from "@/components/custom-slider";
 import { Section } from "../Section";
 import { ColorPickerInput } from "../ColorPickerInput";
@@ -9,6 +9,8 @@ export const DisplayOptions = (props) => {
   return (
     <Section
       title="Display Options"
+      isOpen={props.isOpen}
+      onToggle={props.onToggle}
       icon={Settings2}
       defaultOpen={false}
       id="display-options-section"
@@ -95,6 +97,20 @@ export const DisplayOptions = (props) => {
         >
           <Network className="w-4 h-4 mr-2 opacity-80" />
           Auto Layout
+        </Button>
+
+        <Button
+          className={`w-full mt-2 transition-all shadow-sm ${
+            props.autoAdjust
+              ? 'bg-green-600 text-white hover:bg-green-700 border-green-600'
+              : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100 hover:text-gray-700 hover:border-gray-300'
+          }`}
+          size="sm"
+          onClick={props.onToggleAutoAdjust}
+          disabled={props.disable}
+        >
+          <Maximize2 className="w-4 h-4 mr-2 opacity-80" />
+          Auto Adjust
         </Button>
       </div>
     </Section>

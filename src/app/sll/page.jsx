@@ -44,6 +44,7 @@ function LinkedList() {
     const [laserPointerPosition, setLaserPointerPosition] = useState({ x: 0, y: 0 });
     const [lengthResult, setLengthResult] = useState(null);
     const [searchResult, setSearchResult] = useState(null);
+    const [autoAdjust, setAutoAdjust] = useState(false);
 
     // Refs
     const menuRef = useRef();
@@ -284,6 +285,10 @@ function LinkedList() {
         setSearchResult(null);
     }, []);
 
+    const handleToggleAutoAdjust = useCallback(() => {
+        setAutoAdjust(current => !current);
+    }, []);
+
     const handleMouseMove = useCallback((event) => {
         if (laserPointerEnabled) {
             const canvasArea = document.getElementById('canvas-area');
@@ -417,8 +422,18 @@ function LinkedList() {
                 await listOperations.traverseList();
         }
 
+        // Auto adjust canvas if enabled
+        if (autoAdjust && reactFlowInstance.current) {
+            setTimeout(() => {
+                reactFlowInstance.current.fitView({
+                    duration: ANIMATION.FIT_VIEW_DURATION,
+                    padding: LAYOUT.FIT_VIEW_PADDING
+                });
+            }, ANIMATION.FIT_VIEW_DELAY);
+        }
+
         setIsRunning(false);
-    }, [operation, listOperations]);
+    }, [operation, listOperations, autoAdjust]);
 
     return (
         <div className="flex flex-col h-screen">
@@ -460,6 +475,8 @@ function LinkedList() {
                     lengthResult={lengthResult}
                     searchResult={searchResult}
                     onSearchValueChange={handleSearchValueChange}
+                    autoAdjust={autoAdjust}
+                    onToggleAutoAdjust={handleToggleAutoAdjust}
                 />
                 <div
                     id="canvas-area"

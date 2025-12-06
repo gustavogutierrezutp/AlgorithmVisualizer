@@ -1,4 +1,4 @@
-import { LAYOUT, ANIMATION, NODE_IDS } from '../constants';
+import { LAYOUT, NODE_IDS } from '../constants';
 import { createListNode } from '../utils/nodeFactory';
 import { createListEdge, createTailPointerEdge, createHeadPointerEdge } from '../utils/edgeFactory';
 import { getListNodes, getTailNode } from '../utils/nodeFilters';
@@ -12,7 +12,7 @@ import { sleep } from '../utils/helpers';
  * @returns {Promise<void>}
  */
 export async function insertAtTailO1(context, value) {
-  const { state, setState, reactFlowInstance, handlePointerHover } = context;
+  const { state, setState, handlePointerHover } = context;
   const nodes = [...state.nodes];
   let edges = [...state.edges];
 
@@ -76,12 +76,6 @@ export async function insertAtTailO1(context, value) {
     }
   }
 
-  setState({ nodes: newNodes, edges }, () => {
-    if (reactFlowInstance) {
-      setTimeout(() => {
-        reactFlowInstance.fitView({ duration: ANIMATION.FIT_VIEW_DURATION, padding: LAYOUT.FIT_VIEW_PADDING });
-      }, 100);
-    }
-  });
+  setState({ nodes: newNodes, edges });
   await sleep(state.speed);
 }
