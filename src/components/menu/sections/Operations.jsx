@@ -25,13 +25,20 @@ const SubSection = ({
   children,
   badge,
   defaultOpen = false,
+  isOpen: controlledIsOpen,
+  onToggle,
+  id,
 }) => {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const [internalIsOpen, setInternalIsOpen] = useState(defaultOpen);
+  const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
+  const handleToggle = onToggle || (() => setInternalIsOpen(!internalIsOpen));
 
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+    <div className={`border border-gray-200 rounded-lg overflow-hidden transition-colors ${
+      isOpen ? 'bg-blue-100/40 border-blue-300' : 'bg-white'
+    }`}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleToggle}
         className="w-full px-3 py-2 flex items-center justify-between hover:bg-gray-50 transition-colors group"
       >
         <div className="flex items-center gap-2">
@@ -76,6 +83,11 @@ export const Operations = ({
   const [searchValue, setSearchValue] = useState(
     Math.floor(Math.random() * 100)
   );
+  const [openSubSection, setOpenSubSection] = useState("insert");
+
+  const handleSubSectionToggle = (sectionId) => {
+    setOpenSubSection(prev => prev === sectionId ? null : sectionId);
+  };
 
   const isInsertPositionValid =
     insertPosition >= 0 && insertPosition <= listLength;
@@ -87,7 +99,14 @@ export const Operations = ({
     <Section title="Operations" icon={Play} defaultOpen={false}>
       <div className="space-y-2">
         {/* INSERT SECTION */}
-        <SubSection title="Insert" icon={Plus} badge="4" defaultOpen={true}>
+        <SubSection
+          title="Insert"
+          icon={Plus}
+          badge="4"
+          id="insert"
+          isOpen={openSubSection === "insert"}
+          onToggle={() => handleSubSectionToggle("insert")}
+        >
           <div className="mb-3 p-3 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
             <div className="relative">
               <Input
@@ -224,7 +243,14 @@ export const Operations = ({
         </SubSection>
 
         {/* REMOVE SECTION */}
-        <SubSection title="Remove" icon={Trash2} badge="3">
+        <SubSection
+          title="Remove"
+          icon={Trash2}
+          badge="3"
+          id="remove"
+          isOpen={openSubSection === "remove"}
+          onToggle={() => handleSubSectionToggle("remove")}
+        >
           <div className="space-y-2 pt-1">
             <div className="grid grid-cols-2 gap-1.5">
               <Button
@@ -305,7 +331,14 @@ export const Operations = ({
         </SubSection>
 
         {/* ACCESS SECTION - NUEVA DEL JEFE */}
-        <SubSection title="Access" icon={Circle} badge="3">
+        <SubSection
+          title="Access"
+          icon={Circle}
+          badge="3"
+          id="access"
+          isOpen={openSubSection === "access"}
+          onToggle={() => handleSubSectionToggle("access")}
+        >
           <div className="space-y-2 pt-1">
             <div className="grid grid-cols-2 gap-1.5">
               <Button
@@ -380,7 +413,14 @@ export const Operations = ({
         </SubSection>
 
         {/* SEARCH SECTION */}
-        <SubSection title="Search" icon={Search} badge="1">
+        <SubSection
+          title="Search"
+          icon={Search}
+          badge="1"
+          id="search"
+          isOpen={openSubSection === "search"}
+          onToggle={() => handleSubSectionToggle("search")}
+        >
           <div className="space-y-2 pt-1">
             <div className="flex gap-1.5">
               <div className="relative flex-1">
@@ -444,7 +484,14 @@ export const Operations = ({
         </SubSection>
 
         {/* ALGORITHMS SECTION */}
-        <SubSection title="Algorithms" icon={ArrowRightLeft} badge="5">
+        <SubSection
+          title="Algorithms"
+          icon={ArrowRightLeft}
+          badge="5"
+          id="algorithms"
+          isOpen={openSubSection === "algorithms"}
+          onToggle={() => handleSubSectionToggle("algorithms")}
+        >
           <div className="space-y-1.5 pt-1">
             <Button
               onClick={() => onVisualize(4)}
