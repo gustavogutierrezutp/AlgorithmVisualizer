@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>operations</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="operations_files/libs/clipboard/clipboard.min.js"></script>
+<script src="operations_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="operations_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="operations_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="operations_files/libs/quarto-html/popper.min.js"></script>
+<script src="operations_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="operations_files/libs/quarto-html/anchor.min.js"></script>
+<link href="operations_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="operations_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="operations_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="operations_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="operations_files/libs/bootstrap/bootstrap-e8af4a94f456d0f9129c64e652c6e685.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="sec-operaciones" class="level1">
+<h1>Operaciones</h1>
+<section id="creación" class="level2">
+<h2 class="anchored" data-anchor-id="creación">Creación</h2>
+<p>En el simulador las listas pueden ser creadas de diferentes maneras. Todas las opciones de creación se encuentran en el primer sub menú con el título <strong>List Creation</strong>.</p>
+<section id="lista-vacía" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="lista-vacía">Lista vacía</h3>
+<div id="fig-creation-empty" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-creation-empty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/creation-empty.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-creation-empty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Interfaz para la creación de una lista vacía.
+</figcaption>
+</figure>
+</div>
+<p>Para crear una lista vacía donde el usuario pueda comenzar a añadir elementos haciendo uso de las operaciones se debe hacer click en la pestaña <em>Empty</em> y a continuación hacer click en el botón <em>Create Empty List</em> (ver <a href="#fig-creation-empty" class="quarto-xref">Figure&nbsp;1</a>). Al dar click en él aparecerá un mensaje en el lienzo de la derecha informando que la lista actualmente visualizada se encuentra vacía.</p>
+</section>
+<section id="lista-con-números-aleatorios" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="lista-con-números-aleatorios">Lista con números aleatorios</h3>
+<p>La siguiente opción para crear una lista es con elementos aleatorios. Esto es especialmente útil cuando el usuario desea ver como se comporta una operación sobre una lista que ya contiene elementos y no desea insertarlos uno a uno. En esta opción es cuestión de seleccionar el número de nodos utilizando el elemento deslizante y posteriormente pulsar el botón <em>Generate Random</em> (ver <a href="#fig-creation-random" class="quarto-xref">Figure&nbsp;2</a>). Al presionar el botón aparecerá la lista en el lienzo de la derecha junto con sus elementos.</p>
+<div id="fig-creation-random" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-creation-random-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/creation-random.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-creation-random-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Interfaz para la creación de una lista inicializada de forma aleatoria.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="lista-personalizada" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="lista-personalizada">Lista personalizada</h3>
+<p>Cuando se requiere una lista con elementos específicos la tercera opción es la indicada. Haciendo click en <em>Custom</em> aparecerá un cuadro de texto para insertar cada uno de los elementos de la lista (ver <a href="#fig-creation-random" class="quarto-xref">Figure&nbsp;2</a>). El formato es simple: los elementos deben estar encerrados por los símbolos <code>[</code>y <code>]</code>. Adicionalmente los números deben estar separado por comas. Por ejemplo, al introducir <code>[1,2,3,4,5]</code> se creará y visualizará la lista que contiene los elementos del <span class="math inline">\(1\)</span> al <span class="math inline">\(5\)</span>.</p>
+<div id="fig-creation-custom" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-creation-custom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/creation-custom.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-creation-custom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Interfaz para la creación de una lista con elementos puntuales.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="visualización-de-la-lista" class="level2">
+<h2 class="anchored" data-anchor-id="visualización-de-la-lista">Visualización de la lista</h2>
+<p>Después de creada la lista utilizando cualquiera de las formas mencionadas, está será visualizada en el lienzo que hay en la parte derecha. Por ejemplo, en la <a href="#fig-rand5-commented" class="quarto-xref">Figure&nbsp;4</a> se muestra la interfaz con una lista creada de 7 elementos. En esta figura se encuentran las anotaciones de los diferentes nodos de la lista y los componentes de uno de ellos.</p>
+<div id="fig-rand5-commented" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rand5-commented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/random5-commented.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rand5-commented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Imagen anotada de la visualización de una lista enlazada de 5 elementos en el lienzo.
+</figcaption>
+</figure>
+</div>
+<p>Existen diferentes formas de interactuar con la representación visual de la lista enlazada. Los nodos de la lista pueden ser reposicionados y su encadenamiento puede ser alterado. En la parte inferior izquierda del lienzo se encuentra una pequeña barra vertical con botones que tienen acción sobre la visualización del lienzo.</p>
+<div id="tip-canvas-toolbar" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;1: Consejos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="quarto-layout-panel" data-layout="[1,9]">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p><img src="figures/xyflow-toolbar.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 90.0%;justify-content: flex-start;">
+<ul>
+<li>El tercer botón de arriba a abajo permite siempre enfocar todos los elementos dentro del lienzo. Esto es de gran importancia porque facilita mucho la interacción con la visualización.</li>
+<li>El cuarto botón con el símbolo <img src="figures/lock.png" class="img-fluid"> protege el lienzo de cualquier tipo de interacción. Esta opción es muy útil cuando se desean tomar imágenes de captura de pantalla o realizar explicaciones sin que se altere la visualización.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Cada nodo de la lista consta de dos partes como se identifican en la <a href="#fig-rand5-commented" class="quarto-xref">Figure&nbsp;4</a>. La primera contiene el dato y la segunda representa el apuntador al siguiente nodo en la lista. Cuando el <em>mouse</em> se posiciona sobre este último el apuntador es resaltado en un color diferente (ver <a href="#fig-next-pointer" class="quarto-xref">Figure&nbsp;5</a>). Esto es útil cuando las listas no se muestran de manera lineal. A continuación se muestra la misma lista después de ser reorganizada arrastrando los nodos con el mouse sobre el lienzo. El puntero se posicionó sobre el nodo que contiene el valor <span class="math inline">\(44\)</span>.</p>
+<div id="fig-next-pointer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-next-pointer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/next-pointer.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-next-pointer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Visualización del puntero al siguiente elemento de un nodo. Esta visualización se logra al colocar el puntero del ratón sobre el apuntador del nodo.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="operaciones-sobre-la-lista" class="level2">
+<h2 class="anchored" data-anchor-id="operaciones-sobre-la-lista">Operaciones sobre la lista</h2>
+<p>Después de tener la lista creada o una lista vacía podemos comenzar a realizar operaciones sobre ella. Esto con el fin de observar el comportamiento de cada una de ellas. Las operaciones disponibles se pueden acceder desde el menú <strong>Operations</strong> (ver <a href="#fig-operations" class="quarto-xref">Figure&nbsp;6</a>).</p>
+<div id="fig-operations" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-operations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/operations-menu.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-operations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Panel de operaciones
+</figcaption>
+</figure>
+</div>
+<p>Las operaciones se encuentran agrupadas según su lógica. Por ejemplo, el menú <strong>Insert</strong> agrupa las 4 operaciones que adicionan elementos en la lista. El menú <strong>Access</strong> contiene 3 operaciones que acceden a los elementos de la lista y así sucesivamente.</p>
+<p>A continuación se describen en detalle cada una de las operaciones y su visualización.</p>
+<section id="inserción-de-elementos" class="level3">
+<h3 class="anchored" data-anchor-id="inserción-de-elementos">Inserción de elementos</h3>
+<p>La aplicación provee visualización para 4 diferentes tipos de inserción a través del menú <strong>insert</strong> mostrado en la figura <a href="#fig-operations-only-insert" class="quarto-xref">Figure&nbsp;7</a>. Para todos los casos, el valor a insertar debe ser definido en el primer cuadro de texto. En la figura este presenta el valor <span class="math inline">\(25\)</span>. También dentro del mismo cuadro de texto hay un botón que opcionalmente genera un valor aleatorio (ver <a href="#tip-rnd" class="quarto-xref">Tip&nbsp;2</a>).</p>
+<div id="fig-operations-only-insert" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-operations-only-insert-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/only-insert.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-operations-only-insert-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Operaciones de inserción.
+</figcaption>
+</figure>
+</div>
+<div id="tip-rnd" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;2: Consejo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="quarto-layout-panel" data-layout="[1,9]">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p><img src="figures/rnd-button.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 90.0%;justify-content: flex-start;">
+<p>Pulsando este botón que se encuentra al lado del cuadro de texto se generará un valor aleatorio. Este valor será insertado por cualquiera de las operaciones.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="at-head" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="at-head"><strong>At Head</strong></h4>
+<p>Pulsando el botón <strong>At Head</strong> se inserta el nuevo elemento al inicio de la lista. El nuevo nodo se posicionará al inicio de la lista y tendrá un color diferente (ver <a href="#tip-cambiar-color" class="quarto-xref">Tip&nbsp;3</a>). La <a href="#fig-insert_at_head_s2s" class="quarto-xref">Figure&nbsp;8</a> muestra el lienzo antes y después de la inserción.</p>
+<div id="fig-insert_at_head_s2s" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-insert_at_head_s2s-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-panel" data-layout="[5,5]">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="figures/insert-head-before.png" class="pdf img-fluid figure-img"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="figures/insert-head-after.png" class="pdf img-fluid figure-img"></p>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-insert_at_head_s2s-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Inserción del valor <span class="math inline">\(25\)</span> al inicio de la lista. A la izquierda la lista antes de la inserción. A la derecha la lista resultante.
+</figcaption>
+</figure>
+</div>
+<div id="tip-cambiar-color" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;3: Consejo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="quarto-layout-panel" data-layout="[3,7]">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 30.0%;justify-content: center;">
+<p><img src="figures/apply-color.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 70.0%;justify-content: flex-start;">
+<p>En cualquier momento es posible cambiar el color de los nodos de la lista utilizando la funcionalidad del menú <strong>Display Options</strong> presentado a la izquierda. En este caso se seleccionan en el lienzo los nodos a los que se les desea cambiar el color. Posteriormente se selecciona el color que aparece al lado del botón <strong>Apply</strong> y se pulsa este último.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="at-position" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="at-position"><strong>At Position</strong></h4>
+<p>Para insertar un elemento en una posición específica se debe seleccionar la posición deseada en el cuadro de texto al lado del botón <strong>At Position</strong>. Posteriormente se debe pulsar el botón mencionado para insertar el elemento en la posición seleccionada. La <strong>?@fig-insert_at_position_s2s</strong> muestra el lienzo antes y después de la inserción. En caso de ingresar una posición mayor a la cantidad de elementos de la lista, la entrada de texto se pondrá de color rojo indicando el error (ver <a href="#fig-insert_at_position_error" class="quarto-xref">Figure&nbsp;9</a>).</p>
+<div id="fig-insert_at_position_error" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-insert_at_position_error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/insert-error.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-insert_at_position_error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Error al elegir una posición no válida
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="at-tail" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="at-tail"><strong>At Tail</strong></h4>
+<p>Para insertar una elemento al final de la lista existen dos formas. En ambos casos los botones tienen el mismo nombre: __At Tail_. Uno de ellos tiene un símbolo de advertencia en la parte superior derecha y el otro no. Ambos insertan el elemento al final de la lista. La diferencia es que uno lo hace recorriendo la lista desde el primer elemento y el otro lo hace utilizando la referencia al último elemento de la lista. Cuando se usa la primera opción se verá la animación en el lienzo de como la lista es recorrida elemento a elemento.</p>
+</section>
+</section>
+<section id="borrado-de-elementos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="borrado-de-elementos">Borrado de elementos</h3>
+<p>Para el borrado de elementos existen tres formas diferentes y se muestran en <a href="#fig-operations-only-remove" class="quarto-xref">Figure&nbsp;10</a>. El botón con título <strong>Head</strong> permite borrar el primer elemento de la lista. De manera similar el botón con título <strong>Tail</strong> permite borrar el último elemento de la lista. Por último el botón con título <strong>Position</strong> permite borrar un elemento en una posición específica. En este caso primero se debe seleccionar la posición deseada en el cuadro de texto al lado del mismo.</p>
+<div id="fig-operations-only-remove" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-operations-only-remove-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/only-remove.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-operations-only-remove-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Operaciones de borrado.
+</figcaption>
+</figure>
+</div>
+<p>Cuando se borra utilizando una posición no válida, el cuadro de texto se pondrá de color rojo indicando el error de manera similar al caso de la inserción.</p>
+</section>
+<section id="acceso-a-elementos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="acceso-a-elementos">Acceso a elementos</h3>
+<p>El siguiente grupo de operaciones es el de acceso. Las operaciones de acceso son tres:</p>
+<ul>
+<li><strong>Front</strong>: el primer elemento de la lista.</li>
+<li><strong>Back</strong>: el último elemento de la lista.</li>
+<li><strong>Nth</strong>: el elemento en una posición específica.</li>
+</ul>
+<p>Para cada una de las operaciones el elemento se identificará de manera gráfica en el lienzo.</p>
+<p>La <a href="#fig-operations-only-access" class="quarto-xref">Figure&nbsp;11</a> muestra las operaciones de acceso descritas anteriormente. En el caso de <strong>Nth</strong> es necesario insertar la posición en el cuadro de texto. Cuando se da click en el botón, se visualizará el recorrido hasta llegar a la posición deseada. Si se inserta una posición no válida, el cuadro de texto se pondrá de color rojo indicando el error de manera similar al caso de la inserción.</p>
+<div id="fig-operations-only-access" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-operations-only-access-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/only-access.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-operations-only-access-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Operaciones de acceso a elementos.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="búsqueda-de-elementos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="búsqueda-de-elementos">Búsqueda de elementos</h3>
+<p>La <a href="#fig-operations-only-search" class="quarto-xref">Figure&nbsp;12</a> contiene la única operación de búsqueda en una lista enlazada. En el cuadro de texto se inserta el valor a buscar. Al pulsar el botón se visualizará de manera animada el recorrido de la lista hasta llegar al valor buscado. Si el valor no se encuentra en la lista, el cuadro de texto se pondrá de color rojo indicando que el elemento no fue encontrado. Si el valor es encontrado entonces el nodo que lo contiene se pondrá de color verde y en el botón aparecerá la posición.</p>
+<div id="fig-operations-only-search" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-operations-only-search-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/only-search.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-operations-only-search-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Operaciones de búsqueda.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="herramientas-de-programador" class="level2">
+<h2 class="anchored" data-anchor-id="herramientas-de-programador">Herramientas de programador</h2>
+<p>Una característica importante que tiene este módulo de visualización es la separación de conceptos. Por ejemplo, una lista, conceptualmente, es una secuencia de elementos. A nivel de programación surgen algunos conceptos que son importantes a la hora de implementar esta secuencia. Por ejemplo, se hace necesario hablar de punteros y direcciones de memoria. Por esta razón el simulador incluye un conjunto de herramientas en el menú <strong>Programmer Tools</strong> que se muestra en la <a href="#fig-programmer-tools" class="quarto-xref">Figure&nbsp;13</a>.</p>
+<div id="fig-programmer-tools" class="html pdf quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-programmer-tools-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/programmer-tools.png" class="html pdf img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-programmer-tools-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Vista de herramientas de programador.
+</figcaption>
+</figure>
+</div>
+<section id="apuntadores-al-primer-y-último-nodo" class="level3">
+<h3 class="anchored" data-anchor-id="apuntadores-al-primer-y-último-nodo">Apuntadores al primer y último nodo</h3>
+<p>El botón <strong>Show head and tail pointers</strong> hará visibles los punteros al primer y último elemento en la lista. Hasta ahora las listas que se han mostrado como la de la <strong>?@fig-operations-remove-commented</strong> no tienen esta opción activada. Es posible apreciar la diferencia con la lista que se muestra en la <a href="#fig-head-tail" class="quarto-xref">Figure&nbsp;14</a>. Los nodos naranja representan cada uno de los punteros. Si el usuario localiza el puntero del mouse sobre alguno de ellos la conexión se resaltará.</p>
+<div id="fig-head-tail" class="html pdf quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-head-tail-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/head-and-tail.png" class="html pdf img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-head-tail-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14: Visualización de los punteros al inicio y al final de la lista.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="apuntadores-adicionales" class="level3">
+<h3 class="anchored" data-anchor-id="apuntadores-adicionales">Apuntadores adicionales</h3>
+<p>Durante el diseño de una operación sobre listas es siempre importante considerar el movimiento de los punteros. Incluso operaciones como remover un elemento en una posición de la lista usan punteros adicionales. Para este tipo de operaciones la aplicación cuenta con la funcionalidad de crear nodos de tipo apuntador. Esto se logra haciendo click en el botón <strong>Add pointer</strong> (ver <a href="#fig-programmer-tools" class="quarto-xref">Figure&nbsp;13</a>). Cuando se pulsa este botón se adiciona un nuevo nodo circular al lienzo y este se puede conectar a cualquiera de los nodos de la lista.</p>
+<div id="fig-additional-pointers" class="html pdf quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-additional-pointers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/additional-pointers.png" class="html pdf img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-additional-pointers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15: Visualización de los punteros adicionales insertados por el usuario.
+</figcaption>
+</figure>
+</div>
+<p>La <a href="#fig-additional-pointers" class="quarto-xref">Figure&nbsp;15</a> muestra una lista que incluye los punteros a la cabeza y a la cola. Adicionalmente también hay dos punteros llamados <span class="math inline">\(P\)</span> y <span class="math inline">\(Q\)</span> que apuntan al segundo y al cuarto elemento.</p>
+<p>Los punteros pueden ser reposicionados utilizando el mouse y arrastrando la conexión a otro nodo. Haciendo doble click sobre el nodo es posible cambiar el nombre del puntero. Esto es muy útil en labores de enseñanza.</p>
+</section>
+</section>
+<section id="otras-operaciones" class="level2">
+<h2 class="anchored" data-anchor-id="otras-operaciones">Otras operaciones</h2>
+<p>La aplicación cuenta con algunas funcionalidades que no son propias de las estructuras de datos pero si lo son de la enseñanza y el aprendizaje. Por ejemplo, en el <a href="#tip-canvas-toolbar" class="quarto-xref">Tip&nbsp;1</a> se observa la barra de herramientas que tiene el lienzo en su parte inferior izquierda.</p>
+<ul>
+<li>El botón <img src="figures/png-export.png" class="img-fluid"> exporta el lienzo en su estado actual a un archivo de imagen con extensión <strong>png</strong>.</li>
+<li>El botón <img src="figures/pointer.png" class="img-fluid"> activa la opción de puntero, la cual actúa como un señalador y ayuda a la comunicación efectiva de las ideas. El puntero del mouse va a estar acompañado de un punto rojo de color atractivo. Para desactivarla se debe dar click de nuevo en el mismo botón.</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
