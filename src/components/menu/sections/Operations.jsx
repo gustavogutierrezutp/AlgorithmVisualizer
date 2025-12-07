@@ -446,35 +446,33 @@ export const Operations = ({
         {/* ALGORITHMS SECTION */}
         <SubSection title="Algorithms" icon={ArrowRightLeft} badge="5">
           <div className="space-y-1.5 pt-1">
-            <div className="grid grid-cols-2 gap-1.5">
-              <Button
-                onClick={() => onVisualize(4)}
-                disabled={disable}
-                variant="secondary"
-                size="sm"
-                className="h-8 text-xs font-medium"
-              >
-                <ArrowRightLeft className="w-3.5 h-3.5 mr-1.5" />
-                Traverse
-              </Button>
-              <Button
-                onClick={() => onVisualize(5)}
-                disabled={disable}
-                variant="secondary"
-                size="sm"
-                className="h-8 text-xs font-medium"
-              >
-                <Shuffle className="w-3.5 h-3.5 mr-1.5" />
-                Reverse
-              </Button>
-            </div>
+            <Button
+              onClick={() => onVisualize(4)}
+              disabled={disable}
+              variant="secondary"
+              size="sm"
+              className="w-full h-8 text-xs font-medium justify-start"
+            >
+              <ArrowRightLeft className="w-3.5 h-3.5 mr-1.5" />
+              Traverse
+            </Button>
+            <Button
+              onClick={() => onVisualize(5)}
+              disabled={disable}
+              variant="secondary"
+              size="sm"
+              className="w-full h-8 text-xs font-medium justify-start"
+            >
+              <Shuffle className="w-3.5 h-3.5 mr-1.5" />
+              Reverse
+            </Button>
 
             <Button
               onClick={() => onVisualize(10)}
               disabled={disable}
               variant="secondary"
               size="sm"
-              className="w-full h-8 text-xs font-medium"
+              className="w-full h-8 text-xs font-medium justify-start"
             >
               <Circle className="w-3.5 h-3.5 mr-1.5" />
               Find Middle
@@ -485,7 +483,7 @@ export const Operations = ({
               disabled={disable}
               variant="secondary"
               size="sm"
-              className={`w-full h-8 text-xs font-medium relative overflow-visible transition-colors ${
+              className={`w-full h-8 text-xs font-medium justify-start relative overflow-visible transition-colors ${
                 lengthResult !== null
                   ? "bg-green-500 hover:bg-green-600 text-white"
                   : ""
@@ -507,7 +505,7 @@ export const Operations = ({
               disabled={disable}
               variant="secondary"
               size="sm"
-              className="w-full h-8 text-xs font-medium"
+              className="w-full h-8 text-xs font-medium justify-start"
             >
               <Filter className="w-3.5 h-3.5 mr-1.5" />
               Remove Duplicates
