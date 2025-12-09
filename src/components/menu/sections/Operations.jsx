@@ -96,7 +96,7 @@ export const Operations = ({
   const isNthPositionValid = nthPosition >= 0 && nthPosition < listLength;
 
   return (
-    <Section title="Operations" icon={Play} defaultOpen={false}>
+    <Section title="Operations" icon={Play} defaultOpen={false} id="operations-section">
       <div className="space-y-2">
         {/* INSERT SECTION */}
         <SubSection

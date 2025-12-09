@@ -2,6 +2,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { ReactFlow, Background, Controls, ControlButton, MarkerType, applyNodeChanges, SelectionMode, addEdge, reconnectEdge, getNodesBounds, getViewportForBounds } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import 'driver.js/dist/driver.css';
 import { toPng } from 'html-to-image';
 import { Download, Pointer } from 'lucide-react';
 
@@ -44,7 +45,7 @@ function LinkedList() {
     const [laserPointerPosition, setLaserPointerPosition] = useState({ x: 0, y: 0 });
     const [lengthResult, setLengthResult] = useState(null);
     const [searchResult, setSearchResult] = useState(null);
-    const [autoAdjust, setAutoAdjust] = useState(false);
+    const [autoAdjust, setAutoAdjust] = useState(true);
 
     // Refs
     const menuRef = useRef();
