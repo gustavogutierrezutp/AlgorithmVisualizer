@@ -108,21 +108,20 @@ valor aleatorio. Este valor será insertado por cualquiera de las operaciones.
 
 Pulsando el botón __At Head__ se inserta el nuevo elemento al inicio de la
 lista. El nuevo nodo se posicionará al inicio de la lista y tendrá un color
-diferente (ver @tip-cambiar-color). La @fig-insert_at_head_s2s muestra el lienzo
-antes y después de la inserción.
+diferente (ver @tip-cambiar-color). La @fig-insert_at_head_before muestra el
+lienzo antes de la inserción. Finalmente la @fig-insert_at_head_after muestra el
+lienzo después de la inserción.
 
-::: {#fig-insert_at_head_s2s}
+::: {#fig-insert_at_head_before}
+![](figures/insert-head-before.png)
 
-::: {layout="[5,5]"}
-![](figures/insert-head-before.png){width=50% .pdf}
-
-![](figures/insert-head-after.png){width=50% .pdf}
-
-
+Vista anterior a la inserción del valor $25$ al inicio de la lista.
 :::
 
-Inserción del valor $25$ al inicio de la lista. A la izquierda la lista antes de
-la inserción. A la derecha la lista resultante.
+::: {#fig-insert_at_head_after}
+![](figures/insert-head-after.png)
+
+Vista posterior a la inserción del valor $25$ al inicio de la lista.
 :::
 
 ::: {#tip-cambiar-color .callout-tip}
@@ -278,7 +277,7 @@ nodos naranja representan cada uno de los punteros. Si el usuario localiza el
 puntero del mouse sobre alguno de ellos la conexión se resaltará.
 
 ::: {#fig-head-tail}
-![](figures/head-and-tail.png){width=70% .html width=50% .pdf}
+![](figures/head-and-tail.png)
 
 Visualización de los punteros al inicio y al final de la lista.
 :::
@@ -295,7 +294,7 @@ circular al lienzo y este se puede conectar a cualquiera de los nodos de la
 lista.
 
 ::: {#fig-additional-pointers}
-![](figures/additional-pointers.png){width=70% .html width=50% .pdf}
+![](figures/additional-pointers.png)
 
 Visualización de los punteros adicionales insertados por el usuario.
 :::

@@ -8,16 +8,6 @@ Para utilizarlo puede visitar el siguiente enlace:
 
 [https://gustavogutierrezutp.github.io/AlgorithmVisualizer/sll](https://gustavogutierrezutp.github.io/AlgorithmVisualizer/sll)
 
-# Aclaraciones
-
-Este proyecto es una derivación de
-[Algorithm Visualizer project](https://tamimehsan.github.io/AlgorithmVisualizer/).
-
-La idea principal del proyecto es proporcionar un visualizador de **estructuras
-de datos**. Lo anterior **no hace parte del proyecto original** y en este
-sentido es una adición propia de los autores de esta derivación. Para tener
-acceso a la versión original del proyecto, visite el enlace proporcionado
-arriba.
 
 # Trabajos relacionados
 
@@ -30,7 +20,9 @@ arriba.
 
 ## Arquitectura del Código
 
-El visualizador de listas enlazadas está construido con Next.js y React, utilizando una arquitectura modular basada en componentes funcionales y custom hooks.
+El visualizador de listas enlazadas está construido con Next.js y React,
+utilizando una arquitectura modular basada en componentes funcionales y custom
+hooks.
 
 ### Estructura de Archivos (Single Linked List)
 
@@ -63,7 +55,8 @@ src/app/sll/
 
 ### Custom Hooks
 
-El proyecto utiliza tres custom hooks principales que encapsulan la lógica compleja:
+El proyecto utiliza tres custom hooks principales que encapsulan la lógica
+compleja:
 
 #### 1. useListOperations
 Gestiona todas las operaciones sobre la lista enlazada.
@@ -71,7 +64,8 @@ Gestiona todas las operaciones sobre la lista enlazada.
 **Ubicación:** `src/app/sll/hooks/useListOperations.js`
 
 **Responsabilidades:**
-- Encapsular las 7 operaciones principales (insertar/eliminar cabeza/cola, recorrer, revertir)
+- Encapsular las 7 operaciones principales (insertar/eliminar cabeza/cola,
+  recorrer, revertir)
 - Crear el contexto de operación con estado y callbacks
 - Proporcionar una API limpia para ejecutar operaciones
 
@@ -150,7 +144,8 @@ initializeList(5); // Crear lista con 5 elementos
 
 ### Componente Principal (page.jsx)
 
-El componente principal ha sido simplificado de **708 líneas a 469 líneas** (reducción del 33.8%) gracias a la extracción de lógica a custom hooks.
+El componente principal ha sido simplificado de **708 líneas a 469 líneas**
+(reducción del 33.8%) gracias a la extracción de lógica a custom hooks.
 
 **Responsabilidades principales:**
 - Gestión de estado de la UI
@@ -160,7 +155,8 @@ El componente principal ha sido simplificado de **708 líneas a 469 líneas** (r
 
 ### Módulos de Operaciones
 
-Cada operación está en su propio archivo bajo `src/app/sll/operations/`. Todas reciben un objeto `context` que contiene:
+Cada operación está en su propio archivo bajo `src/app/sll/operations/`. Todas
+reciben un objeto `context` que contiene:
 
 ```javascript
 {
