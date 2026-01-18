@@ -33,8 +33,8 @@ export interface MenuProps {
   showPointers: boolean;
   isListEmpty: boolean;
   listLength: number;
-  lengthResult: number | null;
-  searchResult: { found: boolean; position: number } | null;
+  lengthResult: number | null | undefined;
+  searchResult: { found: boolean; position: number } | null | undefined;
   onSearchValueChange: () => void;
   autoAdjust: boolean;
   onToggleAutoAdjust: () => void;
@@ -93,8 +93,8 @@ const MenuInner = forwardRef<MenuRefType, MenuProps>((props, ref) => {
           disable={props.disable}
           onVisualize={props.onVisualize}
           listLength={props.listLength}
-          lengthResult={props.lengthResult ?? null}
-          searchResult={props.searchResult ?? null}
+          lengthResult={props.lengthResult}
+          searchResult={props.searchResult}
           onSearchValueChange={props.onSearchValueChange}
         />
 
