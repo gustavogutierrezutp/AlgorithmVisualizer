@@ -1,9 +1,15 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 import { Beaker } from "lucide-react";
 import { Section } from "../Section";
 
-export const TestSection = ({ onAddCircularNode, onTogglePointers, showPointers, isListEmpty }) => {
+export interface TestSectionProps {
+  onAddCircularNode: () => void;
+  onTogglePointers: () => void;
+  showPointers: boolean;
+  isListEmpty: boolean;
+}
+
+export const TestSection = ({ onAddCircularNode, onTogglePointers, showPointers, isListEmpty }: TestSectionProps) => {
   return (
     <Section title="Programmer tools" icon={Beaker} defaultOpen={true} id="test-section">
       <div className="space-y-4">

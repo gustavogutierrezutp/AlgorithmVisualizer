@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ListPlus, Shuffle } from "lucide-react";
 import { CustomSlider } from "@/components/custom-slider";
 import { Section } from "../Section";
+
+export interface ListCreationProps {
+  disable: boolean;
+  onCreateEmpty: () => void;
+  onCreateRandom: (count: number) => void;
+  onCreateFromSequence: (sequence: string) => void;
+  onCountChange: (value: number) => void;
+}
 
 export const ListCreation = ({
   disable,
@@ -11,7 +19,7 @@ export const ListCreation = ({
   onCreateRandom,
   onCreateFromSequence,
   onCountChange,
-}) => {
+}: ListCreationProps) => {
   const [creationMode, setCreationMode] = useState("random");
   const [sequenceInput, setSequenceInput] = useState("[1, 2, 3, 4, 5]");
 
@@ -51,11 +59,10 @@ export const ListCreation = ({
             max={100}
             step={1}
             onChange={onCountChange}
-            disable={disable}
           />
           <Button
             className="w-full bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 hover:text-blue-700 hover:border-blue-300 transition-all shadow-sm"
-            onClick={onCreateRandom}
+            onClick={() => onCreateRandom(5)}
             disabled={disable}
           >
             <Shuffle className="w-3 h-3 mr-2" /> Generate Random

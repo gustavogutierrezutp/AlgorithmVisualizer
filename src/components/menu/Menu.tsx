@@ -1,13 +1,62 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import { MenuHeader } from "./MenuHeader";
 import { ListCreation } from "./sections/ListCreation";
 import { Operations } from "./sections/Operations";
 import { DisplayOptions } from "./sections/DisplayOptions";
 import { TestSection } from "./sections/TestSection";
 
-export default function Menu(props) {
+export interface MenuProps {
+  disable: boolean;
+  onVisualize: (opIndex?: number, value?: string, position?: number) => Promise<void>;
+  onCreateEmpty: () => void;
+  onCreateRandom: (count: number) => void;
+  onCreateFromSequence: (sequence: string) => void;
+  onScramble: () => void;
+  onAutoLayout: () => void;
+  onToggleHeadHighlight: () => void;
+  highlightHead: boolean;
+  onToggleTailHighlight: () => void;
+  highlightTail: boolean;
+  count: number;
+  onCountChange: (value: number) => void;
+  onOperationChanged: (value: number) => void;
+  onSpeedChange: (value: number) => void;
+  nodeColor: string;
+  onNodeColorUpdate: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onApplyNodeColor: () => void;
+  newNodeColor: string;
+  onNewNodeColorChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  iterateColor: string;
+  onIterateColorChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onAddCircularNode: () => void;
+  onTogglePointers: () => void;
+  showPointers: boolean;
+  isListEmpty: boolean;
+  listLength: number;
+  lengthResult: number | null;
+  searchResult: { found: boolean; position: number } | null;
+  onSearchValueChange: () => void;
+  autoAdjust: boolean;
+  onToggleAutoAdjust: () => void;
+  refreshInsertValue?: () => void;
+  startTour?: () => void;
+}
+
+export interface MenuRefType {
+  refreshInsertValue: () => void;
+}
+
+const MenuInner = forwardRef<MenuRefType, MenuProps>((props, ref) => {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const scrollContainerRef = useRef(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useImperativeHandle(ref, () => ({
+    refreshInsertValue: () => {
+      if (props.refreshInsertValue) {
+        props.refreshInsertValue();
+      }
+    }
+  }));
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
@@ -44,8 +93,8 @@ export default function Menu(props) {
           disable={props.disable}
           onVisualize={props.onVisualize}
           listLength={props.listLength}
-          lengthResult={props.lengthResult}
-          searchResult={props.searchResult}
+          lengthResult={props.lengthResult ?? null}
+          searchResult={props.searchResult ?? null}
           onSearchValueChange={props.onSearchValueChange}
         />
 
@@ -68,4 +117,8 @@ export default function Menu(props) {
       </div>
     </aside>
   );
-}
+});
+
+MenuInner.displayName = "Menu";
+
+export default MenuInner;

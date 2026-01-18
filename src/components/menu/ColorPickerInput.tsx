@@ -1,7 +1,15 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 
-export const ColorPickerInput = ({ label, color, onChange, disabled, showButton, onApply }) => (
+export interface ColorPickerInputProps {
+  label: string;
+  color: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  showButton?: boolean;
+  onApply?: () => void;
+}
+
+export const ColorPickerInput = ({ label, color, onChange, disabled, showButton, onApply }: ColorPickerInputProps) => (
   <div className="flex items-center justify-between gap-3 p-2 rounded-lg border border-gray-100 hover:border-gray-200 transition-colors">
     <label className="text-xs font-medium text-gray-600">{label}</label>
     <div className="flex items-center gap-2">

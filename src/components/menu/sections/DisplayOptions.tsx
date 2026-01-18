@@ -1,16 +1,14 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 import { Settings2, Eye, Dices, Network, Maximize2 } from "lucide-react";
 import { CustomSlider } from "@/components/custom-slider";
 import { Section } from "../Section";
 import { ColorPickerInput } from "../ColorPickerInput";
+import { MenuProps } from "../Menu";
 
-export const DisplayOptions = (props) => {
+export const DisplayOptions = (props: MenuProps) => {
   return (
     <Section
       title="Display Options"
-      isOpen={props.isOpen}
-      onToggle={props.onToggle}
       icon={Settings2}
       defaultOpen={false}
       id="display-options-section"
@@ -23,7 +21,6 @@ export const DisplayOptions = (props) => {
           min={10}
           max={100}
           step={1}
-          disable={props.disable}
         />
 
         <div className="space-y-2">

@@ -1,7 +1,10 @@
-import React from "react";
 import { Layers } from "lucide-react";
 
-export const MenuHeader = ({ scrollProgress }) => {
+export interface MenuHeaderProps {
+  scrollProgress: number;
+}
+
+export const MenuHeader = ({ scrollProgress }: MenuHeaderProps) => {
   // Cálculos de animación
   const headerHeight = 64 - scrollProgress * 26;
   const fontSize = 1.125 - scrollProgress * 0.35;

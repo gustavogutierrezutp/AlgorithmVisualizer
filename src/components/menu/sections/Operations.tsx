@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -19,6 +19,17 @@ import {
 } from "lucide-react";
 import { Section } from "../Section";
 
+interface SubSectionProps {
+  title: string;
+  icon: any;
+  children: React.ReactNode;
+  badge?: string;
+  defaultOpen?: boolean;
+  isOpen?: boolean;
+  onToggle?: () => void;
+  id?: string;
+}
+
 const SubSection = ({
   title,
   icon: Icon,
@@ -27,8 +38,7 @@ const SubSection = ({
   defaultOpen = false,
   isOpen: controlledIsOpen,
   onToggle,
-  id,
-}) => {
+}: SubSectionProps) => {
   const [internalIsOpen, setInternalIsOpen] = useState(defaultOpen);
   const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
   const handleToggle = onToggle || (() => setInternalIsOpen(!internalIsOpen));
@@ -66,6 +76,15 @@ const SubSection = ({
   );
 };
 
+export interface OperationsProps {
+  disable: boolean;
+  onVisualize: (opIndex?: number, value?: string, position?: number) => Promise<void>;
+  listLength?: number;
+  lengthResult?: number | null | undefined;
+  searchResult?: { found: boolean; position: number } | null | undefined;
+  onSearchValueChange?: () => void;
+}
+
 export const Operations = ({
   disable,
   onVisualize,
@@ -73,27 +92,27 @@ export const Operations = ({
   lengthResult = null,
   searchResult = null,
   onSearchValueChange = () => {},
-}) => {
-  const [insertValue, setInsertValue] = useState(
+}: OperationsProps) => {
+  const [insertValue, setInsertValue] = useState<number | string>(
     Math.floor(Math.random() * 100)
   );
-  const [insertPosition, setInsertPosition] = useState(0);
-  const [deletePosition, setDeletePosition] = useState(0);
-  const [nthPosition, setNthPosition] = useState(0);
-  const [searchValue, setSearchValue] = useState(
-    Math.floor(Math.random() * 100)
+  const [insertPosition, setInsertPosition] = useState<number | string>(0);
+  const [deletePosition, setDeletePosition] = useState<number | string>(0);
+  const [nthPosition, setNthPosition] = useState<number | string>(0);
+  const [searchValue, setSearchValue] = useState<number | string>(
+    String(Math.floor(Math.random() * 100))
   );
-  const [openSubSection, setOpenSubSection] = useState("insert");
+  const [openSubSection, setOpenSubSection] = useState<string | null>("insert");
 
-  const handleSubSectionToggle = (sectionId) => {
+  const handleSubSectionToggle = (sectionId: string) => {
     setOpenSubSection(prev => prev === sectionId ? null : sectionId);
   };
 
   const isInsertPositionValid =
-    insertPosition >= 0 && insertPosition <= listLength;
+    Number(insertPosition) >= 0 && Number(insertPosition) <= listLength;
   const isDeletePositionValid =
-    deletePosition >= 0 && deletePosition < listLength;
-  const isNthPositionValid = nthPosition >= 0 && nthPosition < listLength;
+    Number(deletePosition) >= 0 && Number(deletePosition) < listLength;
+  const isNthPositionValid = Number(nthPosition) >= 0 && Number(nthPosition) < listLength;
 
   return (
     <Section title="Operations" icon={Play} defaultOpen={false} id="operations-section">
@@ -115,7 +134,7 @@ export const Operations = ({
                 onChange={(e) => setInsertValue(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !disable) {
-                    onVisualize(0, insertValue);
+                    onVisualize(7, String(insertValue), Number(insertPosition));
                   }
                 }}
                 placeholder="42"
@@ -138,7 +157,7 @@ export const Operations = ({
 
           <div className="space-y-2 pt-1">
             <Button
-              onClick={() => onVisualize(0, insertValue)}
+              onClick={() => onVisualize(0, String(insertValue))}
               disabled={disable}
               variant="outline"
               size="sm"
@@ -164,7 +183,7 @@ export const Operations = ({
                       !disable &&
                       isInsertPositionValid
                     ) {
-                      onVisualize(7, insertValue, insertPosition);
+                      onVisualize(7, String(insertValue), Number(insertPosition));
                     }
                   }}
                   placeholder="pos"
@@ -177,7 +196,7 @@ export const Operations = ({
                   min="0"
                 />
                 <Button
-                  onClick={() => onVisualize(7, insertValue, insertPosition)}
+                  onClick={() => onVisualize(7, String(insertValue), Number(insertPosition))}
                   disabled={disable || !isInsertPositionValid}
                   variant="outline"
                   size="sm"
@@ -201,7 +220,7 @@ export const Operations = ({
 
             <div className="grid grid-cols-2 gap-1.5">
               <Button
-                onClick={() => onVisualize(2, insertValue)}
+                onClick={() => onVisualize(2, String(insertValue), undefined)}
                 disabled={disable}
                 variant="outline"
                 size="sm"
@@ -224,7 +243,7 @@ export const Operations = ({
               </Button>
 
               <Button
-                onClick={() => onVisualize(6, insertValue)}
+                onClick={() => onVisualize(6, String(insertValue), undefined)}
                 disabled={disable}
                 variant="outline"
                 size="sm"
@@ -254,7 +273,7 @@ export const Operations = ({
           <div className="space-y-2 pt-1">
             <div className="grid grid-cols-2 gap-1.5">
               <Button
-                onClick={() => onVisualize(1)}
+                onClick={() => onVisualize(1, undefined, undefined)}
                 disabled={disable}
                 variant="outline"
                 size="sm"
@@ -264,7 +283,7 @@ export const Operations = ({
                 Head
               </Button>
               <Button
-                onClick={() => onVisualize(3)}
+                onClick={() => onVisualize(3, undefined, undefined)}
                 disabled={disable}
                 variant="outline"
                 size="sm"
@@ -291,7 +310,7 @@ export const Operations = ({
                       !disable &&
                       isDeletePositionValid
                     ) {
-                      onVisualize(11, null, deletePosition);
+                      onVisualize(11, undefined, Number(deletePosition));
                     }
                   }}
                   placeholder="pos"
@@ -304,7 +323,7 @@ export const Operations = ({
                   min="0"
                 />
                 <Button
-                  onClick={() => onVisualize(11, null, deletePosition)}
+                  onClick={() => onVisualize(11, undefined, Number(deletePosition))}
                   disabled={disable || !isDeletePositionValid}
                   variant="outline"
                   size="sm"
@@ -342,7 +361,7 @@ export const Operations = ({
           <div className="space-y-2 pt-1">
             <div className="grid grid-cols-2 gap-1.5">
               <Button
-                onClick={() => onVisualize(13)}
+                onClick={() => onVisualize(13, undefined, undefined)}
                 disabled={disable}
                 variant="secondary"
                 size="sm"
@@ -352,7 +371,7 @@ export const Operations = ({
                 Front
               </Button>
               <Button
-                onClick={() => onVisualize(14)}
+                onClick={() => onVisualize(14, undefined, undefined)}
                 disabled={disable}
                 variant="secondary"
                 size="sm"
@@ -373,7 +392,7 @@ export const Operations = ({
                   }
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !disable && isNthPositionValid) {
-                      onVisualize(15, null, nthPosition);
+                      onVisualize(15, undefined, Number(nthPosition));
                     }
                   }}
                   placeholder="pos"
@@ -386,7 +405,7 @@ export const Operations = ({
                   min="0"
                 />
                 <Button
-                  onClick={() => onVisualize(15, null, nthPosition)}
+                  onClick={() => onVisualize(15, undefined, Number(nthPosition))}
                   disabled={disable || !isNthPositionValid}
                   variant="secondary"
                   size="sm"
@@ -429,11 +448,11 @@ export const Operations = ({
                   value={searchValue}
                   onChange={(e) => {
                     setSearchValue(e.target.value);
-                    onSearchValueChange();
+                    onSearchValueChange && onSearchValueChange();
                   }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !disable) {
-                      onVisualize(9, searchValue);
+                      onVisualize(9, String(searchValue), undefined);
                     }
                   }}
                   placeholder="value"
@@ -446,7 +465,7 @@ export const Operations = ({
                   size="icon"
                   onClick={() => {
                     setSearchValue(Math.floor(Math.random() * 100));
-                    onSearchValueChange();
+                    onSearchValueChange && onSearchValueChange();
                   }}
                   title="Random"
                   disabled={disable}
@@ -456,7 +475,7 @@ export const Operations = ({
                 </Button>
               </div>
               <Button
-                onClick={() => onVisualize(9, searchValue)}
+                onClick={() => onVisualize(9, String(searchValue), undefined)}
                 disabled={disable}
                 variant="outline"
                 size="sm"
@@ -494,7 +513,7 @@ export const Operations = ({
         >
           <div className="space-y-1.5 pt-1">
             <Button
-              onClick={() => onVisualize(4)}
+              onClick={() => onVisualize(4, undefined, undefined)}
               disabled={disable}
               variant="secondary"
               size="sm"
@@ -504,7 +523,7 @@ export const Operations = ({
               Traverse
             </Button>
             <Button
-              onClick={() => onVisualize(5)}
+              onClick={() => onVisualize(5, undefined, undefined)}
               disabled={disable}
               variant="secondary"
               size="sm"
@@ -515,7 +534,7 @@ export const Operations = ({
             </Button>
 
             <Button
-              onClick={() => onVisualize(10)}
+              onClick={() => onVisualize(10, undefined, undefined)}
               disabled={disable}
               variant="secondary"
               size="sm"
@@ -526,7 +545,7 @@ export const Operations = ({
             </Button>
 
             <Button
-              onClick={() => onVisualize(8)}
+              onClick={() => onVisualize(8, undefined, undefined)}
               disabled={disable}
               variant="secondary"
               size="sm"
@@ -548,7 +567,7 @@ export const Operations = ({
             </Button>
 
             <Button
-              onClick={() => onVisualize(12)}
+              onClick={() => onVisualize(12, undefined, undefined)}
               disabled={disable}
               variant="secondary"
               size="sm"
