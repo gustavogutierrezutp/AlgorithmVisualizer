@@ -1,18 +1,25 @@
 import * as React from "react"
 import { Slider } from "@/components/ui/slider"
 
+export interface CustomSliderProps {
+  title: string
+  onChange: (value: number) => void
+  min: number
+  max: number
+  step: number
+  defaultValue: number
+}
 
-export function CustomSlider({ title, onChange, min, max, step, defaultValue }) {
+export function CustomSlider({ title, onChange, min, max, step, defaultValue }: CustomSliderProps) {
     const [value, setValue] = React.useState(defaultValue)
-    const onChangeCover = (value) => {
-        setValue(value)
-        onChange(value)
+    const onChangeCover = (value: number[]) => {
+        setValue(value[0])
+        onChange(value[0])
     }
 
 
     return (
       <div className="space-y-2">
-     {/* <div className="flex items-center space-x-2"> */}
       <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider whitespace-nowrap">{title}</label>
       <Slider
         value={[value]}
@@ -21,10 +28,8 @@ export function CustomSlider({ title, onChange, min, max, step, defaultValue }) 
         max={max}
         step={step}
         className="w-full"
-        // className="w-[180px]"
       />
       <span className="text-sm text-gray-500 w-8">{value}</span>
     </div>
   )
 }
-

@@ -2,10 +2,15 @@ import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Github, Home, HelpCircle, BookOpen, Download } from 'lucide-react'
 
-export default function Navbar(props) {
+export interface NavbarProps {
+  title: string
+  onStartTour?: () => void
+}
+
+export default function Navbar({ title, onStartTour }: NavbarProps) {
   return (
     <nav className="bg-background shadow-sm py-1 px-6 flex justify-between items-center">
-      <Link href="/" className="text-xl font-bold">{props.title}</Link>
+      <Link href="/" className="text-xl font-bold">{title}</Link>
       <div className="flex items-center space-x-4">
         <Button variant="ghost" size="lg" asChild>
           <Link href="/">
@@ -28,8 +33,8 @@ export default function Navbar(props) {
             PDF
           </a>
         </Button>
-        {props.onStartTour && (
-          <Button variant="ghost" size="lg" onClick={props.onStartTour}>
+        {onStartTour && (
+          <Button variant="ghost" size="lg" onClick={onStartTour}>
             <HelpCircle className="h-4 w-4" />
             Tour
           </Button>
@@ -43,4 +48,3 @@ export default function Navbar(props) {
     </nav>
   )
 }
-

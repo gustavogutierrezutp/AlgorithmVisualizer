@@ -1,15 +1,14 @@
 import * as React from "react"
 import { Switch } from "@/components/ui/switch"
 
-// interface CustomToggleProps {
-//   title: string
-//   checked: boolean
-//   onCheckedChange: (checked: boolean) => void
-// }
+export interface CustomToggleProps {
+  title: string
+  onCheckedChange: (checked: boolean) => void
+}
 
-export function CustomToggle({ title, onCheckedChange }) {
+export function CustomToggle({ title, onCheckedChange }: CustomToggleProps) {
     const [checked, setChecked] = React.useState(false)
-    const onCheckedChangeCover = (checked) => {
+    const onCheckedChangeCover = (checked: boolean) => {
         setChecked(checked)
         onCheckedChange(checked)
     }
@@ -25,4 +24,3 @@ export function CustomToggle({ title, onCheckedChange }) {
         </div>
     )
 }
-

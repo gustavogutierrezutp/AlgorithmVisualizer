@@ -2,8 +2,14 @@ import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Image from 'next/image'
 
+interface DataStructure {
+  id: string
+  title: string
+  description: string
+  image: string
+}
 
-const dataStructures = [
+const dataStructures: DataStructure[] = [
   {
     id: 'sll',
     title: 'Listas enlazadas',
