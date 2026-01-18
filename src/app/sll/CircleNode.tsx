@@ -1,0 +1,81 @@
+import React, { useState } from 'react';
+import { Handle, Position } from '@xyflow/react';
+import { CircleNodeData } from '@/types';
+
+const CircleNode = ({ data, style }: { data: CircleNodeData; style?: React.CSSProperties }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState(data.label || 'C');
+
+  const handleDoubleClick = () => {
+    setIsEditing(true);
+    setEditValue(data.label || 'C');
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      finishEditing();
+    } else if (e.key === 'Escape') {
+      setIsEditing(false);
+      setEditValue(data.label || 'C');
+    }
+  };
+
+  const finishEditing = () => {
+    const newLabel = editValue.trim() || 'C';
+    setIsEditing(false);
+    if (data.onLabelChange && newLabel !== data.label) {
+      data.onLabelChange(data.nodeId, newLabel);
+    }
+  };
+
+  return (
+    <div
+      onMouseEnter={() => data.onPointerHover && data.onPointerHover(data.nodeId)}
+      onMouseLeave={() => data.onPointerHover && data.onPointerHover(null)}
+      onDoubleClick={handleDoubleClick}
+      style={{
+        ...style,
+        width: '45px',
+        height: '45px',
+        borderRadius: '50%',
+        background: '#FF5722',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: 'white',
+        fontWeight: 'bold',
+        border: '1.8px solid #E64A19',
+        boxShadow: '0 1.8px 4.5px rgba(0,0,0,0.2)',
+        cursor: 'pointer',
+      }}
+    >
+      {isEditing ? (
+        <input
+          type="text"
+          value={editValue}
+          onChange={(e) => setEditValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onBlur={finishEditing}
+          autoFocus
+          maxLength={3}
+          style={{
+            width: '36px',
+            height: '36px',
+            textAlign: 'center',
+            border: 'none',
+            background: 'transparent',
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: '12.6px',
+            outline: 'none',
+          }}
+        />
+      ) : (
+        data.label || 'C'
+      )}
+      <Handle type="source" position={Position.Right} style={{ background: '#555' }} />
+    </div>
+  );
+};
+
+export default CircleNode;
