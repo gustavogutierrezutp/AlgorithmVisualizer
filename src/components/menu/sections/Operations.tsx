@@ -16,12 +16,13 @@ import {
   Circle,
   Filter,
   ChevronDown,
+  LucideIcon,
 } from "lucide-react";
 import { Section } from "../Section";
 
 interface SubSectionProps {
   title: string;
-  icon: any;
+  icon: LucideIcon;
   children: React.ReactNode;
   badge?: string;
   defaultOpen?: boolean;

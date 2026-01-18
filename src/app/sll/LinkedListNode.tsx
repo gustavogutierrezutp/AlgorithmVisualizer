@@ -3,7 +3,10 @@ import { Handle, Position, useHandleConnections } from '@xyflow/react';
 import { ListNodeData } from '@/types';
 import { CSSProperties } from 'react';
 
-const LinkedListNode = ({ data, style }: { data: ListNodeData & Record<string, unknown>; style?: CSSProperties }) => {
+// Note: If additional properties need to be added to node data in the future,
+// create an ExtendedListNodeData interface that extends ListNodeData
+
+const LinkedListNode = ({ data, style }: { data: ListNodeData; style?: CSSProperties }) => {
     const connections = useHandleConnections({ type: 'source', id: 'right' });
     const [isHovered, setIsHovered] = useState(false);
     return (

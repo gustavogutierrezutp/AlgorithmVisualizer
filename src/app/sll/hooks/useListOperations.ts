@@ -1,8 +1,21 @@
 import { useCallback } from 'react';
 import * as operations from '../operations';
 import { ListOperationsParams, ListOperationsReturn } from '../../../types/hooks';
-import { Node, Edge } from '@xyflow/react';
+import { Node, Edge, ReactFlowInstance } from '@xyflow/react';
 import type { OperationContext, NodeEdgeUpdate, StateUpdater } from '../../../types/linked-list';
+
+/**
+ * Extended operation state with optional properties
+ * These are conditionally added to the base OperationState
+ */
+interface ExtendedOperationState {
+  nodes: Node[];
+  edges: Edge[];
+  speed: number;
+  iterateColor: string;
+  newNodeColor?: string;
+  reactFlowInstance?: ReactFlowInstance;
+}
 
 /**
  * Custom hook to manage all list operations
@@ -24,13 +37,16 @@ export function useListOperations({
       includeNewNodeColor = false,
       includeReactFlow = false
     ): OperationContext => {
-        const stateData = { nodes, edges, speed, iterateColor };
+        // Use properly typed extended state (no any cast needed)
+        const stateData: ExtendedOperationState = { nodes, edges, speed, iterateColor };
+
+        // Type-safe property assignment (no cast needed)
         if (includeNewNodeColor) {
-            (stateData as any).newNodeColor = newNodeColor;
+            stateData.newNodeColor = newNodeColor;
         }
 
         const context: OperationContext = {
-            state: stateData as any,
+            state: stateData,
             setState: (updates: NodeEdgeUpdate | StateUpdater, callback?: () => void) => {
                 if (typeof updates === 'function') {
                     setNodes((currentNodes: Node[]) => {
@@ -42,6 +58,7 @@ export function useListOperations({
                         return currentNodes;
                     });
                 } else {
+                    // Direct object update - type-safe access (still need one cast for TypeScript union type)
                     if ((updates as NodeEdgeUpdate).nodes !== undefined) setNodes((updates as NodeEdgeUpdate).nodes!);
                     if ((updates as NodeEdgeUpdate).edges !== undefined) setEdges((updates as NodeEdgeUpdate).edges!);
                     if (callback) callback();
@@ -50,6 +67,7 @@ export function useListOperations({
             handlePointerHover,
         };
 
+        // Add reactFlowInstance if needed (type-safe)
         if (includeReactFlow && reactFlowInstance.current) {
             context.reactFlowInstance = reactFlowInstance.current;
         }
@@ -119,7 +137,8 @@ export function useListOperations({
     }, [createOperationContext]);
 
     const accessNth = useCallback(async (position: number) => {
-        return (await operations.accessNth(createOperationContext(), position)) as any;
+        const result = await operations.accessNth(createOperationContext(), position);
+        return result as Node | void;
     }, [createOperationContext]);
 
     return {
@@ -139,5 +158,5 @@ export function useListOperations({
         accessFront,
         accessBack,
         accessNth
-    } as any;
+    } as ListOperationsReturn;
 }
