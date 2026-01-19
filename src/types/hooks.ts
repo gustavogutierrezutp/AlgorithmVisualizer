@@ -21,12 +21,12 @@ export interface ListOperationsReturn {
   traverseList: () => Promise<void>;
   reverseList: () => Promise<void>;
   insertAtPosition: (value: number, position: number) => Promise<void>;
-  getLength: () => Promise<number | void>;
-  searchValue: (value: number) => Promise<{ found: boolean; position: number } | void>;
-  findMiddle: () => Promise<Node | void>;
+  getLength: () => Promise<number>;
+  searchValue: (value: number) => Promise<{ found: boolean; position: number }>;
+  findMiddle: () => Promise<Node | null>;
   deleteAtPosition: (position: number) => Promise<void>;
   removeDuplicates: () => Promise<void>;
   accessFront: () => Promise<void>;
   accessBack: () => Promise<void>;
-  accessNth: (position: number) => Promise<Node | void>;
+  accessNth: (position: number) => Promise<Node | null>;
 }

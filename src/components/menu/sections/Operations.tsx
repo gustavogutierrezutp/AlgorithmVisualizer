@@ -81,8 +81,8 @@ export interface OperationsProps {
   disable: boolean;
   onVisualize: (opIndex?: number, value?: string, position?: number) => Promise<void>;
   listLength?: number;
-  lengthResult?: number | null | undefined;
-  searchResult?: { found: boolean; position: number } | null | undefined;
+  lengthResult?: number | null;
+  searchResult?: { found: boolean; position: number } | null;
   onSearchValueChange?: () => void;
 }
 

@@ -137,8 +137,7 @@ export function useListOperations({
     }, [createOperationContext]);
 
     const accessNth = useCallback(async (position: number) => {
-        const result = await operations.accessNth(createOperationContext(), position);
-        return result as Node | void;
+        return await operations.accessNth(createOperationContext(), position);
     }, [createOperationContext]);
 
     return {

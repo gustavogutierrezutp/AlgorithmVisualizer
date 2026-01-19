@@ -33,8 +33,8 @@ export interface MenuProps {
   showPointers: boolean;
   isListEmpty: boolean;
   listLength: number;
-  lengthResult: number | null | undefined;
-  searchResult: { found: boolean; position: number } | null | undefined;
+  lengthResult: number | null;
+  searchResult: { found: boolean; position: number } | null;
   onSearchValueChange: () => void;
   autoAdjust: boolean;
   onToggleAutoAdjust: () => void;

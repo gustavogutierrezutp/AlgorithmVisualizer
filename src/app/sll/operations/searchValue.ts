@@ -7,9 +7,9 @@ import { COLORS, NODE_STYLE } from '../constants';
  * Searches for a value in the linked list
  * @param context - Component context with state and methods
  * @param value - Value to search for
- * @returns Promise<{ found: boolean; position: number } | void>
+ * @returns Promise<{ found: boolean; position: number }>
  */
-export async function searchValue(context: OperationContext, value: number): Promise<{ found: boolean; position: number } | void> {
+export async function searchValue(context: OperationContext, value: number): Promise<{ found: boolean; position: number }> {
   const { state, setState } = context;
   const listNodes = getListNodes(state.nodes);
 

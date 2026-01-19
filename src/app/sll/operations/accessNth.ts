@@ -8,15 +8,15 @@ import { Node } from '@xyflow/react';
  * Accesses nth element by index
  * @param context - Component context with state and methods
  * @param position - Zero-based index
- * @returns Promise<Node | void>
+ * @returns Promise<Node | null>
  */
-export async function accessNth(context: OperationContext, position: number): Promise<Node | void> {
+export async function accessNth(context: OperationContext, position: number): Promise<Node | null> {
   const { state, setState } = context;
   const listNodes = getListNodes(state.nodes);
 
   if (position < 0 || position >= listNodes.length) {
     alert(`Invalid position. List size: ${listNodes.length}`);
-    return;
+    return null;
   }
 
   // Traverse to nth position

@@ -2,19 +2,20 @@ import { sleep } from '../utils/helpers';
 import { OperationContext } from '../../../types/linked-list';
 import { getListNodes } from '../utils/nodeFilters';
 import { COLORS, NODE_STYLE } from '../constants';
+import { Node } from '@xyflow/react';
 
 /**
  * Finds the middle node using fast/slow pointer technique
  * @param context - Component context with state and methods
- * @returns Promise<Node | void>
+ * @returns Promise<Node | null>
  */
-export async function findMiddle(context: OperationContext): Promise<Node | void> {
+export async function findMiddle(context: OperationContext): Promise<Node | null> {
   const { state, setState } = context;
   const listNodes = getListNodes(state.nodes);
 
   if (listNodes.length === 0) {
     alert('List is empty');
-    return;
+    return null;
   }
 
   let slow = 0;
@@ -50,7 +51,7 @@ export async function findMiddle(context: OperationContext): Promise<Node | void
   }
 
   const middleNode = listNodes[slow - 1]; // slow stopped one ahead
-  if (!middleNode) return;
+  if (!middleNode) return null;
 
   // Highlight middle node
   const highlightedNodes = state.nodes.map((node) => {
@@ -85,5 +86,5 @@ export async function findMiddle(context: OperationContext): Promise<Node | void
   });
   setState({ nodes: resetNodes });
 
-  return middleNode as unknown as Node;
+  return middleNode;
 }

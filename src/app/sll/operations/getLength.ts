@@ -6,9 +6,9 @@ import { COLORS } from '../constants';
 /**
  * Gets the length of the linked list
  * @param context - Component context with state and methods
- * @returns Promise<number | void>
+ * @returns Promise<number>
  */
-export async function getLength(context: OperationContext): Promise<number | void> {
+export async function getLength(context: OperationContext): Promise<number> {
   const { state, setState } = context;
   const listNodes = getListNodes(state.nodes);
 
