@@ -1,8 +1,8 @@
 import { MarkerType, Edge, Node } from '@xyflow/react';
 import { COLORS, EDGE_STYLE, NODE_IDS } from '../constants';
 
-export const createListEdge = (sourceId: string, targetId: string, index: number): Edge => ({
-  id: `edge-${index}`,
+export const createListEdge = (sourceId: string, targetId: string): Edge => ({
+  id: `edge-${sourceId}-${targetId}`,
   source: sourceId,
   sourceHandle: 'right',
   target: targetId,
@@ -48,7 +48,7 @@ export const createTailPointerEdge = (targetNodeId: string): Edge =>
 export const createEdgesForList = (nodes: Node[]): Edge[] => {
   const edges: Edge[] = [];
   for (let i = 0; i < nodes.length - 1; i++) {
-    edges.push(createListEdge(nodes[i].id, nodes[i + 1].id, i));
+    edges.push(createListEdge(nodes[i].id, nodes[i + 1].id));
   }
   return edges;
 };
