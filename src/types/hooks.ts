@@ -8,7 +8,7 @@ export interface ListOperationsParams {
   iterateColor: string;
   setNodes: React.Dispatch<React.SetStateAction<Node[]>>;
   setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
-  reactFlowInstance: React.RefObject<ReactFlowInstance>;
+  reactFlowInstance: React.RefObject<ReactFlowInstance | null>;
   handlePointerHover: (nodeId: string | null) => void;
 }
 

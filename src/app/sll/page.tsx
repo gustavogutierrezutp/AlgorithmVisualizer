@@ -84,7 +84,7 @@ function LinkedList() {
         nodeColor,
         setNodes,
         setEdges,
-        reactFlowInstance: reactFlowInstance as React.RefObject<ReactFlowInstance>,
+        reactFlowInstance,
         handlePointerHover,
         handleCircleNodeLabelChange,
         updatePointerPositions
@@ -98,7 +98,7 @@ function LinkedList() {
         iterateColor,
         setNodes,
         setEdges,
-        reactFlowInstance: reactFlowInstance as React.RefObject<ReactFlowInstance>,
+        reactFlowInstance,
         handlePointerHover
     });
 
