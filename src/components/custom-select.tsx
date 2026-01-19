@@ -6,11 +6,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { NumberChangeHandler, SelectionState } from "@/types/common"
 
 export interface CustomSelectProps {
   title: string
-  options: string[]
-  onChange: (value: number) => void
+  options: SelectionState
+  onChange: NumberChangeHandler
 }
 
 export function CustomSelect({ title, options, onChange }: CustomSelectProps) {

@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
+import { ColorChangeHandler, VoidFunction } from "@/types/common";
 
 export interface ColorPickerInputProps {
   label: string;
   color: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: ColorChangeHandler;
   disabled?: boolean;
   showButton?: boolean;
-  onApply?: () => void;
+  onApply?: VoidFunction;
 }
 
 export const ColorPickerInput = ({ label, color, onChange, disabled, showButton, onApply }: ColorPickerInputProps) => (

@@ -18,6 +18,7 @@ import { useListOperations } from './hooks/useListOperations';
 import { useListVisualization } from './hooks/useListVisualization';
 import { useListInitialization } from './hooks/useListInitialization';
 import { getAutoLayoutedNodes } from './utils/elkLayout';
+import { ColorChangeHandler, SelectionState } from '@/types/common';
 
 const nodeTypes = {
     linkedListNode: LinkedListNode,
@@ -42,7 +43,7 @@ function LinkedList() {
     const [nodeColor, setNodeColor] = useState<string>(COLORS.NODE_DEFAULT);
     const [newNodeColor, setNewNodeColor] = useState<string>(COLORS.NODE_NEW);
     const [iterateColor, setIterateColor] = useState<string>(COLORS.NODE_ITERATE);
-    const [selectedNodes, setSelectedNodes] = useState<string[]>([]);
+    const [selectedNodes, setSelectedNodes] = useState<SelectionState>([]);
     const [showPointers, setShowPointers] = useState<boolean>(false);
     const [isReconnecting, setIsReconnecting] = useState<boolean>(false);
     const [laserPointerEnabled, setLaserPointerEnabled] = useState<boolean>(false);
@@ -234,7 +235,7 @@ function LinkedList() {
         setHighlightTail(current => !current);
     }, []);
 
-    const handleNodeColorUpdate = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleNodeColorUpdate = useCallback<ColorChangeHandler>((e) => {
         setNodeColor(e.target.value);
     }, []);
 
@@ -255,11 +256,11 @@ function LinkedList() {
         }));
     }, [nodeColor, selectedNodes]);
 
-    const handleNewNodeColorChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleNewNodeColorChange = useCallback<ColorChangeHandler>((e) => {
         setNewNodeColor(e.target.value);
     }, []);
 
-    const handleIterateColorChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleIterateColorChange = useCallback<ColorChangeHandler>((e) => {
         setIterateColor(e.target.value);
     }, []);
 

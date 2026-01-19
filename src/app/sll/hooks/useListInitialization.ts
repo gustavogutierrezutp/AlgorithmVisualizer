@@ -4,6 +4,7 @@ import { LAYOUT, ANIMATION, INITIAL_STATE, NODE_IDS } from '../constants';
 import { createCircleNode } from '../utils/nodeFactory';
 import { createInitialList, createListFromSequence } from '../utils/listHelpers';
 import { getPointerNodes } from '../utils/nodeFilters';
+import { NodeSetStateAction, EdgeSetStateAction } from '@/types/common';
 
 /**
  * Custom hook to handle list initialization, pointers, and tour
@@ -20,8 +21,8 @@ export function useListInitialization({
 }: {
     nodes: Node[];
     nodeColor: string;
-    setNodes: React.Dispatch<React.SetStateAction<Node[]>>;
-    setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
+    setNodes: NodeSetStateAction;
+    setEdges: EdgeSetStateAction;
     reactFlowInstance: React.RefObject<ReactFlowInstance | null>;
     handlePointerHover: (nodeId: string | null) => void;
     handleCircleNodeLabelChange: (nodeId: string, newLabel: string) => void;

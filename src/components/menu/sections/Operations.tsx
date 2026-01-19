@@ -19,6 +19,7 @@ import {
   LucideIcon,
 } from "lucide-react";
 import { Section } from "../Section";
+import { VoidFunction } from "@/types/common";
 
 interface SubSectionProps {
   title: string;
@@ -83,7 +84,7 @@ export interface OperationsProps {
   listLength?: number;
   lengthResult?: number | null;
   searchResult?: { found: boolean; position: number } | null;
-  onSearchValueChange?: () => void;
+  onSearchValueChange?: VoidFunction;
 }
 
 export const Operations = ({

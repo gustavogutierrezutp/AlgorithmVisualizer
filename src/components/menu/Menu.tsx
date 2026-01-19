@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
+import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import { MenuHeader } from "./MenuHeader";
 import { ListCreation } from "./sections/ListCreation";
 import { Operations } from "./sections/Operations";
 import { DisplayOptions } from "./sections/DisplayOptions";
 import { TestSection } from "./sections/TestSection";
+import { ColorChangeHandler, NumberChangeHandler } from "@/types/common";
 
 export interface MenuProps {
   disable: boolean;
@@ -18,16 +19,16 @@ export interface MenuProps {
   onToggleTailHighlight: () => void;
   highlightTail: boolean;
   count: number;
-  onCountChange: (value: number) => void;
-  onOperationChanged: (value: number) => void;
-  onSpeedChange: (value: number) => void;
+  onCountChange: NumberChangeHandler;
+  onOperationChanged: NumberChangeHandler;
+  onSpeedChange: NumberChangeHandler;
   nodeColor: string;
-  onNodeColorUpdate: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onNodeColorUpdate: ColorChangeHandler;
   onApplyNodeColor: () => void;
   newNodeColor: string;
-  onNewNodeColorChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onNewNodeColorChange: ColorChangeHandler;
   iterateColor: string;
-  onIterateColorChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onIterateColorChange: ColorChangeHandler;
   onAddCircularNode: () => void;
   onTogglePointers: () => void;
   showPointers: boolean;

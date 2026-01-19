@@ -4,13 +4,14 @@ import { Input } from "@/components/ui/input";
 import { ListPlus, Shuffle } from "lucide-react";
 import { CustomSlider } from "@/components/custom-slider";
 import { Section } from "../Section";
+import { NumberChangeHandler, VoidFunction } from "@/types/common";
 
 export interface ListCreationProps {
   disable: boolean;
-  onCreateEmpty: () => void;
+  onCreateEmpty: VoidFunction;
   onCreateRandom: (count: number) => void;
   onCreateFromSequence: (sequence: string) => void;
-  onCountChange: (value: number) => void;
+  onCountChange: NumberChangeHandler;
 }
 
 export const ListCreation = ({
