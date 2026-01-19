@@ -4,7 +4,7 @@ import { getListNodes, getPointerNodes } from '../utils/nodeFilters';
 import { getTailPointerPosition } from '../utils/pointerHelpers';
 import { sleep } from '../utils/helpers';
 import { OperationContext } from '../../../types/linked-list';
-import { Node } from '@xyflow/react';
+import { Node, MarkerType } from '@xyflow/react';
 
 /**
  * Deletes node at tail O(n) - traverses to find tail
@@ -70,7 +70,7 @@ export async function deleteAtTail(context: OperationContext): Promise<void> {
         strokeWidth: 2
       },
       markerEnd: {
-        type: 'arrowclosed' as any,
+        type: MarkerType.ArrowClosed,
         width: 10,
         height: 10,
         color: '#333'

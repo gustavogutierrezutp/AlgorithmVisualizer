@@ -4,6 +4,15 @@ import { ListNode, CircleNode } from '../../../types/linked-list';
 
 const elk = new ELK();
 
+interface ElkNode {
+  id: string;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+  children?: ElkNode[];
+}
+
 /**
  * Automatically layout nodes using ELK's Layered (Sugiyama) algorithm
  * @param nodes - Array of ReactFlow nodes
@@ -53,12 +62,14 @@ export async function getAutoLayoutedNodes(
   };
 
   try {
-    const layoutedGraph = await elk.layout(graph);
+    const layoutedGraph = await elk.layout(graph) as ElkNode;
 
     // Create a map of layouted positions
     const positionMap = new Map<string, { x: number; y: number }>();
-    layoutedGraph.children?.forEach((node: any) => {
-      positionMap.set(node.id, { x: node.x, y: node.y });
+    layoutedGraph.children?.forEach((node: ElkNode) => {
+      if (node.x !== undefined && node.y !== undefined) {
+        positionMap.set(node.id, { x: node.x, y: node.y });
+      }
     });
 
     // Update list nodes with new positions

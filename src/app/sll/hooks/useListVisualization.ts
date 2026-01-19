@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { COLORS, EDGE_STYLE } from '../constants';
 import { getListNodes, removePointerNodes } from '../utils/nodeFilters';
 import { removePointerEdges } from '../utils/pointerHelpers';
-import { Node, Edge } from '@xyflow/react';
+import { Node, Edge, EdgeMarker } from '@xyflow/react';
 
 /**
  * Custom hook to handle list visualization (highlighting, filtering)
@@ -71,7 +71,16 @@ export function useListVisualization({
         // Apply highlighting to edges based on hovered node
         const processedEdges = edgesToRender.map(edge => {
             const isHighlighted = hoveredNodeId && edge.source === hoveredNodeId;
-            // @ts-ignore - spread type issue with complex edge types
+
+            // Handle markerEnd which can be string or object or undefined
+            let currentMarker = typeof edge.markerEnd === 'object' ? edge.markerEnd : undefined;
+
+            // If we need to update color, we ensure we have an object to work with
+            const newMarker: EdgeMarker | undefined = currentMarker ? {
+                ...currentMarker,
+                color: isHighlighted ? iterateColor : COLORS.EDGE_DEFAULT,
+            } : undefined;
+
             const newEdge: Edge = {
                 ...edge,
                 animated: isHighlighted ? true : edge.animated,
@@ -79,16 +88,12 @@ export function useListVisualization({
                     strokeWidth: isHighlighted ? EDGE_STYLE.STROKE_WIDTH_HIGHLIGHTED : EDGE_STYLE.STROKE_WIDTH_DEFAULT,
                     stroke: isHighlighted ? iterateColor : COLORS.EDGE_DEFAULT,
                 },
-                markerEnd: {
-                    // @ts-ignore - markerEnd type issue
-                    ...(edge.markerEnd as any),
-                    color: isHighlighted ? iterateColor : COLORS.EDGE_DEFAULT,
-                } as any,
+                markerEnd: newMarker
             };
             return newEdge;
         });
 
-        return { highlightedNodes: processedNodes, highlightedEdges: processedEdges } as any;
+        return { highlightedNodes: processedNodes, highlightedEdges: processedEdges };
     }, [nodes, edges, showPointers, highlightHead, highlightTail, hoveredNodeId, iterateColor]);
 
     return result;

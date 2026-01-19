@@ -5,7 +5,7 @@ import { getListNodes, getPointerNodes, getTailNode } from '../utils/nodeFilters
 import { getTailPointerPosition } from '../utils/pointerHelpers';
 import { sleep } from '../utils/helpers';
 import { OperationContext } from '../../../types/linked-list';
-import { Node } from '@xyflow/react';
+import { Node, MarkerType } from '@xyflow/react';
 
 /**
  * Inserts a new node at tail (O(n) - traverses to find tail)
@@ -73,7 +73,7 @@ export async function insertAtTail(context: OperationContext, value: number): Pr
     animated: true,
     type: 'smoothstep',
     markerEnd: {
-      type: 'arrowclosed' as any,
+      type: MarkerType.ArrowClosed,
       width: 10,
       height: 10,
       color: '#333'

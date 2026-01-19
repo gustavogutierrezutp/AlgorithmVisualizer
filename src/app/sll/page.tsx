@@ -319,8 +319,8 @@ function LinkedList() {
             EXPORT.VIEWPORT_PADDING
         );
 
-        const flowElement = document.querySelector('.react-flow__viewport') as HTMLElement | null;
-        if (!flowElement) return;
+        const flowElement = document.querySelector('.react-flow__viewport');
+        if (!(flowElement instanceof HTMLElement)) return;
 
         const exportWidth = nodesBounds.width * viewport.zoom + EXPORT.EXTRA_PADDING;
         const exportHeight = nodesBounds.height * viewport.zoom + EXPORT.EXTRA_PADDING;
@@ -400,12 +400,12 @@ function LinkedList() {
                 break;
             case OPERATIONS.GET_LENGTH:
                 const result = await listOperations.getLength();
-                setLengthResult(result as number | null);
+                setLengthResult(result);
                 break;
             case OPERATIONS.SEARCH_VALUE:
                 const searchValue = value && value !== '' ? parseInt(value) : Math.floor(Math.random() * 100);
                 const searchRes = await listOperations.searchValue(searchValue);
-                setSearchResult(searchRes as { found: boolean; position: number } | null);
+                setSearchResult(searchRes);
                 break;
             case OPERATIONS.FIND_MIDDLE:
                 await listOperations.findMiddle();

@@ -5,7 +5,7 @@ import { getListNodes, getPointerNodes } from '../utils/nodeFilters';
 import { getTailPointerPosition } from '../utils/pointerHelpers';
 import { sleep } from '../utils/helpers';
 import { OperationContext } from '../../../types/linked-list';
-import { Node } from '@xyflow/react';
+import { Node, MarkerType } from '@xyflow/react';
 
 /**
  * Inserts at tail O(1) - uses tail pointer directly
@@ -52,7 +52,7 @@ export async function insertAtTailO1(context: OperationContext, value: number): 
     animated: true,
     type: 'smoothstep',
     markerEnd: {
-      type: 'arrowclosed' as any,
+      type: MarkerType.ArrowClosed,
       width: 10,
       height: 10,
       color: '#333'
