@@ -275,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="representación-de-aristas" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="representación-de-aristas"><span class="header-section-number">3.2</span> Representación de aristas</h2>
-<p>Las aristas representan las conexiones entre nodos. La aplicación utiliza tres tipos de aristas, todas creadas por funciones fábrica en <code>src/app/sll/utils/edgeFactory.ts</code>:</p>
+<p>Las aristas representan las conexiones entre nodos (representando el concepto de puntero). La aplicación utiliza tres tipos de aristas, todas creadas por funciones fábrica en <code>src/app/sll/utils/edgeFactory.ts</code>:</p>
 <section id="aristas-de-lista" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="aristas-de-lista"><span class="header-section-number">3.2.1</span> Aristas de lista</h3>
 <p>Conectan nodos consecutivos de la lista (del <em>handle</em> derecho de un nodo al <em>handle</em> izquierdo del siguiente). Utilizan el tipo <code>smoothstep</code> con una flecha <code>ArrowClosed</code> como marcador.</p>

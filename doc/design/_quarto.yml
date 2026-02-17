@@ -46,3 +46,6 @@ format:
     lof: true
     number-sections: true
     colorlinks: true
+    template-partials:
+      - typst-template.typ
+      - typst-show.typ

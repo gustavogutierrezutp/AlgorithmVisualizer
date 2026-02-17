@@ -211,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#tailwind-css" id="toc-tailwind-css" class="nav-link" data-scroll-target="#tailwind-css"><span class="header-section-number">5.3.1</span> Tailwind CSS</a></li>
   <li><a href="#sistema-de-colores" id="toc-sistema-de-colores" class="nav-link" data-scroll-target="#sistema-de-colores"><span class="header-section-number">5.3.2</span> Sistema de colores</a></li>
   <li><a href="#componentes-shadcnui" id="toc-componentes-shadcnui" class="nav-link" data-scroll-target="#componentes-shadcnui"><span class="header-section-number">5.3.3</span> Componentes shadcn/ui</a></li>
-  <li><a href="#diseño-responsivo" id="toc-diseño-responsivo" class="nav-link" data-scroll-target="#diseño-responsivo"><span class="header-section-number">5.3.4</span> Diseño responsivo</a></li>
+  <li><a href="#diseño-adaptativo" id="toc-diseño-adaptativo" class="nav-link" data-scroll-target="#diseño-adaptativo"><span class="header-section-number">5.3.4</span> Diseño adaptativo</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -278,7 +278,17 @@ Figura&nbsp;5.1: Partes principales de la interfaz de usuario.
 <li><strong>Sección de datos</strong> (70% del ancho): muestra el valor del nodo con un fondo semitransparente blanco sobre el color de fondo del nodo.</li>
 <li><strong>Sección de puntero</strong> (30% del ancho): representa el puntero <code>next</code>. Al posicionar el cursor sobre esta sección, el fondo cambia a rojo (<code>#F44336</code>) y la arista saliente se resalta.</li>
 </ul>
-<p>Las dimensiones mínimas son 72x36 píxeles, con bordes redondeados y un divisor vertical entre las dos secciones.</p>
+<p>Las dimensiones mínimas son 72x36 píxeles, con bordes redondeados y un divisor vertical entre las dos secciones. <a href="#fig-node-example" class="quarto-xref">Figura&nbsp;<span>5.2</span></a> muestra un ejemplo de nodo de lista enlazada renderizado.</p>
+<div id="fig-node-example" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-node-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/nodeexample.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-node-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.2: Ejemplo de nodo de datos en el lienzo.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="nodo-circular-circlenode" class="level3" data-number="5.1.3">
 <h3 data-number="5.1.3" class="anchored" data-anchor-id="nodo-circular-circlenode"><span class="header-section-number">5.1.3</span> Nodo circular (<code>CircleNode</code>)</h3>
@@ -289,6 +299,16 @@ Figura&nbsp;5.1: Partes principales de la interfaz de usuario.
 <li><strong>Entrada de texto</strong>: máximo 3 caracteres. Se confirma con Enter o al perder el foco, y se cancela con Escape.</li>
 <li><strong>Hover</strong>: al posicionar el cursor sobre el nodo, se invoca <code>onPointerHover</code> para resaltar la arista conectada.</li>
 </ul>
+<div id="fig-circular-node" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-circular-node-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/head-node.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-circular-node-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5.3: Ejemplo de nodo circular para señalar el primer elemento de la lista.
+</figcaption>
+</figure>
+</div>
 </section>
 </section>
 <section id="sistema-de-menús" class="level2" data-number="5.2">
@@ -376,8 +396,8 @@ Figura&nbsp;5.1: Partes principales de la interfaz de usuario.
 <p>Los componentes atómicos de la interfaz (botones, entradas, <em>sliders</em>, <em>switches</em>, selectores) provienen de <strong>shadcn/ui</strong> y se encuentran en <code>src/components/ui/</code>. Estos componentes están construidos sobre primitivas de <strong>Radix UI</strong>, que proporcionan accesibilidad y comportamiento estandarizado.</p>
 <p>Los componentes personalizados (<code>custom-slider.tsx</code>, <code>custom-select.tsx</code>, <code>custom-toggle.tsx</code>, <code>custom-input.tsx</code>) envuelven los componentes de shadcn/ui con etiquetas, valores de visualización y estilos específicos del visualizador.</p>
 </section>
-<section id="diseño-responsivo" class="level3" data-number="5.3.4">
-<h3 data-number="5.3.4" class="anchored" data-anchor-id="diseño-responsivo"><span class="header-section-number">5.3.4</span> Diseño responsivo</h3>
+<section id="diseño-adaptativo" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="diseño-adaptativo"><span class="header-section-number">5.3.4</span> Diseño adaptativo</h3>
 <p>La interfaz utiliza un diseño de dos columnas con <code>flex</code>:</p>
 <ul>
 <li>El panel de menú tiene un ancho fijo de 288px con scroll vertical independiente.</li>

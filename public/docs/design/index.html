@@ -196,7 +196,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">16 de febrero de 2026</p>
+      <p class="date">17 de febrero de 2026</p>
     </div>
   </div>
   
@@ -210,15 +210,15 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="sec-introduccion" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
-<p>Este documento describe las decisiones de diseño y la arquitectura del visualizador de estructuras de datos <strong>DSViz</strong>. Su objetivo es servir como referencia técnica para desarrolladores y colaboradores del proyecto.</p>
+<p>Este documento describe las decisiones de diseño y la arquitectura del visualizador de listas enlazadas <strong>DSViz: Listas enlazadas</strong>. Su objetivo es servir como referencia técnica para desarrolladores y colaboradores del proyecto.</p>
 <section id="motivación" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="motivación"><span class="header-section-number">1.1</span> Motivación</h2>
-<p>DSViz es una herramienta pedagógica diseñada para la enseñanza de estructuras de datos en el curso de Ingeniería de Sistemas. Las decisiones de diseño están guiadas por los siguientes principios:</p>
+<p><em>DSViz: Listas enlazadas</em> es una herramienta pedagógica diseñada para la enseñanza de conceptos en el curso de <em>Estructuras de datos</em> en la Universidad Tecnológica de Pereira dentro el programa de Ingeniería de sistemas y computación. Las decisiones de diseño están guiadas por los siguientes principios:</p>
 <ul>
-<li><strong>Cero instalación</strong>: la aplicación se ejecuta completamente en el navegador como una <em>Single Page Application</em> (SPA) desplegada en GitHub Pages.</li>
-<li><strong>Interactividad</strong>: los estudiantes pueden manipular directamente los nodos, aristas y punteros de la estructura de datos.</li>
-<li><strong>Visualización paso a paso</strong>: cada operación se anima de manera secuencial para facilitar la comprensión del algoritmo subyacente.</li>
-<li><strong>Separación conceptual</strong>: los elementos de programación (punteros, direcciones de memoria) se mantienen separados de la representación conceptual de la estructura.</li>
+<li><p><strong>Cero instalación</strong>: la aplicación se ejecuta completamente en el navegador como una <em>Single Page Application</em> (SPA) desplegada en GitHub Pages.</p></li>
+<li><p><strong>Interactividad</strong>: los estudiantes tienen acceso a la estructura interna con los nodos y apuntadores de la estructura de datos.</p></li>
+<li><p><strong>Visualización paso a paso de operaciones</strong>: cada operación sobre la estructura de datos se anima de manera secuencial para facilitar la comprensión del algoritmo subyacente.</p></li>
+<li><p><strong>Separación conceptual</strong>: los elementos de programación (punteros, direcciones de memoria) se mantienen separados de la representación conceptual de la estructura.</p></li>
 </ul>
 </section>
 <section id="tecnologías-principales" class="level2" data-number="1.2">
@@ -250,7 +250,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td>Visualización</td>
-<td><code>@xyflow/react</code> (React Flow)</td>
+<td>React Flow (<code>@xyflow</code>)</td>
 <td>12</td>
 </tr>
 <tr class="odd">
@@ -283,7 +283,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="alcance" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="alcance"><span class="header-section-number">1.3</span> Alcance</h2>
-<p>El presente documento cubre la versión actual del módulo de <strong>listas enlazadas simples</strong> (SLL, <em>Single Linked List</em>). Se describen las tecnologías utilizadas, la estructura del proyecto, el modelo de datos, el motor de visualización, la interfaz de usuario y el proceso de despliegue.</p>
+<p>El presente documento cubre la versión actual del módulo. Se describen las tecnologías utilizadas, la estructura del proyecto, el modelo de datos, el motor de visualización, la interfaz de usuario y el proceso de despliegue.</p>
 </section>
 <section id="audiencia" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="audiencia"><span class="header-section-number">1.4</span> Audiencia</h2>

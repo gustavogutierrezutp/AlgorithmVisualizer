@@ -242,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="6.1.1" class="anchored" data-anchor-id="configuración-de-next.js"><span class="header-section-number">6.1.1</span> Configuración de Next.js</h3>
 <p>El archivo <code>next.config.mjs</code> define las siguientes opciones clave para el despliegue:</p>
 <ul>
-<li><strong><code>output: 'export'</code></strong>: indica a Next.js que genere una exportación estática (SPA) en lugar de un servidor Node.js.</li>
+<li><strong><code>output: 'export'</code></strong>: indica a Next.js que genere una exportación estática (aplicación de una sola página o SPA) en lugar de un servidor Node.js.</li>
 <li><strong><code>basePath: '/AlgorithmVisualizer'</code></strong>: prefijo de ruta necesario para GitHub Pages, ya que el sitio se sirve desde un subdirectorio del dominio <code>github.io</code>.</li>
 <li><strong><code>assetPrefix: '/AlgorithmVisualizer'</code></strong>: asegura que los recursos estáticos (JavaScript, CSS, imágenes) se carguen con la ruta correcta.</li>
 <li><strong><code>distDir: './build'</code></strong>: directorio de salida de la construcción.</li>
@@ -250,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="enrutamiento-del-lado-del-cliente" class="level3" data-number="6.1.2">
 <h3 data-number="6.1.2" class="anchored" data-anchor-id="enrutamiento-del-lado-del-cliente"><span class="header-section-number">6.1.2</span> Enrutamiento del lado del cliente</h3>
-<p>Al ser una SPA, toda la navegación se maneja en el navegador. El archivo <code>public/_redirects</code> contiene la regla:</p>
+<p>Al ser una aplicación de una sola página (SPA), toda la navegación se maneja en el navegador. El archivo <code>public/_redirects</code> contiene la regla:</p>
 <pre><code>/* /index.html 200</code></pre>
 <p>Esta regla redirige todas las solicitudes al archivo <code>index.html</code>, permitiendo que el enrutador de Next.js maneje las rutas del lado del cliente.</p>
 </section>

@@ -74,6 +74,9 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -310,14 +313,14 @@ ul.task-list li input[type="checkbox"] {
         └── array_helpers.ts       # Utilidades de arrays</code></pre>
 <section id="organización-modular" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="organización-modular"><span class="header-section-number">2.2.1</span> Organización modular</h3>
-<p>Cada módulo de visualización (como <code>sll/</code>) es autocontenido y sigue una estructura consistente:</p>
+<p>La estructura del módulo de visualización está organizada de manera modular con una estructuraconsistente:</p>
 <ul>
 <li><strong><code>page.tsx</code></strong>: componente principal que actúa como orquestador del estado y la visualización.</li>
-<li><strong><code>hooks/</code></strong>: <em>custom hooks</em> que encapsulan la lógica de negocio.</li>
+<li><strong><code>hooks/</code></strong>: <em>custom hooks</em> que encapsulan la lógica del visualizador. Estos permiten separar la lógica de la visualización de los componentes.</li>
 <li><strong><code>operations/</code></strong>: funciones puras que implementan cada operación sobre la estructura de datos.</li>
 <li><strong><code>utils/</code></strong>: fábricas y funciones auxiliares.</li>
 </ul>
-<p>Esta separación permite agregar nuevas estructuras de datos (por ejemplo, listas doblemente enlazadas, pilas o colas) siguiendo el mismo patrón.</p>
+<p>Esta separación permite agregar nuevas operaciones y algoritmos siguiendo el mismo patrón.</p>
 </section>
 </section>
 <section id="sec-flujo-datos" class="level2" data-number="2.3">
@@ -332,9 +335,41 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Procesamiento visual</strong>: el <em>hook</em> <code>useListVisualization</code> filtra y transforma los nodos y aristas según las opciones de visualización activas (punteros visibles, resaltado de cabeza/cola, nodo bajo el cursor).</li>
 <li><strong>Renderizado</strong>: React Flow recibe los nodos y aristas procesados (<code>highlightedNodes</code>, <code>highlightedEdges</code>) y los renderiza en el lienzo.</li>
 </ol>
-<pre><code>Usuario → Menu → onVisualize() → handleVisualize() → useListOperations
-       → operación (e.g. insertAtHead) → setState() → React re-render
-       → useListVisualization → highlightedNodes/Edges → ReactFlow → Lienzo</code></pre>
+<p>El siguiente diagrama de secuencia ilustra este flujo de datos desde la acción del usuario hasta el renderizado de la visualización:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-flujo-datos" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-flujo-datos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-flujo-datos">sequenceDiagram
+    actor U as Usuario
+    participant M as Menu
+    participant P as page.tsx
+    participant H as useListOperations
+    participant Op as Operación
+    participant S as React State
+    participant V as useListVisualization
+    participant RF as ReactFlow
+
+    U-&gt;&gt;M: Clic en acción
+    M-&gt;&gt;P: onVisualize(op, value, pos)
+    P-&gt;&gt;H: handleVisualize()
+    H-&gt;&gt;Op: insertAtHead(context, ...)
+    Op-&gt;&gt;S: setState({ nodes, edges })
+    S-&gt;&gt;V: Re-render
+    V-&gt;&gt;RF: highlightedNodes, highlightedEdges
+    RF-&gt;&gt;U: Lienzo actualizado
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-flujo-datos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.1: Flujo de datos desde la acción del usuario hasta el renderizado.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <section id="animaciones" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="animaciones"><span class="header-section-number">2.3.1</span> Animaciones</h3>
 <p>Las animaciones se logran mediante un patrón asíncrono: cada operación es una función <code>async</code> que alterna entre llamadas a <code>setState()</code> (para actualizar la visualización) y <code>await sleep(speed)</code> (para pausar entre fotogramas). Esto permite que el usuario observe el progreso paso a paso de cada algoritmo. La velocidad de animación es configurable a través del <em>slider</em> de velocidad en el menú de opciones de visualización.</p>
