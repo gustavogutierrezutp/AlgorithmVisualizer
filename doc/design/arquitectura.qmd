@@ -1,0 +1,201 @@
+# Arquitectura General {#sec-arquitectura}
+
+## Tecnologías principales
+
+### Framework y construcción
+
+La aplicación utiliza **Next.js 16** con el _App Router_ como framework
+principal. Next.js fue seleccionado por las siguientes razones:
+
+- Soporte nativo para TypeScript y compilación incremental.
+- Sistema de rutas basado en el sistema de archivos (`src/app/`).
+- Exportación estática (`output: 'export'`) que permite desplegar en GitHub
+  Pages sin necesidad de un servidor.
+
+El proyecto se compila con **TypeScript 5.9** en modo estricto (`strict: true`),
+lo que garantiza seguridad de tipos en todo el código fuente. La configuración
+de TypeScript utiliza alias de rutas (`@/*` apunta a `./src/*`) para simplificar
+las importaciones.
+
+### Visualización
+
+El motor de visualización se basa en dos bibliotecas complementarias:
+
+- **`@xyflow/react`** (React Flow v12): biblioteca para la visualización
+  interactiva de grafos basados en nodos y aristas. Proporciona el lienzo
+  (_canvas_), el sistema de nodos arrastrables, las conexiones entre nodos y los
+  controles de navegación.
+- **ELK.js** (v0.11): biblioteca de disposición automática de grafos que
+  implementa el algoritmo de Sugiyama (_layered layout_). Se utiliza para
+  organizar automáticamente los nodos de la lista en disposición horizontal.
+
+### Interfaz de usuario
+
+La interfaz se construye con las siguientes tecnologías:
+
+- **Tailwind CSS** (v3.4): framework CSS _utility-first_ para la estilización.
+- **shadcn/ui**: colección de componentes reutilizables construidos sobre
+  primitivas de **Radix UI**. Incluye botones, entradas de texto, _sliders_,
+  _switches_ y selectores.
+- **Lucide React**: biblioteca de iconos SVG.
+- **driver.js**: biblioteca para tours guiados interactivos con soporte para
+  localización en español.
+
+## Estructura del proyecto {#sec-estructura}
+
+El código fuente se organiza bajo el directorio `src/` siguiendo la convención
+del _App Router_ de Next.js:
+
+```
+src/
+├── app/
+│   ├── layout.tsx                 # Layout raíz (fuentes, estilos globales)
+│   ├── page.tsx                   # Página principal (redirección a /sll)
+│   ├── globals.css                # Estilos CSS globales y Tailwind
+│   ├── about/page.tsx             # Página "Acerca de"
+│   └── sll/                       # Módulo de lista enlazada simple
+│       ├── page.tsx               # Componente principal (orquestador)
+│       ├── LinkedListNode.tsx     # Componente de nodo de lista
+│       ├── CircleNode.tsx         # Componente de nodo circular (punteros)
+│       ├── constants.ts           # Constantes de configuración
+│       ├── hooks/                 # Custom hooks
+│       │   ├── useListOperations.ts
+│       │   ├── useListVisualization.ts
+│       │   └── useListInitialization.ts
+│       ├── operations/            # 16 operaciones individuales
+│       │   ├── index.ts
+│       │   ├── insertAtHead.ts
+│       │   ├── insertAtTail.ts
+│       │   ├── insertAtTailO1.ts
+│       │   ├── insertAtPosition.ts
+│       │   ├── deleteAtHead.ts
+│       │   ├── deleteAtTail.ts
+│       │   ├── deleteAtPosition.ts
+│       │   ├── traverseList.ts
+│       │   ├── reverseList.ts
+│       │   ├── searchValue.ts
+│       │   ├── getLength.ts
+│       │   ├── findMiddle.ts
+│       │   ├── accessFront.ts
+│       │   ├── accessBack.ts
+│       │   ├── accessNth.ts
+│       │   └── removeDuplicates.ts
+│       └── utils/                 # Utilidades
+│           ├── nodeFactory.ts
+│           ├── edgeFactory.ts
+│           ├── nodeFilters.ts
+│           ├── pointerHelpers.ts
+│           ├── listHelpers.ts
+│           ├── elkLayout.ts
+│           └── helpers.ts
+├── components/                    # Componentes compartidos
+│   ├── menu/
+│   │   ├── Menu.tsx               # Panel lateral de controles
+│   │   ├── MenuHeader.tsx         # Encabezado animado del menú
+│   │   ├── Section.tsx            # Sección colapsable reutilizable
+│   │   ├── ColorPickerInput.tsx   # Selector de color
+│   │   └── sections/
+│   │       ├── ListCreation.tsx   # Creación de listas
+│   │       ├── Operations.tsx     # Operaciones sobre la lista
+│   │       ├── DisplayOptions.tsx # Opciones de visualización
+│   │       └── TestSection.tsx    # Sección experimental
+│   ├── navbar.tsx                 # Barra de navegación
+│   ├── footer.tsx                 # Pie de página
+│   ├── hero.tsx                   # Sección hero de la landing
+│   ├── ui/                        # Componentes atómicos (shadcn/ui)
+│   │   ├── button.tsx
+│   │   ├── input.tsx
+│   │   ├── slider.tsx
+│   │   ├── select.tsx
+│   │   ├── switch.tsx
+│   │   └── card.tsx
+│   ├── custom-slider.tsx          # Slider con etiqueta
+│   ├── custom-select.tsx          # Selector personalizado
+│   ├── custom-toggle.tsx          # Toggle con etiqueta
+│   ├── custom-input.tsx           # Input personalizado
+│   └── algorithm-cards.tsx        # Tarjetas de algoritmos
+├── types/                         # Definiciones de tipos
+│   ├── linked-list.ts             # Tipos del modelo de datos
+│   ├── common.ts                  # Tipos compartidos (DOM, selección)
+│   ├── hooks.ts                   # Tipos de hooks
+│   ├── utils.ts                   # Tipos de utilidades
+│   └── index.ts                   # Exportaciones centralizadas
+└── lib/
+    ├── utils.ts                   # Función cn() para clases CSS
+    └── helpers/
+        └── array_helpers.ts       # Utilidades de arrays
+```
+
+### Organización modular
+
+La estructura del módulo de visualización está organizada de manera modular con
+una estructuraconsistente:
+
+- **`page.tsx`**: componente principal que actúa como orquestador del estado y
+  la visualización.
+- **`hooks/`**: _custom hooks_ que encapsulan la lógica del visualizador. Estos
+  permiten separar la lógica de la visualización de los componentes.
+- **`operations/`**: funciones puras que implementan cada operación sobre la
+  estructura de datos.
+- **`utils/`**: fábricas y funciones auxiliares.
+
+Esta separación permite agregar nuevas operaciones y algoritmos siguiendo el
+mismo patrón.
+
+## Flujo de datos {#sec-flujo-datos}
+
+El flujo de datos de la aplicación sigue un patrón unidireccional que puede
+describirse en las siguientes etapas:
+
+1. **Acción del usuario**: el usuario interactúa con el menú lateral
+   (por ejemplo, hace clic en "At Head" para insertar un elemento).
+2. **Manejador de evento**: el componente `Menu` invoca el _callback_
+   `onVisualize(opIndex, value, position)` que está definido en `page.tsx`.
+3. **Despacho de operación**: la función `handleVisualize` en `page.tsx`
+   determina la operación correspondiente mediante un `switch` y la delega al
+   _hook_ `useListOperations`.
+4. **Ejecución de la operación**: el _hook_ construye un `OperationContext` con
+   el estado actual y lo pasa a la función de operación correspondiente (por
+   ejemplo, `insertAtHead`).
+5. **Actualización de estado**: la operación modifica los nodos y aristas
+   llamando a `setState()`, que actualiza el estado de React en `page.tsx`.
+6. **Procesamiento visual**: el _hook_ `useListVisualization` filtra y
+   transforma los nodos y aristas según las opciones de visualización activas
+   (punteros visibles, resaltado de cabeza/cola, nodo bajo el cursor).
+7. **Renderizado**: React Flow recibe los nodos y aristas procesados
+   (`highlightedNodes`, `highlightedEdges`) y los renderiza en el lienzo.
+
+El siguiente diagrama de secuencia ilustra este flujo de datos desde la acción
+del usuario hasta el renderizado de la visualización:
+
+```{mermaid}
+%%| label: fig-flujo-datos
+%%| fig-cap: "Flujo de datos desde la acción del usuario hasta el renderizado."
+sequenceDiagram
+    actor U as Usuario
+    participant M as Menu
+    participant P as page.tsx
+    participant H as useListOperations
+    participant Op as Operación
+    participant S as React State
+    participant V as useListVisualization
+    participant RF as ReactFlow
+
+    U->>M: Clic en acción
+    M->>P: onVisualize(op, value, pos)
+    P->>H: handleVisualize()
+    H->>Op: insertAtHead(context, ...)
+    Op->>S: setState({ nodes, edges })
+    S->>V: Re-render
+    V->>RF: highlightedNodes, highlightedEdges
+    RF->>U: Lienzo actualizado
+```
+
+### Animaciones
+
+Las animaciones se logran mediante un patrón asíncrono: cada operación es una
+función `async` que alterna entre llamadas a `setState()` (para actualizar la
+visualización) y `await sleep(speed)` (para pausar entre fotogramas). Esto
+permite que el usuario observe el progreso paso a paso de cada algoritmo. La
+velocidad de animación es configurable a través del _slider_ de velocidad en el
+menú de opciones de visualización.

@@ -22,13 +22,13 @@ export default function Navbar({ title, onStartTour }: NavbarProps) {
           <Link href="/about">Acerca de</Link>
         </Button>
         <Button variant="ghost" size="lg" asChild>
-          <a href="/AlgorithmVisualizer/docs/index.html" target="_blank" rel="noopener noreferrer">
+          <a href="/AlgorithmVisualizer/docs/manual/index.html" target="_blank" rel="noopener noreferrer">
             <BookOpen className="h-4 w-4" />
             Documentación
           </a>
         </Button>
         <Button variant="ghost" size="lg" asChild>
-          <a href="/AlgorithmVisualizer/docs/DSViz--Listas-enlazadas.pdf" download>
+          <a href="/AlgorithmVisualizer/docs/manual/DSViz--Listas-enlazadas.pdf" download>
             <Download className="h-4 w-4" />
             PDF
           </a>

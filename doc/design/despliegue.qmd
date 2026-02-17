@@ -1,0 +1,146 @@
+# Despliegue y CI/CD {#sec-despliegue}
+
+Este capítulo documenta el proceso de construcción, despliegue y el flujo de
+trabajo de integración continua del proyecto.
+
+## GitHub Pages
+
+La aplicación se despliega como un sitio estático en **GitHub Pages**. Esto es
+posible gracias a la configuración de exportación estática de Next.js.
+
+### Configuración de Next.js
+
+El archivo `next.config.mjs` define las siguientes opciones clave para el
+despliegue:
+
+- **`output: 'export'`**: indica a Next.js que genere una exportación estática
+  (aplicación de una sola página o SPA) en lugar de un servidor Node.js.
+- **`basePath: '/AlgorithmVisualizer'`**: prefijo de ruta necesario para GitHub
+  Pages, ya que el sitio se sirve desde un subdirectorio del dominio
+  `github.io`.
+- **`assetPrefix: '/AlgorithmVisualizer'`**: asegura que los recursos estáticos
+  (JavaScript, CSS, imágenes) se carguen con la ruta correcta.
+- **`distDir: './build'`**: directorio de salida de la construcción.
+
+### Enrutamiento del lado del cliente
+
+Al ser una aplicación de una sola página (SPA), toda la navegación se maneja en
+el navegador. El archivo `public/_redirects` contiene la regla:
+
+```
+/* /index.html 200
+```
+
+Esta regla redirige todas las solicitudes al archivo `index.html`, permitiendo
+que el enrutador de Next.js maneje las rutas del lado del cliente.
+
+## Flujo de trabajo con GitHub Actions
+
+El despliegue automatizado se configura en el archivo
+`.github/workflows/nextjs.yml`. El flujo se activa con cada _push_ a la rama
+`master`.
+
+### Etapas del flujo
+
+El _workflow_ consta de dos _jobs_ secuenciales:
+
+#### 1. Construcción (`build`)
+
+1. **Checkout**: descarga el código fuente del repositorio.
+2. **Detección del gestor de paquetes**: identifica automáticamente si el
+   proyecto usa `npm` o `yarn` verificando la existencia de archivos de bloqueo.
+3. **Configuración de Node.js**: instala Node.js v20 y configura el caché de
+   dependencias.
+4. **Configuración de Pages**: inyecta automáticamente el `basePath` en la
+   configuración de Next.js y desactiva la optimización de imágenes del lado del
+   servidor.
+5. **Restauración de caché**: utiliza el caché de `.next/cache` para acelerar
+   construcciones incrementales.
+6. **Instalación de dependencias**: ejecuta `npm ci` para una instalación
+   determinista.
+7. **Construcción**: ejecuta `next build`, que compila TypeScript y genera la
+   exportación estática en el directorio `./build`.
+8. **Subida del artefacto**: empaqueta el directorio `./build` como artefacto
+   de GitHub Pages.
+
+#### 2. Despliegue (`deploy`)
+
+1. Descarga el artefacto generado en la etapa anterior.
+2. Lo despliega en el entorno de GitHub Pages.
+3. Genera la URL pública del sitio.
+
+### Control de concurrencia
+
+El _workflow_ utiliza un grupo de concurrencia (`pages`) que permite solo un
+despliegue simultáneo. Los despliegues en curso no se cancelan para evitar
+estados intermedios.
+
+## Proceso de construcción
+
+### Construcción de la aplicación
+
+El comando de construcción principal es:
+
+```bash
+npm run build
+```
+
+Este ejecuta dos pasos secuenciales:
+
+1. **`tsc`**: compila TypeScript y verifica que no existan errores de tipos.
+2. **`next build`**: genera la exportación estática de la aplicación.
+
+El resultado es el directorio `./build` que contiene todos los archivos HTML,
+JavaScript y CSS necesarios para servir la aplicación.
+
+### Construcción de la documentación
+
+La documentación se construye por separado mediante Quarto:
+
+```bash
+npm run docs:build
+```
+
+Este comando ejecuta:
+
+1. `cd doc/manual && quarto render`: genera la documentación del manual de
+   usuario en HTML y PDF.
+2. `cd doc/design && quarto render`: genera el documento de diseño en HTML y
+   PDF.
+3. `npm run docs:sync`: copia los resultados a `public/docs/manual/` y
+   `public/docs/design/` respectivamente.
+
+La documentación debe construirse **antes** de la construcción de la aplicación,
+ya que los archivos generados en `public/docs/` se incluyen en la exportación
+estática de Next.js.
+
+### Flujo completo de despliegue
+
+Para un despliegue completo que incluya documentación actualizada:
+
+```bash
+# 1. Construir la documentación
+npm run docs:build
+
+# 2. Construir la aplicación (incluye public/docs/)
+npm run build
+
+# 3. Confirmar y enviar los cambios
+git add .
+git commit -m "Update build"
+git push
+```
+
+El _push_ a `master` activa automáticamente el _workflow_ de GitHub Actions que
+despliega el sitio.
+
+## Estructura de URLs desplegadas
+
+Una vez desplegada, la aplicación es accesible en las siguientes rutas:
+
+| Ruta                                          | Contenido                     |
+|-----------------------------------------------|-------------------------------|
+| `/AlgorithmVisualizer/sll`                    | Visualizador de listas        |
+| `/AlgorithmVisualizer/about`                  | Página "Acerca de"            |
+| `/AlgorithmVisualizer/docs/manual/index.html` | Manual de usuario (HTML)      |
+| `/AlgorithmVisualizer/docs/design/index.html` | Documento de diseño (HTML)    |

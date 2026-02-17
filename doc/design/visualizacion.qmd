@@ -1,0 +1,217 @@
+# Motor de Visualización {#sec-visualizacion}
+
+Este capítulo describe cómo la aplicación transforma el modelo de datos
+(descrito en @sec-modelo-datos) en una representación visual interactiva.
+
+## Integración con xyflow (React Flow)
+
+La visualización se basa en la biblioteca **`@xyflow/react`** (React Flow v12),
+que proporciona un lienzo interactivo para grafos de nodos y aristas.
+
+### Registro de tipos de nodos
+
+La aplicación registra dos tipos de nodos personalizados:
+
+```typescript
+const nodeTypes = {
+  linkedListNode: LinkedListNode,
+  circleNode: CircleNode,
+};
+```
+
+Estos componentes se definen en `src/app/sll/LinkedListNode.tsx` y
+`src/app/sll/CircleNode.tsx` respectivamente. Cada uno implementa su propia
+lógica de renderizado y manejo de eventos.
+
+### Sistema de _handles_
+
+Los _handles_ son los puntos de conexión que permiten trazar aristas entre
+nodos. El componente `LinkedListNode` define cuatro _handles_:
+
+- **Right** (`Position.Right`, tipo _source_): representa el puntero `next` del
+  nodo. Es el punto de salida para la arista hacia el siguiente elemento.
+- **Left** (`Position.Left`, tipo _target_): punto de entrada desde el nodo
+  anterior.
+- **Top** (`Position.Top`, tipo _target_): utilizado por el puntero _head_ para
+  conectarse desde arriba.
+- **Bottom** (`Position.Bottom`, tipo _target_): utilizado por el puntero _tail_
+  para conectarse desde abajo.
+
+### Validación de conexiones
+
+La función `isValidConnection` en `page.tsx` controla qué conexiones son
+válidas:
+
+- Los nodos circulares solo pueden conectarse a los _handles_ `top` o `bottom`
+  de un nodo de lista.
+- Se previene la conexión múltiple: si un nodo circular ya tiene una arista
+  saliente, no se permite una segunda (excepto durante reconexión).
+
+### Interacción con el lienzo
+
+ReactFlow se configura con las siguientes opciones de interacción:
+
+- **Nodos arrastrables**: el usuario puede reposicionar cualquier nodo.
+- **Selección parcial**: permite seleccionar nodos arrastrando un rectángulo.
+- **Desplazamiento con scroll**: el lienzo se desplaza con la rueda del ratón.
+- **Reconexión de aristas**: las aristas existentes pueden ser redirigidas a
+  otros nodos.
+
+## Sistema de animaciones
+
+Las animaciones son el componente central de la experiencia pedagógica. Cada
+operación sobre la lista se visualiza paso a paso para que el estudiante pueda
+seguir la ejecución del algoritmo.
+
+### Patrón de animación
+
+Todas las operaciones siguen el mismo patrón asíncrono:
+
+```typescript
+async function operacion(context: OperationContext, ...params) {
+  const { state, setState } = context;
+  const listNodes = getListNodes(state.nodes);
+
+  // Paso 1: modificar nodos/aristas
+  const updatedNodes = listNodes.map(node => /* ... */);
+  setState({ nodes: updatedNodes });
+  await sleep(state.speed);
+
+  // Paso 2: siguiente modificación
+  // ...
+
+  // Paso final: restaurar colores
+  setState({ nodes: resetColors(updatedNodes) });
+}
+```
+
+La función `sleep` (definida en `src/app/sll/utils/helpers.ts`) es una promesa
+que se resuelve después de un número configurable de milisegundos, creando la
+pausa visual entre fotogramas.
+
+### Ejemplo: inserción en la cabeza
+
+La operación `insertAtHead` (`src/app/sll/operations/insertAtHead.ts`) ilustra
+el patrón completo:
+
+1. Filtra los nodos de lista mediante `getListNodes()`.
+2. Calcula la posición X del nuevo nodo: `primerNodo.x - 150`.
+3. Crea el nuevo nodo con el color `newNodeColor` usando `createListNode()`.
+4. Inserta el nodo al inicio del arreglo de nodos.
+5. Reconstruye todas las aristas con `createEdgesForList()`.
+6. Actualiza las posiciones y aristas de los punteros _head_ y _tail_.
+7. Llama a `setState()` para actualizar la visualización.
+8. Ejecuta `sleep(speed)` para la pausa animada.
+
+### Ejemplo: recorrido de la lista
+
+La operación `traverseList` (`src/app/sll/operations/traverseList.ts`) muestra
+la animación iterativa:
+
+1. Restablece todos los nodos al color predeterminado.
+2. Itera sobre cada nodo de la lista:
+   - Resalta los nodos visitados (del primero al actual) con `iterateColor`.
+   - Llama a `setState()` con los nodos actualizados.
+   - Espera `sleep(speed)` milisegundos.
+3. Al finalizar, restablece todos los colores al valor predeterminado.
+
+### Ejemplo: inversión de la lista
+
+La operación `reverseList` (`src/app/sll/operations/reverseList.ts`) es más
+compleja y consta de tres fases:
+
+1. **Inversión de punteros**: para cada nodo, se elimina la arista saliente y se
+   crea una nueva apuntando al nodo anterior. Se resaltan los nodos involucrados.
+2. **Reposicionamiento**: se invierte el orden del arreglo de nodos y se
+   recalculan las posiciones X.
+3. **Reconstrucción de aristas**: se crean las aristas finales y se actualizan
+   los punteros _head_ y _tail_.
+
+### Patrones comunes en las operaciones
+
+Todas las operaciones comparten estos patrones:
+
+- **Filtrado de nodos**: `getListNodes()` para separar nodos de lista de
+  punteros circulares.
+- **Reconstrucción de aristas**: `createEdgesForList()` después de cambios
+  estructurales.
+- **Actualización de punteros**: `updatePointers()` y `createPointerEdges()`
+  para mantener los punteros sincronizados.
+- **Animación por color**: uso de `.map()` sobre el arreglo de nodos para
+  aplicar colores de resaltado según el índice de iteración.
+
+## Disposición automática con ELK {#sec-elk}
+
+La disposición automática de los nodos se implementa mediante la biblioteca
+**ELK.js**, que proporciona algoritmos de disposición de grafos.
+
+### Algoritmo utilizado
+
+Se utiliza el algoritmo **layered** (Sugiyama), configurado con dirección
+`RIGHT` para una disposición horizontal de izquierda a derecha. Este algoritmo
+es especialmente adecuado para estructuras lineales como las listas enlazadas.
+
+La configuración se encuentra en `src/app/sll/utils/elkLayout.ts`:
+
+```typescript
+const elk = new ELK();
+
+const graph = {
+  id: 'root',
+  layoutOptions: {
+    'elk.algorithm': 'layered',
+    'elk.direction': 'RIGHT',
+    'elk.spacing.nodeNode': '150',
+  },
+  children: nodes.map(node => ({
+    id: node.id,
+    width: nodeWidth,
+    height: nodeHeight,
+  })),
+  edges: edges.map(edge => ({
+    id: edge.id,
+    sources: [edge.source],
+    targets: [edge.target],
+  })),
+};
+```
+
+### Posicionamiento de punteros
+
+Después de calcular las posiciones de los nodos de lista, los nodos punteros
+(_head_ y _tail_) se posicionan relativamente:
+
+- **Head**: se ubica 100px por encima del primer nodo de la lista.
+- **Tail**: se ubica 100px por debajo del último nodo de la lista.
+
+Este cálculo se realiza mediante las funciones `getHeadPointerPosition` y
+`getTailPointerPosition` de `src/app/sll/utils/pointerHelpers.ts`.
+
+### Activación
+
+La disposición automática se activa de dos maneras:
+
+- **Botón _Auto Layout_**: en el menú _Display Options_, el usuario puede
+  ejecutar manualmente la disposición.
+- **Después de operaciones**: si la opción `autoAdjust` está habilitada, el
+  lienzo se ajusta automáticamente después de cada operación mediante
+  `reactFlowInstance.fitView()`.
+
+## _Hook_ de visualización
+
+El _hook_ `useListVisualization` (`src/app/sll/hooks/useListVisualization.ts`)
+actúa como capa intermedia entre el estado bruto y lo que se renderiza en
+ReactFlow. Sus responsabilidades son:
+
+1. **Filtrar punteros**: cuando `showPointers` es `false`, se eliminan los nodos
+   circulares y sus aristas del conjunto renderizado.
+2. **Resaltar cabeza y cola**: cuando las opciones `highlightHead` o
+   `highlightTail` están activas, se modifican los estilos de los nodos
+   correspondientes.
+3. **Resaltar aristas al pasar el cursor**: cuando el usuario posiciona el
+   cursor sobre la sección de puntero de un nodo, la arista saliente se resalta
+   con el color de iteración.
+
+El _hook_ utiliza `useMemo` para evitar recálculos innecesarios y retorna los
+arreglos `highlightedNodes` y `highlightedEdges` que se pasan directamente a
+ReactFlow.

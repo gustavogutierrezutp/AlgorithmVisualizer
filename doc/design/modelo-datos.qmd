@@ -1,0 +1,199 @@
+# Modelo de Datos {#sec-modelo-datos}
+
+Este capítulo describe las estructuras de datos internas utilizadas para
+representar la lista enlazada en el motor de visualización. Todas las
+definiciones de tipos se encuentran en el directorio `src/types/`.
+
+## Representación de nodos
+
+La visualización utiliza dos tipos de nodos, ambos basados en la interfaz `Node`
+de xyflow:
+
+### Nodo de lista (`LinkedListNode`)
+
+Representa un elemento de la lista enlazada. Su interfaz de datos es:
+
+```typescript
+interface ListNodeData {
+  label: string;                              // Valor del nodo
+  nodeId: string;                             // Identificador único
+  onPointerHover: (nodeId: string | null) => void; // Callback de hover
+}
+```
+
+Cada nodo de lista tiene cuatro _handles_ (puntos de conexión):
+
+- **Right** (_source_): punto de salida para la arista al siguiente nodo.
+- **Left** (_target_): punto de entrada desde el nodo anterior.
+- **Top** (_target_): punto de conexión para punteros desde arriba (e.g. _head_).
+- **Bottom** (_target_): punto de conexión para punteros desde abajo (e.g. _tail_).
+
+La creación de nodos se realiza mediante la función fábrica `createListNode`
+definida en `src/app/sll/utils/nodeFactory.ts`, que recibe un identificador,
+valor, posición y color de fondo.
+
+### Nodo circular (`CircleNode`)
+
+Representa un puntero o referencia. Se utiliza para visualizar los punteros
+`head`, `tail` y los punteros adicionales creados por el usuario.
+
+```typescript
+interface CircleNodeData {
+  label: string;                                    // Etiqueta (H, T, C)
+  nodeId: string;                                   // Identificador único
+  onPointerHover: (nodeId: string | null) => void;  // Callback de hover
+  onLabelChange: (nodeId: string, newLabel: string) => void; // Edición
+}
+```
+
+Los nodos circulares permiten edición de la etiqueta mediante doble clic
+(máximo 3 caracteres). Se crean con `createCircleNode` de `nodeFactory.ts`.
+
+## Representación de aristas
+
+Las aristas representan las conexiones entre nodos (representando el concepto de
+puntero). La aplicación utiliza tres tipos de aristas, todas creadas por
+funciones fábrica en `src/app/sll/utils/edgeFactory.ts`:
+
+### Aristas de lista
+
+Conectan nodos consecutivos de la lista (del _handle_ derecho de un nodo al
+_handle_ izquierdo del siguiente). Utilizan el tipo `smoothstep` con una flecha
+`ArrowClosed` como marcador.
+
+```typescript
+function createListEdge(
+  sourceId: string,
+  targetId: string
+): Edge
+```
+
+### Aristas de puntero
+
+Conectan los nodos circulares (_head_, _tail_) con los nodos de la lista:
+
+- **`createHeadPointerEdge`**: conecta el puntero _head_ al _handle_ superior
+  del primer nodo de la lista.
+- **`createTailPointerEdge`**: conecta el puntero _tail_ al _handle_ inferior
+  del último nodo de la lista.
+
+Estas aristas se reconstruyen automáticamente después de cada operación
+estructural mediante la función `createPointerEdges` de
+`src/app/sll/utils/pointerHelpers.ts`.
+
+## Gestión de estado {#sec-gestion-estado}
+
+El estado de la aplicación se gestiona enteramente en el componente principal
+`page.tsx` mediante _hooks_ de estado de React. No se utiliza un gestor de
+estado externo (como Redux o Zustand), ya que el alcance del estado es local al
+módulo de visualización.
+
+### Variables de estado
+
+El componente principal mantiene las siguientes variables de estado:
+
+| Variable            | Tipo                   | Descripción                                    |
+|---------------------|------------------------|------------------------------------------------|
+| `nodes`             | `Node[]`               | Todos los nodos (lista + punteros)             |
+| `edges`             | `Edge[]`               | Todas las aristas                              |
+| `count`             | `number`               | Cantidad de nodos para creación aleatoria      |
+| `speed`             | `number`               | Velocidad de animación (ms entre fotogramas)   |
+| `isRunning`         | `boolean`              | Indica si una operación está en ejecución      |
+| `operation`         | `number`               | Índice de la operación seleccionada            |
+| `hoveredNodeId`     | `string \| null`       | ID del nodo bajo el cursor                     |
+| `highlightHead`     | `boolean`              | Resaltar nodo cabeza                           |
+| `highlightTail`     | `boolean`              | Resaltar nodo cola                             |
+| `nodeColor`         | `string`               | Color base de los nodos                        |
+| `newNodeColor`      | `string`               | Color de nodos recién insertados               |
+| `iterateColor`      | `string`               | Color del nodo activo durante animación        |
+| `showPointers`      | `boolean`              | Mostrar/ocultar punteros head y tail           |
+| `autoAdjust`        | `boolean`              | Ajustar lienzo automáticamente                 |
+| `selectedNodes`     | `string[]`             | IDs de nodos seleccionados                     |
+| `laserPointerEnabled` | `boolean`            | Activar puntero láser                          |
+| `lengthResult`      | `number \| null`       | Resultado de la operación _Get Length_          |
+| `searchResult`      | `object \| null`       | Resultado de la operación _Search_             |
+
+### Patrón `OperationContext`
+
+Para evitar pasar múltiples parámetros a cada operación, se utiliza un objeto
+de contexto que encapsula todo lo necesario:
+
+```typescript
+interface OperationContext {
+  state: OperationState;
+  setState: (updates: NodeEdgeUpdate | StateUpdater,
+             callback?: () => void) => void;
+  reactFlowInstance?: ReactFlowInstance;
+  handlePointerHover: (nodeId: string | null) => void;
+}
+
+interface OperationState {
+  nodes: Node[];
+  edges: Edge[];
+  speed: number;
+  iterateColor: string;
+  newNodeColor?: string;
+}
+```
+
+Este patrón permite que las operaciones sean funciones puras que reciben un
+contexto y lo modifican, sin depender de variables externas. El _hook_
+`useListOperations` se encarga de construir el contexto a partir del estado
+actual de React.
+
+## Constantes de configuración {#sec-constantes}
+
+Todas las constantes de configuración están centralizadas en el archivo
+`src/app/sll/constants.ts`. Las principales categorías son:
+
+### Disposición (`LAYOUT`)
+
+| Constante                    | Valor | Descripción                        |
+|------------------------------|-------|------------------------------------|
+| `NODE_HORIZONTAL_SPACING`    | 150px | Separación horizontal entre nodos  |
+| `POINTER_VERTICAL_OFFSET`    | 100px | Distancia vertical de los punteros |
+| `INITIAL_X`                  | 50px  | Posición X inicial                 |
+| `INITIAL_Y`                  | 100px | Posición Y inicial                 |
+| `FIT_VIEW_PADDING`           | 0.3   | Padding del ajuste de vista        |
+
+### Colores (`COLORS`)
+
+| Constante        | Valor     | Uso                              |
+|------------------|-----------|----------------------------------|
+| `NODE_DEFAULT`   | `#2196F3` | Color base de los nodos (azul)   |
+| `NODE_NEW`       | `#4CAF50` | Nodos recién insertados (verde)  |
+| `NODE_ITERATE`   | `#FF5722` | Nodo activo en animación (naranja)|
+| `HEAD_HIGHLIGHT` | `#9C27B0` | Resaltado de cabeza (púrpura)    |
+| `TAIL_HIGHLIGHT` | `#E91E63` | Resaltado de cola (rosa)         |
+| `EDGE_DEFAULT`   | `#333`    | Color de las aristas             |
+
+### Animación (`ANIMATION`)
+
+| Constante          | Valor  | Descripción                         |
+|--------------------|--------|-------------------------------------|
+| `DEFAULT_SPEED`    | 500ms  | Velocidad predeterminada            |
+| `FIT_VIEW_DURATION`| 500ms  | Duración de la transición del lienzo|
+| `FIT_VIEW_DELAY`   | 100ms  | Retardo antes del ajuste de vista   |
+
+### Operaciones (`OPERATIONS`)
+
+Las 16 operaciones disponibles están indexadas numéricamente:
+
+| Índice | Nombre              | Categoría   |
+|--------|---------------------|-------------|
+| 0      | `INSERT_HEAD`       | Inserción   |
+| 1      | `DELETE_HEAD`       | Borrado     |
+| 2      | `INSERT_TAIL`       | Inserción   |
+| 3      | `DELETE_TAIL`       | Borrado     |
+| 4      | `TRAVERSE`          | Algoritmo   |
+| 5      | `REVERSE`           | Algoritmo   |
+| 6      | `INSERT_TAIL_O1`    | Inserción   |
+| 7      | `INSERT_AT_POSITION`| Inserción   |
+| 8      | `GET_LENGTH`        | Algoritmo   |
+| 9      | `SEARCH_VALUE`      | Búsqueda    |
+| 10     | `FIND_MIDDLE`       | Algoritmo   |
+| 11     | `DELETE_AT_POSITION` | Borrado    |
+| 12     | `REMOVE_DUPLICATES` | Algoritmo   |
+| 13     | `ACCESS_FRONT`      | Acceso      |
+| 14     | `ACCESS_BACK`       | Acceso      |
+| 15     | `ACCESS_NTH`        | Acceso      |

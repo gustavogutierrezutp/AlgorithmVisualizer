@@ -1,0 +1,48 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "DSViz: Documento de Diseño"
+  subtitle: "Arquitectura y decisiones de diseño del visualizador"
+  author:
+    - name: "Gustavo Gutiérrez-Sabogal"
+      email: "gustavo.gutierrez@utp.edu.co"
+    - name: "Jovanny Bedoya-Guapacha"
+      email: "jovan@utp.edu.co"
+    - name: "Nancy Janet Castillo-Rodríguez"
+      email: "nancycastillo@utp.edu.co"
+
+  date: "today"
+
+  search: true
+
+  sidebar:
+    style: docked
+    collapse-level: 2
+
+  chapters:
+    - index.qmd
+    - arquitectura.qmd
+    - modelo-datos.qmd
+    - visualizacion.qmd
+    - interfaz.qmd
+    - despliegue.qmd
+
+lang: es
+
+format:
+  html:
+    theme: cosmo
+    code-copy: true
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    smooth-scroll: true
+
+  typst:
+    papersize: us-letter
+    toc: true
+    lof: true
+    number-sections: true
+    colorlinks: true

@@ -1,0 +1,72 @@
+# Introducción {#sec-introduccion}
+
+Este documento describe las decisiones de diseño y la arquitectura del
+visualizador de listas enlazadas **DSViz: Listas enlazadas**. Su objetivo es
+servir como referencia técnica para desarrolladores y colaboradores del
+proyecto.
+
+## Motivación
+
+_DSViz: Listas enlazadas_  es una herramienta pedagógica diseñada para la
+enseñanza de conceptos en el curso de _Estructuras de datos_  en la Universidad
+Tecnológica de Pereira dentro el programa de Ingeniería de sistemas y
+computación. Las decisiones de diseño están guiadas por los siguientes
+principios:
+
+- **Cero instalación**: la aplicación se ejecuta completamente en el navegador
+  como una _Single Page Application_ (SPA) desplegada en GitHub Pages.
+
+- **Interactividad**: los estudiantes tienen acceso a la estructura interna con
+  los nodos y apuntadores de la estructura de datos. 
+  
+- **Visualización paso a paso de operaciones**: cada operación sobre la
+  estructura de datos se anima de manera secuencial para facilitar la
+  comprensión del algoritmo subyacente.
+
+- **Separación conceptual**: los elementos de programación (punteros,
+  direcciones de memoria) se mantienen separados de la representación conceptual
+  de la estructura.
+
+## Tecnologías principales
+
+La aplicación está construida sobre el siguiente conjunto de tecnologías:
+
+| Categoría          | Tecnología                | Versión |
+|--------------------|---------------------------|---------|
+| Framework          | Next.js (App Router)      | 16      |
+| Lenguaje           | TypeScript (modo estricto)| 5.9     |
+| Biblioteca UI      | React                     | 19      |
+| Visualización      | React Flow (`@xyflow`)    | 12      |
+| Disposición        | ELK.js (Sugiyama)         | 0.11    |
+| Estilos            | Tailwind CSS              | 3.4     |
+| Componentes        | shadcn/ui (Radix UI)      | ---     |
+| Tour guiado        | driver.js                 | 1.4     |
+| Exportación        | html-to-image             | 1.11    |
+
+## Alcance
+
+El presente documento cubre la versión actual del módulo. Se describen las
+tecnologías utilizadas, la estructura del proyecto, el modelo de datos, el motor
+de visualización, la interfaz de usuario y el proceso de despliegue.
+
+## Audiencia
+
+Este documento está dirigido a desarrolladores que deseen contribuir al
+proyecto, así como a docentes y estudiantes interesados en comprender la
+implementación interna del simulador.
+
+## Estructura del documento
+
+El documento se organiza en los siguientes capítulos:
+
+1. **Arquitectura General** (@sec-arquitectura): describe las tecnologías, la
+   estructura del proyecto y el flujo de datos.
+2. **Modelo de Datos** (@sec-modelo-datos): detalla las interfaces de tipos,
+   las fábricas de nodos y aristas, y la gestión de estado.
+3. **Motor de Visualización** (@sec-visualizacion): explica la integración con
+   xyflow, el sistema de animaciones y la disposición automática con ELK.
+4. **Interfaz de Usuario** (@sec-interfaz): presenta los componentes
+   principales, el sistema de menús y la estilización.
+5. **Despliegue y CI/CD** (@sec-despliegue): documenta el proceso de
+   construcción, despliegue en GitHub Pages y el flujo de trabajo con GitHub
+   Actions.

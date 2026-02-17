@@ -1,0 +1,292 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "DSViz: Documento de Diseño",
+    "section": "",
+    "text": "1 Introducción\nEste documento describe las decisiones de diseño y la arquitectura del visualizador de estructuras de datos DSViz. Su objetivo es servir como referencia técnica para desarrolladores y colaboradores del proyecto.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducción</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#motivación",
+    "href": "index.html#motivación",
+    "title": "DSViz: Documento de Diseño",
+    "section": "1.1 Motivación",
+    "text": "1.1 Motivación\nDSViz es una herramienta pedagógica diseñada para la enseñanza de estructuras de datos en el curso de Ingeniería de Sistemas. Las decisiones de diseño están guiadas por los siguientes principios:\n\nCero instalación: la aplicación se ejecuta completamente en el navegador como una Single Page Application (SPA) desplegada en GitHub Pages.\nInteractividad: los estudiantes pueden manipular directamente los nodos, aristas y punteros de la estructura de datos.\nVisualización paso a paso: cada operación se anima de manera secuencial para facilitar la comprensión del algoritmo subyacente.\nSeparación conceptual: los elementos de programación (punteros, direcciones de memoria) se mantienen separados de la representación conceptual de la estructura.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducción</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#tecnologías-principales",
+    "href": "index.html#tecnologías-principales",
+    "title": "DSViz: Documento de Diseño",
+    "section": "1.2 Tecnologías principales",
+    "text": "1.2 Tecnologías principales\nLa aplicación está construida sobre el siguiente conjunto de tecnologías:\n\n\n\nCategoría\nTecnología\nVersión\n\n\n\n\nFramework\nNext.js (App Router)\n16\n\n\nLenguaje\nTypeScript (modo estricto)\n5.9\n\n\nBiblioteca UI\nReact\n19\n\n\nVisualización\n@xyflow/react (React Flow)\n12\n\n\nDisposición\nELK.js (Sugiyama)\n0.11\n\n\nEstilos\nTailwind CSS\n3.4\n\n\nComponentes\nshadcn/ui (Radix UI)\n—\n\n\nTour guiado\ndriver.js\n1.4\n\n\nExportación\nhtml-to-image\n1.11",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducción</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#alcance",
+    "href": "index.html#alcance",
+    "title": "DSViz: Documento de Diseño",
+    "section": "1.3 Alcance",
+    "text": "1.3 Alcance\nEl presente documento cubre la versión actual del módulo de listas enlazadas simples (SLL, Single Linked List). Se describen las tecnologías utilizadas, la estructura del proyecto, el modelo de datos, el motor de visualización, la interfaz de usuario y el proceso de despliegue.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducción</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#audiencia",
+    "href": "index.html#audiencia",
+    "title": "DSViz: Documento de Diseño",
+    "section": "1.4 Audiencia",
+    "text": "1.4 Audiencia\nEste documento está dirigido a desarrolladores que deseen contribuir al proyecto, así como a docentes y estudiantes interesados en comprender la implementación interna del simulador.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducción</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#estructura-del-documento",
+    "href": "index.html#estructura-del-documento",
+    "title": "DSViz: Documento de Diseño",
+    "section": "1.5 Estructura del documento",
+    "text": "1.5 Estructura del documento\nEl documento se organiza en los siguientes capítulos:\n\nArquitectura General (Capítulo 2): describe las tecnologías, la estructura del proyecto y el flujo de datos.\nModelo de Datos (Capítulo 3): detalla las interfaces de tipos, las fábricas de nodos y aristas, y la gestión de estado.\nMotor de Visualización (Capítulo 4): explica la integración con xyflow, el sistema de animaciones y la disposición automática con ELK.\nInterfaz de Usuario (Capítulo 5): presenta los componentes principales, el sistema de menús y la estilización.\nDespliegue y CI/CD (Capítulo 6): documenta el proceso de construcción, despliegue en GitHub Pages y el flujo de trabajo con GitHub Actions.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introducción</span>"
+    ]
+  },
+  {
+    "objectID": "arquitectura.html",
+    "href": "arquitectura.html",
+    "title": "2  Arquitectura General",
+    "section": "",
+    "text": "2.1 Tecnologías principales",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Arquitectura General</span>"
+    ]
+  },
+  {
+    "objectID": "arquitectura.html#tecnologías-principales",
+    "href": "arquitectura.html#tecnologías-principales",
+    "title": "2  Arquitectura General",
+    "section": "",
+    "text": "2.1.1 Framework y construcción\nLa aplicación utiliza Next.js 16 con el App Router como framework principal. Next.js fue seleccionado por las siguientes razones:\n\nSoporte nativo para TypeScript y compilación incremental.\nSistema de rutas basado en el sistema de archivos (src/app/).\nExportación estática (output: 'export') que permite desplegar en GitHub Pages sin necesidad de un servidor.\n\nEl proyecto se compila con TypeScript 5.9 en modo estricto (strict: true), lo que garantiza seguridad de tipos en todo el código fuente. La configuración de TypeScript utiliza alias de rutas (@/* apunta a ./src/*) para simplificar las importaciones.\n\n\n2.1.2 Visualización\nEl motor de visualización se basa en dos bibliotecas complementarias:\n\n@xyflow/react (React Flow v12): biblioteca para la visualización interactiva de grafos basados en nodos y aristas. Proporciona el lienzo (canvas), el sistema de nodos arrastrables, las conexiones entre nodos y los controles de navegación.\nELK.js (v0.11): biblioteca de disposición automática de grafos que implementa el algoritmo de Sugiyama (layered layout). Se utiliza para organizar automáticamente los nodos de la lista en disposición horizontal.\n\n\n\n2.1.3 Interfaz de usuario\nLa interfaz se construye con las siguientes tecnologías:\n\nTailwind CSS (v3.4): framework CSS utility-first para la estilización.\nshadcn/ui: colección de componentes reutilizables construidos sobre primitivas de Radix UI. Incluye botones, entradas de texto, sliders, switches y selectores.\nLucide React: biblioteca de iconos SVG.\ndriver.js: biblioteca para tours guiados interactivos con soporte para localización en español.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Arquitectura General</span>"
+    ]
+  },
+  {
+    "objectID": "arquitectura.html#sec-estructura",
+    "href": "arquitectura.html#sec-estructura",
+    "title": "2  Arquitectura General",
+    "section": "2.2 Estructura del proyecto",
+    "text": "2.2 Estructura del proyecto\nEl código fuente se organiza bajo el directorio src/ siguiendo la convención del App Router de Next.js:\nsrc/\n├── app/\n│   ├── layout.tsx                 # Layout raíz (fuentes, estilos globales)\n│   ├── page.tsx                   # Página principal (redirección a /sll)\n│   ├── globals.css                # Estilos CSS globales y Tailwind\n│   ├── about/page.tsx             # Página \"Acerca de\"\n│   └── sll/                       # Módulo de lista enlazada simple\n│       ├── page.tsx               # Componente principal (orquestador)\n│       ├── LinkedListNode.tsx     # Componente de nodo de lista\n│       ├── CircleNode.tsx         # Componente de nodo circular (punteros)\n│       ├── constants.ts           # Constantes de configuración\n│       ├── hooks/                 # Custom hooks\n│       │   ├── useListOperations.ts\n│       │   ├── useListVisualization.ts\n│       │   └── useListInitialization.ts\n│       ├── operations/            # 16 operaciones individuales\n│       │   ├── index.ts\n│       │   ├── insertAtHead.ts\n│       │   ├── insertAtTail.ts\n│       │   ├── insertAtTailO1.ts\n│       │   ├── insertAtPosition.ts\n│       │   ├── deleteAtHead.ts\n│       │   ├── deleteAtTail.ts\n│       │   ├── deleteAtPosition.ts\n│       │   ├── traverseList.ts\n│       │   ├── reverseList.ts\n│       │   ├── searchValue.ts\n│       │   ├── getLength.ts\n│       │   ├── findMiddle.ts\n│       │   ├── accessFront.ts\n│       │   ├── accessBack.ts\n│       │   ├── accessNth.ts\n│       │   └── removeDuplicates.ts\n│       └── utils/                 # Utilidades\n│           ├── nodeFactory.ts\n│           ├── edgeFactory.ts\n│           ├── nodeFilters.ts\n│           ├── pointerHelpers.ts\n│           ├── listHelpers.ts\n│           ├── elkLayout.ts\n│           └── helpers.ts\n├── components/                    # Componentes compartidos\n│   ├── menu/\n│   │   ├── Menu.tsx               # Panel lateral de controles\n│   │   ├── MenuHeader.tsx         # Encabezado animado del menú\n│   │   ├── Section.tsx            # Sección colapsable reutilizable\n│   │   ├── ColorPickerInput.tsx   # Selector de color\n│   │   └── sections/\n│   │       ├── ListCreation.tsx   # Creación de listas\n│   │       ├── Operations.tsx     # Operaciones sobre la lista\n│   │       ├── DisplayOptions.tsx # Opciones de visualización\n│   │       └── TestSection.tsx    # Sección experimental\n│   ├── navbar.tsx                 # Barra de navegación\n│   ├── footer.tsx                 # Pie de página\n│   ├── hero.tsx                   # Sección hero de la landing\n│   ├── ui/                        # Componentes atómicos (shadcn/ui)\n│   │   ├── button.tsx\n│   │   ├── input.tsx\n│   │   ├── slider.tsx\n│   │   ├── select.tsx\n│   │   ├── switch.tsx\n│   │   └── card.tsx\n│   ├── custom-slider.tsx          # Slider con etiqueta\n│   ├── custom-select.tsx          # Selector personalizado\n│   ├── custom-toggle.tsx          # Toggle con etiqueta\n│   ├── custom-input.tsx           # Input personalizado\n│   └── algorithm-cards.tsx        # Tarjetas de algoritmos\n├── types/                         # Definiciones de tipos\n│   ├── linked-list.ts             # Tipos del modelo de datos\n│   ├── common.ts                  # Tipos compartidos (DOM, selección)\n│   ├── hooks.ts                   # Tipos de hooks\n│   ├── utils.ts                   # Tipos de utilidades\n│   └── index.ts                   # Exportaciones centralizadas\n└── lib/\n    ├── utils.ts                   # Función cn() para clases CSS\n    └── helpers/\n        └── array_helpers.ts       # Utilidades de arrays\n\n2.2.1 Organización modular\nCada módulo de visualización (como sll/) es autocontenido y sigue una estructura consistente:\n\npage.tsx: componente principal que actúa como orquestador del estado y la visualización.\nhooks/: custom hooks que encapsulan la lógica de negocio.\noperations/: funciones puras que implementan cada operación sobre la estructura de datos.\nutils/: fábricas y funciones auxiliares.\n\nEsta separación permite agregar nuevas estructuras de datos (por ejemplo, listas doblemente enlazadas, pilas o colas) siguiendo el mismo patrón.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Arquitectura General</span>"
+    ]
+  },
+  {
+    "objectID": "arquitectura.html#sec-flujo-datos",
+    "href": "arquitectura.html#sec-flujo-datos",
+    "title": "2  Arquitectura General",
+    "section": "2.3 Flujo de datos",
+    "text": "2.3 Flujo de datos\nEl flujo de datos de la aplicación sigue un patrón unidireccional que puede describirse en las siguientes etapas:\n\nAcción del usuario: el usuario interactúa con el menú lateral (por ejemplo, hace clic en “At Head” para insertar un elemento).\nManejador de evento: el componente Menu invoca el callback onVisualize(opIndex, value, position) que está definido en page.tsx.\nDespacho de operación: la función handleVisualize en page.tsx determina la operación correspondiente mediante un switch y la delega al hook useListOperations.\nEjecución de la operación: el hook construye un OperationContext con el estado actual y lo pasa a la función de operación correspondiente (por ejemplo, insertAtHead).\nActualización de estado: la operación modifica los nodos y aristas llamando a setState(), que actualiza el estado de React en page.tsx.\nProcesamiento visual: el hook useListVisualization filtra y transforma los nodos y aristas según las opciones de visualización activas (punteros visibles, resaltado de cabeza/cola, nodo bajo el cursor).\nRenderizado: React Flow recibe los nodos y aristas procesados (highlightedNodes, highlightedEdges) y los renderiza en el lienzo.\n\nUsuario → Menu → onVisualize() → handleVisualize() → useListOperations\n       → operación (e.g. insertAtHead) → setState() → React re-render\n       → useListVisualization → highlightedNodes/Edges → ReactFlow → Lienzo\n\n2.3.1 Animaciones\nLas animaciones se logran mediante un patrón asíncrono: cada operación es una función async que alterna entre llamadas a setState() (para actualizar la visualización) y await sleep(speed) (para pausar entre fotogramas). Esto permite que el usuario observe el progreso paso a paso de cada algoritmo. La velocidad de animación es configurable a través del slider de velocidad en el menú de opciones de visualización.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Arquitectura General</span>"
+    ]
+  },
+  {
+    "objectID": "modelo-datos.html",
+    "href": "modelo-datos.html",
+    "title": "3  Modelo de Datos",
+    "section": "",
+    "text": "3.1 Representación de nodos\nEste capítulo describe las estructuras de datos internas utilizadas para representar la lista enlazada en el motor de visualización. Todas las definiciones de tipos se encuentran en el directorio src/types/.\nLa visualización utiliza dos tipos de nodos, ambos basados en la interfaz Node de xyflow:",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Modelo de Datos</span>"
+    ]
+  },
+  {
+    "objectID": "modelo-datos.html#representación-de-nodos",
+    "href": "modelo-datos.html#representación-de-nodos",
+    "title": "3  Modelo de Datos",
+    "section": "",
+    "text": "3.1.1 Nodo de lista (LinkedListNode)\nRepresenta un elemento de la lista enlazada. Su interfaz de datos es:\ninterface ListNodeData {\n  label: string;                              // Valor del nodo\n  nodeId: string;                             // Identificador único\n  onPointerHover: (nodeId: string | null) =&gt; void; // Callback de hover\n}\nCada nodo de lista tiene cuatro handles (puntos de conexión):\n\nRight (source): punto de salida para la arista al siguiente nodo.\nLeft (target): punto de entrada desde el nodo anterior.\nTop (target): punto de conexión para punteros desde arriba (e.g. head).\nBottom (target): punto de conexión para punteros desde abajo (e.g. tail).\n\nLa creación de nodos se realiza mediante la función fábrica createListNode definida en src/app/sll/utils/nodeFactory.ts, que recibe un identificador, valor, posición y color de fondo.\n\n\n3.1.2 Nodo circular (CircleNode)\nRepresenta un puntero o referencia. Se utiliza para visualizar los punteros head, tail y los punteros adicionales creados por el usuario.\ninterface CircleNodeData {\n  label: string;                                    // Etiqueta (H, T, C)\n  nodeId: string;                                   // Identificador único\n  onPointerHover: (nodeId: string | null) =&gt; void;  // Callback de hover\n  onLabelChange: (nodeId: string, newLabel: string) =&gt; void; // Edición\n}\nLos nodos circulares permiten edición de la etiqueta mediante doble clic (máximo 3 caracteres). Se crean con createCircleNode de nodeFactory.ts.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Modelo de Datos</span>"
+    ]
+  },
+  {
+    "objectID": "modelo-datos.html#representación-de-aristas",
+    "href": "modelo-datos.html#representación-de-aristas",
+    "title": "3  Modelo de Datos",
+    "section": "3.2 Representación de aristas",
+    "text": "3.2 Representación de aristas\nLas aristas representan las conexiones entre nodos. La aplicación utiliza tres tipos de aristas, todas creadas por funciones fábrica en src/app/sll/utils/edgeFactory.ts:\n\n3.2.1 Aristas de lista\nConectan nodos consecutivos de la lista (del handle derecho de un nodo al handle izquierdo del siguiente). Utilizan el tipo smoothstep con una flecha ArrowClosed como marcador.\nfunction createListEdge(\n  sourceId: string,\n  targetId: string\n): Edge\n\n\n3.2.2 Aristas de puntero\nConectan los nodos circulares (head, tail) con los nodos de la lista:\n\ncreateHeadPointerEdge: conecta el puntero head al handle superior del primer nodo de la lista.\ncreateTailPointerEdge: conecta el puntero tail al handle inferior del último nodo de la lista.\n\nEstas aristas se reconstruyen automáticamente después de cada operación estructural mediante la función createPointerEdges de src/app/sll/utils/pointerHelpers.ts.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Modelo de Datos</span>"
+    ]
+  },
+  {
+    "objectID": "modelo-datos.html#sec-gestion-estado",
+    "href": "modelo-datos.html#sec-gestion-estado",
+    "title": "3  Modelo de Datos",
+    "section": "3.3 Gestión de estado",
+    "text": "3.3 Gestión de estado\nEl estado de la aplicación se gestiona enteramente en el componente principal page.tsx mediante hooks de estado de React. No se utiliza un gestor de estado externo (como Redux o Zustand), ya que el alcance del estado es local al módulo de visualización.\n\n3.3.1 Variables de estado\nEl componente principal mantiene las siguientes variables de estado:\n\n\n\n\n\n\n\n\nVariable\nTipo\nDescripción\n\n\n\n\nnodes\nNode[]\nTodos los nodos (lista + punteros)\n\n\nedges\nEdge[]\nTodas las aristas\n\n\ncount\nnumber\nCantidad de nodos para creación aleatoria\n\n\nspeed\nnumber\nVelocidad de animación (ms entre fotogramas)\n\n\nisRunning\nboolean\nIndica si una operación está en ejecución\n\n\noperation\nnumber\nÍndice de la operación seleccionada\n\n\nhoveredNodeId\nstring \\| null\nID del nodo bajo el cursor\n\n\nhighlightHead\nboolean\nResaltar nodo cabeza\n\n\nhighlightTail\nboolean\nResaltar nodo cola\n\n\nnodeColor\nstring\nColor base de los nodos\n\n\nnewNodeColor\nstring\nColor de nodos recién insertados\n\n\niterateColor\nstring\nColor del nodo activo durante animación\n\n\nshowPointers\nboolean\nMostrar/ocultar punteros head y tail\n\n\nautoAdjust\nboolean\nAjustar lienzo automáticamente\n\n\nselectedNodes\nstring[]\nIDs de nodos seleccionados\n\n\nlaserPointerEnabled\nboolean\nActivar puntero láser\n\n\nlengthResult\nnumber \\| null\nResultado de la operación Get Length\n\n\nsearchResult\nobject \\| null\nResultado de la operación Search\n\n\n\n\n\n3.3.2 Patrón OperationContext\nPara evitar pasar múltiples parámetros a cada operación, se utiliza un objeto de contexto que encapsula todo lo necesario:\ninterface OperationContext {\n  state: OperationState;\n  setState: (updates: NodeEdgeUpdate | StateUpdater,\n             callback?: () =&gt; void) =&gt; void;\n  reactFlowInstance?: ReactFlowInstance;\n  handlePointerHover: (nodeId: string | null) =&gt; void;\n}\n\ninterface OperationState {\n  nodes: Node[];\n  edges: Edge[];\n  speed: number;\n  iterateColor: string;\n  newNodeColor?: string;\n}\nEste patrón permite que las operaciones sean funciones puras que reciben un contexto y lo modifican, sin depender de variables externas. El hook useListOperations se encarga de construir el contexto a partir del estado actual de React.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Modelo de Datos</span>"
+    ]
+  },
+  {
+    "objectID": "modelo-datos.html#sec-constantes",
+    "href": "modelo-datos.html#sec-constantes",
+    "title": "3  Modelo de Datos",
+    "section": "3.4 Constantes de configuración",
+    "text": "3.4 Constantes de configuración\nTodas las constantes de configuración están centralizadas en el archivo src/app/sll/constants.ts. Las principales categorías son:\n\n3.4.1 Disposición (LAYOUT)\n\n\n\n\n\n\n\n\nConstante\nValor\nDescripción\n\n\n\n\nNODE_HORIZONTAL_SPACING\n150px\nSeparación horizontal entre nodos\n\n\nPOINTER_VERTICAL_OFFSET\n100px\nDistancia vertical de los punteros\n\n\nINITIAL_X\n50px\nPosición X inicial\n\n\nINITIAL_Y\n100px\nPosición Y inicial\n\n\nFIT_VIEW_PADDING\n0.3\nPadding del ajuste de vista\n\n\n\n\n\n3.4.2 Colores (COLORS)\n\n\n\nConstante\nValor\nUso\n\n\n\n\nNODE_DEFAULT\n#2196F3\nColor base de los nodos (azul)\n\n\nNODE_NEW\n#4CAF50\nNodos recién insertados (verde)\n\n\nNODE_ITERATE\n#FF5722\nNodo activo en animación (naranja)\n\n\nHEAD_HIGHLIGHT\n#9C27B0\nResaltado de cabeza (púrpura)\n\n\nTAIL_HIGHLIGHT\n#E91E63\nResaltado de cola (rosa)\n\n\nEDGE_DEFAULT\n#333\nColor de las aristas\n\n\n\n\n\n3.4.3 Animación (ANIMATION)\n\n\n\nConstante\nValor\nDescripción\n\n\n\n\nDEFAULT_SPEED\n500ms\nVelocidad predeterminada\n\n\nFIT_VIEW_DURATION\n500ms\nDuración de la transición del lienzo\n\n\nFIT_VIEW_DELAY\n100ms\nRetardo antes del ajuste de vista\n\n\n\n\n\n3.4.4 Operaciones (OPERATIONS)\nLas 16 operaciones disponibles están indexadas numéricamente:\n\n\n\nÍndice\nNombre\nCategoría\n\n\n\n\n0\nINSERT_HEAD\nInserción\n\n\n1\nDELETE_HEAD\nBorrado\n\n\n2\nINSERT_TAIL\nInserción\n\n\n3\nDELETE_TAIL\nBorrado\n\n\n4\nTRAVERSE\nAlgoritmo\n\n\n5\nREVERSE\nAlgoritmo\n\n\n6\nINSERT_TAIL_O1\nInserción\n\n\n7\nINSERT_AT_POSITION\nInserción\n\n\n8\nGET_LENGTH\nAlgoritmo\n\n\n9\nSEARCH_VALUE\nBúsqueda\n\n\n10\nFIND_MIDDLE\nAlgoritmo\n\n\n11\nDELETE_AT_POSITION\nBorrado\n\n\n12\nREMOVE_DUPLICATES\nAlgoritmo\n\n\n13\nACCESS_FRONT\nAcceso\n\n\n14\nACCESS_BACK\nAcceso\n\n\n15\nACCESS_NTH\nAcceso",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Modelo de Datos</span>"
+    ]
+  },
+  {
+    "objectID": "visualizacion.html",
+    "href": "visualizacion.html",
+    "title": "4  Motor de Visualización",
+    "section": "",
+    "text": "4.1 Integración con xyflow (React Flow)\nEste capítulo describe cómo la aplicación transforma el modelo de datos (descrito en Capítulo 3) en una representación visual interactiva.\nLa visualización se basa en la biblioteca @xyflow/react (React Flow v12), que proporciona un lienzo interactivo para grafos de nodos y aristas.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Motor de Visualización</span>"
+    ]
+  },
+  {
+    "objectID": "visualizacion.html#integración-con-xyflow-react-flow",
+    "href": "visualizacion.html#integración-con-xyflow-react-flow",
+    "title": "4  Motor de Visualización",
+    "section": "",
+    "text": "4.1.1 Registro de tipos de nodos\nLa aplicación registra dos tipos de nodos personalizados:\nconst nodeTypes = {\n  linkedListNode: LinkedListNode,\n  circleNode: CircleNode,\n};\nEstos componentes se definen en src/app/sll/LinkedListNode.tsx y src/app/sll/CircleNode.tsx respectivamente. Cada uno implementa su propia lógica de renderizado y manejo de eventos.\n\n\n4.1.2 Sistema de handles\nLos handles son los puntos de conexión que permiten trazar aristas entre nodos. El componente LinkedListNode define cuatro handles:\n\nRight (Position.Right, tipo source): representa el puntero next del nodo. Es el punto de salida para la arista hacia el siguiente elemento.\nLeft (Position.Left, tipo target): punto de entrada desde el nodo anterior.\nTop (Position.Top, tipo target): utilizado por el puntero head para conectarse desde arriba.\nBottom (Position.Bottom, tipo target): utilizado por el puntero tail para conectarse desde abajo.\n\n\n\n4.1.3 Validación de conexiones\nLa función isValidConnection en page.tsx controla qué conexiones son válidas:\n\nLos nodos circulares solo pueden conectarse a los handles top o bottom de un nodo de lista.\nSe previene la conexión múltiple: si un nodo circular ya tiene una arista saliente, no se permite una segunda (excepto durante reconexión).\n\n\n\n4.1.4 Interacción con el lienzo\nReactFlow se configura con las siguientes opciones de interacción:\n\nNodos arrastrables: el usuario puede reposicionar cualquier nodo.\nSelección parcial: permite seleccionar nodos arrastrando un rectángulo.\nDesplazamiento con scroll: el lienzo se desplaza con la rueda del ratón.\nReconexión de aristas: las aristas existentes pueden ser redirigidas a otros nodos.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Motor de Visualización</span>"
+    ]
+  },
+  {
+    "objectID": "visualizacion.html#sistema-de-animaciones",
+    "href": "visualizacion.html#sistema-de-animaciones",
+    "title": "4  Motor de Visualización",
+    "section": "4.2 Sistema de animaciones",
+    "text": "4.2 Sistema de animaciones\nLas animaciones son el componente central de la experiencia pedagógica. Cada operación sobre la lista se visualiza paso a paso para que el estudiante pueda seguir la ejecución del algoritmo.\n\n4.2.1 Patrón de animación\nTodas las operaciones siguen el mismo patrón asíncrono:\nasync function operacion(context: OperationContext, ...params) {\n  const { state, setState } = context;\n  const listNodes = getListNodes(state.nodes);\n\n  // Paso 1: modificar nodos/aristas\n  const updatedNodes = listNodes.map(node =&gt; /* ... */);\n  setState({ nodes: updatedNodes });\n  await sleep(state.speed);\n\n  // Paso 2: siguiente modificación\n  // ...\n\n  // Paso final: restaurar colores\n  setState({ nodes: resetColors(updatedNodes) });\n}\nLa función sleep (definida en src/app/sll/utils/helpers.ts) es una promesa que se resuelve después de un número configurable de milisegundos, creando la pausa visual entre fotogramas.\n\n\n4.2.2 Ejemplo: inserción en la cabeza\nLa operación insertAtHead (src/app/sll/operations/insertAtHead.ts) ilustra el patrón completo:\n\nFiltra los nodos de lista mediante getListNodes().\nCalcula la posición X del nuevo nodo: primerNodo.x - 150.\nCrea el nuevo nodo con el color newNodeColor usando createListNode().\nInserta el nodo al inicio del arreglo de nodos.\nReconstruye todas las aristas con createEdgesForList().\nActualiza las posiciones y aristas de los punteros head y tail.\nLlama a setState() para actualizar la visualización.\nEjecuta sleep(speed) para la pausa animada.\n\n\n\n4.2.3 Ejemplo: recorrido de la lista\nLa operación traverseList (src/app/sll/operations/traverseList.ts) muestra la animación iterativa:\n\nRestablece todos los nodos al color predeterminado.\nItera sobre cada nodo de la lista:\n\nResalta los nodos visitados (del primero al actual) con iterateColor.\nLlama a setState() con los nodos actualizados.\nEspera sleep(speed) milisegundos.\n\nAl finalizar, restablece todos los colores al valor predeterminado.\n\n\n\n4.2.4 Ejemplo: inversión de la lista\nLa operación reverseList (src/app/sll/operations/reverseList.ts) es más compleja y consta de tres fases:\n\nInversión de punteros: para cada nodo, se elimina la arista saliente y se crea una nueva apuntando al nodo anterior. Se resaltan los nodos involucrados.\nReposicionamiento: se invierte el orden del arreglo de nodos y se recalculan las posiciones X.\nReconstrucción de aristas: se crean las aristas finales y se actualizan los punteros head y tail.\n\n\n\n4.2.5 Patrones comunes en las operaciones\nTodas las operaciones comparten estos patrones:\n\nFiltrado de nodos: getListNodes() para separar nodos de lista de punteros circulares.\nReconstrucción de aristas: createEdgesForList() después de cambios estructurales.\nActualización de punteros: updatePointers() y createPointerEdges() para mantener los punteros sincronizados.\nAnimación por color: uso de .map() sobre el arreglo de nodos para aplicar colores de resaltado según el índice de iteración.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Motor de Visualización</span>"
+    ]
+  },
+  {
+    "objectID": "visualizacion.html#sec-elk",
+    "href": "visualizacion.html#sec-elk",
+    "title": "4  Motor de Visualización",
+    "section": "4.3 Disposición automática con ELK",
+    "text": "4.3 Disposición automática con ELK\nLa disposición automática de los nodos se implementa mediante la biblioteca ELK.js, que proporciona algoritmos de disposición de grafos.\n\n4.3.1 Algoritmo utilizado\nSe utiliza el algoritmo layered (Sugiyama), configurado con dirección RIGHT para una disposición horizontal de izquierda a derecha. Este algoritmo es especialmente adecuado para estructuras lineales como las listas enlazadas.\nLa configuración se encuentra en src/app/sll/utils/elkLayout.ts:\nconst elk = new ELK();\n\nconst graph = {\n  id: 'root',\n  layoutOptions: {\n    'elk.algorithm': 'layered',\n    'elk.direction': 'RIGHT',\n    'elk.spacing.nodeNode': '150',\n  },\n  children: nodes.map(node =&gt; ({\n    id: node.id,\n    width: nodeWidth,\n    height: nodeHeight,\n  })),\n  edges: edges.map(edge =&gt; ({\n    id: edge.id,\n    sources: [edge.source],\n    targets: [edge.target],\n  })),\n};\n\n\n4.3.2 Posicionamiento de punteros\nDespués de calcular las posiciones de los nodos de lista, los nodos punteros (head y tail) se posicionan relativamente:\n\nHead: se ubica 100px por encima del primer nodo de la lista.\nTail: se ubica 100px por debajo del último nodo de la lista.\n\nEste cálculo se realiza mediante las funciones getHeadPointerPosition y getTailPointerPosition de src/app/sll/utils/pointerHelpers.ts.\n\n\n4.3.3 Activación\nLa disposición automática se activa de dos maneras:\n\nBotón Auto Layout: en el menú Display Options, el usuario puede ejecutar manualmente la disposición.\nDespués de operaciones: si la opción autoAdjust está habilitada, el lienzo se ajusta automáticamente después de cada operación mediante reactFlowInstance.fitView().",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Motor de Visualización</span>"
+    ]
+  },
+  {
+    "objectID": "visualizacion.html#hook-de-visualización",
+    "href": "visualizacion.html#hook-de-visualización",
+    "title": "4  Motor de Visualización",
+    "section": "4.4 Hook de visualización",
+    "text": "4.4 Hook de visualización\nEl hook useListVisualization (src/app/sll/hooks/useListVisualization.ts) actúa como capa intermedia entre el estado bruto y lo que se renderiza en ReactFlow. Sus responsabilidades son:\n\nFiltrar punteros: cuando showPointers es false, se eliminan los nodos circulares y sus aristas del conjunto renderizado.\nResaltar cabeza y cola: cuando las opciones highlightHead o highlightTail están activas, se modifican los estilos de los nodos correspondientes.\nResaltar aristas al pasar el cursor: cuando el usuario posiciona el cursor sobre la sección de puntero de un nodo, la arista saliente se resalta con el color de iteración.\n\nEl hook utiliza useMemo para evitar recálculos innecesarios y retorna los arreglos highlightedNodes y highlightedEdges que se pasan directamente a ReactFlow.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Motor de Visualización</span>"
+    ]
+  },
+  {
+    "objectID": "interfaz.html",
+    "href": "interfaz.html",
+    "title": "5  Interfaz de Usuario",
+    "section": "",
+    "text": "5.1 Componentes principales\nEste capítulo describe el diseño de los componentes de la interfaz de usuario, el sistema de menús y la estrategia de estilización.\nLa interfaz se divide en tres áreas principales, como se muestra en la Figura 5.1:",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Interfaz de Usuario</span>"
+    ]
+  },
+  {
+    "objectID": "interfaz.html#componentes-principales",
+    "href": "interfaz.html#componentes-principales",
+    "title": "5  Interfaz de Usuario",
+    "section": "",
+    "text": "Barra de navegación (parte superior): enlaces a documentación, repositorio y tour guiado.\nPanel de menú (izquierda): controles para la creación, operaciones y configuración de la visualización.\nLienzo (derecha): área de visualización interactiva con ReactFlow.\n\n\n\n\n\n\n\nFigura 5.1: Partes principales de la interfaz de usuario.\n\n\n\n\n5.1.1 Componente orquestador (page.tsx)\nEl archivo src/app/sll/page.tsx es el componente principal del módulo de listas enlazadas. Sus responsabilidades son:\n\nGestionar las 18 variables de estado (ver Sección 3.3).\nCoordinar los tres custom hooks (useListOperations, useListVisualization, useListInitialization).\nDefinir los 22 manejadores de eventos que conectan el menú con las operaciones.\nRenderizar la estructura de la página: Navbar, Menu y el lienzo ReactFlow.\n\n\n\n5.1.2 Nodo de lista (LinkedListNode)\nEl componente LinkedListNode (src/app/sll/LinkedListNode.tsx) renderiza cada elemento de la lista enlazada como un rectángulo dividido en dos secciones:\n┌───────────────────────┬──────────────┐\n│  Sección de datos     │  Puntero     │\n│  (valor del nodo)     │  (next →)    │\n└───────────────────────┴──────────────┘\n\nSección de datos (70% del ancho): muestra el valor del nodo con un fondo semitransparente blanco sobre el color de fondo del nodo.\nSección de puntero (30% del ancho): representa el puntero next. Al posicionar el cursor sobre esta sección, el fondo cambia a rojo (#F44336) y la arista saliente se resalta.\n\nLas dimensiones mínimas son 72x36 píxeles, con bordes redondeados y un divisor vertical entre las dos secciones.\n\n\n5.1.3 Nodo circular (CircleNode)\nEl componente CircleNode (src/app/sll/CircleNode.tsx) renderiza los nodos de tipo puntero como círculos de 45x45 píxeles con fondo naranja (#FF5722).\nCaracterísticas interactivas:\n\nDoble clic: activa el modo de edición de la etiqueta.\nEntrada de texto: máximo 3 caracteres. Se confirma con Enter o al perder el foco, y se cancela con Escape.\nHover: al posicionar el cursor sobre el nodo, se invoca onPointerHover para resaltar la arista conectada.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Interfaz de Usuario</span>"
+    ]
+  },
+  {
+    "objectID": "interfaz.html#sistema-de-menús",
+    "href": "interfaz.html#sistema-de-menús",
+    "title": "5  Interfaz de Usuario",
+    "section": "5.2 Sistema de menús",
+    "text": "5.2 Sistema de menús\nEl panel de menú se implementa como un componente jerárquico compuesto por varias capas.\n\n5.2.1 Estructura del menú\nMenu (panel lateral, 288px de ancho)\n├── MenuHeader (encabezado animado, fijo)\n├── ListCreation (sección colapsable)\n│   ├── Pestaña Empty    → botón \"Create Empty List\"\n│   ├── Pestaña Random   → slider de cantidad + \"Generate Random\"\n│   └── Pestaña Custom   → entrada JSON + \"Create From Sequence\"\n├── Operations (sección colapsable)\n│   ├── Insert           → At Head, At Position, At Tail, At Tail (O1)\n│   ├── Remove           → Head, Tail, Position\n│   ├── Access           → Front, Back, Nth\n│   ├── Search           → entrada de valor + botón\n│   └── Algorithms       → Traverse, Reverse, Find Middle,\n│                           Get Length, Remove Duplicates\n├── Programmer Tools (sección colapsable)\n│   ├── Show head and tail pointers\n│   └── Add pointer\n└── Display Options (sección colapsable)\n    ├── Speed             → slider (10-100, mapeado a 10-1000ms)\n    ├── Colors            → selectores de color (Standard, New, Active)\n    ├── Highlights        → Head / Tail toggles\n    ├── Layout            → Scramble + Auto Layout\n    └── Canvas            → Auto Adjust toggle\n\n\n5.2.2 Componente Section\nEl componente reutilizable Section (src/components/menu/Section.tsx) implementa una sección colapsable con:\n\nUn encabezado que muestra un icono (Lucide), un título y un indicador de chevron que rota al expandir/colapsar.\nAnimación suave de altura máxima (max-height) para la transición.\nSoporte para estado controlado y no controlado mediante las props isOpen y defaultOpen.\n\n\n\n5.2.3 Componente MenuHeader\nEl encabezado del menú (src/components/menu/MenuHeader.tsx) incluye animaciones basadas en el progreso de desplazamiento (scroll):\n\nTamaño dinámico del icono que disminuye al desplazarse.\nOpacidad y rotación que cambian según la posición de scroll.\nUna barra de progreso con gradiente que indica la posición actual.\n\n\n\n5.2.4 Sección de operaciones\nLa sección Operations (src/components/menu/sections/Operations.tsx) organiza las 16 operaciones en 5 subsecciones colapsables. Cada subsección sigue un patrón consistente:\n\nEntrada de valor: campo de texto con botón de valor aleatorio (para operaciones que requieren un valor).\nEntrada de posición: campo numérico con validación de rango (para operaciones que requieren una posición).\nBotones de acción: uno por cada operación disponible.\n\nLos botones de acción invocan onVisualize(opIndex, value, position), que se propaga hasta el componente principal page.tsx.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Interfaz de Usuario</span>"
+    ]
+  },
+  {
+    "objectID": "interfaz.html#estilización-con-tailwind-css-y-radix-ui",
+    "href": "interfaz.html#estilización-con-tailwind-css-y-radix-ui",
+    "title": "5  Interfaz de Usuario",
+    "section": "5.3 Estilización con Tailwind CSS y Radix UI",
+    "text": "5.3 Estilización con Tailwind CSS y Radix UI\n\n5.3.1 Tailwind CSS\nLa aplicación utiliza Tailwind CSS con un enfoque utility-first. Las clases de utilidad se aplican directamente en los componentes JSX, evitando la necesidad de hojas de estilo separadas.\nPara la gestión de clases condicionales se utiliza la función cn() definida en src/lib/utils.ts, que combina clsx (para lógica condicional) y tailwind-merge (para resolver conflictos entre clases de Tailwind):\nimport { clsx, type ClassValue } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n\n\n5.3.2 Sistema de colores\nEl sistema de colores se basa en variables CSS con valores HSL, lo que permite una personalización global del tema. Las variables se definen en src/app/globals.css:\n\n--background, --foreground: colores base del fondo y texto.\n--primary, --secondary, --accent: colores de énfasis.\n--destructive: color para acciones destructivas.\n--border, --ring: colores de bordes y anillos de foco.\n\n\n\n5.3.3 Componentes shadcn/ui\nLos componentes atómicos de la interfaz (botones, entradas, sliders, switches, selectores) provienen de shadcn/ui y se encuentran en src/components/ui/. Estos componentes están construidos sobre primitivas de Radix UI, que proporcionan accesibilidad y comportamiento estandarizado.\nLos componentes personalizados (custom-slider.tsx, custom-select.tsx, custom-toggle.tsx, custom-input.tsx) envuelven los componentes de shadcn/ui con etiquetas, valores de visualización y estilos específicos del visualizador.\n\n\n5.3.4 Diseño responsivo\nLa interfaz utiliza un diseño de dos columnas con flex:\n\nEl panel de menú tiene un ancho fijo de 288px con scroll vertical independiente.\nEl lienzo ocupa el espacio restante (flex-1) y se adapta al tamaño de la ventana.\n\nLa barra de navegación es fija en la parte superior y el contenido principal ocupa la altura restante de la ventana (h-screen).",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Interfaz de Usuario</span>"
+    ]
+  },
+  {
+    "objectID": "despliegue.html",
+    "href": "despliegue.html",
+    "title": "6  Despliegue y CI/CD",
+    "section": "",
+    "text": "6.1 GitHub Pages\nEste capítulo documenta el proceso de construcción, despliegue y el flujo de trabajo de integración continua del proyecto.\nLa aplicación se despliega como un sitio estático en GitHub Pages. Esto es posible gracias a la configuración de exportación estática de Next.js.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Despliegue y CI/CD</span>"
+    ]
+  },
+  {
+    "objectID": "despliegue.html#github-pages",
+    "href": "despliegue.html#github-pages",
+    "title": "6  Despliegue y CI/CD",
+    "section": "",
+    "text": "6.1.1 Configuración de Next.js\nEl archivo next.config.mjs define las siguientes opciones clave para el despliegue:\n\noutput: 'export': indica a Next.js que genere una exportación estática (SPA) en lugar de un servidor Node.js.\nbasePath: '/AlgorithmVisualizer': prefijo de ruta necesario para GitHub Pages, ya que el sitio se sirve desde un subdirectorio del dominio github.io.\nassetPrefix: '/AlgorithmVisualizer': asegura que los recursos estáticos (JavaScript, CSS, imágenes) se carguen con la ruta correcta.\ndistDir: './build': directorio de salida de la construcción.\n\n\n\n6.1.2 Enrutamiento del lado del cliente\nAl ser una SPA, toda la navegación se maneja en el navegador. El archivo public/_redirects contiene la regla:\n/* /index.html 200\nEsta regla redirige todas las solicitudes al archivo index.html, permitiendo que el enrutador de Next.js maneje las rutas del lado del cliente.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Despliegue y CI/CD</span>"
+    ]
+  },
+  {
+    "objectID": "despliegue.html#flujo-de-trabajo-con-github-actions",
+    "href": "despliegue.html#flujo-de-trabajo-con-github-actions",
+    "title": "6  Despliegue y CI/CD",
+    "section": "6.2 Flujo de trabajo con GitHub Actions",
+    "text": "6.2 Flujo de trabajo con GitHub Actions\nEl despliegue automatizado se configura en el archivo .github/workflows/nextjs.yml. El flujo se activa con cada push a la rama master.\n\n6.2.1 Etapas del flujo\nEl workflow consta de dos jobs secuenciales:\n\n6.2.1.1 1. Construcción (build)\n\nCheckout: descarga el código fuente del repositorio.\nDetección del gestor de paquetes: identifica automáticamente si el proyecto usa npm o yarn verificando la existencia de archivos de bloqueo.\nConfiguración de Node.js: instala Node.js v20 y configura el caché de dependencias.\nConfiguración de Pages: inyecta automáticamente el basePath en la configuración de Next.js y desactiva la optimización de imágenes del lado del servidor.\nRestauración de caché: utiliza el caché de .next/cache para acelerar construcciones incrementales.\nInstalación de dependencias: ejecuta npm ci para una instalación determinista.\nConstrucción: ejecuta next build, que compila TypeScript y genera la exportación estática en el directorio ./build.\nSubida del artefacto: empaqueta el directorio ./build como artefacto de GitHub Pages.\n\n\n\n6.2.1.2 2. Despliegue (deploy)\n\nDescarga el artefacto generado en la etapa anterior.\nLo despliega en el entorno de GitHub Pages.\nGenera la URL pública del sitio.\n\n\n\n\n6.2.2 Control de concurrencia\nEl workflow utiliza un grupo de concurrencia (pages) que permite solo un despliegue simultáneo. Los despliegues en curso no se cancelan para evitar estados intermedios.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Despliegue y CI/CD</span>"
+    ]
+  },
+  {
+    "objectID": "despliegue.html#proceso-de-construcción",
+    "href": "despliegue.html#proceso-de-construcción",
+    "title": "6  Despliegue y CI/CD",
+    "section": "6.3 Proceso de construcción",
+    "text": "6.3 Proceso de construcción\n\n6.3.1 Construcción de la aplicación\nEl comando de construcción principal es:\nnpm run build\nEste ejecuta dos pasos secuenciales:\n\ntsc: compila TypeScript y verifica que no existan errores de tipos.\nnext build: genera la exportación estática de la aplicación.\n\nEl resultado es el directorio ./build que contiene todos los archivos HTML, JavaScript y CSS necesarios para servir la aplicación.\n\n\n6.3.2 Construcción de la documentación\nLa documentación se construye por separado mediante Quarto:\nnpm run docs:build\nEste comando ejecuta:\n\ncd doc/manual && quarto render: genera la documentación del manual de usuario en HTML y PDF.\ncd doc/design && quarto render: genera el documento de diseño en HTML y PDF.\nnpm run docs:sync: copia los resultados a public/docs/manual/ y public/docs/design/ respectivamente.\n\nLa documentación debe construirse antes de la construcción de la aplicación, ya que los archivos generados en public/docs/ se incluyen en la exportación estática de Next.js.\n\n\n6.3.3 Flujo completo de despliegue\nPara un despliegue completo que incluya documentación actualizada:\n# 1. Construir la documentación\nnpm run docs:build\n\n# 2. Construir la aplicación (incluye public/docs/)\nnpm run build\n\n# 3. Confirmar y enviar los cambios\ngit add .\ngit commit -m \"Update build\"\ngit push\nEl push a master activa automáticamente el workflow de GitHub Actions que despliega el sitio.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Despliegue y CI/CD</span>"
+    ]
+  },
+  {
+    "objectID": "despliegue.html#estructura-de-urls-desplegadas",
+    "href": "despliegue.html#estructura-de-urls-desplegadas",
+    "title": "6  Despliegue y CI/CD",
+    "section": "6.4 Estructura de URLs desplegadas",
+    "text": "6.4 Estructura de URLs desplegadas\nUna vez desplegada, la aplicación es accesible en las siguientes rutas:\n\n\n\n\n\n\n\nRuta\nContenido\n\n\n\n\n/AlgorithmVisualizer/sll\nVisualizador de listas\n\n\n/AlgorithmVisualizer/about\nPágina “Acerca de”\n\n\n/AlgorithmVisualizer/docs/manual/index.html\nManual de usuario (HTML)\n\n\n/AlgorithmVisualizer/docs/design/index.html\nDocumento de diseño (HTML)",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Despliegue y CI/CD</span>"
+    ]
+  }
+]

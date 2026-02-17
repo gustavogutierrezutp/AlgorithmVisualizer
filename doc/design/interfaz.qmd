@@ -1,0 +1,204 @@
+# Interfaz de Usuario {#sec-interfaz}
+
+Este capítulo describe el diseño de los componentes de la interfaz de usuario,
+el sistema de menús y la estrategia de estilización.
+
+## Componentes principales
+
+La interfaz se divide en tres áreas principales, como se muestra en la
+@fig-main-annotated:
+
+1. **Barra de navegación** (parte superior): enlaces a documentación,
+   repositorio y tour guiado.
+2. **Panel de menú** (izquierda): controles para la creación, operaciones y
+   configuración de la visualización.
+3. **Lienzo** (derecha): área de visualización interactiva con ReactFlow.
+
+::: {#fig-main-annotated}
+![](figures/main-annotated.png)
+
+Partes principales de la interfaz de usuario.
+:::
+
+### Componente orquestador (`page.tsx`)
+
+El archivo `src/app/sll/page.tsx` es el componente principal del módulo de
+listas enlazadas. Sus responsabilidades son:
+
+- Gestionar las 18 variables de estado (ver @sec-gestion-estado).
+- Coordinar los tres _custom hooks_ (`useListOperations`,
+  `useListVisualization`, `useListInitialization`).
+- Definir los 22 manejadores de eventos que conectan el menú con las
+  operaciones.
+- Renderizar la estructura de la página: `Navbar`, `Menu` y el lienzo
+  `ReactFlow`.
+
+### Nodo de lista (`LinkedListNode`)
+
+El componente `LinkedListNode` (`src/app/sll/LinkedListNode.tsx`) renderiza cada
+elemento de la lista enlazada como un rectángulo dividido en dos secciones:
+
+```
+┌───────────────────────┬──────────────┐
+│  Sección de datos     │  Puntero     │
+│  (valor del nodo)     │  (next →)    │
+└───────────────────────┴──────────────┘
+```
+
+- **Sección de datos** (70% del ancho): muestra el valor del nodo con un fondo
+  semitransparente blanco sobre el color de fondo del nodo.
+- **Sección de puntero** (30% del ancho): representa el puntero `next`. Al
+  posicionar el cursor sobre esta sección, el fondo cambia a rojo (`#F44336`) y
+  la arista saliente se resalta.
+
+Las dimensiones mínimas son 72x36 píxeles, con bordes redondeados y un divisor
+vertical entre las dos secciones. @fig-node-example muestra un ejemplo de nodo
+de lista enlazada renderizado.
+
+::: {#fig-node-example}
+![](figures/nodeexample.png)
+
+Ejemplo de nodo de datos en el lienzo.
+:::
+
+### Nodo circular (`CircleNode`)
+
+El componente `CircleNode` (`src/app/sll/CircleNode.tsx`) renderiza los nodos de
+tipo puntero como círculos de 45x45 píxeles con fondo naranja (`#FF5722`).
+
+Características interactivas:
+
+- **Doble clic**: activa el modo de edición de la etiqueta.
+- **Entrada de texto**: máximo 3 caracteres. Se confirma con Enter o al perder
+  el foco, y se cancela con Escape.
+- **Hover**: al posicionar el cursor sobre el nodo, se invoca
+  `onPointerHover` para resaltar la arista conectada.
+
+::: {#fig-circular-node}
+![](figures/head-node.png)
+
+Ejemplo de nodo circular para señalar el primer elemento de la lista.
+:::
+
+
+## Sistema de menús
+
+El panel de menú se implementa como un componente jerárquico compuesto por
+varias capas.
+
+### Estructura del menú
+
+```
+Menu (panel lateral, 288px de ancho)
+├── MenuHeader (encabezado animado, fijo)
+├── ListCreation (sección colapsable)
+│   ├── Pestaña Empty    → botón "Create Empty List"
+│   ├── Pestaña Random   → slider de cantidad + "Generate Random"
+│   └── Pestaña Custom   → entrada JSON + "Create From Sequence"
+├── Operations (sección colapsable)
+│   ├── Insert           → At Head, At Position, At Tail, At Tail (O1)
+│   ├── Remove           → Head, Tail, Position
+│   ├── Access           → Front, Back, Nth
+│   ├── Search           → entrada de valor + botón
+│   └── Algorithms       → Traverse, Reverse, Find Middle,
+│                           Get Length, Remove Duplicates
+├── Programmer Tools (sección colapsable)
+│   ├── Show head and tail pointers
+│   └── Add pointer
+└── Display Options (sección colapsable)
+    ├── Speed             → slider (10-100, mapeado a 10-1000ms)
+    ├── Colors            → selectores de color (Standard, New, Active)
+    ├── Highlights        → Head / Tail toggles
+    ├── Layout            → Scramble + Auto Layout
+    └── Canvas            → Auto Adjust toggle
+```
+
+### Componente `Section`
+
+El componente reutilizable `Section` (`src/components/menu/Section.tsx`)
+implementa una sección colapsable con:
+
+- Un encabezado que muestra un icono (Lucide), un título y un indicador de
+  chevron que rota al expandir/colapsar.
+- Animación suave de altura máxima (_max-height_) para la transición.
+- Soporte para estado controlado y no controlado mediante las props `isOpen`
+  y `defaultOpen`.
+
+### Componente `MenuHeader`
+
+El encabezado del menú (`src/components/menu/MenuHeader.tsx`) incluye
+animaciones basadas en el progreso de desplazamiento (_scroll_):
+
+- Tamaño dinámico del icono que disminuye al desplazarse.
+- Opacidad y rotación que cambian según la posición de scroll.
+- Una barra de progreso con gradiente que indica la posición actual.
+
+### Sección de operaciones
+
+La sección `Operations` (`src/components/menu/sections/Operations.tsx`) organiza
+las 16 operaciones en 5 subsecciones colapsables. Cada subsección sigue un
+patrón consistente:
+
+1. **Entrada de valor**: campo de texto con botón de valor aleatorio (para
+   operaciones que requieren un valor).
+2. **Entrada de posición**: campo numérico con validación de rango (para
+   operaciones que requieren una posición).
+3. **Botones de acción**: uno por cada operación disponible.
+
+Los botones de acción invocan `onVisualize(opIndex, value, position)`, que se
+propaga hasta el componente principal `page.tsx`.
+
+## Estilización con Tailwind CSS y Radix UI
+
+### Tailwind CSS
+
+La aplicación utiliza **Tailwind CSS** con un enfoque _utility-first_. Las
+clases de utilidad se aplican directamente en los componentes JSX, evitando la
+necesidad de hojas de estilo separadas.
+
+Para la gestión de clases condicionales se utiliza la función `cn()` definida en
+`src/lib/utils.ts`, que combina `clsx` (para lógica condicional) y
+`tailwind-merge` (para resolver conflictos entre clases de Tailwind):
+
+```typescript
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+
+### Sistema de colores
+
+El sistema de colores se basa en variables CSS con valores HSL, lo que permite
+una personalización global del tema. Las variables se definen en
+`src/app/globals.css`:
+
+- `--background`, `--foreground`: colores base del fondo y texto.
+- `--primary`, `--secondary`, `--accent`: colores de énfasis.
+- `--destructive`: color para acciones destructivas.
+- `--border`, `--ring`: colores de bordes y anillos de foco.
+
+### Componentes shadcn/ui
+
+Los componentes atómicos de la interfaz (botones, entradas, _sliders_,
+_switches_, selectores) provienen de **shadcn/ui** y se encuentran en
+`src/components/ui/`. Estos componentes están construidos sobre primitivas de
+**Radix UI**, que proporcionan accesibilidad y comportamiento estandarizado.
+
+Los componentes personalizados (`custom-slider.tsx`, `custom-select.tsx`,
+`custom-toggle.tsx`, `custom-input.tsx`) envuelven los componentes de shadcn/ui
+con etiquetas, valores de visualización y estilos específicos del visualizador.
+
+### Diseño adaptativo
+
+La interfaz utiliza un diseño de dos columnas con `flex`:
+
+- El panel de menú tiene un ancho fijo de 288px con scroll vertical
+  independiente.
+- El lienzo ocupa el espacio restante (`flex-1`) y se adapta al tamaño de la
+  ventana.
+
+La barra de navegación es fija en la parte superior y el contenido principal
+ocupa la altura restante de la ventana (`h-screen`).

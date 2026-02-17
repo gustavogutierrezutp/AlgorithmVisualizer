@@ -1,6 +1,6 @@
-/.quarto/
+**/.quarto/
 **/*.quarto_ipynb
-/_book/
-/_site/
-*_files/
-*_cache/
+**/_book/
+**/_site/
+**/*_files/
+**/*_cache/
