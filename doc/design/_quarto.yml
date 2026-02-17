@@ -3,8 +3,8 @@ project:
   output-dir: _book
 
 book:
-  title: "DSViz: Documento de Diseño"
-  subtitle: "Arquitectura y decisiones de diseño del visualizador"
+  title: "DSViz Listas enlazadas: diseño"
+  subtitle: "Arquitectura y decisiones de diseño"
   author:
     - name: "Gustavo Gutiérrez-Sabogal"
       email: "gustavo.gutierrez@utp.edu.co"

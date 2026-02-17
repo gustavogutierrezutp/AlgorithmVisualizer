@@ -2,7 +2,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "DSViz: Documento de Diseño",
+    "title": "DSViz Listas enlazadas: diseño",
     "section": "",
     "text": "1 Introducción\nEste documento describe las decisiones de diseño y la arquitectura del visualizador de listas enlazadas DSViz: Listas enlazadas. Su objetivo es servir como referencia técnica para desarrolladores y colaboradores del proyecto.",
     "crumbs": [
@@ -12,7 +12,7 @@
   {
     "objectID": "index.html#motivación",
     "href": "index.html#motivación",
-    "title": "DSViz: Documento de Diseño",
+    "title": "DSViz Listas enlazadas: diseño",
     "section": "1.1 Motivación",
     "text": "1.1 Motivación\nDSViz: Listas enlazadas es una herramienta pedagógica diseñada para la enseñanza de conceptos en el curso de Estructuras de datos en la Universidad Tecnológica de Pereira dentro el programa de Ingeniería de sistemas y computación. Las decisiones de diseño están guiadas por los siguientes principios:\n\nCero instalación: la aplicación se ejecuta completamente en el navegador como una Single Page Application (SPA) desplegada en GitHub Pages.\nInteractividad: los estudiantes tienen acceso a la estructura interna con los nodos y apuntadores de la estructura de datos.\nVisualización paso a paso de operaciones: cada operación sobre la estructura de datos se anima de manera secuencial para facilitar la comprensión del algoritmo subyacente.\nSeparación conceptual: los elementos de programación (punteros, direcciones de memoria) se mantienen separados de la representación conceptual de la estructura.",
     "crumbs": [
@@ -22,7 +22,7 @@
   {
     "objectID": "index.html#tecnologías-principales",
     "href": "index.html#tecnologías-principales",
-    "title": "DSViz: Documento de Diseño",
+    "title": "DSViz Listas enlazadas: diseño",
     "section": "1.2 Tecnologías principales",
     "text": "1.2 Tecnologías principales\nLa aplicación está construida sobre el siguiente conjunto de tecnologías:\n\n\n\nCategoría\nTecnología\nVersión\n\n\n\n\nFramework\nNext.js (App Router)\n16\n\n\nLenguaje\nTypeScript (modo estricto)\n5.9\n\n\nBiblioteca UI\nReact\n19\n\n\nVisualización\nReact Flow (@xyflow)\n12\n\n\nDisposición\nELK.js (Sugiyama)\n0.11\n\n\nEstilos\nTailwind CSS\n3.4\n\n\nComponentes\nshadcn/ui (Radix UI)\n—\n\n\nTour guiado\ndriver.js\n1.4\n\n\nExportación\nhtml-to-image\n1.11",
     "crumbs": [
@@ -32,7 +32,7 @@
   {
     "objectID": "index.html#alcance",
     "href": "index.html#alcance",
-    "title": "DSViz: Documento de Diseño",
+    "title": "DSViz Listas enlazadas: diseño",
     "section": "1.3 Alcance",
     "text": "1.3 Alcance\nEl presente documento cubre la versión actual del módulo. Se describen las tecnologías utilizadas, la estructura del proyecto, el modelo de datos, el motor de visualización, la interfaz de usuario y el proceso de despliegue.",
     "crumbs": [
@@ -42,7 +42,7 @@
   {
     "objectID": "index.html#audiencia",
     "href": "index.html#audiencia",
-    "title": "DSViz: Documento de Diseño",
+    "title": "DSViz Listas enlazadas: diseño",
     "section": "1.4 Audiencia",
     "text": "1.4 Audiencia\nEste documento está dirigido a desarrolladores que deseen contribuir al proyecto, así como a docentes y estudiantes interesados en comprender la implementación interna del simulador.",
     "crumbs": [
@@ -52,7 +52,7 @@
   {
     "objectID": "index.html#estructura-del-documento",
     "href": "index.html#estructura-del-documento",
-    "title": "DSViz: Documento de Diseño",
+    "title": "DSViz Listas enlazadas: diseño",
     "section": "1.5 Estructura del documento",
     "text": "1.5 Estructura del documento\nEl documento se organiza en los siguientes capítulos:\n\nArquitectura General (Capítulo 2): describe las tecnologías, la estructura del proyecto y el flujo de datos.\nModelo de Datos (Capítulo 3): detalla las interfaces de tipos, las fábricas de nodos y aristas, y la gestión de estado.\nMotor de Visualización (Capítulo 4): explica la integración con xyflow, el sistema de animaciones y la disposición automática con ELK.\nInterfaz de Usuario (Capítulo 5): presenta los componentes principales, el sistema de menús y la estilización.\nDespliegue y CI/CD (Capítulo 6): documenta el proceso de construcción, despliegue en GitHub Pages y el flujo de trabajo con GitHub Actions.",
     "crumbs": [

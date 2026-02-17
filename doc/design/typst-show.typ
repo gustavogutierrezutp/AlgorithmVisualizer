@@ -16,6 +16,7 @@ $endif$
 $if(lang)$
   lang: "$lang$",
 $endif$
+  cover: block(width: 100%, align(center, pad(bottom: 2cm)[#text(size: 14pt)[Universidad Tecnológica de Pereira]])),
   main-color: brand-color.at("primary", default: blue),
   logo: {
     let logo-info = brand-logo.at("medium", default: none)
