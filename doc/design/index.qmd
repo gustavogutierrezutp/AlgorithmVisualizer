@@ -5,13 +5,26 @@ visualizador de listas enlazadas **DSViz: Listas enlazadas**. Su objetivo es
 servir como referencia técnica para desarrolladores y colaboradores del
 proyecto.
 
+
+
 ## Motivación
 
-_DSViz: Listas enlazadas_  es una herramienta pedagógica diseñada para la
-enseñanza de conceptos en el curso de _Estructuras de datos_  en la Universidad
-Tecnológica de Pereira dentro el programa de Ingeniería de sistemas y
-computación. Las decisiones de diseño están guiadas por los siguientes
-principios:
+_DSViz: Listas enlazadas_ nació como una ayuda didáctica para el curso de
+_Estructuras de datos_ del programa de Ingeniería de Sistemas y Computación de
+la **Universidad Tecnológica de Pereira (UTP)**. Su propósito central es
+facilitar tanto el aprendizaje como la enseñanza del concepto de _lista enlazada
+simple_: una estructura de datos cuyo comportamiento —nodos, apuntadores y
+operaciones— resulta difícil de abstraer únicamente a través de la lectura de
+código o de diagramas estáticos.
+
+La herramienta permite a los estudiantes observar en tiempo real cómo se
+modifica la estructura interna de la lista al ejecutar cada operación, y a los
+docentes disponer de un recurso visual e interactivo que complementa la
+explicación en clase. Al ejecutarse íntegramente en el navegador sin requerir
+instalación ni infraestructura adicional, puede incorporarse con facilidad tanto
+en sesiones presenciales como en actividades de estudio independiente.
+
+Las decisiones de diseño están guiadas por los siguientes principios:
 
 - **Cero instalación**: la aplicación se ejecuta completamente en el navegador
   como una _Single Page Application_ (SPA) desplegada en GitHub Pages.
@@ -42,6 +55,18 @@ La aplicación está construida sobre el siguiente conjunto de tecnologías:
 | Componentes        | shadcn/ui (Radix UI)      | ---     |
 | Tour guiado        | driver.js                 | 1.4     |
 | Exportación        | html-to-image             | 1.11    |
+
+TypeScript fue elegido como lenguaje de desarrollo por las ventajas que su
+sistema de tipos estáticos aporta a un proyecto de esta naturaleza. Al modelar
+estructuras como nodos, aristas y el estado de animaciones, la verificación de
+tipos en tiempo de compilación detecta errores antes de la ejecución y sirve
+como documentación viva del código. El proyecto habilita el modo estricto
+(`"strict": true`), que activa las comprobaciones más rigurosas del compilador,
+incluyendo la comprobación de nulos y la prohibición del tipo implícito `any`.
+Adicionalmente, TypeScript ofrece integración de primera clase con los entornos
+de desarrollo más utilizados, proporcionando autocompletado, documentación en
+línea y refactorizaciones seguras sin alterar la compatibilidad con el
+ecosistema JavaScript estándar.
 
 ## Alcance
 
