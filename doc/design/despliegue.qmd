@@ -3,6 +3,18 @@
 Este capítulo documenta el proceso de construcción, despliegue y el flujo de
 trabajo de integración continua del proyecto.
 
+## Requisitos de infraestructura
+
+Uno de los objetivos del proyecto es que la herramienta tenga **costo cero** de
+operación: no requiere servidores propios, bases de datos ni ningún tipo de
+infraestructura de pago. Para los usuarios finales, el único requisito es
+disponer de un navegador web moderno; no se necesita instalar ningún software
+adicional.
+
+Esta decisión orienta directamente la elección de GitHub Pages como plataforma
+de despliegue y de GitHub Actions como sistema de integración continua, ya que
+ambos servicios son gratuitos para repositorios públicos.
+
 ## GitHub Pages
 
 La aplicación se despliega como un sitio estático en **GitHub Pages**. Esto es
