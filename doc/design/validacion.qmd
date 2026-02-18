@@ -1,0 +1,307 @@
+# Pruebas de validación y evaluación de impacto pedagógico {#sec-validacion}
+
+Para validar la utilidad, usabilidad y el impacto pedagógico de la herramienta
+_DSViz: Listas enlazadas_, se realizó una prueba de campo con una muestra de 15
+estudiantes de la Universidad Tecnológica de Pereira (UTP), del programa de
+Ingeniería de sistemas y computación.
+
+## Metodología de Validación
+
+La validación se llevó a cabo mediante una encuesta estructurada que evaluó
+cuatro dimensiones críticas: usabilidad de la interfaz, eficacia en la
+transferencia de conocimiento, motivación del estudiante y comparación frente a
+métodos tradicionales de enseñanza.
+
+Adicionalmente se utilizó la encuesta para recopilar información sobre posibles
+mejoras y características adicionales que los estudiantes consideraran valiosas.
+
+A continuación se detallan las preguntas y se adjunta su justificación. La
+primera sección tiene como objetivo recolectar información que permita
+caracterizar la población.
+
+:::{.callout appearance="minimal"}
+1.  Semestre actual.
+2.  ¿Habías estudiado listas enlazadas antes de usar esta herramienta?
+:::
+
+La segunda sección evalúa la *usabilidad* del software. Contiene tres preguntas
+que se responden en una escala de 1 a 5. Se pregunta por el nivel de acuerdo en
+que el encuestado se encuentra con las afirmaciones.
+
+:::{.callout appearance="minimal"}
+3.  La interfaz de la herramienta es intuitiva y fácil de usar.
+4.  Las instrucciones para realizar operaciones son claras.
+5.  La navegación entre las diferentes funciones es sencilla.
+:::
+
+La tercera sección evalúa el impacto del software en el aprendizaje. De nuevo
+utiliza la escala de 1 a 5 y se le pide al encuestado indicar su nivel acuerdo
+con las afirmaciones.
+
+:::{.callout appearance="minimal"}
+6.  La herramienta le ayudó a comprender qué es una lista enlazada.
+7.  Logró entender mejor *qué hacen* las diferentes operaciones de las listas enlazadas.
+8.  Logró entender mejor *cómo funcionan* las diferentes operaciones de las listas enlazadas.
+9.  Considera que puede explicar a otras personas, las operaciones de listas enlazadas a otros.
+:::
+
+La cuarta sección indaga al encuestado para que compare el enfoque del software
+con otros métodos de aprendizaje. En este caso son dos preguntas con sus
+respectivas opciones de respuesta. En el caso de la primera pregunta es de única
+respuesta y para la segunda puede seleccionar más de una.
+
+:::{.callout appearance="minimal"}
+10. Considera que la visualización con gráficas de la herramienta frente al
+aprendizaje editando y ejecutando código fuente es:
+
+- Mucho más efectiva.
+- Más efectiva.
+- Igual de efectiva.
+- Menos efectiva.
+
+11. ¿Cuál método de aprendizaje prefiere para entender estructuras de datos?
+(Puedes seleccionar varios)
+
+- Lectura de libros/documentación.
+- Explicación del profesor.
+- Visualizadores interactivos como este.
+- Implementar el código por cuenta propia.
+- Videos o tutoriales.
+- Otros (especificar).
+:::
+
+La quinta sección busca indagar por la motivación al uso de la herramienta. De
+nuevo, Se muestran cinco afirmaciones y se le pide indicar el nivel de acuerdo
+en valores de 1 a 5.
+
+:::{.callout appearance="minimal"}
+
+12. Usar la herramienta hizo el aprendizaje más interesante.
+13. Me sentí motivado(a) a experimentar con diferentes operaciones.
+14. La herramienta redujo mi frustración al aprender el tema.
+15. Recomendaría esta herramienta a otros estudiantes.
+16. Me gustaría usar herramientas similares para otros temas.
+:::
+
+Finalmente, la sexta sección es abierta y busca obtener retroalimentación.
+
+:::{.callout appearance="minimal"}
+17. En general, ¿cómo calificarías la herramienta?
+
+- Excelente.
+- Muy buena.
+- Buena.
+- Regular.
+- Mala.
+
+18. ¿Qué aspectos mejorarías de la herramienta?
+19. ¿Qué otras estructuras de datos te gustaría visualizar con una herramienta similar?.
+20. Comentarios adicionales.
+:::
+
+## Resultados
+
+### Caracterización de la muestra
+
+La encuesta fue respondida por 15 estudiantes del programa de Ingeniería de
+Sistemas y Computación de la UTP. La @tbl-semestres muestra la distribución
+por semestre.
+
+| Semestre | Estudiantes |
+|:--------:|:-----------:|
+| 5        | 8           |
+| 7        | 3           |
+| 8        | 1           |
+| 10       | 3           |
+| **Total** | **15**     |
+
+: Distribución de la muestra por semestre {#tbl-semestres}
+
+El 100% de los encuestados (15/15) había estudiado listas enlazadas antes de
+usar la herramienta, lo que convierte a la muestra en un grupo con conocimiento
+previo del tema y con capacidad para comparar el aprendizaje basado en la
+herramienta frente a métodos que ya conocían. La idea de extender la encuesta a estudiantes de semestres posteriores al semestre donde se dicta el curso de estructuras de datos tenía varios fines.
+
+- Permitir que los estudiantes tuvieran un conocimiento previo del tema para poder comparar el aprendizaje basado en la herramienta frente a métodos tradicionales.
+- Obtener retroalimentación de estudiantes que ya han pasado por el curso de estructuras de datos y que pueden aportar una perspectiva más crítica sobre la herramienta.
+- Validar que la herramienta es útil no solo para estudiantes que están aprendiendo el tema por primera vez, sino también para aquellos que ya tienen experiencia y pueden usarla como una herramienta de repaso.
+
+### Usabilidad
+
+Las tres afirmaciones de usabilidad fueron evaluadas en escala de 1 a 5. Los
+resultados se resumen en la @tbl-usabilidad.
+
+| Afirmación | Media |
+|:-----------|:-----:|
+| La interfaz es intuitiva y fácil de usar | 4.67 |
+| Las instrucciones para realizar operaciones son claras | 4.60 |
+| La navegación entre las funciones es sencilla | 4.80 |
+
+: Resultados de usabilidad (escala 1–5, n = 15) {#tbl-usabilidad}
+
+Las tres dimensiones de usabilidad obtuvieron promedios superiores a 4.5 sobre
+5, con la navegación como el ítem mejor valorado (4.80). Estos resultados
+indican que la interfaz es percibida como intuitiva y fácil de usar por la
+amplia mayoría de los estudiantes.
+
+### Impacto en el aprendizaje
+
+La @tbl-aprendizaje presenta los promedios de las cuatro afirmaciones de la
+sección de impacto en el aprendizaje.
+
+| Afirmación | Media |
+|:-----------|:-----:|
+| La herramienta ayudó a comprender qué es una lista enlazada | 4.67 |
+| Entendió mejor *qué hacen* las operaciones | 4.67 |
+| Entendió mejor *cómo funcionan* las operaciones | 4.33 |
+| Puede explicar las operaciones a otras personas | 4.60 |
+
+: Resultados de impacto en el aprendizaje (escala 1–5, n = 15) {#tbl-aprendizaje}
+
+El ítem con menor valoración fue la comprensión de *cómo funcionan* las
+operaciones internamente (4.33), lo cual es esperable dado que la herramienta
+prioriza la visualización del comportamiento observable por encima de la
+implementación interna. Aun así, todos los promedios superan el 4.3,
+indicando un impacto positivo y consistente en el aprendizaje.
+
+### Comparación con el aprendizaje basado en código
+
+Cuando se les preguntó cómo perciben la visualización gráfica frente al
+aprendizaje editando y ejecutando código fuente, el 100% de los estudiantes
+valoró la herramienta como igual o más efectiva:
+
+| Opción | Estudiantes | Porcentaje |
+|:-------|:-----------:|:----------:|
+| Mucho más efectiva | 11 | 73% |
+| Más efectiva | 4 | 27% |
+| Igual de efectiva | 0 | 0% |
+| Menos efectiva | 0 | 0% |
+
+: Comparación con el aprendizaje basado en código (n = 15) {#tbl-comparacion}
+
+Ningún estudiante consideró el enfoque visual menos efectivo que la programación,
+lo que respalda la premisa central de la herramienta.
+
+### Métodos de aprendizaje preferidos
+
+La pregunta de selección múltiple sobre métodos de aprendizaje preferidos arrojó
+los siguientes resultados:
+
+| Método | Estudiantes | Porcentaje |
+|:-------|:-----------:|:----------:|
+| Visualizadores interactivos | 15 | 100% |
+| Implementar el código por cuenta propia | 11 | 73% |
+| Explicación del profesor | 10 | 67% |
+| Videos o tutoriales | 7 | 47% |
+| Lectura de libros/documentación | 3 | 20% |
+
+: Métodos de aprendizaje preferidos (selección múltiple, n = 15) {#tbl-metodos}
+
+Los visualizadores interactivos fueron seleccionados por la totalidad de los
+encuestados (100%), siendo el único método con selección unánime. Le siguen la
+implementación de código (73%) y la explicación del profesor (67%), lo que
+sugiere que la herramienta es percibida como un complemento natural al
+aprendizaje activo y a la enseñanza presencial.
+
+### Motivación
+
+La @tbl-motivacion resume los resultados de la sección de motivación.
+
+| Afirmación | Media |
+|:-----------|:-----:|
+| La herramienta hizo el aprendizaje más interesante | 4.73 |
+| Se sintió motivado a experimentar con las operaciones | 4.73 |
+| La herramienta redujo su frustración al aprender el tema | 4.40 |
+| Recomendaría la herramienta a otros estudiantes | 4.87 |
+| Le gustaría usar herramientas similares para otros temas | 4.73 |
+
+: Resultados de motivación (escala 1–5, n = 15) {#tbl-motivacion}
+
+El ítem de mayor puntaje es la intención de recomendar la herramienta (4.87),
+seguido de la motivación a experimentar y el interés en herramientas similares
+(4.73). La reducción de frustración obtuvo el puntaje más bajo de esta sección
+(4.40), aunque sigue siendo una valoración muy positiva.
+
+### Calificación general
+
+La distribución de calificaciones globales se presenta en la @tbl-calificacion.
+
+| Calificación | Estudiantes | Porcentaje |
+|:-------------|:-----------:|:----------:|
+| Excelente | 6 | 40% |
+| Muy buena | 7 | 47% |
+| Buena | 2 | 13% |
+| Regular | 0 | 0% |
+| Mala | 0 | 0% |
+
+: Calificación general de la herramienta (n = 15) {#tbl-calificacion}
+
+El 87% de los estudiantes calificó la herramienta como _Excelente_ o _Muy
+buena_. Ningún estudiante la calificó como Regular o Mala.
+
+### Retroalimentación cualitativa
+
+#### Aspectos a mejorar
+
+Los estudiantes identificaron varios aspectos de mejora. El más mencionado
+(por 3 estudiantes) fue el comportamiento visual de la inserción _At Position_:
+el nodo insertado aparece desplazado respecto a su posición lógica en la lista
+y solo se acomoda correctamente al usar _Auto Layout_ manualmente. Otros
+aspectos mencionados:
+
+- **Sensibilidad del _slider_ de nodos aleatorios**: difícil de ajustar con
+  precisión, especialmente en portátil. Se sugirió complementarlo con un campo
+  numérico directo.
+- **Descripción de la operación en curso**: mostrar un texto explicativo
+  durante la animación para facilitar la comprensión de lo que ocurre en cada
+  paso.
+- **Adaptación a dispositivos móviles**: la interfaz no está optimizada para
+  pantallas pequeñas.
+- **Tour inicial o videotutorial**: algunos estudiantes sugirieron un
+  recorrido guiado introductorio (la herramienta ya incluye un tour con
+  _driver.js_, aunque no todos lo descubrieron).
+- **Modo ejercicio**: un estudiante propuso incluir ejercicios interactivos
+  donde el estudiante construya la lista y la herramienta evalúe el resultado.
+
+Los aspectos anteriores que señalan fallas de la aplicación ya se han efectuado
+en la versión actual del programa como parte del ciclo de desarrollo de software.
+
+#### Estructuras de datos solicitadas
+
+Las estructuras más solicitadas para futuras versiones de la herramienta fueron:
+
+- **Árboles** (especialmente árboles Rojo-Negro y BST): mencionados por 7 estudiantes.
+- **Grafos**: mencionados por 3 estudiantes.
+- **Pilas y colas**: mencionadas por 2 estudiantes.
+- **Listas circulares**, **_Hash tables_** y **algoritmos de ordenamiento**:
+  mencionados por 1 estudiante cada uno.
+
+Es importante aclarar que estas respuestas serán tenidas en cuenta para desarrollos futuros pero que en si mismas pueden requerir desarrollos incluso más grandes de los presentados para listas enlazadas. En todo caso se listan aquí porque se consideran contribuciones valiosas que trazan posibles desarrollos futuros de otras heramientas.
+
+## Conclusiones de la validación
+
+Los resultados de la validación con 15 estudiantes evidencian que _DSViz:
+Listas enlazadas_ cumple satisfactoriamente sus objetivos pedagógicos y de
+usabilidad:
+
+1. **Alta usabilidad**: las tres dimensiones evaluadas superan el 4.6/5, lo
+   que confirma que la interfaz es intuitiva y accesible sin necesidad de
+   formación previa.
+
+2. **Impacto positivo en el aprendizaje**: los promedios de comprensión
+   oscilan entre 4.33 y 4.67/5. El ítem de comprensión interna de las
+   operaciones (4.33) es el más bajo, coherente con el enfoque de la
+   herramienta en la visualización del comportamiento observable.
+
+3. **Superioridad percibida frente al código**: el 100% de los encuestados
+   considera la visualización gráfica al menos tan efectiva como el
+   aprendizaje por código. El 73% la considera _mucho más efectiva_.
+
+4. **Alta motivación**: la intención de recomendar la herramienta obtuvo el
+   mayor puntaje de toda la encuesta (4.87/5), y el 100% seleccionó los
+   visualizadores interactivos como su método de aprendizaje preferido.
+
+5. **Retroalimentación accionable**: los estudiantes identificaron errores
+   visuales concretos y funcionalidades de alto valor para futuras
+   iteraciones, en especial el comportamiento de la inserción _At Position_
+   y la adición de descripciones durante las animaciones.

@@ -28,6 +28,7 @@ book:
     - visualizacion.qmd
     - interfaz.qmd
     - despliegue.qmd
+    - validacion.qmd
 
 lang: es
 

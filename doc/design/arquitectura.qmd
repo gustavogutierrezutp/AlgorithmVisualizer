@@ -170,6 +170,7 @@ del usuario hasta el renderizado de la visualización:
 
 ```{mermaid}
 %%| label: fig-flujo-datos
+%%| fig-width: 6
 %%| fig-cap: "Flujo de datos desde la acción del usuario hasta el renderizado."
 sequenceDiagram
     actor U as Usuario

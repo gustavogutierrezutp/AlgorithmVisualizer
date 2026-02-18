@@ -288,5 +288,25 @@
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Despliegue y CI/CD</span>"
     ]
+  },
+  {
+    "objectID": "validacion.html",
+    "href": "validacion.html",
+    "title": "7  Pruebas de validación y evaluación de impacto pedagógico",
+    "section": "",
+    "text": "7.1 Metodología de Validación\nPara validar la utilidad, usabilidad y el impacto pedagógico de la herramienta DSViz: Listas enlazadas, se realizó una prueba de campo con una muestra de 15 estudiantes de la Universidad Tecnológica de Pereira (UTP), del programa de Ingeniería de sistemas y computación.\nLa validación se llevó a cabo mediante una encuesta estructurada que evaluó cuatro dimensiones críticas: usabilidad de la interfaz, eficacia en la transferencia de conocimiento, motivación del estudiante y comparación frente a métodos tradicionales de enseñanza.\nAdicionalmente se utilizó la encuesta para recopilar información sobre posibles mejoras y características adicionales que los estudiantes consideraran valiosas.\nA continuación se detallan las preguntas y se adjunta su justificación. La primera sección tiene como objetivo recolectar información que permita caracterizar la población.\nLa segunda sección evalúa la usabilidad del software. Contiene tres preguntas que se responden en una escala de 1 a 5. Se pregunta por el nivel de acuerdo en que el encuestado se encuentra con las afirmaciones.\nLa tercera sección evalúa el impacto del software en el aprendizaje. De nuevo utiliza la escala de 1 a 5 y se le pide al encuestado indicar su nivel acuerdo con las afirmaciones.\nLa cuarta sección indaga al encuestado para que compare el enfoque del software con otros métodos de aprendizaje. En este caso son dos preguntas con sus respectivas opciones de respuesta. En el caso de la primera pregunta es de única respuesta y para la segunda puede seleccionar más de una.\nLa quinta sección busca indagar por la motivación al uso de la herramienta. De nuevo, Se muestran cinco afirmaciones y se le pide indicar el nivel de acuerdo en valores de 1 a 5.\nFinalmente, la sexta sección es abierta y busca obtener retroalimentación.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Pruebas de validación y evaluación de impacto pedagógico</span>"
+    ]
+  },
+  {
+    "objectID": "validacion.html#metodología-de-validación",
+    "href": "validacion.html#metodología-de-validación",
+    "title": "7  Pruebas de validación y evaluación de impacto pedagógico",
+    "section": "",
+    "text": "Semestre actual.\n¿Habías estudiado listas enlazadas antes de usar esta herramienta?\n\n\n\nLa interfaz de la herramienta es intuitiva y fácil de usar.\nLas instrucciones para realizar operaciones son claras.\nLa navegación entre las diferentes funciones es sencilla.\n\n\n\nLa herramienta le ayudó a comprender qué es una lista enlazada.\nLogró entender mejor qué hacen las diferentes operaciones de las listas enlazadas.\nLogró entender mejor cómo funcionan las diferentes operaciones de las listas enlazadas.\nConsidera que puede explicar a otras personas, las operaciones de listas enlazadas a otros.\n\n\n\nConsidera que la visualización con gráficas de la herramienta frente al aprendizaje editando y ejecutando código fuente es:\n\n\nMucho más efectiva.\nMás efectiva.\nIgual de efectiva.\nMenos efectiva.\n\n\n¿Cuál método de aprendizaje prefiere para entender estructuras de datos? (Puedes seleccionar varios)\n\n\nLectura de libros/documentación.\nExplicación del profesor.\nVisualizadores interactivos como este.\nImplementar el código por cuenta propia.\nVideos o tutoriales.\nOtros (especificar).\n\n\n\nUsar la herramienta hizo el aprendizaje más interesante.\nMe sentí motivado(a) a experimentar con diferentes operaciones.\nLa herramienta redujo mi frustración al aprender el tema.\nRecomendaría esta herramienta a otros estudiantes.\nMe gustaría usar herramientas similares para otros temas.\n\n\n\nEn general, ¿cómo calificarías la herramienta?\n\n\nExcelente.\nMuy buena.\nBuena.\nRegular.\nMala.\n\n\n¿Qué aspectos mejorarías de la herramienta?\n¿Qué otras estructuras de datos te gustaría visualizar con una herramienta similar?.\nComentarios adicionales.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Pruebas de validación y evaluación de impacto pedagógico</span>"
+    ]
   }
 ]

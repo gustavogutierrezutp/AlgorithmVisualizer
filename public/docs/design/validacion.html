@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Interfaz de Usuario – DSViz Listas enlazadas: diseño</title>
+<title>7&nbsp; Pruebas de validación y evaluación de impacto pedagógico – DSViz Listas enlazadas: diseño</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -68,8 +33,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./despliegue.html" rel="next">
-<link href="./visualizacion.html" rel="prev">
+<link href="./despliegue.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -122,7 +86,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interfaz.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Interfaz de Usuario</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./validacion.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pruebas de validación y evaluación de impacto pedagógico</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -173,7 +137,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./interfaz.html" class="sidebar-item-text sidebar-link active">
+  <a href="./interfaz.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Interfaz de Usuario</span></span></a>
   </div>
 </li>
@@ -185,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./validacion.html" class="sidebar-item-text sidebar-link">
+  <a href="./validacion.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pruebas de validación y evaluación de impacto pedagógico</span></span></a>
   </div>
 </li>
@@ -199,26 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#componentes-principales" id="toc-componentes-principales" class="nav-link active" data-scroll-target="#componentes-principales"><span class="header-section-number">5.1</span> Componentes principales</a>
-  <ul class="collapse">
-  <li><a href="#componente-orquestador-page.tsx" id="toc-componente-orquestador-page.tsx" class="nav-link" data-scroll-target="#componente-orquestador-page.tsx"><span class="header-section-number">5.1.1</span> Componente orquestador (<code>page.tsx</code>)</a></li>
-  <li><a href="#nodo-de-lista-linkedlistnode" id="toc-nodo-de-lista-linkedlistnode" class="nav-link" data-scroll-target="#nodo-de-lista-linkedlistnode"><span class="header-section-number">5.1.2</span> Nodo de lista (<code>LinkedListNode</code>)</a></li>
-  <li><a href="#nodo-circular-circlenode" id="toc-nodo-circular-circlenode" class="nav-link" data-scroll-target="#nodo-circular-circlenode"><span class="header-section-number">5.1.3</span> Nodo circular (<code>CircleNode</code>)</a></li>
-  </ul></li>
-  <li><a href="#sistema-de-menús" id="toc-sistema-de-menús" class="nav-link" data-scroll-target="#sistema-de-menús"><span class="header-section-number">5.2</span> Sistema de menús</a>
-  <ul class="collapse">
-  <li><a href="#estructura-del-menú" id="toc-estructura-del-menú" class="nav-link" data-scroll-target="#estructura-del-menú"><span class="header-section-number">5.2.1</span> Estructura del menú</a></li>
-  <li><a href="#componente-section" id="toc-componente-section" class="nav-link" data-scroll-target="#componente-section"><span class="header-section-number">5.2.2</span> Componente <code>Section</code></a></li>
-  <li><a href="#componente-menuheader" id="toc-componente-menuheader" class="nav-link" data-scroll-target="#componente-menuheader"><span class="header-section-number">5.2.3</span> Componente <code>MenuHeader</code></a></li>
-  <li><a href="#sección-de-operaciones" id="toc-sección-de-operaciones" class="nav-link" data-scroll-target="#sección-de-operaciones"><span class="header-section-number">5.2.4</span> Sección de operaciones</a></li>
-  </ul></li>
-  <li><a href="#estilización-con-tailwind-css-y-radix-ui" id="toc-estilización-con-tailwind-css-y-radix-ui" class="nav-link" data-scroll-target="#estilización-con-tailwind-css-y-radix-ui"><span class="header-section-number">5.3</span> Estilización con Tailwind CSS y Radix UI</a>
-  <ul class="collapse">
-  <li><a href="#tailwind-css" id="toc-tailwind-css" class="nav-link" data-scroll-target="#tailwind-css"><span class="header-section-number">5.3.1</span> Tailwind CSS</a></li>
-  <li><a href="#sistema-de-colores" id="toc-sistema-de-colores" class="nav-link" data-scroll-target="#sistema-de-colores"><span class="header-section-number">5.3.2</span> Sistema de colores</a></li>
-  <li><a href="#componentes-shadcnui" id="toc-componentes-shadcnui" class="nav-link" data-scroll-target="#componentes-shadcnui"><span class="header-section-number">5.3.3</span> Componentes shadcn/ui</a></li>
-  <li><a href="#diseño-adaptativo" id="toc-diseño-adaptativo" class="nav-link" data-scroll-target="#diseño-adaptativo"><span class="header-section-number">5.3.4</span> Diseño adaptativo</a></li>
-  </ul></li>
+  <li><a href="#metodología-de-validación" id="toc-metodología-de-validación" class="nav-link active" data-scroll-target="#metodología-de-validación"><span class="header-section-number">7.1</span> Metodología de Validación</a></li>
   </ul>
 </nav>
     </div>
@@ -227,7 +172,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-interfaz" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Interfaz de Usuario</span></span></h1>
+<h1 class="title"><span id="sec-validacion" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pruebas de validación y evaluación de impacto pedagógico</span></span></h1>
 </div>
 
 
@@ -244,175 +189,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Este capítulo describe el diseño de los componentes de la interfaz de usuario, el sistema de menús y la estrategia de estilización.</p>
-<section id="componentes-principales" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="componentes-principales"><span class="header-section-number">5.1</span> Componentes principales</h2>
-<p>La interfaz se divide en tres áreas principales, como se muestra en la <a href="#fig-main-annotated" class="quarto-xref">Figura&nbsp;<span>5.1</span></a>:</p>
+<p>Para validar la utilidad, usabilidad y el impacto pedagógico de la herramienta <em>DSViz: Listas enlazadas</em>, se realizó una prueba de campo con una muestra de 15 estudiantes de la Universidad Tecnológica de Pereira (UTP), del programa de Ingeniería de sistemas y computación.</p>
+<section id="metodología-de-validación" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="metodología-de-validación"><span class="header-section-number">7.1</span> Metodología de Validación</h2>
+<p>La validación se llevó a cabo mediante una encuesta estructurada que evaluó cuatro dimensiones críticas: usabilidad de la interfaz, eficacia en la transferencia de conocimiento, motivación del estudiante y comparación frente a métodos tradicionales de enseñanza.</p>
+<p>Adicionalmente se utilizó la encuesta para recopilar información sobre posibles mejoras y características adicionales que los estudiantes consideraran valiosas.</p>
+<p>A continuación se detallan las preguntas y se adjunta su justificación. La primera sección tiene como objetivo recolectar información que permita caracterizar la población.</p>
 <ol type="1">
-<li><strong>Barra de navegación</strong> (parte superior): enlaces a documentación, repositorio y tour guiado.</li>
-<li><strong>Panel de menú</strong> (izquierda): controles para la creación, operaciones y configuración de la visualización.</li>
-<li><strong>Lienzo</strong> (derecha): área de visualización interactiva con ReactFlow.</li>
+<li>Semestre actual.</li>
+<li>¿Habías estudiado listas enlazadas antes de usar esta herramienta?</li>
 </ol>
-<div id="fig-main-annotated" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-main-annotated-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/main-annotated.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-main-annotated-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;5.1: Partes principales de la interfaz de usuario.
-</figcaption>
-</figure>
-</div>
-<section id="componente-orquestador-page.tsx" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="componente-orquestador-page.tsx"><span class="header-section-number">5.1.1</span> Componente orquestador (<code>page.tsx</code>)</h3>
-<p>El archivo <code>src/app/sll/page.tsx</code> es el componente principal del módulo de listas enlazadas. Sus responsabilidades son:</p>
-<ul>
-<li>Gestionar las 18 variables de estado (ver <a href="modelo-datos.html#sec-gestion-estado" class="quarto-xref"><span>Sección 3.3</span></a>).</li>
-<li>Coordinar los tres <em>custom hooks</em> (<code>useListOperations</code>, <code>useListVisualization</code>, <code>useListInitialization</code>).</li>
-<li>Definir los 22 manejadores de eventos que conectan el menú con las operaciones.</li>
-<li>Renderizar la estructura de la página: <code>Navbar</code>, <code>Menu</code> y el lienzo <code>ReactFlow</code>.</li>
-</ul>
-</section>
-<section id="nodo-de-lista-linkedlistnode" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="nodo-de-lista-linkedlistnode"><span class="header-section-number">5.1.2</span> Nodo de lista (<code>LinkedListNode</code>)</h3>
-<p>El componente <code>LinkedListNode</code> (<code>src/app/sll/LinkedListNode.tsx</code>) renderiza cada elemento de la lista enlazada como un rectángulo dividido en dos secciones:</p>
-<pre><code>┌───────────────────────┬──────────────┐
-│  Sección de datos     │  Puntero     │
-│  (valor del nodo)     │  (next →)    │
-└───────────────────────┴──────────────┘</code></pre>
-<ul>
-<li><strong>Sección de datos</strong> (70% del ancho): muestra el valor del nodo con un fondo semitransparente blanco sobre el color de fondo del nodo.</li>
-<li><strong>Sección de puntero</strong> (30% del ancho): representa el puntero <code>next</code>. Al posicionar el cursor sobre esta sección, el fondo cambia a rojo (<code>#F44336</code>) y la arista saliente se resalta.</li>
-</ul>
-<p>Las dimensiones mínimas son 72x36 píxeles, con bordes redondeados y un divisor vertical entre las dos secciones. <a href="#fig-node-example" class="quarto-xref">Figura&nbsp;<span>5.2</span></a> muestra un ejemplo de nodo de lista enlazada renderizado.</p>
-<div id="fig-node-example" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-node-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/nodeexample.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-node-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;5.2: Ejemplo de nodo de datos en el lienzo.
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="nodo-circular-circlenode" class="level3" data-number="5.1.3">
-<h3 data-number="5.1.3" class="anchored" data-anchor-id="nodo-circular-circlenode"><span class="header-section-number">5.1.3</span> Nodo circular (<code>CircleNode</code>)</h3>
-<p>El componente <code>CircleNode</code> (<code>src/app/sll/CircleNode.tsx</code>) renderiza los nodos de tipo puntero como círculos de 45x45 píxeles con fondo naranja (<code>#FF5722</code>).</p>
-<p>Características interactivas:</p>
-<ul>
-<li><strong>Doble clic</strong>: activa el modo de edición de la etiqueta.</li>
-<li><strong>Entrada de texto</strong>: máximo 3 caracteres. Se confirma con Enter o al perder el foco, y se cancela con Escape.</li>
-<li><strong>Hover</strong>: al posicionar el cursor sobre el nodo, se invoca <code>onPointerHover</code> para resaltar la arista conectada.</li>
-</ul>
-<div id="fig-circular-node" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-circular-node-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/head-node.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-circular-node-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;5.3: Ejemplo de nodo circular para señalar el primer elemento de la lista.
-</figcaption>
-</figure>
-</div>
-</section>
-</section>
-<section id="sistema-de-menús" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="sistema-de-menús"><span class="header-section-number">5.2</span> Sistema de menús</h2>
-<p>El panel de menú se implementa como un componente jerárquico compuesto por varias capas.</p>
-<section id="estructura-del-menú" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="estructura-del-menú"><span class="header-section-number">5.2.1</span> Estructura del menú</h3>
-<pre><code>Menu (panel lateral, 288px de ancho)
-├── MenuHeader (encabezado animado, fijo)
-├── ListCreation (sección colapsable)
-│   ├── Pestaña Empty    → botón "Create Empty List"
-│   ├── Pestaña Random   → slider de cantidad + "Generate Random"
-│   └── Pestaña Custom   → entrada JSON + "Create From Sequence"
-├── Operations (sección colapsable)
-│   ├── Insert           → At Head, At Position, At Tail, At Tail (O1)
-│   ├── Remove           → Head, Tail, Position
-│   ├── Access           → Front, Back, Nth
-│   ├── Search           → entrada de valor + botón
-│   └── Algorithms       → Traverse, Reverse, Find Middle,
-│                           Get Length, Remove Duplicates
-├── Programmer Tools (sección colapsable)
-│   ├── Show head and tail pointers
-│   └── Add pointer
-└── Display Options (sección colapsable)
-    ├── Speed             → slider (10-100, mapeado a 10-1000ms)
-    ├── Colors            → selectores de color (Standard, New, Active)
-    ├── Highlights        → Head / Tail toggles
-    ├── Layout            → Scramble + Auto Layout
-    └── Canvas            → Auto Adjust toggle</code></pre>
-</section>
-<section id="componente-section" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="componente-section"><span class="header-section-number">5.2.2</span> Componente <code>Section</code></h3>
-<p>El componente reutilizable <code>Section</code> (<code>src/components/menu/Section.tsx</code>) implementa una sección colapsable con:</p>
-<ul>
-<li>Un encabezado que muestra un icono (Lucide), un título y un indicador de chevron que rota al expandir/colapsar.</li>
-<li>Animación suave de altura máxima (<em>max-height</em>) para la transición.</li>
-<li>Soporte para estado controlado y no controlado mediante las props <code>isOpen</code> y <code>defaultOpen</code>.</li>
-</ul>
-</section>
-<section id="componente-menuheader" class="level3" data-number="5.2.3">
-<h3 data-number="5.2.3" class="anchored" data-anchor-id="componente-menuheader"><span class="header-section-number">5.2.3</span> Componente <code>MenuHeader</code></h3>
-<p>El encabezado del menú (<code>src/components/menu/MenuHeader.tsx</code>) incluye animaciones basadas en el progreso de desplazamiento (<em>scroll</em>):</p>
-<ul>
-<li>Tamaño dinámico del icono que disminuye al desplazarse.</li>
-<li>Opacidad y rotación que cambian según la posición de scroll.</li>
-<li>Una barra de progreso con gradiente que indica la posición actual.</li>
-</ul>
-</section>
-<section id="sección-de-operaciones" class="level3" data-number="5.2.4">
-<h3 data-number="5.2.4" class="anchored" data-anchor-id="sección-de-operaciones"><span class="header-section-number">5.2.4</span> Sección de operaciones</h3>
-<p>La sección <code>Operations</code> (<code>src/components/menu/sections/Operations.tsx</code>) organiza las 16 operaciones en 5 subsecciones colapsables. Cada subsección sigue un patrón consistente:</p>
-<ol type="1">
-<li><strong>Entrada de valor</strong>: campo de texto con botón de valor aleatorio (para operaciones que requieren un valor).</li>
-<li><strong>Entrada de posición</strong>: campo numérico con validación de rango (para operaciones que requieren una posición).</li>
-<li><strong>Botones de acción</strong>: uno por cada operación disponible.</li>
+<p>La segunda sección evalúa la <em>usabilidad</em> del software. Contiene tres preguntas que se responden en una escala de 1 a 5. Se pregunta por el nivel de acuerdo en que el encuestado se encuentra con las afirmaciones.</p>
+<ol start="3" type="1">
+<li>La interfaz de la herramienta es intuitiva y fácil de usar.</li>
+<li>Las instrucciones para realizar operaciones son claras.</li>
+<li>La navegación entre las diferentes funciones es sencilla.</li>
 </ol>
-<p>Los botones de acción invocan <code>onVisualize(opIndex, value, position)</code>, que se propaga hasta el componente principal <code>page.tsx</code>.</p>
-</section>
-</section>
-<section id="estilización-con-tailwind-css-y-radix-ui" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="estilización-con-tailwind-css-y-radix-ui"><span class="header-section-number">5.3</span> Estilización con Tailwind CSS y Radix UI</h2>
-<section id="tailwind-css" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="tailwind-css"><span class="header-section-number">5.3.1</span> Tailwind CSS</h3>
-<p>La aplicación utiliza <strong>Tailwind CSS</strong> con un enfoque <em>utility-first</em>. Las clases de utilidad se aplican directamente en los componentes JSX, evitando la necesidad de hojas de estilo separadas.</p>
-<p>Para la gestión de clases condicionales se utiliza la función <code>cn()</code> definida en <code>src/lib/utils.ts</code>, que combina <code>clsx</code> (para lógica condicional) y <code>tailwind-merge</code> (para resolver conflictos entre clases de Tailwind):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { clsx<span class="op">,</span> <span class="kw">type</span> ClassValue } <span class="im">from</span> <span class="st">"clsx"</span><span class="op">;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { twMerge } <span class="im">from</span> <span class="st">"tailwind-merge"</span><span class="op">;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">cn</span>(<span class="op">...</span>inputs<span class="op">:</span> ClassValue[]) {</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">twMerge</span>(<span class="fu">clsx</span>(inputs))<span class="op">;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="sistema-de-colores" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="sistema-de-colores"><span class="header-section-number">5.3.2</span> Sistema de colores</h3>
-<p>El sistema de colores se basa en variables CSS con valores HSL, lo que permite una personalización global del tema. Las variables se definen en <code>src/app/globals.css</code>:</p>
+<p>La tercera sección evalúa el impacto del software en el aprendizaje. De nuevo utiliza la escala de 1 a 5 y se le pide al encuestado indicar su nivel acuerdo con las afirmaciones.</p>
+<ol start="6" type="1">
+<li>La herramienta le ayudó a comprender qué es una lista enlazada.</li>
+<li>Logró entender mejor <em>qué hacen</em> las diferentes operaciones de las listas enlazadas.</li>
+<li>Logró entender mejor <em>cómo funcionan</em> las diferentes operaciones de las listas enlazadas.</li>
+<li>Considera que puede explicar a otras personas, las operaciones de listas enlazadas a otros.</li>
+</ol>
+<p>La cuarta sección indaga al encuestado para que compare el enfoque del software con otros métodos de aprendizaje. En este caso son dos preguntas con sus respectivas opciones de respuesta. En el caso de la primera pregunta es de única respuesta y para la segunda puede seleccionar más de una.</p>
+<ol start="10" type="1">
+<li>Considera que la visualización con gráficas de la herramienta frente al aprendizaje editando y ejecutando código fuente es:</li>
+</ol>
 <ul>
-<li><code>--background</code>, <code>--foreground</code>: colores base del fondo y texto.</li>
-<li><code>--primary</code>, <code>--secondary</code>, <code>--accent</code>: colores de énfasis.</li>
-<li><code>--destructive</code>: color para acciones destructivas.</li>
-<li><code>--border</code>, <code>--ring</code>: colores de bordes y anillos de foco.</li>
+<li>Mucho más efectiva.</li>
+<li>Más efectiva.</li>
+<li>Igual de efectiva.</li>
+<li>Menos efectiva.</li>
 </ul>
-</section>
-<section id="componentes-shadcnui" class="level3" data-number="5.3.3">
-<h3 data-number="5.3.3" class="anchored" data-anchor-id="componentes-shadcnui"><span class="header-section-number">5.3.3</span> Componentes shadcn/ui</h3>
-<p>Los componentes atómicos de la interfaz (botones, entradas, <em>sliders</em>, <em>switches</em>, selectores) provienen de <strong>shadcn/ui</strong> y se encuentran en <code>src/components/ui/</code>. Estos componentes están construidos sobre primitivas de <strong>Radix UI</strong>, que proporcionan accesibilidad y comportamiento estandarizado.</p>
-<p>Los componentes personalizados (<code>custom-slider.tsx</code>, <code>custom-select.tsx</code>, <code>custom-toggle.tsx</code>, <code>custom-input.tsx</code>) envuelven los componentes de shadcn/ui con etiquetas, valores de visualización y estilos específicos del visualizador.</p>
-</section>
-<section id="diseño-adaptativo" class="level3" data-number="5.3.4">
-<h3 data-number="5.3.4" class="anchored" data-anchor-id="diseño-adaptativo"><span class="header-section-number">5.3.4</span> Diseño adaptativo</h3>
-<p>La interfaz utiliza un diseño de dos columnas con <code>flex</code>:</p>
+<ol start="11" type="1">
+<li>¿Cuál método de aprendizaje prefiere para entender estructuras de datos? (Puedes seleccionar varios)</li>
+</ol>
 <ul>
-<li>El panel de menú tiene un ancho fijo de 288px con scroll vertical independiente.</li>
-<li>El lienzo ocupa el espacio restante (<code>flex-1</code>) y se adapta al tamaño de la ventana.</li>
+<li>Lectura de libros/documentación.</li>
+<li>Explicación del profesor.</li>
+<li>Visualizadores interactivos como este.</li>
+<li>Implementar el código por cuenta propia.</li>
+<li>Videos o tutoriales.</li>
+<li>Otros (especificar).</li>
 </ul>
-<p>La barra de navegación es fija en la parte superior y el contenido principal ocupa la altura restante de la ventana (<code>h-screen</code>).</p>
+<p>La quinta sección busca indagar por la motivación al uso de la herramienta. De nuevo, Se muestran cinco afirmaciones y se le pide indicar el nivel de acuerdo en valores de 1 a 5.</p>
+<ol start="13" type="1">
+<li>Usar la herramienta hizo el aprendizaje más interesante.</li>
+<li>Me sentí motivado(a) a experimentar con diferentes operaciones.</li>
+<li>La herramienta redujo mi frustración al aprender el tema.</li>
+<li>Recomendaría esta herramienta a otros estudiantes.</li>
+<li>Me gustaría usar herramientas similares para otros temas.</li>
+</ol>
+<p>Finalmente, la sexta sección es abierta y busca obtener retroalimentación.</p>
+<ol start="17" type="1">
+<li>En general, ¿cómo calificarías la herramienta?</li>
+</ol>
+<ul>
+<li>Excelente.</li>
+<li>Muy buena.</li>
+<li>Buena.</li>
+<li>Regular.</li>
+<li>Mala.</li>
+</ul>
+<ol start="18" type="1">
+<li>¿Qué aspectos mejorarías de la herramienta?</li>
+<li>¿Qué otras estructuras de datos te gustaría visualizar con una herramienta similar?.</li>
+<li>Comentarios adicionales.</li>
+</ol>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -818,14 +664,11 @@ Figura&nbsp;5.3: Ejemplo de nodo circular para señalar el primer elemento de la
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./visualizacion.html" class="pagination-link" aria-label="Motor de Visualización">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Motor de Visualización</span></span>
+      <a href="./despliegue.html" class="pagination-link" aria-label="Despliegue y CI/CD">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Despliegue y CI/CD</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./despliegue.html" class="pagination-link" aria-label="Despliegue y CI/CD">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Despliegue y CI/CD</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
