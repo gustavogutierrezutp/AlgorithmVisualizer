@@ -3,7 +3,7 @@
 Para validar la utilidad, usabilidad y el impacto pedagógico de la herramienta
 _DSViz: Listas enlazadas_, se realizó una prueba de campo con una muestra de 15
 estudiantes de la Universidad Tecnológica de Pereira (UTP), del programa de
-Ingeniería de sistemas y computación.
+Ingeniería de Sistemas y Computación.
 
 ## Metodología de Validación
 
@@ -19,7 +19,8 @@ A continuación se detallan las preguntas y se adjunta su justificación. La
 primera sección tiene como objetivo recolectar información que permita
 caracterizar la población.
 
-:::{.callout appearance="minimal"}
+:::{.callout-note appearance="minimal"}
+### Preguntas
 1.  Semestre actual.
 2.  ¿Habías estudiado listas enlazadas antes de usar esta herramienta?
 :::
@@ -28,21 +29,23 @@ La segunda sección evalúa la *usabilidad* del software. Contiene tres pregunta
 que se responden en una escala de 1 a 5. Se pregunta por el nivel de acuerdo en
 que el encuestado se encuentra con las afirmaciones.
 
-:::{.callout appearance="minimal"}
+:::{.callout-note appearance="minimal"}
+### Preguntas
 3.  La interfaz de la herramienta es intuitiva y fácil de usar.
 4.  Las instrucciones para realizar operaciones son claras.
 5.  La navegación entre las diferentes funciones es sencilla.
 :::
 
 La tercera sección evalúa el impacto del software en el aprendizaje. De nuevo
-utiliza la escala de 1 a 5 y se le pide al encuestado indicar su nivel acuerdo
+utiliza la escala de 1 a 5 y se le pide al encuestado indicar su nivel de acuerdo
 con las afirmaciones.
 
-:::{.callout appearance="minimal"}
+:::{.callout-note appearance="minimal"}
+### Preguntas
 6.  La herramienta le ayudó a comprender qué es una lista enlazada.
 7.  Logró entender mejor *qué hacen* las diferentes operaciones de las listas enlazadas.
 8.  Logró entender mejor *cómo funcionan* las diferentes operaciones de las listas enlazadas.
-9.  Considera que puede explicar a otras personas, las operaciones de listas enlazadas a otros.
+9.  Considera que puede explicar a otras personas las operaciones de listas enlazadas.
 :::
 
 La cuarta sección indaga al encuestado para que compare el enfoque del software
@@ -50,7 +53,8 @@ con otros métodos de aprendizaje. En este caso son dos preguntas con sus
 respectivas opciones de respuesta. En el caso de la primera pregunta es de única
 respuesta y para la segunda puede seleccionar más de una.
 
-:::{.callout appearance="minimal"}
+:::{.callout-note appearance="minimal"}
+### Preguntas
 10. Considera que la visualización con gráficas de la herramienta frente al
 aprendizaje editando y ejecutando código fuente es:
 
@@ -71,11 +75,11 @@ aprendizaje editando y ejecutando código fuente es:
 :::
 
 La quinta sección busca indagar por la motivación al uso de la herramienta. De
-nuevo, Se muestran cinco afirmaciones y se le pide indicar el nivel de acuerdo
+nuevo, se muestran cinco afirmaciones y se le pide indicar el nivel de acuerdo
 en valores de 1 a 5.
 
-:::{.callout appearance="minimal"}
-
+:::{.callout-note appearance="minimal"}
+### Preguntas
 12. Usar la herramienta hizo el aprendizaje más interesante.
 13. Me sentí motivado(a) a experimentar con diferentes operaciones.
 14. La herramienta redujo mi frustración al aprender el tema.
@@ -85,7 +89,9 @@ en valores de 1 a 5.
 
 Finalmente, la sexta sección es abierta y busca obtener retroalimentación.
 
-:::{.callout appearance="minimal"}
+:::{.callout-note appearance="minimal"}
+### Preguntas
+
 17. En general, ¿cómo calificarías la herramienta?
 
 - Excelente.
@@ -95,7 +101,7 @@ Finalmente, la sexta sección es abierta y busca obtener retroalimentación.
 - Mala.
 
 18. ¿Qué aspectos mejorarías de la herramienta?
-19. ¿Qué otras estructuras de datos te gustaría visualizar con una herramienta similar?.
+19. ¿Qué otras estructuras de datos te gustaría visualizar con una herramienta similar?
 20. Comentarios adicionales.
 :::
 
@@ -276,7 +282,7 @@ Las estructuras más solicitadas para futuras versiones de la herramienta fueron
 - **Listas circulares**, **_Hash tables_** y **algoritmos de ordenamiento**:
   mencionados por 1 estudiante cada uno.
 
-Es importante aclarar que estas respuestas serán tenidas en cuenta para desarrollos futuros pero que en si mismas pueden requerir desarrollos incluso más grandes de los presentados para listas enlazadas. En todo caso se listan aquí porque se consideran contribuciones valiosas que trazan posibles desarrollos futuros de otras heramientas.
+Es importante aclarar que estas respuestas serán tenidas en cuenta para desarrollos futuros pero que en sí mismas pueden requerir desarrollos incluso más grandes de los presentados para listas enlazadas. En todo caso se listan aquí porque se consideran contribuciones valiosas que trazan posibles desarrollos futuros de otras herramientas.
 
 ## Conclusiones de la validación
 
@@ -284,7 +290,7 @@ Los resultados de la validación con 15 estudiantes evidencian que _DSViz:
 Listas enlazadas_ cumple satisfactoriamente sus objetivos pedagógicos y de
 usabilidad:
 
-1. **Alta usabilidad**: las tres dimensiones evaluadas superan el 4.6/5, lo
+1. **Alta usabilidad**: las tres dimensiones evaluadas alcanzan o superan el 4.5/5, lo
    que confirma que la interfaz es intuitiva y accesible sin necesidad de
    formación previa.
 

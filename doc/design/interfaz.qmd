@@ -25,11 +25,10 @@ Partes principales de la interfaz de usuario.
 El archivo `src/app/sll/page.tsx` es el componente principal del módulo de
 listas enlazadas. Sus responsabilidades son:
 
-- Gestionar las 18 variables de estado (ver @sec-gestion-estado).
+- Gestionar las 20 variables de estado (ver @sec-gestion-estado).
 - Coordinar los tres _custom hooks_ (`useListOperations`,
   `useListVisualization`, `useListInitialization`).
-- Definir los 22 manejadores de eventos que conectan el menú con las
-  operaciones.
+- Definir los manejadores de eventos que conectan el menú con las operaciones.
 - Renderizar la estructura de la página: `Navbar`, `Menu` y el lienzo
   `ReactFlow`.
 
@@ -56,7 +55,7 @@ vertical entre las dos secciones. @fig-node-example muestra un ejemplo de nodo
 de lista enlazada renderizado.
 
 ::: {#fig-node-example}
-![](figures/nodeexample.png)
+![](figures/nodeexample.png){width=15%}
 
 Ejemplo de nodo de datos en el lienzo.
 :::
@@ -75,7 +74,7 @@ Características interactivas:
   `onPointerHover` para resaltar la arista conectada.
 
 ::: {#fig-circular-node}
-![](figures/head-node.png)
+![](figures/head-node.png){width=10%}
 
 Ejemplo de nodo circular para señalar el primer elemento de la lista.
 :::

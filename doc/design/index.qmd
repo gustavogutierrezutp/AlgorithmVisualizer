@@ -72,7 +72,8 @@ ecosistema JavaScript estándar.
 
 El presente documento cubre la versión actual del módulo. Se describen las
 tecnologías utilizadas, la estructura del proyecto, el modelo de datos, el motor
-de visualización, la interfaz de usuario y el proceso de despliegue.
+de visualización, la interfaz de usuario, el proceso de despliegue y los
+resultados de la validación pedagógica realizada con estudiantes de la UTP.
 
 ## Audiencia
 
@@ -95,3 +96,6 @@ El documento se organiza en los siguientes capítulos:
 5. **Despliegue y CI/CD** (@sec-despliegue): documenta el proceso de
    construcción, despliegue en GitHub Pages y el flujo de trabajo con GitHub
    Actions.
+6. **Pruebas de validación** (@sec-validacion): describe la metodología de
+   evaluación con estudiantes y los resultados de la prueba de campo realizada
+   en la UTP.

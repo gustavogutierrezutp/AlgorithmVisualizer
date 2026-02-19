@@ -129,7 +129,7 @@ src/
 ### Organización modular
 
 La estructura del módulo de visualización está organizada de manera modular con
-una estructuraconsistente:
+una estructura consistente:
 
 - **`page.tsx`**: componente principal que actúa como orquestador del estado y
   la visualización.

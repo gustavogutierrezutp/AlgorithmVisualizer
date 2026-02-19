@@ -110,6 +110,8 @@ El componente principal mantiene las siguientes variables de estado:
 | `autoAdjust`        | `boolean`              | Ajustar lienzo automáticamente                 |
 | `selectedNodes`     | `string[]`             | IDs de nodos seleccionados                     |
 | `laserPointerEnabled` | `boolean`            | Activar puntero láser                          |
+| `laserPointerPosition` | `{ x, y }`          | Posición actual del puntero láser              |
+| `isReconnecting`    | `boolean`              | Indica si se está reconectando una arista      |
 | `lengthResult`      | `number \| null`       | Resultado de la operación _Get Length_          |
 | `searchResult`      | `object \| null`       | Resultado de la operación _Search_             |
 

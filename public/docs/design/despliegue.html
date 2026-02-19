@@ -199,23 +199,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#github-pages" id="toc-github-pages" class="nav-link active" data-scroll-target="#github-pages"><span class="header-section-number">6.1</span> GitHub Pages</a>
+  <li><a href="#requisitos-de-infraestructura" id="toc-requisitos-de-infraestructura" class="nav-link active" data-scroll-target="#requisitos-de-infraestructura"><span class="header-section-number">6.1</span> Requisitos de infraestructura</a></li>
+  <li><a href="#github-pages" id="toc-github-pages" class="nav-link" data-scroll-target="#github-pages"><span class="header-section-number">6.2</span> GitHub Pages</a>
   <ul class="collapse">
-  <li><a href="#configuración-de-next.js" id="toc-configuración-de-next.js" class="nav-link" data-scroll-target="#configuración-de-next.js"><span class="header-section-number">6.1.1</span> Configuración de Next.js</a></li>
-  <li><a href="#enrutamiento-del-lado-del-cliente" id="toc-enrutamiento-del-lado-del-cliente" class="nav-link" data-scroll-target="#enrutamiento-del-lado-del-cliente"><span class="header-section-number">6.1.2</span> Enrutamiento del lado del cliente</a></li>
+  <li><a href="#configuración-de-next.js" id="toc-configuración-de-next.js" class="nav-link" data-scroll-target="#configuración-de-next.js"><span class="header-section-number">6.2.1</span> Configuración de Next.js</a></li>
+  <li><a href="#enrutamiento-del-lado-del-cliente" id="toc-enrutamiento-del-lado-del-cliente" class="nav-link" data-scroll-target="#enrutamiento-del-lado-del-cliente"><span class="header-section-number">6.2.2</span> Enrutamiento del lado del cliente</a></li>
   </ul></li>
-  <li><a href="#flujo-de-trabajo-con-github-actions" id="toc-flujo-de-trabajo-con-github-actions" class="nav-link" data-scroll-target="#flujo-de-trabajo-con-github-actions"><span class="header-section-number">6.2</span> Flujo de trabajo con GitHub Actions</a>
+  <li><a href="#flujo-de-trabajo-con-github-actions" id="toc-flujo-de-trabajo-con-github-actions" class="nav-link" data-scroll-target="#flujo-de-trabajo-con-github-actions"><span class="header-section-number">6.3</span> Flujo de trabajo con GitHub Actions</a>
   <ul class="collapse">
-  <li><a href="#etapas-del-flujo" id="toc-etapas-del-flujo" class="nav-link" data-scroll-target="#etapas-del-flujo"><span class="header-section-number">6.2.1</span> Etapas del flujo</a></li>
-  <li><a href="#control-de-concurrencia" id="toc-control-de-concurrencia" class="nav-link" data-scroll-target="#control-de-concurrencia"><span class="header-section-number">6.2.2</span> Control de concurrencia</a></li>
+  <li><a href="#etapas-del-flujo" id="toc-etapas-del-flujo" class="nav-link" data-scroll-target="#etapas-del-flujo"><span class="header-section-number">6.3.1</span> Etapas del flujo</a></li>
+  <li><a href="#control-de-concurrencia" id="toc-control-de-concurrencia" class="nav-link" data-scroll-target="#control-de-concurrencia"><span class="header-section-number">6.3.2</span> Control de concurrencia</a></li>
   </ul></li>
-  <li><a href="#proceso-de-construcción" id="toc-proceso-de-construcción" class="nav-link" data-scroll-target="#proceso-de-construcción"><span class="header-section-number">6.3</span> Proceso de construcción</a>
+  <li><a href="#proceso-de-construcción" id="toc-proceso-de-construcción" class="nav-link" data-scroll-target="#proceso-de-construcción"><span class="header-section-number">6.4</span> Proceso de construcción</a>
   <ul class="collapse">
-  <li><a href="#construcción-de-la-aplicación" id="toc-construcción-de-la-aplicación" class="nav-link" data-scroll-target="#construcción-de-la-aplicación"><span class="header-section-number">6.3.1</span> Construcción de la aplicación</a></li>
-  <li><a href="#construcción-de-la-documentación" id="toc-construcción-de-la-documentación" class="nav-link" data-scroll-target="#construcción-de-la-documentación"><span class="header-section-number">6.3.2</span> Construcción de la documentación</a></li>
-  <li><a href="#flujo-completo-de-despliegue" id="toc-flujo-completo-de-despliegue" class="nav-link" data-scroll-target="#flujo-completo-de-despliegue"><span class="header-section-number">6.3.3</span> Flujo completo de despliegue</a></li>
+  <li><a href="#construcción-de-la-aplicación" id="toc-construcción-de-la-aplicación" class="nav-link" data-scroll-target="#construcción-de-la-aplicación"><span class="header-section-number">6.4.1</span> Construcción de la aplicación</a></li>
+  <li><a href="#construcción-de-la-documentación" id="toc-construcción-de-la-documentación" class="nav-link" data-scroll-target="#construcción-de-la-documentación"><span class="header-section-number">6.4.2</span> Construcción de la documentación</a></li>
+  <li><a href="#flujo-completo-de-despliegue" id="toc-flujo-completo-de-despliegue" class="nav-link" data-scroll-target="#flujo-completo-de-despliegue"><span class="header-section-number">6.4.3</span> Flujo completo de despliegue</a></li>
   </ul></li>
-  <li><a href="#estructura-de-urls-desplegadas" id="toc-estructura-de-urls-desplegadas" class="nav-link" data-scroll-target="#estructura-de-urls-desplegadas"><span class="header-section-number">6.4</span> Estructura de URLs desplegadas</a></li>
+  <li><a href="#estructura-de-urls-desplegadas" id="toc-estructura-de-urls-desplegadas" class="nav-link" data-scroll-target="#estructura-de-urls-desplegadas"><span class="header-section-number">6.5</span> Estructura de URLs desplegadas</a></li>
   </ul>
 </nav>
     </div>
@@ -242,11 +243,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Este capítulo documenta el proceso de construcción, despliegue y el flujo de trabajo de integración continua del proyecto.</p>
-<section id="github-pages" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="github-pages"><span class="header-section-number">6.1</span> GitHub Pages</h2>
+<section id="requisitos-de-infraestructura" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="requisitos-de-infraestructura"><span class="header-section-number">6.1</span> Requisitos de infraestructura</h2>
+<p>Uno de los objetivos del proyecto es que la herramienta tenga <strong>costo cero</strong> de operación: no requiere servidores propios, bases de datos ni ningún tipo de infraestructura de pago. Para los usuarios finales, el único requisito es disponer de un navegador web moderno; no se necesita instalar ningún software adicional.</p>
+<p>Esta decisión orienta directamente la elección de GitHub Pages como plataforma de despliegue y de GitHub Actions como sistema de integración continua, ya que ambos servicios son gratuitos para repositorios públicos.</p>
+</section>
+<section id="github-pages" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="github-pages"><span class="header-section-number">6.2</span> GitHub Pages</h2>
 <p>La aplicación se despliega como un sitio estático en <strong>GitHub Pages</strong>. Esto es posible gracias a la configuración de exportación estática de Next.js.</p>
-<section id="configuración-de-next.js" class="level3" data-number="6.1.1">
-<h3 data-number="6.1.1" class="anchored" data-anchor-id="configuración-de-next.js"><span class="header-section-number">6.1.1</span> Configuración de Next.js</h3>
+<section id="configuración-de-next.js" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="configuración-de-next.js"><span class="header-section-number">6.2.1</span> Configuración de Next.js</h3>
 <p>El archivo <code>next.config.mjs</code> define las siguientes opciones clave para el despliegue:</p>
 <ul>
 <li><strong><code>output: 'export'</code></strong>: indica a Next.js que genere una exportación estática (aplicación de una sola página o SPA) en lugar de un servidor Node.js.</li>
@@ -255,21 +261,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong><code>distDir: './build'</code></strong>: directorio de salida de la construcción.</li>
 </ul>
 </section>
-<section id="enrutamiento-del-lado-del-cliente" class="level3" data-number="6.1.2">
-<h3 data-number="6.1.2" class="anchored" data-anchor-id="enrutamiento-del-lado-del-cliente"><span class="header-section-number">6.1.2</span> Enrutamiento del lado del cliente</h3>
+<section id="enrutamiento-del-lado-del-cliente" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="enrutamiento-del-lado-del-cliente"><span class="header-section-number">6.2.2</span> Enrutamiento del lado del cliente</h3>
 <p>Al ser una aplicación de una sola página (SPA), toda la navegación se maneja en el navegador. El archivo <code>public/_redirects</code> contiene la regla:</p>
 <pre><code>/* /index.html 200</code></pre>
 <p>Esta regla redirige todas las solicitudes al archivo <code>index.html</code>, permitiendo que el enrutador de Next.js maneje las rutas del lado del cliente.</p>
 </section>
 </section>
-<section id="flujo-de-trabajo-con-github-actions" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="flujo-de-trabajo-con-github-actions"><span class="header-section-number">6.2</span> Flujo de trabajo con GitHub Actions</h2>
+<section id="flujo-de-trabajo-con-github-actions" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="flujo-de-trabajo-con-github-actions"><span class="header-section-number">6.3</span> Flujo de trabajo con GitHub Actions</h2>
 <p>El despliegue automatizado se configura en el archivo <code>.github/workflows/nextjs.yml</code>. El flujo se activa con cada <em>push</em> a la rama <code>master</code>.</p>
-<section id="etapas-del-flujo" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="etapas-del-flujo"><span class="header-section-number">6.2.1</span> Etapas del flujo</h3>
+<section id="etapas-del-flujo" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="etapas-del-flujo"><span class="header-section-number">6.3.1</span> Etapas del flujo</h3>
 <p>El <em>workflow</em> consta de dos <em>jobs</em> secuenciales:</p>
-<section id="construcción-build" class="level4" data-number="6.2.1.1">
-<h4 data-number="6.2.1.1" class="anchored" data-anchor-id="construcción-build"><span class="header-section-number">6.2.1.1</span> 1. Construcción (<code>build</code>)</h4>
+<section id="construcción-build" class="level4" data-number="6.3.1.1">
+<h4 data-number="6.3.1.1" class="anchored" data-anchor-id="construcción-build"><span class="header-section-number">6.3.1.1</span> 1. Construcción (<code>build</code>)</h4>
 <ol type="1">
 <li><strong>Checkout</strong>: descarga el código fuente del repositorio.</li>
 <li><strong>Detección del gestor de paquetes</strong>: identifica automáticamente si el proyecto usa <code>npm</code> o <code>yarn</code> verificando la existencia de archivos de bloqueo.</li>
@@ -281,8 +287,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Subida del artefacto</strong>: empaqueta el directorio <code>./build</code> como artefacto de GitHub Pages.</li>
 </ol>
 </section>
-<section id="despliegue-deploy" class="level4" data-number="6.2.1.2">
-<h4 data-number="6.2.1.2" class="anchored" data-anchor-id="despliegue-deploy"><span class="header-section-number">6.2.1.2</span> 2. Despliegue (<code>deploy</code>)</h4>
+<section id="despliegue-deploy" class="level4" data-number="6.3.1.2">
+<h4 data-number="6.3.1.2" class="anchored" data-anchor-id="despliegue-deploy"><span class="header-section-number">6.3.1.2</span> 2. Despliegue (<code>deploy</code>)</h4>
 <ol type="1">
 <li>Descarga el artefacto generado en la etapa anterior.</li>
 <li>Lo despliega en el entorno de GitHub Pages.</li>
@@ -290,15 +296,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 </section>
 </section>
-<section id="control-de-concurrencia" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="control-de-concurrencia"><span class="header-section-number">6.2.2</span> Control de concurrencia</h3>
+<section id="control-de-concurrencia" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="control-de-concurrencia"><span class="header-section-number">6.3.2</span> Control de concurrencia</h3>
 <p>El <em>workflow</em> utiliza un grupo de concurrencia (<code>pages</code>) que permite solo un despliegue simultáneo. Los despliegues en curso no se cancelan para evitar estados intermedios.</p>
 </section>
 </section>
-<section id="proceso-de-construcción" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="proceso-de-construcción"><span class="header-section-number">6.3</span> Proceso de construcción</h2>
-<section id="construcción-de-la-aplicación" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="construcción-de-la-aplicación"><span class="header-section-number">6.3.1</span> Construcción de la aplicación</h3>
+<section id="proceso-de-construcción" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="proceso-de-construcción"><span class="header-section-number">6.4</span> Proceso de construcción</h2>
+<section id="construcción-de-la-aplicación" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="construcción-de-la-aplicación"><span class="header-section-number">6.4.1</span> Construcción de la aplicación</h3>
 <p>El comando de construcción principal es:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run build</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Este ejecuta dos pasos secuenciales:</p>
@@ -308,8 +314,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>El resultado es el directorio <code>./build</code> que contiene todos los archivos HTML, JavaScript y CSS necesarios para servir la aplicación.</p>
 </section>
-<section id="construcción-de-la-documentación" class="level3" data-number="6.3.2">
-<h3 data-number="6.3.2" class="anchored" data-anchor-id="construcción-de-la-documentación"><span class="header-section-number">6.3.2</span> Construcción de la documentación</h3>
+<section id="construcción-de-la-documentación" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="construcción-de-la-documentación"><span class="header-section-number">6.4.2</span> Construcción de la documentación</h3>
 <p>La documentación se construye por separado mediante Quarto:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run docs:build</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Este comando ejecuta:</p>
@@ -320,8 +326,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>La documentación debe construirse <strong>antes</strong> de la construcción de la aplicación, ya que los archivos generados en <code>public/docs/</code> se incluyen en la exportación estática de Next.js.</p>
 </section>
-<section id="flujo-completo-de-despliegue" class="level3" data-number="6.3.3">
-<h3 data-number="6.3.3" class="anchored" data-anchor-id="flujo-completo-de-despliegue"><span class="header-section-number">6.3.3</span> Flujo completo de despliegue</h3>
+<section id="flujo-completo-de-despliegue" class="level3" data-number="6.4.3">
+<h3 data-number="6.4.3" class="anchored" data-anchor-id="flujo-completo-de-despliegue"><span class="header-section-number">6.4.3</span> Flujo completo de despliegue</h3>
 <p>Para un despliegue completo que incluya documentación actualizada:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Construir la documentación</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run docs:build</span>
@@ -336,8 +342,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>El <em>push</em> a <code>master</code> activa automáticamente el <em>workflow</em> de GitHub Actions que despliega el sitio.</p>
 </section>
 </section>
-<section id="estructura-de-urls-desplegadas" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="estructura-de-urls-desplegadas"><span class="header-section-number">6.4</span> Estructura de URLs desplegadas</h2>
+<section id="estructura-de-urls-desplegadas" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="estructura-de-urls-desplegadas"><span class="header-section-number">6.5</span> Estructura de URLs desplegadas</h2>
 <p>Una vez desplegada, la aplicación es accesible en las siguientes rutas:</p>
 <table class="caption-top table">
 <colgroup>
