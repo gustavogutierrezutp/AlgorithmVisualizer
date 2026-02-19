@@ -9,6 +9,9 @@ $if(subtitle)$
 $endif$
 $if(by-author)$
   author: "$for(by-author)$$it.name.literal$$sep$\n$endfor$",
+  author-content: [#set text(size: 1.4em, weight: "bold")
+$for(by-author)$    #align(right)[$it.name.literal$ \ #text(size: 0.75em, weight: "regular", style: "italic")[$it.email$]]$sep$
+$endfor$],
 $endif$
 $if(date)$
   date: "$date$",
